@@ -5,8 +5,8 @@
 
 class GrassTile : public Tile
 {
-	public:
-		bool isWalkable() const;
+   public:
+      bool isWalkable() const;
 };
 
 #endif

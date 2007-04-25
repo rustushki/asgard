@@ -5,10 +5,10 @@
 
 class CircHardPoint : public Hardpoint
 {
-	private:
-		int radius;
-	public:
-		bool conflict(int wc) const;
+   private:
+      int radius;
+   public:
+      bool conflict(int wc) const;
 
 };
 

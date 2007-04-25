@@ -2,5 +2,5 @@
 
 bool WaterTile::isWalkable() const
 {
-	return true;
+   return true;
 }

@@ -2,5 +2,5 @@
 
 bool DesertTile::isWalkable() const
 {
-	return true;
+   return true;
 }
