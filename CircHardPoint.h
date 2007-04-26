@@ -1,7 +1,7 @@
 #ifndef _CIRCHARDPOINT_H
 #define _CIRCHARDPOINT_H
 
-#include "hardpoint.h"
+#include "Hardpoint.h"
 
 class CircHardPoint : public Hardpoint
 {
