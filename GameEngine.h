@@ -19,13 +19,27 @@
 
 #ifndef GAME_ENGINE_H
 #define GAME_ENGINE_H
- 
+
+#include <vector>
+#include "Coordinate.h"
+
+#define VISIBLE_BOUNDING_BOXES   9
+
 class GameEngine
 {
-   private:
-      
    public:
+      static GameEngine* getInstance();
+      void loadGame();
+      void loadVisibleBoxes();
+      void addMapObject(MapObject object);
+      void removeBoundingBoxObjects(int boundingBoxID);
       
+   private:
+      GameEngine();
+      static GameEngine* instance;
+      std::vector<MapObject> objects;
+      int visibleBoxes[VISIBLE_BOUNDING_BOXES];
+      Coordinate currentPosition;
 };
 
 #endif //GAME_ENGINE_H

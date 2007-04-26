@@ -20,11 +20,12 @@
 #ifndef DATABASE_H
 #define DATABASE_H
  
-class Tile
+class Database
 {
-   private:
+   private: 
       
    public:
+   
       
 };
 
