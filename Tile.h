@@ -24,7 +24,7 @@
 
 class Tile
 {
-   private:
+   protected:
       TileType tileType;
    public:
       virtual bool isWalkable() const = 0;
