@@ -1,7 +1,7 @@
-#ifndef _DESERTTILE_H
-#define _DESERTTILE_H
+#ifndef DESERT_TILE_H
+#define DESERT_TILE_H
 
-#include "tile.h"
+#include "Tile.h"
 
 class DesertTile : public Tile
 {
@@ -9,4 +9,4 @@ class DesertTile : public Tile
       bool isWalkable() const;
 };
 
-#endif
+#endif // DESERT_TILE_H

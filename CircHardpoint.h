@@ -1,9 +1,9 @@
-#ifndef _CIRCHARDPOINT_H
-#define _CIRCHARDPOINT_H
+#ifndef CIRC_HARDPOINT_H
+#define CIRC_HARDPOINT_H
 
 #include "Hardpoint.h"
 
-class CircHardPoint : public Hardpoint
+class CircHardpoint : public Hardpoint
 {
    private:
       int radius;
@@ -12,4 +12,4 @@ class CircHardPoint : public Hardpoint
 
 };
 
-#endif
+#endif //CIRC_HARDPOINT

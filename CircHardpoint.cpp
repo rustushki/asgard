@@ -1,6 +1,6 @@
-#include "circhardpoint.h"
+#include "CircHardpoint.h"
 
-bool CircHardPoint::conflict(const int wc) const
+bool CircHardpoint::conflict(const int wc) const
 {
    return true;
 }

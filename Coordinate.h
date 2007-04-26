@@ -21,13 +21,14 @@
 
 class Coordinate
 {
-	public:
-		Coordinate(int, int);
-		int getX();
-		int getY();
-		void setX(int);
-		void setY(int);
-	private:
-		int x,y;
+   public:
+      Coordinate(int, int);
+      int getX();
+      int getY();
+      void setX(int);
+      void setY(int);
+   private:
+      int x,y;
 };
-#endif
+
+#endif //COORDINATE_H
