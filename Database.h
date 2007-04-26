@@ -19,13 +19,16 @@
  
 #ifndef DATABASE_H
 #define DATABASE_H
+
+#include "Coordinate.h"
  
 class Database
 {
-   private: 
+   private:
       
    public:
-   
+      void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
+      bool loadBoundingBox(int boxId);
       
 };
 

@@ -23,11 +23,12 @@
 class Coordinate
 {
    public:
-      Coordinate(int, int);
+      Coordinate();
+      Coordinate(int x, int y);
       int getX();
       int getY();
-      void setX(int);
-      void setY(int);
+      void setX(int x);
+      void setY(int y);
    private:
       int x,y;
 };

@@ -1,28 +1,35 @@
 #include "Coordinate.h"
 
-Coordinate::Coordinate(int x0, int y0)
+Coordinate::Coordinate()
 {
-	x = x0;
-	y = y0;
+   //Initialize to zero
+   this->x = 0;
+   this->y = 0;
+}
+
+Coordinate::Coordinate(int x, int y)
+{
+   this->x = x;
+	this->y = y;
 }
 
 int Coordinate::getX()
 {
-	return x;
+	return this->x;
 }
 
 int Coordinate::getY()
 {
-	return y;
+	return this->y;
 }
 
-void Coordinate::setX(int x0)
+void Coordinate::setX(int x)
 {
-	x = x0;
+	this->x = x;
 }
 
-void Coordinate::setY(int y0)
+void Coordinate::setY(int y)
 {
-	y = y0;
+	this->y = y;
 }
 

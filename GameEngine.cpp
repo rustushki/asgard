@@ -18,11 +18,12 @@ void GameEngine::loadGame()
 
 void GameEngine::loadVisibleBoxes()
 {
+   this->database.determineVisibleBoxes(this->currentPosition,this->visibleBoxes,VISIBLE_BOUNDING_BOXES);
 }
 
-void GameEngine::addMapObject(MapObject object)
+/*void GameEngine::addMapObject(MapObject object)
 {
-}
+}*/
 
 void GameEngine::removeBoundingBoxObjects(int boundingBoxID)
 {
