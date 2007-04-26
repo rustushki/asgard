@@ -1,0 +1,2 @@
+#include "MapObjectFactory.h"
+

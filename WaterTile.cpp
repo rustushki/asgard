@@ -1,4 +1,4 @@
-#include "watertile.h"
+#include "WaterTile.h"
 
 bool WaterTile::isWalkable() const
 {

@@ -1,4 +1,4 @@
-#include "deserttile.h"
+#include "DesertTile.h"
 
 bool DesertTile::isWalkable() const
 {

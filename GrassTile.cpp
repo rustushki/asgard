@@ -1,4 +1,4 @@
-#include "grasstile.h"
+#include "GrassTile.h"
 
 bool GrassTile::isWalkable() const
 {

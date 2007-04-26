@@ -17,18 +17,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef CIRC_HARDPOINT_H
-#define CIRC_HARDPOINT_H
-
-#include "Hardpoint.h"
-
-class CircHardpoint : public Hardpoint
+#ifndef GAME_ENGINE_H
+#define GAME_ENGINE_H
+ 
+class GameEngine
 {
    private:
-      int radius;
+      
    public:
-      bool conflict(int wc) const;
-
+      
 };
 
-#endif //CIRC_HARDPOINT
+#endif //GAME_ENGINE_H
+

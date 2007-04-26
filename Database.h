@@ -16,19 +16,17 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-
-#ifndef CIRC_HARDPOINT_H
-#define CIRC_HARDPOINT_H
-
-#include "Hardpoint.h"
-
-class CircHardpoint : public Hardpoint
+ 
+#ifndef DATABASE_H
+#define DATABASE_H
+ 
+class Tile
 {
    private:
-      int radius;
+      
    public:
-      bool conflict(int wc) const;
-
+      
 };
 
-#endif //CIRC_HARDPOINT
+#endif //DATABASE_H
+
