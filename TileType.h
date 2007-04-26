@@ -1,0 +1,12 @@
+#ifndef TILE_TYPE_H
+#define TILE_TYPE_H
+
+enum TileType 
+{
+   TILE_TYPE_WATER,
+   TILE_TYPE_DESERT,
+   TILE_TYPE_GRASS,
+   TILE_TYPE_COUNT
+};
+
+#endif //TILE_TYPE_H

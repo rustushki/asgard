@@ -1,7 +1,7 @@
-#ifndef _WATERTILE_H
-#define _WATERTILE_H
+#ifndef WATER_TILE_H
+#define WATER_TILE_H
 
-#include "tile.h"
+#include "Tile.h"
 
 class WaterTile : public Tile
 {
@@ -9,4 +9,4 @@ class WaterTile : public Tile
       bool isWalkable() const;
 };
 
-#endif
+#endif // WATER_TILE_H

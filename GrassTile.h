@@ -1,7 +1,7 @@
-#ifndef _GRASSTILE_H
-#define _GRASSTILE_H
+#ifndef GRASS_TILE_H
+#define GRASS_TILE_H
 
-#include "tile.h"
+#include "Tile.h"
 
 class GrassTile : public Tile
 {
@@ -9,4 +9,4 @@ class GrassTile : public Tile
       bool isWalkable() const;
 };
 
-#endif
+#endif // GRASS_TILE_H

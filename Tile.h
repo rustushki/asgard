@@ -1,7 +1,7 @@
-#ifndef _TILE_H
-#define _TILE_H
+#ifndef TILE_H
+#define TILE_H
 
-enum TileType {TILE_TYPE_WATER,TILE_TYPE_DESERT,TILE_TYPE_GRASS,TILE_TYPE_COUNT};
+#include "TileType.h"
 
 class Tile
 {
@@ -11,4 +11,4 @@ class Tile
       virtual bool isWalkable() const = 0;
 };
 
-#endif
+#endif //TILE_H
