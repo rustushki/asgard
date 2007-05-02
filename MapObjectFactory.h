@@ -23,8 +23,13 @@
 class MapObjectFactory
 {
    private:
+      static void createTile(char **columnValue);
+      static void createContainer(char **columnValue);
+      static void createNonPlayerCharacter(char **columnValue);
+      static void createStaticMapObject(char **columnValue);
       
    public:
+      static void processRow(void *resultType, int columnCount, char **columnValue, char **columnName); 
       
 };
 
