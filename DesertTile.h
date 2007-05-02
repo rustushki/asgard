@@ -25,6 +25,7 @@
 class DesertTile : public Tile
 {
    public:
+      DesertTile();
       bool isWalkable() const;
 };
 

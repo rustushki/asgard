@@ -25,6 +25,7 @@
 class GrassTile : public Tile
 {
    public:
+      GrassTile();
       bool isWalkable() const;
 };
 

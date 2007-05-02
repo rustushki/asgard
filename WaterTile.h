@@ -25,6 +25,7 @@
 class WaterTile : public Tile
 {
    public:
+      WaterTile();
       bool isWalkable() const;
 };
 
