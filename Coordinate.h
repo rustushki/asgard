@@ -38,7 +38,10 @@ class Coordinate
       Coordinate operator- (const int) const;
       Coordinate operator* (const int) const;
       Coordinate operator/ (const int) const;
-      //friend Coordinate operator+(const Coordinate&, const Coordinate&);
+      friend Coordinate operator+(const int, const Coordinate&);
+      friend Coordinate operator-(const int, const Coordinate&);
+      friend Coordinate operator*(const int, const Coordinate&);
+      friend Coordinate operator/(const int, const Coordinate&);
 
       bool operator== (const Coordinate) const;
       bool operator!= (const Coordinate) const;
