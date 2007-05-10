@@ -16,10 +16,24 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
+
+#ifndef CONTAINER_H
+#define CONTAINER_H
+
 #include "StaticMapObject.h"
+#include "Item.h"
 
-StaticMapObject::StaticMapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV)
-   : MapObject(leftCorner,boundingBoxes,h,w)
+class Container : public StaticMapObject
 {
+   public:
+      Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV);
+      int open(Item*);
+      int countItems();
+      Item* getItem(int);
+      bool putItem(Item*);
+      bool isOpenable();
+   private:
+      vector<Item*> items;
+};
 
-}
+#endif //CONTAINER_H

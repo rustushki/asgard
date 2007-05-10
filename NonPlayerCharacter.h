@@ -20,12 +20,12 @@
 #ifndef NON_PLAYER_CHARACTER_H
 #define NON_PLAYER_CHARACTER_H
 
-#include "StaticMapObject.cpp"
+#include "StaticMapObject.h"
 
 class NonPlayerCharacter : public StaticMapObject
 {
    public:
-      NonPlayerCharacter(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,Hardpoint**,int,list<Coordinate>& path,int);
+      NonPlayerCharacter(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV,list<Coordinate>& path,int);
    private:
       list<Coordinate> path;
       int speed;

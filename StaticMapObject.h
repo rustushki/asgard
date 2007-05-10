@@ -20,17 +20,19 @@
 #ifndef STATIC_MAP_OBJECT_H
 #define STATIC_MAP_OBJECT_H
 
-#include "MapObject.cpp"
+#include <vector>
+#include "MapObject.h"
 #include "Hardpoint.h"
+
+using std::vector;
 
 class StaticMapObject : public MapObject
 {
    public:
-      StaticMapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,Hardpoint**,int);
+      StaticMapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>&);
       bool collide(MapObject*);
    private:
-      Hardpoint* hardpoints[15];
-      int hardpointCount;
+      vector<Hardpoint*> hardpoints;
 };
 
 #endif //STATIC_MAP_OBJECT_H

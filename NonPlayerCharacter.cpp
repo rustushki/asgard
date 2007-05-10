@@ -19,8 +19,8 @@
 
 #include "NonPlayerCharacter.h"
 
-NonPlayerCharacter::NonPlayerCharacter(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,Hardpoint** hp,int hpCnt,list<Coordinate>& path,int spd)
-   : StaticMapObject(leftCorner,boundingBoxes,h,w,hp,hpCnt)
+NonPlayerCharacter::NonPlayerCharacter(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV,list<Coordinate>& path,int spd)
+   : StaticMapObject(leftCorner,boundingBoxes,h,w,hpV)
 {
    speed = spd;
 }

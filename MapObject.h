@@ -21,7 +21,7 @@
 #define MAP_OBJECT_H
 
 #include <list>
-#include "Coordinate.cpp"
+#include "Coordinate.h"
 
 using std::list;
 
