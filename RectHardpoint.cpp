@@ -1,6 +1,6 @@
 #include "RectHardpoint.h"
 
-bool RectHardpoint::conflict(const int wc) const
+bool RectHardpoint::conflict(const Coordinate wc) const
 {
    return true;
 }

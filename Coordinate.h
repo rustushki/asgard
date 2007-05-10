@@ -25,12 +25,27 @@ class Coordinate
    public:
       Coordinate();
       Coordinate(int x, int y);
-      int getX();
-      int getY();
-      void setX(int x);
-      void setY(int y);
+      Coordinate(const Coordinate&);
+
+      void operator+= (const Coordinate);
+      void operator-= (const Coordinate);
+
+      Coordinate operator+ (const Coordinate) const;
+      Coordinate operator- (const Coordinate) const;
+      
+      // scaling arithmetic
+      Coordinate operator+ (const int) const;
+      Coordinate operator- (const int) const;
+      Coordinate operator* (const int) const;
+      Coordinate operator/ (const int) const;
+      //friend Coordinate operator+(const Coordinate&, const Coordinate&);
+
+      bool operator== (const Coordinate) const;
+      bool operator!= (const Coordinate) const;
+
+      friend double distance(const Coordinate&,const Coordinate&); 
+
    private:
       int x,y;
 };
-
 #endif //COORDINATE_H

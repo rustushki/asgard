@@ -16,6 +16,7 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
+#include "Coordinate.h"
 
 #ifndef HARDPOINT_H
 #define HARDPOINT_H
@@ -23,10 +24,10 @@
 class Hardpoint
 {
    protected:
-      int coordinate;
+      Coordinate coordinate;
 
    public:
-      virtual bool conflict(const int wc) const = 0;
+      virtual bool conflict(const Coordinate&) const = 0;
 };
 
 #endif //HARDPOINT_H

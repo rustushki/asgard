@@ -28,7 +28,7 @@ class RectHardpoint : public Hardpoint
       int height;
       int width;
    public:
-      bool conflict(int wc) const;
+      bool conflict(Coordinate wc) const;
 };
 
 #endif //RECT_HARDPOINT_H

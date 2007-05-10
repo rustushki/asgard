@@ -25,10 +25,14 @@
 class CircHardpoint : public Hardpoint
 {
    private:
-      int radius;
+      double radius;
    public:
-      bool conflict(int wc) const;
+      CircHardpoint();
+      CircHardpoint(int, int);
+      CircHardpoint(int, int, double);
+
+      bool conflict(const Coordinate &) const;
 
 };
 
-#endif //CIRC_HARDPOINT
+#endif //CIRC_HARDPOINT_H
