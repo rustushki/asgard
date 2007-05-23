@@ -17,27 +17,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef CONTAINER_H
-#define CONTAINER_H
+#ifndef ITEM_H
+#define ITEM_H
 
-#include <iterator>
-#include "StaticMapObject.h"
-#include "Item.h"
+#include <string>
 
-class Container : public StaticMapObject
+using std::string;
+
+class Item
 {
    public:
-      Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV);
-      int getItemCount();
-      Item* getItem(string);
-      bool putItem(Item*);
-      bool isOpenable();
-      string peekNext();
-      string peekPrevious();
+      Item(string);
+      string getName();
    private:
-      const static int MAX_ITEMS = 15;
-      vector<Item*> items;
-      vector<Item*>::iterator cursor;
+      string name;
 };
 
-#endif //CONTAINER_H
+#endif //ITEM_H

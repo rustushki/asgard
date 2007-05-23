@@ -21,28 +21,34 @@
 Container::Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV)
    : StaticMapObject(leftCorner,boundingBoxes,h,w,hpV)
 {
-  
+   items.reserve(MAX_ITEMS);
+   cursor = items.begin();
 }
    
-int Container::open(Item* itPtr)
-{
-   return 0;
-}
-
-int Container::countItems()
+int Container::getItemCount()
 {
    return items.size();
 }
 
-Item* Container::getItem(int itemIndex)
+Item* Container::getItem(string n)
 {
-   if(itemIndex >= 0)
-      return items.at(itemIndex);
+   vector<Item*>::iterator i1;
+   Item* itPtr = 0;
+   for(i1 = items.begin(); i1 != items.end(); i1++)
+   {
+      if((*(*i1)).getName() == n)
+      {
+         itPtr = *i1;
+         break;
+      }
+   }
+   items.erase(i1);
+   return itPtr;
 }
 
 bool Container::putItem(Item* itPtr)
 {
-   if(itPtr != 0)
+   if((itPtr != 0) && (items.size() < MAX_ITEMS))
    {
       items.push_back(itPtr);
       return true;
@@ -54,4 +60,16 @@ bool Container::putItem(Item* itPtr)
 bool Container::isOpenable()
 {
    return true;
+}
+
+string Container::peekNext()
+{
+   cursor++;
+   return (*(*cursor)).getName();
+}
+
+string Container::peekPrevious()
+{
+   cursor--;
+   return (*(*cursor)).getName();
 }
