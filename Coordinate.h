@@ -45,6 +45,10 @@ class Coordinate
 
       bool operator== (const Coordinate) const;
       bool operator!= (const Coordinate) const;
+      bool operator> (const Coordinate) const;
+      bool operator< (const Coordinate) const;
+      bool operator<= (const Coordinate) const;
+      bool operator>= (const Coordinate) const;
 
       friend double distance(const Coordinate&,const Coordinate&); 
 

@@ -62,6 +62,26 @@ bool Coordinate::operator!=(const Coordinate x) const
    return !(*this == x);
 }
 
+bool Coordinate::operator>=(const Coordinate x) const
+{
+   return (this->x >= x.x && this->y >= x.y);
+}
+
+bool Coordinate::operator<(const Coordinate x) const
+{
+   return !(*this >= x);
+}
+
+bool Coordinate::operator<=(const Coordinate x) const
+{
+   return (this->x <= x.x && this->y <= x.y);
+}
+
+bool Coordinate::operator>(const Coordinate x) const
+{
+   return !(*this <= x);
+}
+
 Coordinate Coordinate::operator+ (const Coordinate x) const
 {
    return Coordinate(this->x+x.x, this->y+x.y);
