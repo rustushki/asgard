@@ -18,34 +18,31 @@
  ****************************************************************************/
 #include "Container.h"
 
+/* Constructor */
 Container::Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV)
    : StaticMapObject(leftCorner,boundingBoxes,h,w,hpV)
 {
    items.reserve(MAX_ITEMS);
    cursor = items.begin();
 }
-   
+
+/* Returns number of Items in Container */
 int Container::getItemCount()
 {
    return items.size();
 }
 
-Item* Container::getItem(string n)
+/* Retrieve Item */
+Item* Container::getItem()
 {
-   vector<Item*>::iterator i1;
-   Item* itPtr = 0;
-   for(i1 = items.begin(); i1 != items.end(); i1++)
+   if(items.size() != 0)
    {
-      if((*(*i1)).getName() == n)
-      {
-         itPtr = *i1;
-         break;
-      }
+      items.erase(cursor);
+      return *cursor;
    }
-   items.erase(i1);
-   return itPtr;
 }
 
+/* Insert Item in Container */
 bool Container::putItem(Item* itPtr)
 {
    if((itPtr != 0) && (items.size() < MAX_ITEMS))
@@ -57,19 +54,61 @@ bool Container::putItem(Item* itPtr)
       return false;
 }
 
+/* Is Item in Container? */
+bool Container::findItem(string n)
+{
+   vector<Item*>::iterator i1;
+   for(i1 = items.begin(); i1 != items.end(); i1++)
+   {
+      if((*(*i1)).getName() == n)
+      {
+         cursor = i1;
+         return true;
+      }
+   }
+   return false;
+}
+
+/* Can Container be opened? */
 bool Container::isOpenable()
 {
    return true;
 }
 
-string Container::peekNext()
+/* What Item is cursor pointing at? */
+string Container::peek()
 {
-   cursor++;
    return (*(*cursor)).getName();
 }
 
-string Container::peekPrevious()
+/* Moves cursor to next Item */
+bool Container::moveNext()
 {
-   cursor--;
-   return (*(*cursor)).getName();
+   /* Cannot move in empty vector */
+   if(items.size() != 0)
+   {
+      if((cursor + 1) != items.end())
+         cursor++;
+      else
+         cursor = items.begin();
+      return true;
+   }
+   else
+      return false;
+}
+
+/* Moves cursor to previous Item */
+bool Container::movePrevious()
+{
+   /* Cannot move in empty vector */
+   if(items.size() != 0)
+   {
+      if(cursor != items.begin())
+         cursor--;
+      else
+         cursor = items.end() - 1;
+      return true;
+   }
+   else
+      return false;
 }

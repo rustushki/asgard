@@ -29,11 +29,13 @@ class Container : public StaticMapObject
    public:
       Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV);
       int getItemCount();
-      Item* getItem(string);
+      Item* getItem();
       bool putItem(Item*);
+      bool findItem(string);
       bool isOpenable();
-      string peekNext();
-      string peekPrevious();
+      string peek();
+      bool moveNext();
+      bool movePrevious();
    private:
       const static int MAX_ITEMS = 15;
       vector<Item*> items;
