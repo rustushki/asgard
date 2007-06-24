@@ -1,0 +1,4 @@
+# Basic Hardpoint and Coordinate Functionality
+test001:
+	g++ -o test001 test001.cpp Coordinate.cpp CircHardpoint.cpp RectHardpoint.cpp
+	./test001

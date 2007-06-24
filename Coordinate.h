@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -25,30 +25,30 @@ class Coordinate
    public:
       Coordinate();
       Coordinate(int x, int y);
-      Coordinate(const Coordinate&);
+      Coordinate(const Coordinate& copyme);
 
-      void operator+= (const Coordinate);
-      void operator-= (const Coordinate);
+      void operator+= (const Coordinate rhwc);
+      void operator-= (const Coordinate rhwc);
 
-      Coordinate operator+ (const Coordinate) const;
-      Coordinate operator- (const Coordinate) const;
+      Coordinate operator+ (const Coordinate rhwc) const;
+      Coordinate operator- (const Coordinate rhwc) const;
       
       // scaling arithmetic
-      Coordinate operator+ (const int) const;
-      Coordinate operator- (const int) const;
-      Coordinate operator* (const int) const;
-      Coordinate operator/ (const int) const;
-      friend Coordinate operator+(const int, const Coordinate&);
-      friend Coordinate operator-(const int, const Coordinate&);
-      friend Coordinate operator*(const int, const Coordinate&);
-      friend Coordinate operator/(const int, const Coordinate&);
+      Coordinate operator+ (const int scalar) const;
+      Coordinate operator- (const int scalar) const;
+      Coordinate operator* (const int scalar) const;
+      Coordinate operator/ (const int scalar) const;
+      friend Coordinate operator+(const int scalar, const Coordinate& wc);
+      friend Coordinate operator-(const int scalar, const Coordinate& wc);
+      friend Coordinate operator*(const int scalar, const Coordinate& wc);
+      friend Coordinate operator/(const int scalar, const Coordinate& wc);
 
-      bool operator== (const Coordinate) const;
-      bool operator!= (const Coordinate) const;
-      bool operator> (const Coordinate) const;
-      bool operator< (const Coordinate) const;
-      bool operator<= (const Coordinate) const;
-      bool operator>= (const Coordinate) const;
+      bool operator== (const Coordinate rhwc) const;
+      bool operator!= (const Coordinate rhwc) const;
+      bool operator>  (const Coordinate rhwc) const;
+      bool operator<  (const Coordinate rhwc) const;
+      bool operator<= (const Coordinate rhwc) const;
+      bool operator>= (const Coordinate rhwc) const;
 
       friend double distance(const Coordinate&,const Coordinate&); 
 

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -29,8 +29,8 @@ class RectHardpoint : public Hardpoint
       int width;
    public:
       RectHardpoint();
-      RectHardpoint(int, int);
-      RectHardpoint(int, int, int, int);
+      RectHardpoint(int x, int y);
+      RectHardpoint(int x, int y, int h, int w);
 
       bool conflict(const Coordinate & wc) const;
 };

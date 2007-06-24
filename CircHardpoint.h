@@ -28,10 +28,10 @@ class CircHardpoint : public Hardpoint
       double radius;
    public:
       CircHardpoint();
-      CircHardpoint(int, int);
-      CircHardpoint(int, int, double);
+      CircHardpoint(int x, int y);
+      CircHardpoint(int x, int y, double r);
 
-      bool conflict(const Coordinate &) const;
+      bool conflict(const Coordinate & wc) const;
 
 };
 
