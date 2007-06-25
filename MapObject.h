@@ -23,14 +23,25 @@
 #include <list>
 #include "Coordinate.h"
 
+#define MAP_OBJECT_HEIGHT_DEFAULT   10
+#define MAP_OBJECT_WIDTH_DEFAULT    10
+
 using std::list;
 
 class MapObject
 {
    public:
-      MapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int,int);
+      MapObject();
+      MapObject(const Coordinate& leftCorner, int height, int width);
+      
+      void setLeftCorner(const Coordinate& leftCorner);
+      void setHeight(int height);
+      void setWidth(int width);
+      
+      void addBoundingBox(int boundingBox);
+      
    private:
-      const Coordinate leftCorner;
+      Coordinate leftCorner;
       list<int> boundingBoxes;
       int height,width;
 };

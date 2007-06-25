@@ -19,54 +19,63 @@
 #include "Container.h"
 
 /* Constructor */
-Container::Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV)
-   : StaticMapObject(leftCorner,boundingBoxes,h,w,hpV)
+Container::Container() : StaticMapObject()
 {
    items.reserve(MAX_ITEMS);
-   cursor = items.begin();
+   
+   vector<Item*>::iterator currentItem;
+   for(currentItem = items.begin(); currentItem != items.end(); currentItem++)
+   {
+      *currentItem = NULL;
+   }
+   
 }
 
 /* Returns number of Items in Container */
 int Container::getItemCount()
 {
-   return items.size();
+   int validItemCount;
+   vector<Item*>::iterator currentItem;
+   for(currentItem = items.begin(); currentItem != items.end(); currentItem++)
+   {
+      if(*currentItem != NULL) validItemCount++;
+   }
+   return validItemCount;
 }
 
 /* Retrieve Item */
-Item* Container::getItem()
+Item* Container::getItem(int index)
 {
-   if(items.size() != 0)
+   Item* itemToReturn = NULL;
+   
+   if(!items.empty() && index < MAX_ITEMS)
    {
-      items.erase(cursor);
-      return *cursor;
+      itemToReturn = new Item();
+      memcpy(itemToReturn, items[index], sizeof(Item));
+      items[index] = NULL;
    }
+   
+   return itemToReturn;
 }
 
 /* Insert Item in Container */
-bool Container::putItem(Item* itPtr)
+bool Container::putItem(Item* item)
 {
-   if((itPtr != 0) && (items.size() < MAX_ITEMS))
+   bool itemAdded = false;
+   
+   assert(item);
+   
+   vector<Item*>::iterator currentItem;
+   for(currentItem = items.begin(); currentItem != items.end() && !itemAdded; currentItem++)
    {
-      items.push_back(itPtr);
-      return true;
-   }
-   else
-      return false;
-}
-
-/* Is Item in Container? */
-bool Container::findItem(string n)
-{
-   vector<Item*>::iterator i1;
-   for(i1 = items.begin(); i1 != items.end(); i1++)
-   {
-      if((*(*i1)).getName() == n)
+      if(*currentItem != NULL)
       {
-         cursor = i1;
-         return true;
+         *currentItem = item;
+         itemAdded = true;
       }
    }
-   return false;
+   
+   return itemAdded;
 }
 
 /* Can Container be opened? */
@@ -76,39 +85,9 @@ bool Container::isOpenable()
 }
 
 /* What Item is cursor pointing at? */
-string Container::peek()
+string Container::peek(int index)
 {
-   return (*(*cursor)).getName();
-}
-
-/* Moves cursor to next Item */
-bool Container::moveNext()
-{
-   /* Cannot move in empty vector */
-   if(items.size() != 0)
-   {
-      if((cursor + 1) != items.end())
-         cursor++;
-      else
-         cursor = items.begin();
-      return true;
-   }
-   else
-      return false;
-}
-
-/* Moves cursor to previous Item */
-bool Container::movePrevious()
-{
-   /* Cannot move in empty vector */
-   if(items.size() != 0)
-   {
-      if(cursor != items.begin())
-         cursor--;
-      else
-         cursor = items.end() - 1;
-      return true;
-   }
-   else
-      return false;
+   assert(index < MAX_ITEMS);
+   
+   return items[index]->getName();
 }

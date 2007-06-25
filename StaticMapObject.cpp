@@ -18,8 +18,16 @@
  ****************************************************************************/
 #include "StaticMapObject.h"
 
-StaticMapObject::StaticMapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV)
-   : MapObject(leftCorner,boundingBoxes,h,w)
+StaticMapObject::StaticMapObject() : MapObject()
 {
+}
 
+void StaticMapObject::addHardpoint(Hardpoint *hardpoint)
+{
+   this->hardpoints.push_back(hardpoint);
+}
+
+bool StaticMapObject::collide(MapObject*)
+{
+   return false;
 }

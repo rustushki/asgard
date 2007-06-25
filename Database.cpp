@@ -6,4 +6,5 @@ void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBox
 
 bool Database::loadBoundingBox(int boxId)
 {
+   return false;
 }

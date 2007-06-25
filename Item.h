@@ -27,6 +27,7 @@ using std::string;
 class Item
 {
    public:
+      Item();
       Item(string);
       string getName();
    private:

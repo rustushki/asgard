@@ -19,8 +19,39 @@
 
 #include "MapObject.h"
 
-MapObject::MapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w)
+MapObject::MapObject()
 {
-   height = h;
-   width = w;
+   this->height = MAP_OBJECT_HEIGHT_DEFAULT;
+   this->width = MAP_OBJECT_WIDTH_DEFAULT;
+}
+
+MapObject::MapObject(const Coordinate& leftCorner,int height,int width)
+{
+   this->leftCorner = leftCorner;
+   this->height = height;
+   this->width = width;
+}
+
+void MapObject::setLeftCorner(const Coordinate& leftCorner)
+{
+   this->leftCorner = leftCorner;
+}
+
+void MapObject::setHeight(int height)
+{
+   assert(height != 0);
+   
+   this->height = height;
+}
+
+void MapObject::setWidth(int width)
+{
+   assert(width != 0);
+   
+   this->width = width;
+}
+      
+void MapObject::addBoundingBox(int boundingBox)
+{
+   this->boundingBoxes.push_back(boundingBox);
 }

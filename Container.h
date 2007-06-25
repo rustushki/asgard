@@ -27,19 +27,16 @@
 class Container : public StaticMapObject
 {
    public:
-      Container(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV);
+      Container();
       int getItemCount();
-      Item* getItem();
-      bool putItem(Item*);
-      bool findItem(string);
+      Item* getItem(int index);
+      bool putItem(Item* item);
       bool isOpenable();
-      string peek();
-      bool moveNext();
-      bool movePrevious();
+      string peek(int index);
+      
    private:
       const static int MAX_ITEMS = 15;
       vector<Item*> items;
-      vector<Item*>::iterator cursor;
 };
 
 #endif //CONTAINER_H

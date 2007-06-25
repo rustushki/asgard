@@ -22,12 +22,17 @@
 
 #include "StaticMapObject.h"
 
+#define NON_PLAYER_CHARACTER_DEFAULT_SPEED   0
+
 class NonPlayerCharacter : public StaticMapObject
 {
    public:
-      NonPlayerCharacter(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>& hpV,list<Coordinate>& path,int);
+      NonPlayerCharacter();
+      
+      void setSpeed(int speed);
+      void addCoordinateToPath(Coordinate *coordinate);
    private:
-      list<Coordinate> path;
+      list<Coordinate*> path;
       int speed;
 };
 

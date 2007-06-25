@@ -29,7 +29,9 @@ using std::vector;
 class StaticMapObject : public MapObject
 {
    public:
-      StaticMapObject(const Coordinate& leftCorner,list<int>& boundingBoxes,int h,int w,vector<Hardpoint*>&);
+      StaticMapObject();
+      
+      void addHardpoint(Hardpoint *hardpoint);
       bool collide(MapObject*);
    private:
       vector<Hardpoint*> hardpoints;
