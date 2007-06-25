@@ -50,8 +50,7 @@ Item* Container::getItem(int index)
    
    if(!items.empty() && index < MAX_ITEMS)
    {
-      itemToReturn = new Item();
-      memcpy(itemToReturn, items[index], sizeof(Item));
+      itemToReturn = items[index];
       items[index] = NULL;
    }
    
