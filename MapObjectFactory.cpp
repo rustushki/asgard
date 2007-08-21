@@ -1,14 +1,26 @@
 #include "MapObjectFactory.h"
 #include "GameEngine.h"
 #include "Tile.h"
-//#include "Container.h"
+#include "Container.h"
 #include "StaticMapObject.h"
 #include "NonPlayerCharacter.h"
+#include "MapObjectType.h"
+#include "DatabaseColumnMap.h"
 
-void MapObjectFactory::processRow(void *resultType, int columnCount, char **columnValue, char **columnName)
+int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
 {
-   // TODO: Switch on type of result as passed into call back function
-      // TODO: Case for each type of database row result that calls a MapObjectFactory private function
+   MapObjectType *type = static_cast<MapObjectType*>(mapObjectType);
+   
+   switch(*type)
+   {
+      case MAP_OBJECT_TYPE_CONTAINER:              { MapObjectFactory::createContainer(columnValue); break; }
+      case MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER:   { MapObjectFactory::createNonPlayerCharacter(columnValue); break; }
+      case MAP_OBJECT_TYPE_STATIC_MAP_OBJECT:      { MapObjectFactory::createStaticMapObject(columnValue); break; }
+      case MAP_OBJECT_TYPE_TILE:                   { MapObjectFactory::createTile(columnValue); break; }
+      default:                                     { /* TODO: Error case... add logging */ break; }
+   }
+   
+   return true;
 }
 
 void MapObjectFactory::createTile(char **columnValue)
@@ -32,7 +44,7 @@ void MapObjectFactory::createTile(char **columnValue)
 
 void MapObjectFactory::createContainer(char **columnValue)
 {
-   //Container *container = new Container();
+   Container *container = new Container();
    
    // TODO: Add all columnValue data to Container object
    
@@ -40,12 +52,12 @@ void MapObjectFactory::createContainer(char **columnValue)
    GameEngine *gameEngine = GameEngine::getInstance();
       
    // Add container to gameEngine
-   //gameEngine->addMapObject((MapObject*)container);
+   gameEngine->addMapObject((MapObject*)container);
 }
 
 void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 {
-   //NonPlayerCharacter *npc = new NonPlayerCharacter();
+   NonPlayerCharacter *npc = new NonPlayerCharacter();
    
    // TODO: Add all columnValue data to NonPlayerCharacter object
    
@@ -53,12 +65,12 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
    GameEngine *gameEngine = GameEngine::getInstance();
       
    // Add container to gameEngine
-   //gameEngine->addMapObject((MapObject*)npc);
+   gameEngine->addMapObject((MapObject*)npc);
 }
 
 void MapObjectFactory::createStaticMapObject(char **columnValue)
 {
-   //StaticMapObject staticMapObject = new StaticMapObject();
+   StaticMapObject *staticMapObject = new StaticMapObject();
    
    // TODO: Add all columnValue data to NonPlayerCharacter object
    
@@ -66,6 +78,6 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
    GameEngine *gameEngine = GameEngine::getInstance();
       
    // Add container to gameEngine
-   //gameEngine->addMapObject((MapObject*)staticMapObject);
+   gameEngine->addMapObject((MapObject*)staticMapObject);
 
 }

@@ -29,7 +29,7 @@ class MapObjectFactory
       static void createStaticMapObject(char **columnValue);
       
    public:
-      static void processRow(void *resultType, int columnCount, char **columnValue, char **columnName); 
+      static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 
       
 };
 

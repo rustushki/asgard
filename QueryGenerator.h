@@ -17,26 +17,24 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
  
-#ifndef DATABASE_H
-#define DATABASE_H
+#ifndef QUERY_GENERATOR_H
+#define QUERY_GENERATOR_H
 
-#include <sqlite3.h>
-#include "Coordinate.h"
- 
-#define ASGARD_DATABASE "asgard.db3"
- 
-class Database
+#include "QueryGenerator.h"
+
+class QueryGenerator
 {
-   private:
-      sqlite3 *asgardDb;
-      
    public:
-      Database();
-      ~Database();
-      void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
-      bool loadBoundingBox(int boxId);
+      static char* staticMapObject(int mapObjectId);
       
+      static char* nonPlayerCharacter(int boundingBoxId);
+      static char* nonPlayerCharacterPath(int mapObjectId);
+      
+      static char* container(int boundingBoxId);
+      
+      static char* tile(int boundingBoxId);
+      
+      static char* hardpoint(int mapObjectId);
 };
 
-#endif //DATABASE_H
-
+#endif // QUERY_GENERATOR_H
