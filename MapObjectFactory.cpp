@@ -1,6 +1,9 @@
 #include "MapObjectFactory.h"
 #include "GameEngine.h"
 #include "Tile.h"
+#include "WaterTile.h"
+#include "GrassTile.h"
+#include "DesertTile.h"
 #include "Container.h"
 #include "StaticMapObject.h"
 #include "NonPlayerCharacter.h"
@@ -28,11 +31,20 @@ void MapObjectFactory::createTile(char **columnValue)
    // Create new tile
    Tile *tile;
    
-   // TODO: Switch on tile type
-      // TODO: Create approprate tile subclass
+   TileType tileType = (TileType)atoi(columnValue[TILE_COLUMN_TILE_TYPE]);
+   
+   switch(tileType)
+   {
+      case TILE_TYPE_WATER:   { tile = new WaterTile(); break; }
+      case TILE_TYPE_DESERT:  { tile = new DesertTile(); break; }
+      case TILE_TYPE_GRASS:   { tile = new GrassTile(); break; }
+      default:                { break; }
+   }
 
    if(tile != NULL)
    {
+      tile->setWidth(atoi(columnValue[TILE_COLUMN_WIDTH]));
+      tile->setHeight(atoi(columnValue[TILE_COLUMN_HEIGHT]));
       // Get reference to GameEngine
       GameEngine *gameEngine = GameEngine::getInstance();
       
