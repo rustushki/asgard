@@ -21,7 +21,7 @@
 #include <iostream>
 #include <sstream>
 
-char* QueryGenerator::staticMapObject(int mapObjectId)
+char* QueryGenerator::staticMapObject(int boundingBoxId)
 {
    std::stringstream queryStream;
    std::string       query;
@@ -34,7 +34,7 @@ char* QueryGenerator::staticMapObject(int mapObjectId)
    queryStream << "mo.Width ";
    queryStream << "from MapObject mo ";
    queryStream << "inner join BoundingBox bb on bb.BoundingBoxId = mo.BoundingBoxId ";
-   queryStream << "where mo.BoundingBoxId = " << mapObjectId << "; ";
+   queryStream << "where mo.BoundingBoxId = " << boundingBoxId << "; ";
    
    query = queryStream.str();
    
@@ -96,7 +96,6 @@ char* QueryGenerator::container(int boundingBoxId)
    queryStream << "c.item1, ";
    queryStream << "c.item2, ";
    queryStream << "c.item3, ";
-   queryStream << "c.item3, ";
    queryStream << "c.item4, ";
    queryStream << "c.item5, ";
    queryStream << "c.item6, ";
@@ -129,7 +128,7 @@ char* QueryGenerator::tile(int boundingBoxId)
    queryStream << "mo.WC_Y, ";
    queryStream << "mo.Height, ";
    queryStream << "mo.Width, ";
-   queryStream << "t.tileType, ";
+   queryStream << "t.tileType ";
    queryStream << "from MapObject mo, BoundingBox bb ";
    queryStream << "inner join Tiles t on mo.MapObjectId = t.MapObjectId ";
    queryStream << "where bb.BoundingBoxId = " << boundingBoxId << ";";

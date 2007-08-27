@@ -25,7 +25,7 @@
 class QueryGenerator
 {
    public:
-      static char* staticMapObject(int mapObjectId);
+      static char* staticMapObject(int boundingBoxId);
       
       static char* nonPlayerCharacter(int boundingBoxId);
       static char* nonPlayerCharacterPath(int mapObjectId);

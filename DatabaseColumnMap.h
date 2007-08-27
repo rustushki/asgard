@@ -1,0 +1,89 @@
+/*****************************************************************************
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
+ 
+enum DatabaseQuery
+{
+   DATABASE_QUERY_STATIC_MAP_OBJECT,
+   DATABASE_QUERY_NON_PLAYER_CHARACTER,
+   DATABASE_QUERY_NON_PLAYER_CHARACTER_PATH,
+   DATABASE_QUERY_CONTAINER,
+   DATABASE_QUERY_TILE,
+   DATABASE_QUERY_HARDPOINT,
+   DATABASE_QUERY_COUNT
+};
+
+enum StaticMapObjectColumn
+{
+   STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID,
+   STATIC_MAP_OBJECT_COLUMN_WC_X,
+   STATIC_MAP_OBJECT_COLUMN_WC_Y,
+   STATIC_MAP_OBJECT_COLUMN_HEIGHT,
+   STATIC_MAP_OBJECT_COLUMN_WIDTH,
+   STATIC_MAP_OBJECT_COLUMN_COUNT
+};
+
+enum NonPlayerCharacterColumn
+{
+   NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID,
+   NON_PLAYER_CHARACTER_COLUMN_WC_X,
+   NON_PLAYER_CHARACTER_COLUMN_WC_Y,
+   NON_PLAYER_CHARACTER_COLUMN_HEIGHT,
+   NON_PLAYER_CHARACTER_COLUMN_WIDTH,
+   NON_PLAYER_CHARACTER_COLUMN_SPEED,
+   NON_PLAYER_CHARACTER_COLUMN_BOUNDING_BOX_ID,
+   NON_PLAYER_CHARACTER_COLUMN_COUNT
+};
+
+enum NonPlayerCharacterPathColumn
+{
+   NON_PLAYER_CHARACTER_PATH_COLUMN_MAP_OBJECT_ID,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_HEIGHT,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_WIDTH,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_SPEED,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_BOUNDING_BOX_ID,
+   NON_PLAYER_CHARACTER_PATH_COLUMN_COUNT
+};
+
+enum ContainerColumn
+{
+   CONTAINER_COLUMN_MAP_OBJECT_ID,
+   CONTAINER_COLUMN_WC_X,
+   CONTAINER_COLUMN_WC_Y,
+   CONTAINER_COLUMN_HEIGHT,
+   CONTAINER_COLUMN_WIDTH,
+   CONTAINER_COLUMN_ITEM_0,
+   CONTAINER_COLUMN_ITEM_1,
+   CONTAINER_COLUMN_ITEM_2,
+   CONTAINER_COLUMN_ITEM_3,
+   CONTAINER_COLUMN_ITEM_4,
+   CONTAINER_COLUMN_ITEM_5,
+   CONTAINER_COLUMN_ITEM_6,
+   CONTAINER_COLUMN_ITEM_7,
+   CONTAINER_COLUMN_ITEM_8,
+   CONTAINER_COLUMN_ITEM_9,
+   CONTAINER_COLUMN_ITEM_10,
+   CONTAINER_COLUMN_ITEM_11,
+   CONTAINER_COLUMN_ITEM_12,
+   CONTAINER_COLUMN_ITEM_13,
+   CONTAINER_COLUMN_ITEM_14,
+   CONTAINER_COLUMN_COUNT
+};
+
