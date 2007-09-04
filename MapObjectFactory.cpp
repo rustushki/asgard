@@ -43,8 +43,10 @@ void MapObjectFactory::createTile(char **columnValue)
 
    if(tile != NULL)
    {
+      // Set tile Map Object variables
       tile->setWidth(atoi(columnValue[TILE_COLUMN_WIDTH]));
       tile->setHeight(atoi(columnValue[TILE_COLUMN_HEIGHT]));
+      
       // Get reference to GameEngine
       GameEngine *gameEngine = GameEngine::getInstance();
       
