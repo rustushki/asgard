@@ -38,3 +38,4 @@ class QueryGenerator
 };
 
 #endif // QUERY_GENERATOR_H
+

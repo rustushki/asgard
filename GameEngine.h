@@ -42,7 +42,6 @@ class GameEngine
       std::vector<MapObject*> objects;
       int visibleBoxes[VISIBLE_BOUNDING_BOXES];
       Coordinate currentPosition;
-      Database database;
 };
 
 #endif //GAME_ENGINE_H

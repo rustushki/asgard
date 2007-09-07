@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -100,14 +100,13 @@ enum TileColumn
 
 enum HardpointColumn
 {
-   HARDPOUNT_COLUMN_MAP_OBJECT_ID,
-   HARDPOUNT_COLUMN_RELATIVE_X,
-   HARDPOUNT_COLUMN_RELATIVE_Y,
-   HARDPOUNT_COLUMN_HARDPOINT_TYPE,
-   HARDPOUNT_COLUMN_WIDTH,
-   HARDPOUNT_COLUMN_HEIGHT,
-   HARDPOUNT_COLUMN_RADIUS,
-   HARDPOUNT_COLUMN_COUNT
+   HARDPOINT_COLUMN_MAP_OBJECT_ID,
+   HARDPOINT_COLUMN_RELATIVE_X,
+   HARDPOINT_COLUMN_RELATIVE_Y,
+   HARDPOINT_COLUMN_HARDPOINT_TYPE,
+   HARDPOINT_COLUMN_WIDTH,
+   HARDPOINT_COLUMN_HEIGHT,
+   HARDPOINT_COLUMN_RADIUS,
+   HARDPOINT_COLUMN_COUNT
 };
-
 

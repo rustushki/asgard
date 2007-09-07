@@ -34,3 +34,4 @@ class MapObjectFactory
 };
 
 #endif //MAP_OBJECT_FACTORY_H
+

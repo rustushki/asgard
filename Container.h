@@ -21,6 +21,7 @@
 #define CONTAINER_H
 
 #include <iterator>
+#include <cassert>
 #include "StaticMapObject.h"
 #include "Item.h"
 

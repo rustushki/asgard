@@ -21,6 +21,7 @@
 #define MAP_OBJECT_H
 
 #include <list>
+#include <cassert>
 #include "Coordinate.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10

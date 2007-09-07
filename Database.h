@@ -28,13 +28,17 @@
 class Database
 {
    private:
-      sqlite3 *asgardDb;
-      
-   public:
       Database();
       ~Database();
+      sqlite3 *asgardDb;
+      static Database* instance;
+      
+   public:
+      static Database* getInstance();
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
       bool loadBoundingBox(int boxId);
+      char*** loadHardpoints(int smoId);
+      char*** loadNonPlayerCharacterPath(int npcId);
       
 };
 

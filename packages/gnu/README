@@ -1,0 +1,30 @@
+Short Guide for Making GNU-style Package:
+09/03/2007
+Written by Russ Adams
+
+
+[only if necessary]
+ 1. Change trunk/packages/gnu/asgard/configure.ac     
+ 2. Change trunk/packages/gnu/asgard/Makefile.am      
+ 3. Change trunk/packages/gnu/asgard/src/Makefile.am
+ 4. Add any other necessary Makefile.am's
+ * at this point, be sure to add any new Makefile.am's or changes to
+   configure.ac to source control
+
+[required]
+ 5. cd trunk/packages/gnu
+ 6. make
+ 7. cd asgard
+ 8. aclocal
+ 9. autoheader
+10. autoconf
+11. automake --add-missing
+
+[test-compile]
+12. ./configure
+13. make
+
+[making a tar.gz]
+14. make dist
+
+The created package should appear in trunk/packages/gnu/asgard/asgard-version.tar.gz.
