@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -19,6 +19,8 @@
 
 #ifndef MAP_OBJECT_FACTORY_H
 #define MAP_OBJECT_FACTORY_H
+
+#include "Hardpoint.h"
  
 class MapObjectFactory
 {
@@ -27,6 +29,7 @@ class MapObjectFactory
       static void createContainer(char **columnValue);
       static void createNonPlayerCharacter(char **columnValue);
       static void createStaticMapObject(char **columnValue);
+      static Hardpoint* createHardpoint(char **columnValue);
       
    public:
       static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 

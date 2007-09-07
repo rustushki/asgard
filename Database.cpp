@@ -67,28 +67,26 @@ bool Database::loadBoundingBox(int boxId)
    return true;
 }
 
-char*** Database::loadHardpoints(int smoId)
+char*** Database::loadHardpoints(int smoId, int* rowCount)
 {
    char*** table = NULL;
-   int* numRows;
    int* numColumns;
    char** sqliteErrorCode;
 
-   sqlite3_get_table(this->asgardDb, QueryGenerator::hardpoint(smoId), table, numRows, numColumns, sqliteErrorCode);
+   sqlite3_get_table(this->asgardDb, QueryGenerator::hardpoint(smoId), table, rowCount, numColumns, sqliteErrorCode);
 
    assert(*numColumns == CONTAINER_COLUMN_COUNT);
 
    return table;
 }
 
-char*** Database::loadNonPlayerCharacterPath(int npcId)
+char*** Database::loadNonPlayerCharacterPath(int npcId, int* rowCount)
 {
    char*** table = NULL;
-   int* numRows;
    int* numColumns;
    char** sqliteErrorCode;
 
-   sqlite3_get_table(this->asgardDb, QueryGenerator::nonPlayerCharacterPath(npcId), table, numRows, numColumns, sqliteErrorCode);
+   sqlite3_get_table(this->asgardDb, QueryGenerator::nonPlayerCharacterPath(npcId), table, rowCount, numColumns, sqliteErrorCode);
    
    assert(*numColumns == HARDPOINT_COLUMN_COUNT);
 

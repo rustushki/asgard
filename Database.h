@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -37,8 +37,8 @@ class Database
       static Database* getInstance();
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
       bool loadBoundingBox(int boxId);
-      char*** loadHardpoints(int smoId);
-      char*** loadNonPlayerCharacterPath(int npcId);
+      char*** loadHardpoints(int smoId, int *rowCount);
+      char*** loadNonPlayerCharacterPath(int npcId, int *rowCount);
       
 };
 

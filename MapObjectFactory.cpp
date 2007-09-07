@@ -28,6 +28,9 @@
 #include "NonPlayerCharacter.h"
 #include "MapObjectType.h"
 #include "DatabaseColumnMap.h"
+#include "Hardpoint.h"
+#include "CircHardpoint.h"
+#include "RectHardpoint.h"
 #include "Database.h"
 
 int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
@@ -80,15 +83,18 @@ void MapObjectFactory::createContainer(char **columnValue)
 {
    Database* db = Database::getInstance();
    char*** table;
+   int* rowCount;
 
    // Objects to Create
    Container* container = new Container();
-   Hardpoint* hardpoint; 
 
-   //
-   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]));
+   // Create Hardpoints
+   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
+   for (int row = 0; row < *rowCount; row++)
+      container->addHardpoint(createHardpoint(table[row]));
 
-   
+   // TODO: Create Items
+
    // Get reference to GameEngine
    GameEngine *gameEngine = GameEngine::getInstance();
       
@@ -98,9 +104,16 @@ void MapObjectFactory::createContainer(char **columnValue)
 
 void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 {
+   Database* db = Database::getInstance();
+   char*** table;
+   int* rowCount;
+
    NonPlayerCharacter *npc = new NonPlayerCharacter();
    
-   // TODO: Add all columnValue data to NonPlayerCharacter object
+   // Create Hardpoints
+   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
+   for (int row = 0; row < *rowCount; row++)
+      npc->addHardpoint(createHardpoint(table[row]));
    
    // Get reference to GameEngine
    GameEngine *gameEngine = GameEngine::getInstance();
@@ -111,9 +124,17 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 
 void MapObjectFactory::createStaticMapObject(char **columnValue)
 {
+   Database* db = Database::getInstance();
+   char*** table;
+   int* rowCount;
+
    StaticMapObject *staticMapObject = new StaticMapObject();
+
+   // Create Hardpoints
+   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
+   for (int row = 0; row < *rowCount; row++)
+      staticMapObject->addHardpoint(createHardpoint(table[row]));
    
-   // TODO: Add all columnValue data to NonPlayerCharacter object
    
    // Get reference to GameEngine
    GameEngine *gameEngine = GameEngine::getInstance();
@@ -122,3 +143,35 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
    gameEngine->addMapObject((MapObject*)staticMapObject);
 
 }
+
+Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
+{
+      int x       = 0;
+      int y       = 0;
+      int height  = 0;
+      int width   = 0;
+      double r    = 0;
+      int type    = 0;
+
+      type = atoi(columnValue[HARDPOINT_COLUMN_HARDPOINT_TYPE]);
+      x = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_X]);
+      y = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_Y]);
+
+      if (type == HARDPOINT_TYPE_RECT)
+      {
+         height = atoi(columnValue[HARDPOINT_COLUMN_WIDTH]);
+         width = atoi(columnValue[HARDPOINT_COLUMN_HEIGHT]);
+         return new RectHardpoint(x,y,height,width);
+      }
+      else if (type == HARDPOINT_TYPE_CIRC)
+      {
+         r = atof(columnValue[HARDPOINT_COLUMN_RADIUS]);
+         return new RectHardpoint(x,y,height,width);
+      }
+      else
+      {
+         return new RectHardpoint();
+      }
+}
+
+
