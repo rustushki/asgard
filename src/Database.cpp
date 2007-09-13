@@ -52,7 +52,8 @@ Database* Database::getInstance()
 
 void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes)
 {
-
+   // Map as of 0.3.0 is 1 boundbox, 0.
+   visibleBoxes[0] =  0;
 }
 
 bool Database::loadBoundingBox(int boxId)

@@ -30,6 +30,7 @@ class MapObjectFactory
       static void createNonPlayerCharacter(char **columnValue);
       static void createStaticMapObject(char **columnValue);
       static Hardpoint* createHardpoint(char **columnValue);
+      static Coordinate* createNonPlayerCharacterPathPoint(char **columnValue);
       
    public:
       static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 

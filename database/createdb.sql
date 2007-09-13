@@ -25,7 +25,7 @@ create table NonPlayerCharacterPath
 
 create table BoundingBox
 (
-   BoundingBoxID integer(10) not null,
+   BoundingBoxId integer(10) primary key,
    WC_X integer(10) null,
    WC_Y integer(10) null,
    Height integer(10) null,
@@ -34,18 +34,17 @@ create table BoundingBox
 
 create table MapObject
 (
-   MapObjectID integer(10) not null,
+   MapObjectId integer primary key,
    WC_X integer(10) null,
    WC_Y integer(10) null,
    Height integer(10) null,
    Width integer(10) null,
-   BoundingBoxID integer(10) null,
-   primary key(MapObjectID)
+   BoundingBoxId integer(10) null
 );
 
 create table Container
 (
-   MapObjectID integer(10) null,
+   MapObjectId integer(10) null,
    item0 integer(10) null,
    item1 integer(10) null,
    item2 integer(10) null,
@@ -61,7 +60,7 @@ create table Container
    item12 integer(10) null,
    item13 integer(10) null,
    item14 integer(10) null,
-   foreign key(MapObjectID) references MapObject(MapObjectID)
+   foreign key(MapObjectId) references MapObject(MapObjectId)
 );
 
 create table Hardpoints
@@ -79,7 +78,7 @@ create table Hardpoints
 
 create table Tiles
 (
-   MapObjectID integer(10) not null,
+   MapObjectId integer(10) not null,
    TileType integer(10) null,
    foreign key (MapObjectId) references MapObject(MapObjectId)
 );

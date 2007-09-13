@@ -33,6 +33,7 @@
 #include "RectHardpoint.h"
 #include "Database.h"
 
+
 int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
 {
    MapObjectType *type = static_cast<MapObjectType*>(mapObjectType);
@@ -49,10 +50,17 @@ int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **co
    return true;
 }
 
+
 void MapObjectFactory::createTile(char **columnValue)
 {
    // Create new tile
    Tile *tile;
+      
+   // MapObject Req'd Members
+   int wc_x;
+   int wc_y;
+   int height;
+   int width;
    
    TileType tileType = (TileType)atoi(columnValue[TILE_COLUMN_TILE_TYPE]);
    
@@ -66,9 +74,15 @@ void MapObjectFactory::createTile(char **columnValue)
 
    if(tile != NULL)
    {
+      wc_x = atoi(columnValue[TILE_COLUMN_WC_X]);
+      wc_y = atoi(columnValue[TILE_COLUMN_WC_Y]);
+      width = atoi(columnValue[TILE_COLUMN_WIDTH]);
+      height = atoi(columnValue[TILE_COLUMN_HEIGHT]);
+
       // Set tile Map Object variables
-      tile->setWidth(atoi(columnValue[TILE_COLUMN_WIDTH]));
-      tile->setHeight(atoi(columnValue[TILE_COLUMN_HEIGHT]));
+      tile->setLeftCorner(Coordinate(wc_x, wc_y));
+      tile->setWidth(width);
+      tile->setHeight(height);
       
       // Get reference to GameEngine
       GameEngine *gameEngine = GameEngine::getInstance();
@@ -79,11 +93,18 @@ void MapObjectFactory::createTile(char **columnValue)
       
 }
 
+
 void MapObjectFactory::createContainer(char **columnValue)
 {
    Database* db = Database::getInstance();
    char*** table;
    int* rowCount;
+
+   // MapObject Req'd Members
+   int wc_x;
+   int wc_y;
+   int height;
+   int width;
 
    // Objects to Create
    Container* container = new Container();
@@ -93,14 +114,29 @@ void MapObjectFactory::createContainer(char **columnValue)
    for (int row = 0; row < *rowCount; row++)
       container->addHardpoint(createHardpoint(table[row]));
 
-   // TODO: Create Items
+   // TODO: Create Items; Not 0.3.0
+   
 
-   // Get reference to GameEngine
-   GameEngine *gameEngine = GameEngine::getInstance();
-      
-   // Add container to gameEngine
-   gameEngine->addMapObject((MapObject*)container);
+   if (container != NULL)
+   {
+      // Set MapObject Members 
+      wc_x = atoi(columnValue[CONTAINER_COLUMN_WC_X]);
+      wc_y = atoi(columnValue[CONTAINER_COLUMN_WC_Y]);
+      width = atoi(columnValue[CONTAINER_COLUMN_WIDTH]);
+      height = atoi(columnValue[CONTAINER_COLUMN_HEIGHT]);
+
+      container->setLeftCorner(Coordinate(wc_x, wc_y));
+      container->setWidth(width);
+      container->setHeight(height);
+
+      // Get reference to GameEngine
+      GameEngine *gameEngine = GameEngine::getInstance();
+         
+      // Add container to gameEngine
+      gameEngine->addMapObject((MapObject*)container);
+   }
 }
+
 
 void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 {
@@ -108,41 +144,83 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
    char*** table;
    int* rowCount;
 
+   // MapObject Req'd Members
+   int wc_x;
+   int wc_y;
+   int height;
+   int width;
+
    NonPlayerCharacter *npc = new NonPlayerCharacter();
    
-   // Create Hardpoints
-   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
-   for (int row = 0; row < *rowCount; row++)
-      npc->addHardpoint(createHardpoint(table[row]));
-   
-   // Get reference to GameEngine
-   GameEngine *gameEngine = GameEngine::getInstance();
+   if (npc != NULL)
+   {
+      // Create Hardpoints
+      table = db->loadHardpoints(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]),rowCount);
+      for (int row = 0; row < *rowCount; row++)
+         npc->addHardpoint(createHardpoint(table[row]));
+
+      // Create NonPlayerCharacterPath
+      table = db->loadNonPlayerCharacterPath(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]),rowCount);
+      for (int row = 0; row < *rowCount; row++)
+         npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(table[row]));
       
-   // Add container to gameEngine
-   gameEngine->addMapObject((MapObject*)npc);
+      wc_x = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_X]);
+      wc_y = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_Y]);
+      width = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WIDTH]);
+      height = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_HEIGHT]);
+
+      npc->setLeftCorner(Coordinate(wc_x, wc_y));
+      npc->setWidth(width);
+      npc->setHeight(height);
+
+      // Get reference to GameEngine
+      GameEngine *gameEngine = GameEngine::getInstance();
+         
+      // Add container to gameEngine
+      gameEngine->addMapObject((MapObject*)npc);
+   }
 }
+
 
 void MapObjectFactory::createStaticMapObject(char **columnValue)
 {
    Database* db = Database::getInstance();
    char*** table;
    int* rowCount;
+   
+   // MapObject Req'd Members
+   int wc_x;
+   int wc_y;
+   int height;
+   int width;
 
    StaticMapObject *staticMapObject = new StaticMapObject();
 
-   // Create Hardpoints
-   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
-   for (int row = 0; row < *rowCount; row++)
-      staticMapObject->addHardpoint(createHardpoint(table[row]));
-   
-   
-   // Get reference to GameEngine
-   GameEngine *gameEngine = GameEngine::getInstance();
+   if (staticMapObject != NULL)
+   {
+      // Create Hardpoints
+      table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
+      for (int row = 0; row < *rowCount; row++)
+         staticMapObject->addHardpoint(createHardpoint(table[row]));
       
-   // Add container to gameEngine
-   gameEngine->addMapObject((MapObject*)staticMapObject);
+      wc_x = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_X]);
+      wc_y = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_Y]);
+      width = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WIDTH]);
+      height = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_HEIGHT]);
+
+      staticMapObject->setLeftCorner(Coordinate(wc_x, wc_y));
+      staticMapObject->setWidth(width);
+      staticMapObject->setHeight(height);
+
+      // Get reference to GameEngine
+      GameEngine *gameEngine = GameEngine::getInstance();
+         
+      // Add container to gameEngine
+      gameEngine->addMapObject((MapObject*)staticMapObject);
+   }
 
 }
+
 
 Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
 {
@@ -153,21 +231,25 @@ Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
       double r    = 0;
       int type    = 0;
 
+      // Rect and Circ Hardpoints need these.
       type = atoi(columnValue[HARDPOINT_COLUMN_HARDPOINT_TYPE]);
       x = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_X]);
       y = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_Y]);
 
+      // Only RectHardpoints
       if (type == HARDPOINT_TYPE_RECT)
       {
          height = atoi(columnValue[HARDPOINT_COLUMN_WIDTH]);
          width = atoi(columnValue[HARDPOINT_COLUMN_HEIGHT]);
          return new RectHardpoint(x,y,height,width);
       }
+      // Only CircHardpoints
       else if (type == HARDPOINT_TYPE_CIRC)
       {
          r = atof(columnValue[HARDPOINT_COLUMN_RADIUS]);
          return new RectHardpoint(x,y,height,width);
       }
+      // Default
       else
       {
          return new RectHardpoint();
@@ -175,3 +257,13 @@ Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
 }
 
 
+Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(char **columnValue)
+{
+   int wc_x = 0;
+   int wc_y = 0;
+
+   wc_x = atoi(columnValue[NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X]);
+   wc_y = atoi(columnValue[NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y]);
+
+   return new Coordinate(wc_x, wc_y);
+}
