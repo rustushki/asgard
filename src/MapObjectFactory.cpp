@@ -33,11 +33,10 @@
 #include "RectHardpoint.h"
 #include "Database.h"
 
-
 int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
 {
    MapObjectType *type = static_cast<MapObjectType*>(mapObjectType);
-   
+
    switch(*type)
    {
       case MAP_OBJECT_TYPE_CONTAINER:              { MapObjectFactory::createContainer(columnValue); break; }
@@ -47,7 +46,8 @@ int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **co
       default:                                     { /* TODO: Error case... add logging */ break; }
    }
    
-   return true;
+   
+   return 0;
 }
 
 
@@ -97,8 +97,7 @@ void MapObjectFactory::createTile(char **columnValue)
 void MapObjectFactory::createContainer(char **columnValue)
 {
    Database* db = Database::getInstance();
-   char*** table;
-   int* rowCount;
+   RowSet* rs;
 
    // MapObject Req'd Members
    int wc_x;
@@ -110,9 +109,14 @@ void MapObjectFactory::createContainer(char **columnValue)
    Container* container = new Container();
 
    // Create Hardpoints
-   table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
-   for (int row = 0; row < *rowCount; row++)
-      container->addHardpoint(createHardpoint(table[row]));
+   rs = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]));
+
+   if (rs != NULL)
+   {
+      for (int row = 0; row < rs->getRowCount(); row++)
+         container->addHardpoint(createHardpoint(rs,row));
+   }
+
 
    // TODO: Create Items; Not 0.3.0
    
@@ -141,8 +145,7 @@ void MapObjectFactory::createContainer(char **columnValue)
 void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 {
    Database* db = Database::getInstance();
-   char*** table;
-   int* rowCount;
+   RowSet* rs;
 
    // MapObject Req'd Members
    int wc_x;
@@ -155,14 +158,22 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
    if (npc != NULL)
    {
       // Create Hardpoints
-      table = db->loadHardpoints(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]),rowCount);
-      for (int row = 0; row < *rowCount; row++)
-         npc->addHardpoint(createHardpoint(table[row]));
+      rs = db->loadHardpoints(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+
+      if (rs != NULL)
+      {
+         for (int row = 0; row < rs->getRowCount(); row++)
+            npc->addHardpoint(createHardpoint(rs,row));
+      }
 
       // Create NonPlayerCharacterPath
-      table = db->loadNonPlayerCharacterPath(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]),rowCount);
-      for (int row = 0; row < *rowCount; row++)
-         npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(table[row]));
+      rs = db->loadNonPlayerCharacterPath(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+
+      if (rs != NULL)
+      {
+         for (int row = 0; row < rs->getRowCount(); row++)
+            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
+      }
       
       wc_x = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_X]);
       wc_y = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_Y]);
@@ -185,8 +196,7 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 void MapObjectFactory::createStaticMapObject(char **columnValue)
 {
    Database* db = Database::getInstance();
-   char*** table;
-   int* rowCount;
+   RowSet* rs;
    
    // MapObject Req'd Members
    int wc_x;
@@ -199,10 +209,14 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
    if (staticMapObject != NULL)
    {
       // Create Hardpoints
-      table = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]),rowCount);
-      for (int row = 0; row < *rowCount; row++)
-         staticMapObject->addHardpoint(createHardpoint(table[row]));
-      
+      rs = db->loadHardpoints(atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID]));
+
+      if (rs != NULL)
+      {
+         for (int row = 0; row < rs->getRowCount(); row++)
+            staticMapObject->addHardpoint(createHardpoint(rs,row));
+      }
+
       wc_x = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_X]);
       wc_y = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_Y]);
       width = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WIDTH]);
@@ -222,7 +236,7 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
 }
 
 
-Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
+Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
 {
       int x       = 0;
       int y       = 0;
@@ -232,22 +246,22 @@ Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
       int type    = 0;
 
       // Rect and Circ Hardpoints need these.
-      type = atoi(columnValue[HARDPOINT_COLUMN_HARDPOINT_TYPE]);
-      x = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_X]);
-      y = atoi(columnValue[HARDPOINT_COLUMN_RELATIVE_Y]);
+      type = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HARDPOINT_TYPE));
+      x = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_X));
+      y = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_Y));
 
       // Only RectHardpoints
       if (type == HARDPOINT_TYPE_RECT)
       {
-         height = atoi(columnValue[HARDPOINT_COLUMN_WIDTH]);
-         width = atoi(columnValue[HARDPOINT_COLUMN_HEIGHT]);
+         height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
+         width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
          return new RectHardpoint(x,y,height,width);
       }
       // Only CircHardpoints
       else if (type == HARDPOINT_TYPE_CIRC)
       {
-         r = atof(columnValue[HARDPOINT_COLUMN_RADIUS]);
-         return new RectHardpoint(x,y,height,width);
+         r = atof(rs->getColumnValue(row,HARDPOINT_COLUMN_RADIUS));
+         return new CircHardpoint(x,y,type);
       }
       // Default
       else
@@ -257,13 +271,13 @@ Hardpoint* MapObjectFactory::createHardpoint(char **columnValue)
 }
 
 
-Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(char **columnValue)
+Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row)
 {
    int wc_x = 0;
    int wc_y = 0;
 
-   wc_x = atoi(columnValue[NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X]);
-   wc_y = atoi(columnValue[NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y]);
+   wc_x = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X));
+   wc_y = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y));
 
    return new Coordinate(wc_x, wc_y);
 }

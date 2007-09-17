@@ -16,32 +16,31 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
- 
-#ifndef DATABASE_H
-#define DATABASE_H
 
-#include <sqlite3.h>
-#include "Coordinate.h"
-#include "RowSet.h"
- 
-#define ASGARD_DATABASE "asgard.db3"
- 
-class Database
+#ifndef ROWSET_H
+#define ROWSET_H
+
+#include <string>
+#include <sqlite3.h> 
+
+
+class RowSet
 {
    private:
-      Database();
-      ~Database();
-      sqlite3 *asgardDb;
-      static Database* instance;
-      
+      char** table;
+      int rowCount;
+      int colCount;
+      std::string errorMsg;
+
    public:
-      static Database* getInstance();
-      void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
-      bool loadBoundingBox(int boxId);
-      RowSet* loadHardpoints(int smoId);
-      RowSet* loadNonPlayerCharacterPath(int npcId);
-      
+      RowSet();
+      ~RowSet();
+      int select(sqlite3 * db, const char* query);
+      const char* getColumnValue(int row, int column);
+      int getRowCount();
+      int getColCount();
+      std::string getError();
+
 };
 
-#endif //DATABASE_H
-
+#endif // ROWSET_H

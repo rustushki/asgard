@@ -25,7 +25,7 @@ create table NonPlayerCharacterPath
 
 create table BoundingBox
 (
-   BoundingBoxId integer(10) primary key,
+   BoundingBoxId integer primary key,
    WC_X integer(10) null,
    WC_Y integer(10) null,
    Height integer(10) null,

@@ -16,32 +16,79 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
- 
-#ifndef DATABASE_H
-#define DATABASE_H
 
-#include <sqlite3.h>
-#include "Coordinate.h"
 #include "RowSet.h"
- 
-#define ASGARD_DATABASE "asgard.db3"
- 
-class Database
+#include <sqlite3.h>
+
+RowSet::RowSet()
 {
-   private:
-      Database();
-      ~Database();
-      sqlite3 *asgardDb;
-      static Database* instance;
-      
-   public:
-      static Database* getInstance();
-      void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
-      bool loadBoundingBox(int boxId);
-      RowSet* loadHardpoints(int smoId);
-      RowSet* loadNonPlayerCharacterPath(int npcId);
-      
-};
+   table = NULL;
+   rowCount = 0;
+   colCount = 0;
+   errorMsg = "";
+}
 
-#endif //DATABASE_H
 
+int RowSet::select(sqlite3 * db, const char* query)
+{
+   char queryCpy[2048];
+   int rc;
+   //char* error;
+
+   strcpy(queryCpy,query);
+
+   rc = sqlite3_get_table(
+         db, 
+         queryCpy, 
+         &(this->table), 
+         &(this->rowCount), 
+         &(this->colCount), 
+         0);
+         //&error);
+
+   //this->errorMsg = error;
+
+   return rc;
+}
+
+
+const char* RowSet::getColumnValue(int row, int column)
+{
+   char* columnValue;
+
+   columnValue = table[(row + 1) * colCount + column];
+
+   return columnValue;
+
+}
+
+
+int RowSet::getRowCount()
+{
+   return this->rowCount;
+}
+
+
+int RowSet::getColCount()
+{
+   return this->colCount;
+
+}
+
+
+std::string RowSet::getError()
+{
+   std::string * error = new std::string(this->errorMsg);
+
+   return *error;
+
+}
+
+
+RowSet::~RowSet()
+{
+   if (table != NULL)
+   {
+      sqlite3_free(table);
+   }
+}

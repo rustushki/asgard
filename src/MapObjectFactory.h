@@ -21,6 +21,7 @@
 #define MAP_OBJECT_FACTORY_H
 
 #include "Hardpoint.h"
+#include "RowSet.h"
  
 class MapObjectFactory
 {
@@ -29,8 +30,8 @@ class MapObjectFactory
       static void createContainer(char **columnValue);
       static void createNonPlayerCharacter(char **columnValue);
       static void createStaticMapObject(char **columnValue);
-      static Hardpoint* createHardpoint(char **columnValue);
-      static Coordinate* createNonPlayerCharacterPathPoint(char **columnValue);
+      static Hardpoint* createHardpoint(RowSet* rs, int row);
+      static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
       
    public:
       static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 

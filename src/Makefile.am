@@ -13,6 +13,7 @@ MapObjectFactory.cpp    \
 NonPlayerCharacter.cpp  \
 QueryGenerator.cpp	   \
 RectHardpoint.cpp 	   \
+RowSet.cpp              \
 StaticMapObject.cpp 	   \
 WaterTile.cpp 		      \
 main.cpp
@@ -34,6 +35,7 @@ MapObjectType.h			\
 NonPlayerCharacter.h    \
 QueryGenerator.h        \
 RectHardpoint.h         \
+RowSet.h                \
 StaticMapObject.h       \
 Tile.h                  \
 TileType.h              \

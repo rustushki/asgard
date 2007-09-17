@@ -10,11 +10,11 @@ using std::ifstream;
 using std::stringstream;
 using std::endl;
 
-
-/*static int callback(void *NotUsed, int argc, char ** argv, char **azColName)
+int callback(void *NotUsed, int argc, char ** argv, char **azColName)
 {
+   cout << "foo";
    return 0;
-}*/
+}
 
 int main(int argc, char **argv)
 {
@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
    if (argc >= 1 && argc < 3)
    {
-      cout << "usage: querydb <database> <sqlite_script>\n";
+      cout << "usage: runquery <database> <sqlite_script>\n";
       return 0;
    }
 
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
    sqlite_script.close();
 
    rc = sqlite3_open(argv[1], &db);
-   rc = sqlite3_exec(db, query.c_str(), 0, 0, &zErrMsg);
+   rc = sqlite3_exec(db, query.c_str(), callback, 0, &zErrMsg);
 
    if (rc > 0)
    {

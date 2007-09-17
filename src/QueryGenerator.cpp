@@ -25,6 +25,7 @@ char* QueryGenerator::staticMapObject(int boundingBoxId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "mo.MapObjectId, ";
@@ -32,19 +33,31 @@ char* QueryGenerator::staticMapObject(int boundingBoxId)
    queryStream << "mo.WC_Y, ";
    queryStream << "mo.Height, ";
    queryStream << "mo.Width ";
-   queryStream << "from MapObject mo ";
-   queryStream << "inner join BoundingBox bb on bb.BoundingBoxId = mo.BoundingBoxId ";
-   queryStream << "where mo.BoundingBoxId = " << boundingBoxId << "; ";
+   queryStream << "from BoundingBox bb ";
+   queryStream << "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   queryStream << "where mo.BoundingBoxId = " << boundingBoxId << " ";
+
+   // TODO:
+   // This is not ideal.
+   // Instantiation of StaticMapObjects will need to be addressed.
+   queryStream << "  and mo.MapObjectId not in ";
+   queryStream << "     (select MapObjectId from Container) ";
+   queryStream << "  and mo.MapObjectId not in ";
+   queryStream << "     (select MapObjectId from NonPlayerCharacter) ";
+   queryStream << "  and mo.MapObjectId not in ";
+   queryStream << "     (select MapObjectId from Tiles);";
+
    
    query = queryStream.str();
-   
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
 
 char* QueryGenerator::nonPlayerCharacter(int boundingBoxId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "mo.MapObjectId, ";
@@ -54,19 +67,22 @@ char* QueryGenerator::nonPlayerCharacter(int boundingBoxId)
    queryStream << "mo.Width, ";
    queryStream << "npc.Speed, ";
    queryStream << "mo.BoundingBoxId ";
-   queryStream << "from NonPlayerCharacter npc, MapObject mo ";
-   queryStream << "inner join BoundingBox bb on bb.BoundingBoxId = mo.BoundingBoxId ";
+   queryStream << "from BoundingBox bb ";
+   queryStream << "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   queryStream << "inner join NonPlayerCharacter npc on npc.MapObjectId = mo.MapObjectId ";
    queryStream << "where mo.BoundingBoxId = " << boundingBoxId << ";";
    
    query = queryStream.str();
    
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
 
 char* QueryGenerator::nonPlayerCharacterPath(int mapObjectId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "npcp.MapObjectId, ";
@@ -78,13 +94,15 @@ char* QueryGenerator::nonPlayerCharacterPath(int mapObjectId)
 
    query = queryStream.str();
    
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
       
 char* QueryGenerator::container(int boundingBoxId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "mo.MapObjectId, ";
@@ -107,20 +125,22 @@ char* QueryGenerator::container(int boundingBoxId)
    queryStream << "c.item12, ";
    queryStream << "c.item13, ";
    queryStream << "c.item14 ";
-   queryStream << "from Container c, BoundingBox bb ";
-   queryStream << "inner join MapObject mo on mo.MapObjectId = c.MapObjectId ";
-   queryStream << "on mo.BoundingBoxId = bb.BoundingBoxId ";
+   queryStream << "from BoundingBox bb ";
+   queryStream << "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   queryStream << "inner join Container c on c.MapObjectId = mo.MapObjectId ";
    queryStream << "where bb.BoundingBoxId = " << boundingBoxId << ";";
    
    query = queryStream.str();
    
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
 
 char* QueryGenerator::tile(int boundingBoxId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "mo.MapObjectId, ";
@@ -129,19 +149,22 @@ char* QueryGenerator::tile(int boundingBoxId)
    queryStream << "mo.Height, ";
    queryStream << "mo.Width, ";
    queryStream << "t.tileType ";
-   queryStream << "from MapObject mo, BoundingBox bb ";
+   queryStream << "from BoundingBox bb ";
+   queryStream << "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
    queryStream << "inner join Tiles t on mo.MapObjectId = t.MapObjectId ";
    queryStream << "where bb.BoundingBoxId = " << boundingBoxId << ";";
    
    query = queryStream.str();
    
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
       
 char* QueryGenerator::hardpoint(int mapObjectId)
 {
    std::stringstream queryStream;
    std::string       query;
+   char* cStr = new char[2048];
    
    queryStream << "select ";
    queryStream << "mo.MapObjectId, ";
@@ -151,11 +174,13 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    queryStream << "h.Width, ";
    queryStream << "h.Height, ";
    queryStream << "h.Radius ";
-   queryStream << "from MapObject mo, Hardpoints h ";
+   queryStream << "from MapObject mo ";
+   queryStream << "inner join Hardpoints h on h.MapObjectId = mo.MapObjectId ";
    queryStream << "where mo.MapObjectId = " << mapObjectId << ";";
    
    query = queryStream.str();
    
-   return const_cast<char*>(query.c_str());
+   strcpy(cStr,query.c_str());
+   return cStr;
 }
 

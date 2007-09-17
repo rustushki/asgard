@@ -18,11 +18,16 @@
  ****************************************************************************/
 
 #include "GameEngine.h"
+#include <iostream>
 
 int main()
 {
+   std::cout << "Creating Asgard Instance." << std::endl;
    GameEngine* asgard = GameEngine::getInstance();
+   
+   std::cout << "Loading Bounding Boxes." << std::endl;
    asgard->loadVisibleBoxes();
 
+   std::cout << "Done." << std::endl;
    return 0;
 }
