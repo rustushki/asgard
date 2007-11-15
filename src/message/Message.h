@@ -25,7 +25,6 @@
 struct Message
 {
    MessageHeader header;
-   MessageType type(){return header.type;}
    union
    {
       LoadBoundingBox box;
