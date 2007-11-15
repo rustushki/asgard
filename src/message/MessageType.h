@@ -17,13 +17,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef MESSAGE_TYPE_H
-#define MESSAGE_TYPE_H
+#ifndef MESSAGETYPE_H
+#define MESSAGETYPE_H
 
 enum MessageType
 {
-   MESSAGE_TYPE_0,
-   MESSAGE_TYPE_COUNT
+   MESSAGETYPE_LOADBOUNDINGBOX,
+   MESSAGETYPE_COUNT
 };
 
-#endif //MESSAGE_TYPE_H
+#endif //MESSAGETYPE_H

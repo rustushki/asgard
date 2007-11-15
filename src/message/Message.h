@@ -21,6 +21,7 @@
 #define MESSAGE_H
 
 #include "MessageHeader.h"
+#include "LoadBoundingBox.h"
 
 struct Message
 {
@@ -28,6 +29,6 @@ struct Message
    union
    {
       LoadBoundingBox box;
-   };
+   } data;
 };
 #endif //MESSAGE_H

@@ -1,0 +1,8 @@
+objects = [
+   'Console.cpp',
+   'ConsoleDriver.cpp',
+   'MessageFactory.cpp',
+   'Parser.cpp'
+]
+
+Program('console',objects, LIBS=['boost_thread-mt'])
