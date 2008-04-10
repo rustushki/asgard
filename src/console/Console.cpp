@@ -20,6 +20,7 @@
 #include <string>
 #include "Console.h"
 #include "Parser.h"
+#include <boost/bind.hpp>
 
 using std::getline;
 using std::cin;
@@ -36,14 +37,36 @@ Console::~Console()
    Parser::deleteInstance();
 }
 
-int Console::listen()
+bool Console::open()
+{
+   bool status = true;
+   
+   this->consoleThread.open(boost::bind(&Console::listen, this));
+   
+   status = SystemComponent::open();
+   
+   return status;
+}
+
+bool Console::close()
+{
+   bool status = true;
+   
+   if(!this->consoleThread.isClosed())
+   {
+      this->consoleThread.close();
+   }
+   
+   status = SystemComponent::close();
+   
+   return status;
+}
+
+void Console::listen()
 {
    this->prompt();
 
-   while (this->readline())
-      this->prompt();
-
-   return 0;
+   this->readline();
 }
 
 bool Console::readline()

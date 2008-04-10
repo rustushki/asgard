@@ -16,8 +16,8 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef ASGARDGRAMMAR_H
-#define ASGARDGRAMMAR_H
+#ifndef ASGARD_GRAMMAR_H
+#define ASGARD_GRAMMAR_H
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/spirit.hpp>
@@ -72,4 +72,4 @@ struct AsgardGrammar : public grammar<AsgardGrammar>
    };
 };
 
-#endif // ASGARDGRAMMAR_H
+#endif // ASGARD_GRAMMAR_H

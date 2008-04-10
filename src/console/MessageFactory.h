@@ -16,8 +16,8 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef MESSAGEFACTORY_H
-#define MESSAGEFACTORY_H
+#ifndef MESSAGE_FACTORY_H
+#define MESSAGE_FACTORY_H
 
 class MessageFactory
 {
@@ -25,4 +25,4 @@ class MessageFactory
       static void makeLoadBoundingBox(int bbId);
 };
 
-#endif // MESSAGEFACTORY_H
+#endif // MESSAGE_FACTORY_H

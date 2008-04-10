@@ -19,22 +19,27 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+#include "AsgardThread.h"
 #include "Parser.h"
+#include "SystemComponent.h"
 
-class Console
+class Console : public SystemComponent
 {
    public:
       Console();
       ~Console();
-      int listen();
-
+      
+      virtual bool open();
+      virtual bool close();
+     
    private:
       Parser* parser;
 
+      void listen();
       bool readline();
       void prompt();
-
-
+      
+      AsgardThread consoleThread;
 };
 
 #endif // CONSOLE_H

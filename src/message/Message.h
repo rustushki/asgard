@@ -31,4 +31,5 @@ struct Message
       LoadBoundingBox box;
    } data;
 };
+
 #endif //MESSAGE_H
