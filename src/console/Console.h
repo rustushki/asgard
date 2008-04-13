@@ -31,6 +31,8 @@ class Console : public SystemComponent
       
       virtual bool open();
       virtual bool close();
+
+      virtual void handleMessage();
      
    private:
       Parser* parser;
@@ -38,8 +40,6 @@ class Console : public SystemComponent
       void listen();
       bool readline();
       void prompt();
-      
-      AsgardThread consoleThread;
 };
 
 #endif // CONSOLE_H

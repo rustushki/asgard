@@ -41,7 +41,7 @@ bool Console::open()
 {
    bool status = true;
    
-   this->consoleThread.open(boost::bind(&Console::listen, this));
+   this->thread.open(boost::bind(&Console::listen, this));
    
    status = SystemComponent::open();
    
@@ -52,9 +52,9 @@ bool Console::close()
 {
    bool status = true;
    
-   if(!this->consoleThread.isClosed())
+   if(!this->thread.isClosed())
    {
-      this->consoleThread.close();
+      this->thread.close();
    }
    
    status = SystemComponent::close();
@@ -77,8 +77,11 @@ bool Console::readline()
    string line;
    getline(cin, line);
 
+   // Handle Ctrl+D
+   // TODO
+   // More general way of exitting.
    if (cin.eof())
-      return false;
+      exit(1);
    else
       return this->parser->parseCommand(line);
 }
@@ -86,4 +89,10 @@ bool Console::readline()
 void Console::prompt()
 {
    cout << "> ";
+}
+
+void Console::handleMessage()
+{
+   // throw away message
+   delete this->mailbox.getMessage();
 }

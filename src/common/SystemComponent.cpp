@@ -1,3 +1,4 @@
+#include <boost/bind.hpp>
 #include "SystemComponent.h"
 
 SystemComponent::SystemComponent()
@@ -12,7 +13,9 @@ SystemComponent::~SystemComponent()
 bool SystemComponent::open()
 {
    this->state = SYSTEM_COMPONENT_STATE_OPEN;
-   
+
+   this->mailbox.connect(boost::bind(&SystemComponent::handleMessage, this));
+
    return true;
 }
 
