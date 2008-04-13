@@ -32,6 +32,7 @@
 #include "CircHardpoint.h"
 #include "RectHardpoint.h"
 #include "Database.h"
+#include <cstdlib>
 
 int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
 {

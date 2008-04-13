@@ -19,6 +19,7 @@
 
 #include "RowSet.h"
 #include <sqlite3.h>
+#include <cstring>
 
 RowSet::RowSet()
 {

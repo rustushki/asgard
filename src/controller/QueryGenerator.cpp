@@ -20,6 +20,7 @@
 #include "QueryGenerator.h"
 #include <iostream>
 #include <sstream>
+#include <cstring>
 
 char* QueryGenerator::staticMapObject(int boundingBoxId)
 {
