@@ -21,11 +21,12 @@
 
 #define BOOST_SPIRIT_THREADSAFE
 #include <boost/spirit.hpp>
+#include "Message.h"
 #include "MessageFactory.h"
 
 using boost::spirit::grammar;
 using boost::spirit::str_p;
-using boost::spirit::uint_p;
+using boost::spirit::int_p;
 using boost::spirit::rule;
 
 struct AsgardGrammar : public grammar<AsgardGrammar>
@@ -56,8 +57,9 @@ struct AsgardGrammar : public grammar<AsgardGrammar>
                                 >> boundingbox_parms
                                    ;
 
-         boundingbox_parms    =    uint_p[&MessageFactory::makeLoadBoundingBox]
+         boundingbox_parms    =    int_p[&MessageFactory::makeLoadBoundingBox]
                                    ;
+
       }
 
       rule<ScannerT> command;
@@ -68,7 +70,9 @@ struct AsgardGrammar : public grammar<AsgardGrammar>
 
       rule <ScannerT> const&
       start() const {return command;};
-      
+
+      Message* generatedMsg;
+
    };
 };
 

@@ -40,4 +40,4 @@ objects = [
 # Main Target: Build the Full Executable
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
-env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3'])
+env.Program('asgard', objects, LIBS=['boost_thread-gcc43-mt-1_36','boost_signals-gcc43-mt-1_36','sqlite3'])

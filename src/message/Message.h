@@ -22,6 +22,7 @@
 
 #include "MessageHeader.h"
 #include "LoadBoundingBox.h"
+#include "PrintString.h"
 
 struct Message
 {
@@ -29,6 +30,7 @@ struct Message
    union
    {
       LoadBoundingBox box;
+      PrintString printString;
    } data;
 };
 

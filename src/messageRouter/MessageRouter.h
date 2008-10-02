@@ -42,7 +42,7 @@ private:
    
    RouterSignal routeMessage;
    
-   AsgardThread routerThread;
+   AsgardThread* routerThread;
    
    Mailbox mailbox;
 };

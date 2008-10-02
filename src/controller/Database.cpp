@@ -17,7 +17,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
+#include <iostream>
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
 #include <cassert>
+#include <string>
 #include "Database.h"
 #include "MapObjectFactory.h"
 #include "MapObjectType.h"
@@ -25,18 +29,22 @@
 #include "DatabaseColumnMap.h"
 #include "GameEngine.h"
 #include "RowSet.h"
+#include "MessageFactory.h"
 
 Database* Database::instance = NULL;
 
-Database::Database()
+Database::Database() : SystemComponent()
 {
    int status = sqlite3_open(ASGARD_DATABASE, &this->asgardDb);
    
+   this->thread->name = new char[255];
+   this->thread->name = "database";
+
    if(status != SQLITE_OK)
    {
       sqlite3_close(this->asgardDb);
    }
-   
+
    // TODO: Add some type of logging for status
 }
 
@@ -131,4 +139,44 @@ RowSet* Database::loadNonPlayerCharacterPath(int npcId)
 
    return rs;
    
+}
+
+bool Database::interpretMessage(Message* msg)
+{
+   bool messageHandled = false;
+   if (msg->header.type == MESSAGE_TYPE_LOAD_BOUNDING_BOX)
+   {
+      std::string printOutput;
+
+      if (this->loadBoundingBox(msg->data.box.boundingBoxId))
+         printOutput = "bounding box loaded";
+      else
+         printOutput = "failed";
+
+      MessageFactory::makePrintString(printOutput.c_str());
+      messageHandled = true;
+   }
+   return messageHandled;
+}
+
+void Database::loop()
+{
+   while(1)
+      this->listen();
+}
+
+bool Database::open()
+{
+   bool status = true;
+   
+   status = SystemComponent::open();
+   
+   this->thread->open(boost::bind(&Database::loop, this));
+   
+   return status;
+}
+
+bool Database::close()
+{
+
 }

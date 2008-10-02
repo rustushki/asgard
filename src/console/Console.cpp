@@ -26,10 +26,13 @@ using std::getline;
 using std::cin;
 using std::cout;
 using std::string;
+using std::endl;
 
 Console::Console()
 {
    this->parser = Parser::getInstance();
+   this->thread->name = new char[255];
+   this->thread->name = "console";
 }
 
 Console::~Console()
@@ -41,7 +44,7 @@ bool Console::open()
 {
    bool status = true;
    
-   this->thread.open(boost::bind(&Console::listen, this));
+   this->thread->open(boost::bind(&Console::inputLoop, this));
    
    status = SystemComponent::open();
    
@@ -52,9 +55,9 @@ bool Console::close()
 {
    bool status = true;
    
-   if(!this->thread.isClosed())
+   if(!this->thread->isClosed())
    {
-      this->thread.close();
+      this->thread->close();
    }
    
    status = SystemComponent::close();
@@ -62,11 +65,13 @@ bool Console::close()
    return status;
 }
 
-void Console::listen()
+void Console::inputLoop()
 {
    this->prompt();
 
    this->readline();
+
+   this->listen();
 }
 
 bool Console::readline()
@@ -91,8 +96,13 @@ void Console::prompt()
    cout << "> ";
 }
 
-void Console::handleMessage()
+bool Console::interpretMessage(Message* msg)
 {
-   // throw away message
-   delete this->mailbox.getMessage();
+   bool messageHandled = false;
+   if (msg->header.type == MESSAGE_TYPE_PRINT_STRING)
+   {
+      std::cout << msg->data.printString.output << std::endl;
+      messageHandled = true;
+   }
+   return messageHandled;
 }

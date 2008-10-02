@@ -1,10 +1,10 @@
 #include "Mailbox.h"
+#include <iostream>
 #include <boost/thread/mutex.hpp>
 #include <boost/signal.hpp>
 
 Mailbox::Mailbox()
 {
-   
 }
    
 Mailbox::~Mailbox()
@@ -64,6 +64,14 @@ Message* Mailbox::getMessage()
          this->messageQueue.pop_front();
       }
    }
-  
+
    return msgToReturn;
+}
+
+int Mailbox::getNumMessages()
+{
+   // Entering a critical section
+   boost::mutex::scoped_lock scopedLock(this->queueMutex);
+
+   return this->messageQueue.size();
 }

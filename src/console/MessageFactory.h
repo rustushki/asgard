@@ -19,10 +19,13 @@
 #ifndef MESSAGE_FACTORY_H
 #define MESSAGE_FACTORY_H
 
+#include "Message.h"
+
 class MessageFactory
 {
    public:
       static void makeLoadBoundingBox(int bbId);
+      static void makePrintString(const char* output);
 };
 
 #endif // MESSAGE_FACTORY_H

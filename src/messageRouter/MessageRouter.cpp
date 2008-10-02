@@ -1,5 +1,6 @@
 #include "MessageRouter.h"
 #include <boost/bind.hpp>
+#include <iostream>
 
 MessageRouter* MessageRouter::messageRouter = NULL;
 
@@ -21,12 +22,15 @@ void MessageRouter::deleteInstance()
 void MessageRouter::newMessageReceived()
 {
    // Unlock the runRouterThread because new mail is here
+   this->routerThread->wake();
 }
 
 MessageRouter::MessageRouter()
 {
+   this->routerThread = new AsgardThread(&this->mailbox);
+
    // Open the MessageRouter thread
-   this->routerThread.open(boost::bind(&MessageRouter::runRouterThread, this));
+   this->routerThread->open(boost::bind(&MessageRouter::runRouterThread, this));
    
    // Connect to the message router mailbox
    this->mailbox.connect(boost::bind(&MessageRouter::newMessageReceived, this));
@@ -35,10 +39,12 @@ MessageRouter::MessageRouter()
 MessageRouter::~MessageRouter()
 {
    // If the thread isn't closed we need to close it
-   if(!this->routerThread.isClosed())
+   if(!this->routerThread->isClosed())
    {
-      this->routerThread.close();
+      this->routerThread->close();
    }
+
+   delete this->routerThread;
 }
 
 void MessageRouter::connect(const RouterSignal::slot_type& slot)
@@ -55,13 +61,14 @@ void MessageRouter::sendMessage(Message* message)
 
 void MessageRouter::runRouterThread()
 {
-   // TODO: Write this method
-   
-   // Lock until new mail is received
-   
-   // new mail has been received, call get mail
-   Message* mail = this->mailbox.getMessage();
-   
-   // And route to attached mailboxes
-   this->routeMessage(mail);
+   while(1)
+   {
+      // Lock until new mail is received
+      this->routerThread->sleep();
+      // new mail has been received, call get mail
+      Message* mail = this->mailbox.getMessage();
+      
+      // And route to attached mailboxes
+      this->routeMessage(mail);
+   }
 }

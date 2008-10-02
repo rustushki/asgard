@@ -3,17 +3,16 @@
 
 #include <iostream>
 
-AsgardThread::AsgardThread()
+AsgardThread::AsgardThread(Mailbox* mb)
 {
    this->state = ASGARD_THREAD_STATE_CLOSED;
+   this->mb = mb;
 }
 
 AsgardThread::~AsgardThread()
 {
    if(!this->isClosed())
-   {
       this->close();
-   }
 }
 
 void AsgardThread::open(ThreadDelegate delegate)
@@ -27,9 +26,21 @@ void AsgardThread::open(ThreadDelegate delegate)
 void AsgardThread::close()
 {
    this->state = ASGARD_THREAD_STATE_CLOSE;
-   this->thread->join(); // what for thread to close
+   this->thread->join(); // wait for thread to close
    delete this->thread;
    this->state = ASGARD_THREAD_STATE_CLOSED;
+}
+
+bool AsgardThread::wake()
+{
+   if (this->isSleeping())
+   {
+      this->state = ASGARD_THREAD_STATE_OPEN;
+      this->untilMessagesArrive.notify_all();
+      return true;
+   }
+
+   return false;
 }
 
 bool AsgardThread::isClosing()
@@ -42,11 +53,25 @@ bool AsgardThread::isClosed()
    return (this->state == ASGARD_THREAD_STATE_CLOSED);
 }
 
+bool AsgardThread::isSleeping()
+{
+   return (this->state == ASGARD_THREAD_STATE_SLEEPING);
+}
+
+void AsgardThread::sleep()
+{
+   boost::unique_lock<boost::mutex> lock(this->mut);
+   this->state = ASGARD_THREAD_STATE_SLEEPING;
+   if (this->mb->getNumMessages() == 0)
+      this->untilMessagesArrive.wait(lock);
+}
+
 void AsgardThread::runThread()
 {
    while(!this->isClosing())
    {
-      if(this->state == ASGARD_THREAD_STATE_OPEN) this->state = ASGARD_THREAD_STATE_ACTIVE;
+      if(this->state == ASGARD_THREAD_STATE_OPEN)
+         this->state = ASGARD_THREAD_STATE_ACTIVE;
       
       // Call some method to execute custom thread code.
       this->customRunThread();

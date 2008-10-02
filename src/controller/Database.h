@@ -21,12 +21,13 @@
 #define DATABASE_H
 
 #include <sqlite3.h>
+#include "SystemComponent.h"
 #include "Coordinate.h"
 #include "RowSet.h"
  
 #define ASGARD_DATABASE "asgard.db3"
  
-class Database
+class Database : public SystemComponent
 {
    private:
       Database();
@@ -34,6 +35,9 @@ class Database
       sqlite3 *asgardDb;
       static Database* instance;
       
+      void loop();
+      virtual bool interpretMessage(Message* message);
+
    public:
       static Database* getInstance();
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
@@ -41,6 +45,8 @@ class Database
       RowSet* loadHardpoints(int smoId);
       RowSet* loadNonPlayerCharacterPath(int npcId);
       
+      virtual bool open();
+      virtual bool close();
 };
 
 #endif //DATABASE_H
