@@ -1,0 +1,41 @@
+Quick Start Instructions:
+
+We thank you for taking interest in Asgard!  As this project is still in its
+infancy, this release is intended for testing and observation.  We encourage
+you to attempt to compile and run it.  Let us know how things go.
+
+1. Get scons
+Compiling is a little shakey right now.  The compilation method included with
+this source is scons.  You're welcome to use it if you like.  scons can be
+acquired at http://www.scons.org.
+
+2. Install boost 1.36
+Our new threading system requires some of the features in boost 1.36, so you
+will need to install it as well.  Sources can be obtained from
+http://www.boost.org
+
+3. Be sure you have SDL and sqlite3 as well.
+http://www.sqlite.org
+http://www.libsdl.org
+
+4. Create the application database.
+You can do this by:
+% cd $PKG/database/
+% make
+% make create
+% make install
+
+5. Now compile the project..
+% cd $PKG/src/
+% scons
+
+6. To Run:
+./asgard
+
+7. The only command it accepts right now is
+
+      load boundingbox $x
+
+where $x is an integer.  There are a few bounding boxes in the test
+environment.  We recommend 1, 2, or 3.
+
