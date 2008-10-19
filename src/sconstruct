@@ -1,13 +1,16 @@
 # Search these directories for libraries to include.
 # '#' indicates the directory that scons is executed in.
-include_path =       \
-    '#/common:'      \
-   +'#/console:'     \
-   +'#/controller:'  \
-   +'#/gui:'         \
-   +'#/main:'        \
-   +'#/message:'     \
-   +'#/messageRouter'
+# TODO: pkg-config for boost?
+include_path =                     \
+    '#/common:'                    \
+   +'#/console:'                   \
+   +'#/controller:'                \
+   +'#/gui:'                       \
+   +'#/main:'                      \
+   +'#/message:'                   \
+   +'#/messageRouter:'             \
+   +'/usr/local/include/boost-1_36'
+ #  +'/usr/include/boost-1_36'      \
 
 # List of Objects to Compile
 objects = [

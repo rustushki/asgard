@@ -1,4 +1,5 @@
 Quick Start Instructions:
+===============================================================================
 
 We thank you for taking interest in Asgard!  As this project is still in its
 infancy, this release is intended for testing and observation.  We encourage
@@ -14,9 +15,16 @@ Our new threading system requires some of the features in boost 1.36, so you
 will need to install it as well.  Sources can be obtained from
 http://www.boost.org
 
+On a *nix system, you can compile boost by:
+% tar xvf ./boost_1_36_0.tar.bz2
+% cd ./boost-1_36_0/
+% ./configure --prefix=/usr/local  # our system looks in /usr/local for boost.
+% make
+% sudo make install
+
 3. Be sure you have SDL and sqlite3 as well.
-http://www.sqlite.org
 http://www.libsdl.org
+http://www.sqlite.org
 
 4. Create the application database.
 You can do this by:
@@ -30,12 +38,21 @@ You can do this by:
 % scons
 
 6. To Run:
-./asgard
+% ./asgard
 
 7. The only command it accepts right now is
 
       load boundingbox $x
 
 where $x is an integer.  There are a few bounding boxes in the test
-environment.  We recommend 1, 2, or 3.
+environment.  Currently there is only one boundingbox in our test environment
+and that's 1. (i.e $x=1)
 
+
+
+New to Asgard?:
+===============================================================================
+
+Check out our website and wiki:
+http://asgardrpg.org/
+http://wiki.asgardrpg.org/
