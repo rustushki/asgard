@@ -1,6 +1,7 @@
 #ifndef SYSTEM_COMPONENT_H
 #define SYSTEM_COMPONENT_H
 
+#include <string>
 #include "SystemComponentState.h"
 #include "AsgardThread.h"
 #include "Mailbox.h"
@@ -8,7 +9,7 @@
 class SystemComponent
 {
 public:
-   SystemComponent();
+   SystemComponent(std::string threadName);
    
    virtual ~SystemComponent();
    

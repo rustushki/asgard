@@ -33,13 +33,10 @@
 
 Database* Database::instance = NULL;
 
-Database::Database() : SystemComponent()
+Database::Database() : SystemComponent("database")
 {
    int status = sqlite3_open(ASGARD_DATABASE, &this->asgardDb);
    
-   this->thread->name = new char[255];
-   this->thread->name = "database";
-
    if(status != SQLITE_OK)
    {
       sqlite3_close(this->asgardDb);

@@ -27,7 +27,7 @@ void MessageRouter::newMessageReceived()
 
 MessageRouter::MessageRouter()
 {
-   this->routerThread = new AsgardThread(&this->mailbox);
+   this->routerThread = new AsgardThread("message_router", &this->mailbox);
 
    // Open the MessageRouter thread
    this->routerThread->open(boost::bind(&MessageRouter::runRouterThread, this));

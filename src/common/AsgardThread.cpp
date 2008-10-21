@@ -3,10 +3,11 @@
 
 #include <iostream>
 
-AsgardThread::AsgardThread(Mailbox* mb)
+AsgardThread::AsgardThread(std::string name, Mailbox* mb)
 {
    this->state = ASGARD_THREAD_STATE_CLOSED;
    this->mb = mb;
+   this->name = name;
 }
 
 AsgardThread::~AsgardThread()
@@ -76,4 +77,9 @@ void AsgardThread::runThread()
       // Call some method to execute custom thread code.
       this->customRunThread();
    }
+}
+
+std::string AsgardThread::getName()
+{
+   return this->name;
 }

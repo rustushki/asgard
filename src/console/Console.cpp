@@ -28,11 +28,9 @@ using std::cout;
 using std::string;
 using std::endl;
 
-Console::Console()
+Console::Console() : SystemComponent("console")
 {
    this->parser = Parser::getInstance();
-   this->thread->name = new char[255];
-   this->thread->name = "console";
 }
 
 Console::~Console()

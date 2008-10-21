@@ -1,13 +1,14 @@
+#include <string>
 #include <boost/bind.hpp>
 #include <iostream>
 #include "MessageRouter.h"
 #include "SystemComponent.h"
 
-SystemComponent::SystemComponent()
+SystemComponent::SystemComponent(std::string threadName)
 {
    this->state = SYSTEM_COMPONENT_STATE_CREATED;
    this->connectMessageRouter();
-   this->thread = new AsgardThread(&this->mailbox);
+   this->thread = new AsgardThread(threadName, &this->mailbox);
 }
 
 SystemComponent::~SystemComponent()
