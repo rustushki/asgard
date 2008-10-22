@@ -67,9 +67,9 @@ void Console::inputLoop()
 {
    this->prompt();
 
-   this->readline();
-
-   this->listen();
+   // Only listen if the parser returned success.
+   if (this->readline() == true)
+      this->listen();
 }
 
 bool Console::readline()
