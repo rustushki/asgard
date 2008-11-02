@@ -24,20 +24,17 @@ public:
    virtual bool close();
    
    // Returns if the System Component is in an open state
-   virtual bool isOpen();
+   virtual bool isOpen() const;
    
    // Returns if the System Component is in a closed state
-   virtual bool isClosed();
+   virtual bool isClosed() const;
 
-   // Sleep until messages arrive from the MessageRouter.
+   // Block until messages arrive from the MessageRouter.
    void listen();
 
-   // Wakes up the SystemComponent thread when a new message is detected.
+   // Signals SystemComponent thread when a new message is detected.
+   // Only MessageRouter should use this.
    void notifyMessages();
-
-   // A mailbox for receiving messages from the MessageRouter.
-   // Should this be public?
-   Mailbox mailbox;
 
 protected:
    // A thread for the SystemComponent to run in.
@@ -45,12 +42,16 @@ protected:
    
    // Override to interpet received messages.
    virtual bool interpretMessage(Message* message) = 0;
-
+   
 private:
    SystemComponentState state;
 
+   // A mailbox for receiving messages from the MessageRouter.
+   Mailbox mailbox;
+
    // Connect mailbox to the MessageRouter for receiving messages from it.
    void connectMessageRouter();
+   
 };
 
 #endif /*SYSTEM_COMPONENT_H*/

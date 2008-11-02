@@ -32,14 +32,44 @@ bool SystemComponent::close()
    return true;
 }
 
-bool SystemComponent::isOpen()
+bool SystemComponent::isOpen() const
 {
    return (this->state == SYSTEM_COMPONENT_STATE_OPEN);
 }
 
-bool SystemComponent::isClosed()
+bool SystemComponent::isClosed() const
 {
    return (this->state == SYSTEM_COMPONENT_STATE_CLOSED);
+}
+
+// WARNING:  Be wary of editing this routine as changes may trigger system-wide
+// race conditions.
+void SystemComponent::listen()
+{
+
+   bool messagesHandled = false;
+
+   // If messages have arrived before the listening session begins OR since
+   // the thread was woken at end of loop
+   int numMessages = this->mailbox.getNumMessages();
+   while (numMessages > 0)
+   {
+      // handle the message appropriately (if this component handles it)
+      // false means message was discarded.
+      messagesHandled |= this->interpretMessage(this->mailbox.getMessage());
+
+      // re-evaluate each time.. more messages could have been added.
+      numMessages = this->mailbox.getNumMessages();
+   }
+   
+   // If messages were handled, this listening session is over.
+   if (messagesHandled == true)
+      return;
+   
+   // sleep until messages arrive
+   this->thread->sleep();
+
+   // otherwise, run listen again (done automatically)
 }
 
 void SystemComponent::notifyMessages()
@@ -53,34 +83,4 @@ void SystemComponent::connectMessageRouter()
    mr->connect(boost::bind(&Mailbox::addMessage,&this->mailbox,_1));
 }
 
-void SystemComponent::listen()
-{
-   bool messagesHandled = false;
-   while (1)
-   {
-      // If messages have arrived before the listening session begins OR since
-      // the thread was woken at end of loop
-      int numMessages = this->mailbox.getNumMessages();
-      while (numMessages > 0)
-      {
-         // handle the message appropriately (if this component handles it)
-         // false means message was discarded.
-         messagesHandled |= this->interpretMessage(this->mailbox.getMessage());
 
-         // re-evaluate each time.. more messages could have been added.
-         numMessages = this->mailbox.getNumMessages();
-      }
-      
-      // If messages were handled, this listening session is over.
-      if (messagesHandled == true)
-         break;
-
-      //std::cout << this->thread->name << " sleeps.." << std::endl;
-
-      // sleep until messages arrive
-      this->thread->sleep();
-
-      //std::cout << this->thread->name << " woken!" << std::endl;
-
-   }
-}

@@ -65,6 +65,7 @@ void MessageRouter::runRouterThread()
    {
       // Lock until new mail is received
       this->routerThread->sleep();
+
       // new mail has been received, call get mail
       Message* mail = this->mailbox.getMessage();
       

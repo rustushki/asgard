@@ -36,6 +36,7 @@ bool AsgardThread::wake()
 {
    if (this->isSleeping())
    {
+      //std::cout << this->name << " waking..." << std::endl;
       this->state = ASGARD_THREAD_STATE_OPEN;
       this->untilMessagesArrive.notify_all();
       return true;
@@ -44,27 +45,39 @@ bool AsgardThread::wake()
    return false;
 }
 
-bool AsgardThread::isClosing()
+void AsgardThread::sleep()
 {
-   return (this->state == ASGARD_THREAD_STATE_CLOSE);
+   boost::unique_lock<boost::mutex> lock(this->sleepMutex);
+   this->state = ASGARD_THREAD_STATE_SLEEPING;
+
+   if (this->mb->getNumMessages() == 0)
+   {
+      // Be wary of uncommenting this as it may cause a race condition.
+      //std::cout << this->name << " sleeps.." << std::endl;
+      this->untilMessagesArrive.wait(lock);
+      //std::cout << this->name << " woken!" << std::endl;
+   }
+
 }
 
-bool AsgardThread::isClosed()
-{
-   return (this->state == ASGARD_THREAD_STATE_CLOSED);
-}
-
-bool AsgardThread::isSleeping()
+bool AsgardThread::isSleeping() const
 {
    return (this->state == ASGARD_THREAD_STATE_SLEEPING);
 }
 
-void AsgardThread::sleep()
+bool AsgardThread::isClosing() const
 {
-   boost::unique_lock<boost::mutex> lock(this->mut);
-   this->state = ASGARD_THREAD_STATE_SLEEPING;
-   if (this->mb->getNumMessages() == 0)
-      this->untilMessagesArrive.wait(lock);
+   return (this->state == ASGARD_THREAD_STATE_CLOSE);
+}
+
+bool AsgardThread::isClosed() const
+{
+   return (this->state == ASGARD_THREAD_STATE_CLOSED);
+}
+
+std::string AsgardThread::getName() const
+{
+   return this->name;
 }
 
 void AsgardThread::runThread()
@@ -79,7 +92,4 @@ void AsgardThread::runThread()
    }
 }
 
-std::string AsgardThread::getName()
-{
-   return this->name;
-}
+
