@@ -76,22 +76,46 @@ insert into Drawable
 (DrawableName,AnimationName)
 values("HandSwingsSword","HandSwingsSwordSouth");
 
---insert into Drawable
---(DrawableName,AnimationName)
---values("HandSwingsSword","HandSwingsSwordNorth");
+insert into Drawable
+(DrawableName,AnimationName)
+values("HandSwingsSword","HandSwingsSwordNorth");
 
---insert into Drawable
---(DrawableName,AnimationName)
---values("HandSwingsSword","HandSwingsSwordEast");
+insert into Drawable
+(DrawableName,AnimationName)
+values("HandSwingsSword","HandSwingsSwordEast");
 
---insert into Drawable
---(DrawableName,AnimationName)
---values("HandSwingsSword","HandSwingsSwordWest");
+insert into Drawable
+(DrawableName,AnimationName)
+values("HandSwingsSword","HandSwingsSwordWest");
 
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
-values("HandSwingsSwordSouth.txt",2,2);
+values("HandSwingsSwordSouth.bmp",2,2);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("HandSwingsSwordNorth.bmp",2,2);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("HandSwingsSwordEast.bmp",2,2);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("HandSwingsSwordWest.bmp",2,2);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("HandSwingsSwordSouth","HandSwingsSwordSouth.txt",100,50,4,4);
+values("HandSwingsSwordSouth","HandSwingsSwordSouth.bmp",100,50,4,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("HandSwingsSwordNorth","HandSwingsSwordNorth.bmp",100,50,4,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("HandSwingsSwordEast","HandSwingsSwordEast.bmp",100,50,4,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);

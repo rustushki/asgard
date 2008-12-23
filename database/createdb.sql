@@ -110,6 +110,5 @@ create table Drawable
 (
    DrawableName varchar(50) not null,
    AnimationName varchar(100) not null,
-   primary key(DrawableName),
    foreign key(AnimationName) references Animation(AnimationName)
 );
