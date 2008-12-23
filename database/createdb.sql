@@ -5,6 +5,9 @@ drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
 drop table if exists Tiles;
+drop table if exists Animation;
+drop table if exists SpriteSheet;
+drop table if exists Drawable;
 
 create table NonPlayerCharacter
 (
@@ -81,4 +84,32 @@ create table Tiles
    MapObjectId integer(10) not null,
    TileType integer(10) null,
    foreign key (MapObjectId) references MapObject(MapObjectId)
+);
+
+create table Animation
+(
+   AnimationName varchar(100) not null,
+   SpriteSheetName varchar(50) not null,
+   Height integer(5) not null,
+   Width integer(5) not null,
+   StillCount integer(2) not null,
+   StillsPerSecond integer(2) not null,
+   primary key(AnimationName),
+   foreign key(SpriteSheetName) references SpriteSheet(SpriteSheetName)
+);
+
+create table SpriteSheet
+(
+   SpriteSheetName varchar(50) not null,
+   NumColumns integer(2) not null,
+   NumRows integer(2) not null,
+   primary key(SpriteSheetName)
+);
+
+create table Drawable
+(
+   DrawableName varchar(50) not null,
+   AnimationName varchar(100) not null,
+   primary key(DrawableName),
+   foreign key(AnimationName) references Animation(AnimationName)
 );

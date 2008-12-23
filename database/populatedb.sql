@@ -69,3 +69,29 @@ values(2,0,0,0,5,5);
 insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(3,1,0,0,3);
+
+--Hand's Animations
+--Hand swings sword
+insert into Drawable
+(DrawableName,AnimationName)
+values("HandSwingsSword","HandSwingsSwordSouth");
+
+--insert into Drawable
+--(DrawableName,AnimationName)
+--values("HandSwingsSword","HandSwingsSwordNorth");
+
+--insert into Drawable
+--(DrawableName,AnimationName)
+--values("HandSwingsSword","HandSwingsSwordEast");
+
+--insert into Drawable
+--(DrawableName,AnimationName)
+--values("HandSwingsSword","HandSwingsSwordWest");
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("HandSwingsSwordSouth.txt",2,2);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("HandSwingsSwordSouth","HandSwingsSwordSouth.txt",100,50,4,4);
