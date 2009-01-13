@@ -1,0 +1,23 @@
+# Search these directories for libraries to include.
+# '#' indicates the directory that scons is executed in.
+# TODO: pkg-config for boost?
+include_path =                     \
+    '#/../common/:'                \
+    '/usr/local/include/:'         \
+   +'/usr/local/include/boost-1_36'
+ #  +'/usr/include/boost-1_36'      \
+
+# List of Objects to Compile
+objects = [
+'./test.cpp',
+'./Screen.cpp',
+'./Layer.cpp',
+'./Drawable.cpp',
+'./Animation.cpp',
+'./RectBlitter.cpp'
+]
+
+# Main Target: Build the Full Executable
+# Notice the high level dependencies list in LIBS
+env = Environment(CPPPATH=include_path, CPPFLAGS='-g')
+env.Program('asgard', objects, LIBS=['boost_thread-gcc43-mt-1_36','boost_signals-gcc43-mt-1_36','sqlite3','SDL','SDL_image'])

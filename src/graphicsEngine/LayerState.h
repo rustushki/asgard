@@ -1,0 +1,9 @@
+#ifndef LAYERSTATE_H
+#define LAYERSTATE_H
+enum LayerState
+{
+   LAYERSTATE_IDLE,
+   LAYERSTATE_UPDATING,
+   LAYERSTATE_COUNT
+};
+#endif//LAYERSTATE_H
