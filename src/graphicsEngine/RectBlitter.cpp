@@ -20,5 +20,5 @@ void RectBlitter::blit(SDL_Rect r, SDL_Surface* spriteSheet, SDL_Rect clip)
 {
    Screen* s = Screen::getInstance();
 
-   SDL_BlitSurface(spriteSheet, &clip, s->currentFrame, &r);
+   SDL_BlitSurface(spriteSheet, &clip, s->nextFrame, &r);
 }

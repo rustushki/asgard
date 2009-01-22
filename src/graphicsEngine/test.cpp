@@ -37,7 +37,7 @@ int main()
 
    d1->addAnimation(a1, a1Name);
    d2->addAnimation(a2, a2Name);
-   d1->addAnimation(a3, a3Name);
+   d2->addAnimation(a3, a3Name);
    db->addAnimation(ab, abName);
 
    ls->insertDrawableTop(d2);
@@ -72,11 +72,11 @@ int main()
       }
          if (r == 25)
          {
-            d1->swapAnimation("cecil");
+            d2->swapAnimation("cecil");
          }
          else if (r == 50)
          {
-            d1->swapAnimation("demo");
+            d2->swapAnimation("demo");
             r=0;
          }
          r++;
