@@ -1,7 +1,4 @@
-#include <iostream>
-#include <string>
 #include <cmath>
-#include <map>
 #include "Screen.h"
 #include "Drawable.h"
 

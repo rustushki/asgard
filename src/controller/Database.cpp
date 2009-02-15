@@ -30,6 +30,7 @@
 #include "GameEngine.h"
 #include "RowSet.h"
 #include "MessageFactory.h"
+#include "DrawableFactory.h"
 
 Database* Database::instance = NULL;
 
@@ -136,6 +137,11 @@ RowSet* Database::loadNonPlayerCharacterPath(int npcId)
 
    return rs;
    
+}
+
+void Database::loadDrawable(std::string dName)
+{
+   DrawableFactory::build(this->asgardDb, dName);
 }
 
 bool Database::interpretMessage(Message* msg)

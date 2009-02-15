@@ -21,6 +21,7 @@
 #define GAME_ENGINE_H
 
 #include <vector>
+#include <string>
 #include "Coordinate.h"
 #include "Database.h"
 #include "MapObject.h"

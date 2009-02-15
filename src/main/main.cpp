@@ -20,11 +20,11 @@ int main()
    MessageRouter* mr = MessageRouter::getInstance();
    SystemComponent* console = new Console();
    SystemComponent* dbCont  = Database::getInstance();
-   SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
+   // SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
 
    dbCont->open();
    console->open();
-   graphicsEngine->open();
+   // graphicsEngine->open();
    
    // load drawables
    // fish out drawables and animations loaded into memory.

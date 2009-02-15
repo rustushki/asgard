@@ -185,3 +185,28 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    return cStr;
 }
 
+char* QueryGenerator::drawable(std::string dName)
+{
+   std::stringstream queryStream;
+   std::string       query;
+   char* cStr = new char[2048];
+
+   queryStream << "select ";
+   queryStream << "d.DrawableName, ";
+   queryStream << "d.AnimationName, ";
+   queryStream << "ss.SpriteSheetName, ";
+   queryStream << "ss.NumColumns, ";
+   queryStream << "ss.NumRows, ";
+   queryStream << "a.Height, ";
+   queryStream << "a.Width, ";
+   queryStream << "a.StillCount, ";
+   queryStream << "a.StillsPerSecond ";
+   queryStream << "from Animation a ";
+   queryStream << "inner join SpriteSheet ss on ss.SpriteSheetName = a.SpriteSheetName inner join Drawable d on d.AnimationName = a.AnimationName ";
+   queryStream << "where d.DrawableName = '" << dName << "';";
+
+   query = queryStream.str();
+
+   strcpy(cStr,query.c_str());
+   return cStr;
+}

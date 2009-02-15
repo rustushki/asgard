@@ -20,7 +20,7 @@
 #ifndef QUERY_GENERATOR_H
 #define QUERY_GENERATOR_H
 
-#include "QueryGenerator.h"
+#include <string>
 
 class QueryGenerator
 {
@@ -35,6 +35,8 @@ class QueryGenerator
       static char* tile(int boundingBoxId);
       
       static char* hardpoint(int mapObjectId);
+
+      static char* drawable(std::string dName);
 };
 
 #endif // QUERY_GENERATOR_H
