@@ -21,18 +21,28 @@
 #include "Drawable.h"
 #include "QueryGenerator.h"
 #include "DatabaseColumnMap.h"
-#include <cstdlib>
 
 int DrawableFactory::build(sqlite3 *db, std::string dName)
 {
-   char *query;
-   char *sqliteErrorCode;
-
    Drawable *d;
+   char *query, *sqliteErrorCode;
 
+   // Create Drawable object
    d = new Drawable(dName);
+
+   // Generate query for building Drawable
    query = QueryGenerator::drawable(dName);
-   sqlite3_exec(db, query, processDRow, (void*)d, &sqliteErrorCode);
+
+   // Use query to process information from database for building Drawable
+   if(sqlite3_exec(db, query, processDRow, (void*)d, &sqliteErrorCode) != SQLITE_OK)
+   {
+      // Handle sqliteErrorCode?
+
+      // Free memory held by error message
+      sqlite3_free((void*)sqliteErrorCode);
+
+      return -1;
+   }
    delete query;
 
    // Do something with Drawable
@@ -46,17 +56,10 @@ int DrawableFactory::processDRow(void *d, int columnCount, char **columnValue, c
 {
    Drawable *drawPtr = static_cast<Drawable*>(d);
    Animation *a;
+   std::string dName, aName, ssName;
+   uint ssCols, ssRows, height, width, stillCount, sps;
 
-   std::string dName;
-   std::string aName;
-   std::string ssName;
-   uint ssCols;
-   uint ssRows;
-   uint height;
-   uint width;
-   uint stillCount;
-   uint sps;
-
+   // Extract data for creating Animation
    dName = columnValue[ANIMATION_COLUMN_DRAWABLE_NAME];
    aName = columnValue[ANIMATION_COLUMN_ANIMATION_NAME];
    ssName = columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NAME];
