@@ -4,7 +4,7 @@
 include_path =                     \
     '#/common:'                    \
    +'#/console:'                   \
-   +'#/controller:'                \
+   +'#/database:'                \
    +'#/graphicsEngine:'            \
    +'#/gui:'                       \
    +'#/main:'                      \
@@ -23,23 +23,23 @@ objects = [
 './common/SystemComponent.cpp',
 './common/Mailbox.cpp',
 './common/AsgardThread.cpp',
-'./controller/QueryGenerator.cpp',
-'./controller/GrassTile.cpp',
-'./controller/RowSet.cpp',
-'./controller/GameEngine.cpp',
-'./controller/RectHardpoint.cpp',
-'./controller/MapObjectFactory.cpp',
-'./controller/StaticMapObject.cpp',
-'./controller/Coordinate.cpp',
-'./controller/MapObject.cpp',
-'./controller/NonPlayerCharacter.cpp',
-'./controller/WaterTile.cpp',
-'./controller/Item.cpp',
-'./controller/Database.cpp',
-'./controller/CircHardpoint.cpp',
-'./controller/Container.cpp',
-'./controller/DesertTile.cpp',
-'./controller/DrawableFactory.cpp',
+'./database/QueryGenerator.cpp',
+'./database/GrassTile.cpp',
+'./database/RowSet.cpp',
+'./database/GameEngine.cpp',
+'./database/RectHardpoint.cpp',
+'./database/MapObjectFactory.cpp',
+'./database/StaticMapObject.cpp',
+'./database/Coordinate.cpp',
+'./database/MapObject.cpp',
+'./database/NonPlayerCharacter.cpp',
+'./database/WaterTile.cpp',
+'./database/Item.cpp',
+'./database/Database.cpp',
+'./database/CircHardpoint.cpp',
+'./database/Container.cpp',
+'./database/DesertTile.cpp',
+'./database/DrawableFactory.cpp',
 './graphicsEngine/Animation.cpp',
 './graphicsEngine/Drawable.cpp',
 './graphicsEngine/Layer.cpp',
