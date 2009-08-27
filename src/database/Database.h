@@ -45,7 +45,7 @@ class Database : public SystemComponent
       bool loadBoundingBox(int boxId);
       RowSet* loadHardpoints(int smoId);
       RowSet* loadNonPlayerCharacterPath(int npcId);
-      void loadDrawable(std::string dName);
+      bool loadDrawable(std::string dName);
       
       virtual bool open();
       virtual bool close();

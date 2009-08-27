@@ -21,6 +21,7 @@
 
 #include "Parser.h"
 #include "AsgardGrammar.h" 
+//#include "MessageFactory.h" //TEST drawable loading
 
 using boost::spirit::space_p;
 using boost::spirit::parse;
@@ -54,6 +55,14 @@ bool Parser::parseCommand(string command)
 {
    bool valid;
    
+   // TEST: Uncomment this section to test drawable loading
+   //if (command == "load drawable HandSwingsSword")
+   //{
+   //   MessageFactory::makeLoadDrawable("HandSwingsSword");
+   //   return true;
+   //}
+   //ENDTEST
+
    valid = parse(command.c_str(),this->grammar,space_p).full;
 
    return valid;

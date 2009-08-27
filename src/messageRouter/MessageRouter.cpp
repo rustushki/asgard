@@ -55,6 +55,7 @@ void MessageRouter::connect(const RouterSignal::slot_type& slot)
 
 void MessageRouter::sendMessage(Message* message)
 {
+   std::cout<<"inside sendMessage"<<std::endl;//TEST
    // Add to MessageRouter's mailbox
    this->mailbox.addMessage(message);
 }

@@ -25,6 +25,7 @@ class MessageFactory
 {
    public:
       static void makeLoadBoundingBox(int bbId);
+      static void makeLoadDrawable(char *dName);
       static void makePrintString(const char* output);
 };
 

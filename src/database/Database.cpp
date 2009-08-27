@@ -17,7 +17,6 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include <iostream>
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
 #include <cassert>
@@ -139,22 +138,37 @@ RowSet* Database::loadNonPlayerCharacterPath(int npcId)
    
 }
 
-void Database::loadDrawable(std::string dName)
+bool Database::loadDrawable(std::string dName)
 {
    DrawableFactory::build(this->asgardDb, dName);
+
+   return true;
 }
 
 bool Database::interpretMessage(Message* msg)
 {
    bool messageHandled = false;
+   std::string printOutput;
+
    if (msg->header.type == MESSAGE_TYPE_LOAD_BOUNDING_BOX)
    {
-      std::string printOutput;
-
       if (this->loadBoundingBox(msg->data.box.boundingBoxId))
          printOutput = "bounding box loaded";
       else
          printOutput = "failed";
+
+      MessageFactory::makePrintString(printOutput.c_str());
+      messageHandled = true;
+   }
+
+   else if (msg->header.type == MESSAGE_TYPE_LOAD_DRAWABLE)
+   {
+      std::string dName(msg->data.drawable.drawableName);
+
+      if (dName.empty())
+         printOutput = "Failed: no drawable name provided";
+      else if (this->loadDrawable(dName))
+         printOutput = "drawable loaded";
 
       MessageFactory::makePrintString(printOutput.c_str());
       messageHandled = true;

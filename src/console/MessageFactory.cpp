@@ -16,6 +16,7 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
+
 #include "MessageFactory.h"
 #include "MessageRouter.h"
 
@@ -24,6 +25,16 @@ void MessageFactory::makeLoadBoundingBox(int bbId)
    Message *msg = new Message();
    msg->header.type = MESSAGE_TYPE_LOAD_BOUNDING_BOX;
    msg->data.box.boundingBoxId = bbId;
+
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}
+
+void MessageFactory::makeLoadDrawable(char *dName)
+{
+   Message *msg = new Message();
+   msg->header.type = MESSAGE_TYPE_LOAD_DRAWABLE;
+   msg->data.drawable.drawableName = dName;
 
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);
