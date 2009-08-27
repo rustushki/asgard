@@ -1,6 +1,5 @@
 #include "MessageRouter.h"
 #include <boost/bind.hpp>
-#include <iostream>
 
 MessageRouter* MessageRouter::messageRouter = NULL;
 
@@ -55,7 +54,6 @@ void MessageRouter::connect(const RouterSignal::slot_type& slot)
 
 void MessageRouter::sendMessage(Message* message)
 {
-   std::cout<<"inside sendMessage"<<std::endl;//TEST
    // Add to MessageRouter's mailbox
    this->mailbox.addMessage(message);
 }
