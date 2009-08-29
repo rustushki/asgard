@@ -1,4 +1,7 @@
+#include <string>
 #include "GraphicsEngine.h"
+
+using std::string;
 
 GraphicsEngine* GraphicsEngine::instance = NULL;
 
@@ -53,4 +56,22 @@ void GraphicsEngine::initScreen()
 }
       
 bool GraphicsEngine::interpretMessage(Message* message)
-{return true;}
+{
+   if (message->header.type == MESSAGE_TYPE_DISPLAY_DRAWABLE)
+   {
+      string layerName = message->data.displayDrawable.layName;
+      Drawable* drawable = message->data.displayDrawable.drawPtr;
+
+      Screen* s = Screen::getInstance();
+
+      Layer* l = s->getLayer(layerName);
+
+      // TOOD: parameterize stack location on layer
+      // Always on the top?
+      if (l != NULL)
+         l->insertDrawableTop(drawable);
+
+      // TOOD: parameterize whether to play or not.
+      drawable->play();
+   }
+}

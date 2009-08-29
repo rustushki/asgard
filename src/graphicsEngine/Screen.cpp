@@ -127,6 +127,8 @@ Layer* Screen::getLayer(std::string name) const
    for (itr = this->layer.begin(); itr < this->layer.end(); itr++)
       if ((*itr)->getName() == name)
          return (*itr);
+
+   return NULL;
 }
 
 void Screen::updateRect(SDL_Rect r)
