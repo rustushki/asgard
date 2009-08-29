@@ -163,7 +163,7 @@ bool Database::interpretMessage(Message* msg)
 
    else if (msg->header.type == MESSAGE_TYPE_LOAD_DRAWABLE)
    {
-      std::string dName(msg->data.drawable.drawableName);
+      std::string dName(msg->data.loadDrawable.drawableName);
 
       if (dName.empty())
          printOutput = "Failed: no drawable name provided";

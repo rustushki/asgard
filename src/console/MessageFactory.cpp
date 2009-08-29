@@ -17,8 +17,21 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
+#include <cstring>
 #include "MessageFactory.h"
 #include "MessageRouter.h"
+
+void MessageFactory::makeDisplayDrawable(Drawable *d, std::string layerName)
+{
+   Message *msg = new Message();
+   msg->header.type = MESSAGE_TYPE_DISPLAY_DRAWABLE;
+   msg->data.displayDrawable.drawPtr = d;
+   strcpy(msg->data.displayDrawable.layName, layerName.c_str());
+
+   // Message should be picked up by Graphics Engine
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}
 
 void MessageFactory::makeLoadBoundingBox(int bbId)
 {
@@ -34,7 +47,7 @@ void MessageFactory::makeLoadDrawable(char *dName)
 {
    Message *msg = new Message();
    msg->header.type = MESSAGE_TYPE_LOAD_DRAWABLE;
-   msg->data.drawable.drawableName = dName;
+   msg->data.loadDrawable.drawableName = dName;
 
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);

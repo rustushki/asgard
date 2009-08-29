@@ -21,6 +21,7 @@
 #include "Drawable.h"
 #include "QueryGenerator.h"
 #include "DatabaseColumnMap.h"
+#include "MessageFactory.h" //TEMP: for displaying drawable
 
 int DrawableFactory::build(sqlite3 *db, std::string dName)
 {
@@ -43,11 +44,11 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
 
       return -1;
    }
+
    delete query;
 
-   // Do something with Drawable
-   // ...
-   // Something has been done!
+   // Send drawable to Graphics Engine for display
+   MessageFactory::makeDisplayDrawable(d, "stageLayer");
 
    return 0;
 }
