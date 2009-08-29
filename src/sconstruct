@@ -1,6 +1,8 @@
 # Search these directories for libraries to include.
 # '#' indicates the directory that scons is executed in.
 # TODO: pkg-config for boost?
+
+# Sean's boost headers
 include_path =                     \
     '#/common:'                    \
    +'#/console:'                   \
@@ -10,7 +12,7 @@ include_path =                     \
    +'#/main:'                      \
    +'#/message:'                   \
    +'#/messageRouter:'             \
-   +'/usr/include/boost-1_39:'     \
+   +'/usr/local/include/boost-1_36:'     \
    +'/usr/include/SDL'
  #  +'/usr/include/boost-1_36'      \
 
@@ -52,4 +54,5 @@ objects = [
 # Main Target: Build the Full Executable
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
-env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image'])
+# Sean's libraries
+env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt','boost_signals-gcc42-mt','sqlite3','SDL','SDL_image'])
