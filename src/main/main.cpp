@@ -10,21 +10,22 @@
 #include <boost/bind.hpp>
 
 #include "MessageRouter.h"
-#include "Console.h"
+//#include "Console.h"
 #include "Database.h"
+#include "GraphicsEngine.h"
 #include "unistd.h"
 
 int main() 
 {
    
    MessageRouter* mr = MessageRouter::getInstance();
-   SystemComponent* console = new Console();
+   //SystemComponent* console = new Console();
    SystemComponent* dbCont  = Database::getInstance();
-   // SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
+   SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
 
    dbCont->open();
-   console->open();
-   // graphicsEngine->open();
+   //console->open();
+   graphicsEngine->open();
    
    // load drawables
    // fish out drawables and animations loaded into memory.
@@ -32,10 +33,6 @@ int main()
 
    while(1)
       sleep(10);
-   
-   //AsgardThread asgardThread;
-   //asgardThread.open(Console::);
-   
    
    return 0;
 }

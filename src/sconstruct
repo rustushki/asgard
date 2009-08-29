@@ -4,20 +4,20 @@
 include_path =                     \
     '#/common:'                    \
    +'#/console:'                   \
-   +'#/database:'                \
+   +'#/database:'                  \
    +'#/graphicsEngine:'            \
    +'#/gui:'                       \
    +'#/main:'                      \
    +'#/message:'                   \
    +'#/messageRouter:'             \
-   +'/usr/local/include/boost-1_36:'\
+   +'/usr/include/boost-1_39:'     \
    +'/usr/include/SDL'
  #  +'/usr/include/boost-1_36'      \
 
 # List of Objects to Compile
 objects = [
-'./console/Parser.cpp',
-'./console/Console.cpp',
+#'./console/Parser.cpp',
+#'./console/Console.cpp',
 './console/MessageFactory.cpp',
 './messageRouter/MessageRouter.cpp',
 './common/SystemComponent.cpp',
@@ -40,6 +40,7 @@ objects = [
 './database/Container.cpp',
 './database/DesertTile.cpp',
 './database/DrawableFactory.cpp',
+'./graphicsEngine/GraphicsEngine.cpp',
 './graphicsEngine/Animation.cpp',
 './graphicsEngine/Drawable.cpp',
 './graphicsEngine/Layer.cpp',
@@ -51,4 +52,4 @@ objects = [
 # Main Target: Build the Full Executable
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
-env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt-1_36','boost_signals-gcc42-mt-1_36','sqlite3','SDL','SDL_image'])
+env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image'])
