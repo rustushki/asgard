@@ -88,6 +88,10 @@ insert into Drawable
 (DrawableName,AnimationName)
 values("HandSwingsSword","HandSwingsSwordWest");
 
+insert into Drawable
+(DrawableName,AnimationName)
+values("OsirisCat","OsirisCat");
+
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("HandSwingsSwordSouth.bmp",2,2);
@@ -104,6 +108,10 @@ insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("HandSwingsSwordWest.bmp",2,2);
 
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("OsirisCat.png",3,1);
+
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordSouth","HandSwingsSwordSouth.bmp",100,50,4,4);
@@ -119,3 +127,7 @@ values("HandSwingsSwordEast","HandSwingsSwordEast.bmp",100,50,4,4);
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("OsirisCat","OsirisCat.png",75,25,3,4);

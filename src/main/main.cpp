@@ -7,10 +7,12 @@
 //============================================================================
 
 #include <iostream>
+#include <string>
 #include <boost/bind.hpp>
 
 #include "MessageRouter.h"
 //#include "Console.h"
+#include "MessageFactory.h"
 #include "Database.h"
 #include "GraphicsEngine.h"
 #include "unistd.h"
@@ -18,19 +20,30 @@
 int main() 
 {
    
+   // Open MessageRouter first always.
    MessageRouter* mr = MessageRouter::getInstance();
+   
    //SystemComponent* console = new Console();
    SystemComponent* dbCont  = Database::getInstance();
    SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
 
-   dbCont->open();
    //console->open();
+   dbCont->open();
    graphicsEngine->open();
+
+   // TODO: make ready() instructions for SystemComponent's so that there is
+   // not a race condition here.  Explanation: Screen in GraphicsEngine *MUST*
+   // be initialized before many SDL calls will work properly.  Subsequent
+   // calls to the GraphicsEngine *NEED* to wait until GraphicsEngine is
+   // fininished loading.  This sleep is a work around:
+   sleep(2);
    
    // load drawables
    // fish out drawables and animations loaded into memory.
    // graphics engine will do something with those.
+   MessageFactory::makeLoadDrawable("OsirisCat");
 
+   // Wait for user to kill Vear.
    while(1)
       sleep(10);
    

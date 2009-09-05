@@ -3,6 +3,7 @@
 #include <iostream>
 #include "MessageRouter.h"
 #include "SystemComponent.h"
+#include "Asgard.h"
 
 SystemComponent::SystemComponent(std::string threadName)
 {
@@ -42,9 +43,14 @@ bool SystemComponent::isClosed() const
    return (this->state == SYSTEM_COMPONENT_STATE_CLOSED);
 }
 
+void SystemComponent::listen()
+{
+   this->listen(-1);
+}
+
 // WARNING:  Be wary of editing this routine as changes may trigger system-wide
 // race conditions.
-void SystemComponent::listen()
+void SystemComponent::listen(uint waitUntilMS)
 {
 
    bool messagesHandled = false;
@@ -67,7 +73,10 @@ void SystemComponent::listen()
       return;
    
    // sleep until messages arrive
-   this->thread->sleep();
+   if (waitUntilMS == -1)
+      this->thread->sleep();
+   else
+      boost::this_thread::sleep(boost::posix_time::milliseconds(waitUntilMS));
 
    // otherwise, run listen again (done automatically)
 }

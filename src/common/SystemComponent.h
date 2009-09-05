@@ -29,8 +29,10 @@ public:
    // Returns if the System Component is in a closed state
    virtual bool isClosed() const;
 
-   // Block until messages arrive from the MessageRouter.
+   // Block until messages arrive from the MessageRouter, or for a certain
+   // amount of milliseconds.
    void listen();
+   void listen(uint waitUntilMS);
 
    // Signals SystemComponent thread when a new message is detected.
    // Only MessageRouter should use this.

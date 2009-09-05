@@ -57,25 +57,29 @@ int DrawableFactory::processDRow(void *d, int columnCount, char **columnValue, c
 {
    Drawable *drawPtr = static_cast<Drawable*>(d);
    Animation *a;
-   std::string dName, aName, ssName;
    uint ssCols, ssRows, height, width, stillCount, sps;
 
+   char dName[50];
+   char aName[100];
+   char ssName[50];
+
    // Extract data for creating Animation
-   dName = columnValue[ANIMATION_COLUMN_DRAWABLE_NAME];
-   aName = columnValue[ANIMATION_COLUMN_ANIMATION_NAME];
-   ssName = columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NAME];
+   strcpy(dName, columnValue[ANIMATION_COLUMN_DRAWABLE_NAME]);
+   strcpy(aName, columnValue[ANIMATION_COLUMN_ANIMATION_NAME]);
+   strcpy(ssName, columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NAME]);
    ssCols = atoi(columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NUM_COLUMNS]);
    ssRows = atoi(columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NUM_ROWS]);
    height = atoi(columnValue[ANIMATION_COLUMN_HEIGHT]);
    width = atoi(columnValue[ANIMATION_COLUMN_WIDTH]);
    stillCount = atoi(columnValue[ANIMATION_COLUMN_STILL_COUNT]);
    sps = atoi(columnValue[ANIMATION_COLUMN_STILLS_PER_SECOND]);
-
+   
    // Create Animation
-   a = new Animation(ssName, width, height, stillCount, sps, ssRows, ssCols);
+   a = new Animation(std::string(ssName), width, height, stillCount, sps, 
+         ssRows, ssCols);
    
    // Load Animation into Drawable
-   drawPtr->addAnimation(a, aName);
+   drawPtr->addAnimation(a, std::string(aName));
    
    return 0;
 }

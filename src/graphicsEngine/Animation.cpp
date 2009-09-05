@@ -1,6 +1,5 @@
 #include "Animation.h"
 #include "Screen.h"
-#include <iostream>
 Animation::Animation(std::string filename, uint width, uint height, uint
       stillCount, uint sps, uint ssRows, uint ssCols)
 {
