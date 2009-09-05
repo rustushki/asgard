@@ -2,15 +2,19 @@ Quick Start Instructions:
 ===============================================================================
 
 We thank you for taking interest in Asgard!  As this project is still in its
-infancy, this release is intended for testing and observation.  We encourage
-you to attempt to compile and run it.  Let us know how things go.
+infancy, this release is intended for testing and observation.  
+
+You can now observe that we have a functional graphics engine which displays a
+dancing blue cat!
+
+We encourage you to attempt to compile and run it.  Let us know how things go.
 
 1. Get scons
 Compiling is a little shakey right now.  The compilation method included with
 this source is scons.  You're welcome to use it if you like.  scons can be
 acquired at http://www.scons.org.
 
-2. Install boost 1.36
+2. Install boost 1.36 or greater
 Our new threading system requires some of the features in boost 1.36, so you
 will need to install it as well.  Sources can be obtained from
 http://www.boost.org
@@ -40,15 +44,7 @@ You can do this by:
 6. To Run:
 % ./asgard
 
-7. The only command it accepts right now is
-
-      load boundingbox $x
-
-where $x is an integer.  There are a few bounding boxes in the test
-environment.  Currently there is only one boundingbox in our test environment
-and that's 1. (i.e $x=1)
-
-
+You should see the dancing blue cat in the top left hand corner.
 
 New to Asgard?:
 ===============================================================================
