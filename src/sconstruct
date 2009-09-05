@@ -12,9 +12,14 @@ include_path =                     \
    +'#/main:'                      \
    +'#/message:'                   \
    +'#/messageRouter:'             \
-   +'/usr/local/include/boost-1_36:'     \
-   +'/usr/include/SDL'
- #  +'/usr/include/boost-1_36'      \
+   +'/usr/include/SDL:'
+
+# Sean's Boost
+#include_path += '/usr/local/include/boost-1_36'
+
+# Russ's Boost
+include_path += '/usr/local/include/boost-1_39'
+
 
 # List of Objects to Compile
 objects = [
@@ -54,5 +59,10 @@ objects = [
 # Main Target: Build the Full Executable
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
+
 # Sean's libraries
-env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt','boost_signals-gcc42-mt','sqlite3','SDL','SDL_image'])
+#env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt','boost_signals-gcc42-mt','sqlite3','SDL','SDL_image', CXXFLAGS=['-g'])
+
+# Russ's libaries
+env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image'], CXXFLAGS=['-g'])
+
