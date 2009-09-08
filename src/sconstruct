@@ -23,7 +23,6 @@ include_path += '/usr/local/include/boost-1_39'
 
 # List of Objects to Compile
 objects = [
-#'./console/Parser.cpp',
 #'./console/Console.cpp',
 './console/MessageFactory.cpp',
 './messageRouter/MessageRouter.cpp',
