@@ -16,8 +16,8 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef CONSOLE_H
-#define CONSOLE_H
+#ifndef GRAPHICSENGINE_H
+#define GRAPHICSENGINE_H
 
 #include "AsgardThread.h"
 #include "Screen.h"
@@ -41,4 +41,4 @@ class GraphicsEngine : public SystemComponent
       virtual bool interpretMessage(Message* message);
 };
 
-#endif // CONSOLE_H
+#endif // GRAPHICSENGINE_H
