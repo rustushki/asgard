@@ -22,7 +22,7 @@
 
 struct PrintString 
 {
-   const char* output;
+   char* output;
 };
 
 #endif //PRINT_STRING_H

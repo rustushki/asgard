@@ -12,7 +12,8 @@ include_path =                     \
    +'#/main:'                      \
    +'#/message:'                   \
    +'#/messageRouter:'             \
-   +'/usr/include/SDL:'
+   +'/usr/include/SDL:'            \
+   +'/usr/include/python2.6:'
 
 # Sean's Boost
 #include_path += '/usr/local/include/boost-1_36'
@@ -23,7 +24,7 @@ include_path += '/usr/local/include/boost-1_39'
 
 # List of Objects to Compile
 objects = [
-#'./console/Console.cpp',
+'./console/Console.cpp',
 './console/MessageFactory.cpp',
 './messageRouter/MessageRouter.cpp',
 './common/SystemComponent.cpp',
@@ -60,8 +61,8 @@ objects = [
 env = Environment(CPPPATH=include_path)
 
 # Sean's libraries
-#env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt','boost_signals-gcc42-mt','sqlite3','SDL','SDL_image', CXXFLAGS=['-g'])
+#env.Program('asgard', objects, LIBS=['boost_thread-gcc42-mt','boost_signals-gcc42-mt','sqlite3','SDL','SDL_image','python2.6'], CXXFLAGS=['-g'])
 
 # Russ's libaries
-env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image'], CXXFLAGS=['-g'])
+env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6'], CXXFLAGS=['-g'])
 

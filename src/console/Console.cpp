@@ -16,10 +16,11 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
+#include <python2.6/Python.h>
 #include <iostream>
 #include <string>
 #include "Console.h"
-#include "Parser.h"
+#include "ConsolePython.h"
 #include <boost/bind.hpp>
 
 using std::getline;
@@ -28,19 +29,38 @@ using std::cout;
 using std::string;
 using std::endl;
 
+Console::Console(string filename) : SystemComponent("console")
+{
+   this->sessionLog = "";
+   this->code = "";
+   this->filename = filename;
+}
+
 Console::Console() : SystemComponent("console")
 {
-   this->parser = Parser::getInstance();
+   this->sessionLog = "";
+   this->code = "";
+   this->filename = "";
 }
 
 Console::~Console()
 {
-   Parser::deleteInstance();
 }
 
 bool Console::open()
 {
    bool status = true;
+
+	Py_Initialize();
+
+	if (Py_IsInitialized() != true)
+	{
+		cout << "python not initialized." << endl;
+      return SystemComponent::close();
+	}
+
+	Py_InitModule("asgard", AsgardMethods);
+
    
    this->thread->open(boost::bind(&Console::inputLoop, this));
    
@@ -52,6 +72,8 @@ bool Console::open()
 bool Console::close()
 {
    bool status = true;
+
+   Py_Finalize();
    
    if(!this->thread->isClosed())
    {
@@ -65,28 +87,66 @@ bool Console::close()
 
 void Console::inputLoop()
 {
-   this->prompt();
+   // If a filename is provided, read that file in and execute it.
+   if (this->filename != "")
+   {
+      this->execPython();
+   }
 
-   // Only listen if the parser returned success.
-   if (this->readline() == true)
-      this->listen();
+   // Then switch to console input as Asgard is intended to continue running.
+   while(1)
+   {
+      this->prompt();
+
+      if (this->readCode() != true)
+      {
+         // output session log
+         cout << this->sessionLog;
+         exit(1);
+      }
+
+      this->listen(10);
+   }
 }
 
-bool Console::readline()
+bool Console::readCode()
 {
-   // TODO: 
-   // Add more error handling 
-   // for reading input
-   string line;
-   getline(cin, line);
+   char input[1024];
+   fgets(input, 1024, stdin);
 
-   // Handle Ctrl+D
-   // TODO
-   // More general way of exitting.
-   if (cin.eof())
-      exit(1);
+   if (!feof(stdin))
+   {
+      // Copy the input.  Otherwise when the stream is closed, our read in data
+      // becomes gibberish.
+      char tempbuff[1024];
+      strcpy(tempbuff, input);
+
+      // Concatentate to session log so far.
+      this->sessionLog += string(tempbuff);
+      this->code += input;
+      return this->execPython();
+   }
+
+   return false;
+}
+
+bool Console::execPython()
+{
+   bool success = false;
+
+   if (this->filename != "")
+   {
+      FILE *fp = fopen(this->filename.c_str(), "r");
+      success = PyRun_SimpleFile(fp, this->filename.c_str());
+      fclose(fp);
+   }
    else
-      return this->parser->parseCommand(line);
+   {
+      success = (PyRun_SimpleString(this->code.c_str()) == 0);
+   }
+
+   this->code = "";
+   return success;
 }
 
 void Console::prompt()

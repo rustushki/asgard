@@ -19,25 +19,31 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
+#include <string>
 #include "AsgardThread.h"
-#include "Parser.h"
 #include "SystemComponent.h"
+
+using std::string;
 
 class Console : public SystemComponent
 {
    public:
       Console();
+      Console(string filename);
       ~Console();
       
       virtual bool open();
       virtual bool close();
 
    private:
-      Parser* parser;
-
       void inputLoop();
-      bool readline();
+      bool readCode();
+      bool execPython();
       void prompt();
+
+      string code;
+      string sessionLog;
+      string filename;
    
       virtual bool interpretMessage(Message* message);
 };

@@ -11,23 +11,21 @@
 #include <boost/bind.hpp>
 
 #include "MessageRouter.h"
-//#include "Console.h"
+#include "Console.h"
 #include "MessageFactory.h"
 #include "Database.h"
 #include "GraphicsEngine.h"
 #include "unistd.h"
 
-int main() 
+int main(int argc, char**argv)
 {
    
    // Open MessageRouter first always.
    MessageRouter* mr = MessageRouter::getInstance();
    
-   //SystemComponent* console = new Console();
    SystemComponent* dbCont  = Database::getInstance();
    SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
 
-   //console->open();
    dbCont->open();
    graphicsEngine->open();
 
@@ -37,11 +35,23 @@ int main()
    // calls to the GraphicsEngine *NEED* to wait until GraphicsEngine is
    // fininished loading.  This sleep is a work around:
    sleep(2);
-   
+
+   SystemComponent* console;
+   char script_fn[50];
+   if (argc > 1)
+   {
+      strcpy(script_fn, argv[1]);
+      console = new Console(std::string(script_fn));
+   }
+   else
+      console = new Console();
+
+   console->open();
+
    // load drawables
    // fish out drawables and animations loaded into memory.
    // graphics engine will do something with those.
-   MessageFactory::makeLoadDrawable("OsirisCat");
+   //MessageFactory::makeLoadDrawable("OsirisCat");
 
    // Wait for user to kill Vear.
    while(1)
