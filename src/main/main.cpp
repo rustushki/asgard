@@ -51,7 +51,7 @@ int main(int argc, char**argv)
    // load drawables
    // fish out drawables and animations loaded into memory.
    // graphics engine will do something with those.
-   //MessageFactory::makeLoadDrawable("OsirisCat");
+   MessageFactory::makeLoadDrawable("OsirisCat");
 
    // Wait for user to kill Vear.
    while(1)

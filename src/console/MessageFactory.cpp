@@ -57,6 +57,7 @@ void MessageFactory::makePrintString(const char* output)
 {
    Message *msg = new Message();
    msg->header.type = MESSAGE_TYPE_PRINT_STRING;
+   msg->data.printString.output = new char[strlen(output)];
    strcpy(msg->data.printString.output, output);
 
    MessageRouter* mr = MessageRouter::getInstance();
