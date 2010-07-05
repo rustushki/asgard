@@ -48,11 +48,6 @@ int main(int argc, char**argv)
 
    console->open();
 
-   // load drawables
-   // fish out drawables and animations loaded into memory.
-   // graphics engine will do something with those.
-   MessageFactory::makeLoadDrawable("OsirisCat");
-
    // Wait for user to kill Vear.
    while(1)
       sleep(10);

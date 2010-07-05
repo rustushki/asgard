@@ -1,4 +1,6 @@
 import asgard
-print "asgard LoadBoundingBox tester"
+print "testing LoadBoundingBox"
 asgard.LoadBoundingBox(1)
 
+print "testing LoadDrawable"
+asgard.LoadDrawable("OsirisCat")
