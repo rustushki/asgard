@@ -40,11 +40,19 @@ int main(int argc, char**argv)
    char script_fn[50];
    if (argc > 1)
    {
-      strcpy(script_fn, argv[1]);
-      console = new Console(std::string(script_fn));
+	  // Interactive Shell
+	  if (strcmp(argv[1], "-i") == 0)
+	  {
+          console = new Console(true);
+	  }
+	  else
+	  {
+		  strcpy(script_fn, argv[1]);
+          console = new Console(std::string(script_fn));
+	  }
    }
    else
-      console = new Console();
+      console = new Console(false);
 
    console->open();
 

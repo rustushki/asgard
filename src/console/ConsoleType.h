@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2010 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -16,45 +16,12 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef CONSOLE_H
-#define CONSOLE_H
-
-#include <string>
-#include "AsgardThread.h"
-#include "SystemComponent.h"
-#include "ConsoleType.h"
-
-using std::string;
-
-class Console : public SystemComponent
+#ifndef  CONSOLETYPE_H
+#define  CONSOLETYPE_H
+enum ConsoleType
 {
-   public:
-      Console();
-      Console(bool interactive);
-      Console(string filename);
-      ~Console();
-
-      virtual bool open();
-      virtual bool close();
-
-   private:
-      void inputLoop();
-      int readCode();
-      int execPython();
-      void prompt();
-
-      string code;
-      string sessionLog;
-      string filename;
-
-      ConsoleType consoleType;
-   
-      virtual bool interpretMessage(Message* message);
-
-      static const int CONTINUE_READ  = 100;
-      static const int PYTHON_SUCCESS = 200;
-      static const int PYTHON_FAIL    = 300;
-      static const int FEOF           = 400;
+   CONSOLETYPE_INTERACTIVE,
+   CONSOLETYPE_FILE,
+   CONSOLETYPE_STDIN
 };
-
-#endif // CONSOLE_H
+#endif// CONSOLETYPE_H

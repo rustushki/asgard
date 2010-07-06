@@ -31,16 +31,27 @@ using std::endl;
 
 Console::Console(string filename) : SystemComponent("console")
 {
-   this->sessionLog = "";
    this->code = "";
    this->filename = filename;
+   this->consoleType = CONSOLETYPE_FILE;
 }
 
 Console::Console() : SystemComponent("console")
 {
-   this->sessionLog = "";
    this->code = "";
    this->filename = "";
+   this->consoleType = CONSOLETYPE_STDIN;
+}
+
+Console::Console(bool interactive) : SystemComponent("console")
+{
+   this->code = "";
+   this->filename = "";
+
+   if (interactive == true)
+      this->consoleType = CONSOLETYPE_INTERACTIVE;
+   else
+      this->consoleType = CONSOLETYPE_STDIN;
 }
 
 Console::~Console()
@@ -94,47 +105,75 @@ void Console::inputLoop()
    }
 
    // Then switch to console input as Asgard is intended to continue running.
-   while(1)
-   {
+
+   if (this->consoleType == CONSOLETYPE_INTERACTIVE)
       this->prompt();
 
-      if (this->readCode() != true)
+   while(1)
+   {
+      int code = this->readCode();
+      if (code == Console::FEOF)
       {
-         // output session log
-         cout << this->sessionLog;
-         exit(1);
+         if (this->consoleType == CONSOLETYPE_INTERACTIVE)
+         {
+            exit(1);
+         }
+      }
+
+      if (code == Console::CONTINUE_READ)
+      {
+         if (this->consoleType == CONSOLETYPE_INTERACTIVE)
+            this->prompt();
+         continue;
       }
 
       this->listen(10);
    }
 }
 
-bool Console::readCode()
+int Console::readCode()
 {
-   char input[1024];
-   fgets(input, 1024, stdin);
-
    if (!feof(stdin))
    {
-      // Copy the input.  Otherwise when the stream is closed, our read in data
-      // becomes gibberish.
-      char tempbuff[1024];
-      strcpy(tempbuff, input);
+      char input[1024];
 
-      // Concatentate to session log so far.
-      this->sessionLog += string(tempbuff);
+      fgets(input, 1024, stdin);
+
       this->code += input;
-      return this->execPython();
+
+      // Interactive Mode: Exec Python each CR.
+      if (this->consoleType == CONSOLETYPE_INTERACTIVE)
+      {
+         // TODO: Handle Failure.
+         this->execPython();
+      }
+      // STDIN Mode: Accumulate all input until stdin is closed.
+      else if (!feof(stdin))
+      {
+         return Console::CONTINUE_READ;
+      }
+      // STDIN Mode: When stdin stream is closed, execute.
+      else
+      {
+         // TODO: Handle Failure.
+         this->execPython();
+      }
+
+      // Continue reading input?
+      if (feof(stdin))
+         return Console::FEOF;
+      else
+         return Console::CONTINUE_READ;
    }
 
-   return false;
+   return Console::FEOF;
 }
 
-bool Console::execPython()
+int Console::execPython()
 {
    bool success = false;
 
-   if (this->filename != "")
+   if (this->consoleType == CONSOLETYPE_FILE)
    {
       FILE *fp = fopen(this->filename.c_str(), "r");
       success = PyRun_SimpleFile(fp, this->filename.c_str());
@@ -146,7 +185,10 @@ bool Console::execPython()
    }
 
    this->code = "";
-   return success;
+   if (success)
+      return Console::PYTHON_SUCCESS;
+
+   return Console::PYTHON_FAIL;
 }
 
 void Console::prompt()
