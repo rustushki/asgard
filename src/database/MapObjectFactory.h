@@ -20,6 +20,7 @@
 #ifndef MAP_OBJECT_FACTORY_H
 #define MAP_OBJECT_FACTORY_H
 
+#include <sqlite3.h>
 #include "Hardpoint.h"
 #include "RowSet.h"
  
@@ -32,11 +33,12 @@ class MapObjectFactory
       static void createStaticMapObject(char **columnValue);
       static Hardpoint* createHardpoint(RowSet* rs, int row);
       static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
+      static RowSet* loadHardpoints(sqlite3 *asgardDb, int smoId);
+      static RowSet* loadNonPlayerCharacterPath(sqlite3 *asgardDb, int npcId);
       
    public:
+      static int build(sqlite3 *db, int boxId);
       static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 
-      
 };
 
 #endif //MAP_OBJECT_FACTORY_H
-

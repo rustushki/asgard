@@ -32,7 +32,46 @@
 #include "CircHardpoint.h"
 #include "RectHardpoint.h"
 #include "Database.h"
+#include "QueryGenerator.h"
 #include <cstdlib>
+
+int MapObjectFactory::build(sqlite3 *db, int boxId)
+{
+   MapObjectType type;
+   char *query, *sqliteErrorCode;
+
+   // Invalid Bounding Box
+   if (boxId <= 0)
+      return false;
+ 
+   // NonPlayerCharacter
+   query = QueryGenerator::nonPlayerCharacter(boxId);
+   type = MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER;
+   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
+   delete query;
+
+   // Container
+   query = QueryGenerator::container(boxId);
+   type = MAP_OBJECT_TYPE_CONTAINER;
+   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
+   delete query;
+
+   // StaticMapObject
+   query = QueryGenerator::staticMapObject(boxId);
+   type = MAP_OBJECT_TYPE_STATIC_MAP_OBJECT;
+   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
+   delete query;
+
+   // Tile
+   query = QueryGenerator::tile(boxId);
+   type = MAP_OBJECT_TYPE_TILE;
+   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
+   delete query;
+
+   sqlite3_free(sqliteErrorCode);
+
+   return 0;
+}
 
 int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
 {
@@ -47,10 +86,8 @@ int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **co
       default:                                     { /* TODO: Error case... add logging */ break; }
    }
    
-   
    return 0;
 }
-
 
 void MapObjectFactory::createTile(char **columnValue)
 {
@@ -91,13 +128,12 @@ void MapObjectFactory::createTile(char **columnValue)
       // Add tile to gameEngine
       gameEngine->addMapObject((MapObject*)tile);
    }
-      
 }
-
 
 void MapObjectFactory::createContainer(char **columnValue)
 {
    Database* db = Database::getInstance();
+   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
 
    // MapObject Req'd Members
@@ -110,14 +146,13 @@ void MapObjectFactory::createContainer(char **columnValue)
    Container* container = new Container();
 
    // Create Hardpoints
-   rs = db->loadHardpoints(atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]));
+   rs = loadHardpoints(asgardDb, atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]));
 
    if (rs != NULL)
    {
       for (int row = 0; row < rs->getRowCount(); row++)
          container->addHardpoint(createHardpoint(rs,row));
    }
-
 
    // TODO: Create Items; Not 0.3.0
    
@@ -142,10 +177,10 @@ void MapObjectFactory::createContainer(char **columnValue)
    }
 }
 
-
 void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
 {
    Database* db = Database::getInstance();
+   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
 
    // MapObject Req'd Members
@@ -159,7 +194,7 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
    if (npc != NULL)
    {
       // Create Hardpoints
-      rs = db->loadHardpoints(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+      rs = loadHardpoints(asgardDb, atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
 
       if (rs != NULL)
       {
@@ -168,7 +203,7 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
       }
 
       // Create NonPlayerCharacterPath
-      rs = db->loadNonPlayerCharacterPath(atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+      rs = loadNonPlayerCharacterPath(asgardDb, atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
 
       if (rs != NULL)
       {
@@ -193,10 +228,10 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
    }
 }
 
-
 void MapObjectFactory::createStaticMapObject(char **columnValue)
 {
    Database* db = Database::getInstance();
+   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
    
    // MapObject Req'd Members
@@ -210,7 +245,7 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
    if (staticMapObject != NULL)
    {
       // Create Hardpoints
-      rs = db->loadHardpoints(atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID]));
+      rs = loadHardpoints(asgardDb, atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID]));
 
       if (rs != NULL)
       {
@@ -233,9 +268,7 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)staticMapObject);
    }
-
 }
-
 
 Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
 {
@@ -271,7 +304,6 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
       }
 }
 
-
 Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row)
 {
    int wc_x = 0;
@@ -281,4 +313,40 @@ Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int 
    wc_y = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y));
 
    return new Coordinate(wc_x, wc_y);
+}
+
+RowSet* MapObjectFactory::loadHardpoints(sqlite3 *asgardDb, int smoId)
+{
+   RowSet* rs = new RowSet();
+   char* hpQuery;
+   int rc; 
+ 
+   hpQuery = QueryGenerator::hardpoint(smoId);
+   rc = rs->select(asgardDb, hpQuery);
+   delete hpQuery;
+
+   if (rc == SQLITE_OK)
+   {
+      assert(rs->getColCount() == HARDPOINT_COLUMN_COUNT);
+   }
+
+   return rs;
+}
+
+RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *asgardDb, int npcId)
+{
+   RowSet* rs = new RowSet();
+   char* npcPathQuery;
+   int rc;
+
+   npcPathQuery = QueryGenerator::nonPlayerCharacterPath(npcId);
+   rc = rs->select(asgardDb, npcPathQuery);
+   delete npcPathQuery;
+
+   if (rc == SQLITE_OK)
+   {
+      assert(rs->getColCount() == NON_PLAYER_CHARACTER_PATH_COLUMN_COUNT);
+   }
+
+   return rs;
 }

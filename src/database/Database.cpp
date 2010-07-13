@@ -19,15 +19,9 @@
 
 #include <boost/bind.hpp>
 #include <boost/thread.hpp>
-#include <cassert>
 #include <string>
 #include "Database.h"
 #include "MapObjectFactory.h"
-#include "MapObjectType.h"
-#include "QueryGenerator.h"
-#include "DatabaseColumnMap.h"
-#include "GameEngine.h"
-#include "RowSet.h"
 #include "MessageFactory.h"
 #include "DrawableFactory.h"
 
@@ -56,6 +50,11 @@ Database* Database::getInstance()
    return instance;
 }
 
+sqlite3* Database::getAsgardDb() const
+{
+   return this->asgardDb;
+}
+
 void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes)
 {
    // Map as of 0.3.0 is 1 boundbox, 0.
@@ -64,78 +63,9 @@ void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBox
 
 bool Database::loadBoundingBox(int boxId)
 {
-   char* query;
-   MapObjectType type;
-   char *sqliteErrorCode;
+   MapObjectFactory::build(this->asgardDb, boxId);
 
-   // Invalid Bounding Box
-   if (boxId <= 0)
-      return false;
-   
-   // NonPlayerCharacter
-   query = QueryGenerator::nonPlayerCharacter(boxId);
-   type = MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER;
-   sqlite3_exec(this->asgardDb, query, MapObjectFactory::processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
-
-   // Container
-   query = QueryGenerator::container(boxId);
-   type = MAP_OBJECT_TYPE_CONTAINER;
-   sqlite3_exec(this->asgardDb, query, MapObjectFactory::processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
-
-   // StaticMapObject
-   query = QueryGenerator::staticMapObject(boxId);
-   type = MAP_OBJECT_TYPE_STATIC_MAP_OBJECT;
-   sqlite3_exec(this->asgardDb, query, MapObjectFactory::processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
-
-   // Tile
-   query = QueryGenerator::tile(boxId);
-   type = MAP_OBJECT_TYPE_TILE;
-   sqlite3_exec(this->asgardDb, query, MapObjectFactory::processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
-
-   sqlite3_free(sqliteErrorCode);
-   
    return true;
-}
-
-RowSet* Database::loadHardpoints(int smoId)
-{
-   RowSet* rs = new RowSet();
-   char* query;
-   int rc;
-
-   query = QueryGenerator::hardpoint(smoId);
-   rc = rs->select(this->asgardDb, query);
-   delete query;
-
-   if (rc == SQLITE_OK)
-   {
-      assert(rs->getColCount() == HARDPOINT_COLUMN_COUNT);
-   }
-
-   return rs;
-}
-
-RowSet* Database::loadNonPlayerCharacterPath(int npcId)
-{
-   RowSet* rs = new RowSet();
-   char* query;
-   int rc;
-
-   query = QueryGenerator::nonPlayerCharacterPath(npcId);
-   rc = rs->select(this->asgardDb, query);
-   delete query;
-
-   if (rc == SQLITE_OK)
-   {
-      assert(rs->getColCount() == NON_PLAYER_CHARACTER_PATH_COLUMN_COUNT);
-   }
-
-   return rs;
-   
 }
 
 bool Database::loadDrawable(std::string dName)

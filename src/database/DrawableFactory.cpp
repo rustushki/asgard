@@ -35,7 +35,7 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
    query = QueryGenerator::drawable(dName);
 
    // Use query to process information from database for building Drawable
-   if(sqlite3_exec(db, query, processDRow, (void*)d, &sqliteErrorCode) != SQLITE_OK)
+   if(sqlite3_exec(db, query, processRow, (void*)d, &sqliteErrorCode) != SQLITE_OK)
    {
       // Handle sqliteErrorCode?
 
@@ -53,7 +53,7 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
    return 0;
 }
 
-int DrawableFactory::processDRow(void *d, int columnCount, char **columnValue, char **columnName)
+int DrawableFactory::processRow(void *d, int columnCount, char **columnValue, char **columnName)
 {
    Drawable *drawPtr = static_cast<Drawable*>(d);
    Animation *a;

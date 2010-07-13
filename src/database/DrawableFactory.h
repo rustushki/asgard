@@ -29,7 +29,7 @@ class DrawableFactory
       static int build(sqlite3 *db, std::string dName);
 
    private:
-      static int processDRow(void *d, int columnCount, char **columnValue, char **columnName);
+      static int processRow(void *d, int columnCount, char **columnValue, char **columnName);
 };
 
 #endif //DRAWABLE_FACTORY_H

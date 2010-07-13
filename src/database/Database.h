@@ -24,7 +24,6 @@
 #include <string>
 #include "SystemComponent.h"
 #include "Coordinate.h"
-#include "RowSet.h"
  
 #define ASGARD_DATABASE "asgard.db3"
  
@@ -41,10 +40,9 @@ class Database : public SystemComponent
 
    public:
       static Database* getInstance();
+      sqlite3* getAsgardDb() const;
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
       bool loadBoundingBox(int boxId);
-      RowSet* loadHardpoints(int smoId);
-      RowSet* loadNonPlayerCharacterPath(int npcId);
       bool loadDrawable(std::string dName);
       
       virtual bool open();
