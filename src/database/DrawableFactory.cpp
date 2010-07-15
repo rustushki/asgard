@@ -26,7 +26,8 @@
 int DrawableFactory::build(sqlite3 *db, std::string dName)
 {
    Drawable *d;
-   char *query, *sqliteErrorCode;
+   Animation *a;
+   char *query;
 
    // Create Drawable object
    d = new Drawable(dName);
@@ -34,17 +35,20 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
    // Generate query for building Drawable
    query = QueryGenerator::drawable(dName);
 
-   // Use query to process information from database for building Drawable
-   if(sqlite3_exec(db, query, processRow, (void*)d, &sqliteErrorCode) != SQLITE_OK)
+   // Prepare SQLite3 statement
+   sqlite3_stmt *stmt = 0;
+   sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+
+   // Load Drawable object with Animations
+   while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      // Handle sqliteErrorCode?
-
-      // Free memory held by error message
-      sqlite3_free((void*)sqliteErrorCode);
-
-      return -1;
+      a = new Animation((const char *)sqlite3_column_text(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NAME), sqlite3_column_int(stmt, ANIMATION_COLUMN_WIDTH), sqlite3_column_int(stmt, ANIMATION_COLUMN_HEIGHT), sqlite3_column_int(stmt, ANIMATION_COLUMN_STILL_COUNT), sqlite3_column_int(stmt, ANIMATION_COLUMN_STILLS_PER_SECOND), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_ROWS), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_COLUMNS));
+      d->addAnimation(a, (const char *)sqlite3_column_text(stmt, ANIMATION_COLUMN_ANIMATION_NAME));
    }
 
+   // Clean up
+   sqlite3_finalize(stmt);
+   sqlite3_close(db);
    delete query;
 
    // Send drawable to Graphics Engine for display
@@ -52,35 +56,3 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
 
    return 0;
 }
-
-int DrawableFactory::processRow(void *d, int columnCount, char **columnValue, char **columnName)
-{
-   Drawable *drawPtr = static_cast<Drawable*>(d);
-   Animation *a;
-   uint ssCols, ssRows, height, width, stillCount, sps;
-
-   char dName[50];
-   char aName[100];
-   char ssName[50];
-
-   // Extract data for creating Animation
-   strcpy(dName, columnValue[ANIMATION_COLUMN_DRAWABLE_NAME]);
-   strcpy(aName, columnValue[ANIMATION_COLUMN_ANIMATION_NAME]);
-   strcpy(ssName, columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NAME]);
-   ssCols = atoi(columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NUM_COLUMNS]);
-   ssRows = atoi(columnValue[ANIMATION_COLUMN_SPRITE_SHEET_NUM_ROWS]);
-   height = atoi(columnValue[ANIMATION_COLUMN_HEIGHT]);
-   width = atoi(columnValue[ANIMATION_COLUMN_WIDTH]);
-   stillCount = atoi(columnValue[ANIMATION_COLUMN_STILL_COUNT]);
-   sps = atoi(columnValue[ANIMATION_COLUMN_STILLS_PER_SECOND]);
-   
-   // Create Animation
-   a = new Animation(std::string(ssName), width, height, stillCount, sps, 
-         ssRows, ssCols);
-   
-   // Load Animation into Drawable
-   drawPtr->addAnimation(a, std::string(aName));
-   
-   return 0;
-}
-
