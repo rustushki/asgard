@@ -26,18 +26,15 @@ class QueryGenerator
 {
    public:
       static char* staticMapObject(int boundingBoxId);
-      
       static char* nonPlayerCharacter(int boundingBoxId);
       static char* nonPlayerCharacterPath(int mapObjectId);
-      
       static char* container(int boundingBoxId);
-      
       static char* tile(int boundingBoxId);
-      
       static char* hardpoint(int mapObjectId);
-
       static char* drawable(std::string dName);
+   private:
+      static char* makeCStr(std::string s);
+      static std::string intToString(int b);
 };
 
 #endif // QUERY_GENERATOR_H
-
