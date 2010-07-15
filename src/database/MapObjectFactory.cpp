@@ -18,7 +18,6 @@
  ****************************************************************************/
 
 #include "MapObjectFactory.h"
-#include "GameEngine.h"
 #include "Tile.h"
 #include "WaterTile.h"
 #include "GrassTile.h"
@@ -26,82 +25,78 @@
 #include "Container.h"
 #include "StaticMapObject.h"
 #include "NonPlayerCharacter.h"
-#include "MapObjectType.h"
 #include "DatabaseColumnMap.h"
-#include "Hardpoint.h"
 #include "CircHardpoint.h"
 #include "RectHardpoint.h"
-#include "Database.h"
 #include "QueryGenerator.h"
 #include <cstdlib>
 
 int MapObjectFactory::build(sqlite3 *db, int boxId)
 {
-   MapObjectType type;
-   char *query, *sqliteErrorCode;
+   char *query;
+   sqlite3_stmt *stmt;
 
    // Invalid Bounding Box
    if (boxId <= 0)
       return false;
+
+   // Get pointer to GameEngine
+   GameEngine *gameEngine = GameEngine::getInstance();
  
-   // NonPlayerCharacter
+   // Build NonPlayerCharacters
    query = QueryGenerator::nonPlayerCharacter(boxId);
-   type = MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER;
-   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete [] query;
-
-   // Container
-   query = QueryGenerator::container(boxId);
-   type = MAP_OBJECT_TYPE_CONTAINER;
-   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete [] query;
-
-   // StaticMapObject
-   query = QueryGenerator::staticMapObject(boxId);
-   type = MAP_OBJECT_TYPE_STATIC_MAP_OBJECT;
-   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete [] query;
-
-   // Tile
-   query = QueryGenerator::tile(boxId);
-   type = MAP_OBJECT_TYPE_TILE;
-   sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete [] query;
-
-   sqlite3_free(sqliteErrorCode);
-
-   return 0;
-}
-
-int MapObjectFactory::processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName)
-{
-   MapObjectType *type = static_cast<MapObjectType*>(mapObjectType);
-
-   switch(*type)
+   stmt = 0;
+   sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+   while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      case MAP_OBJECT_TYPE_CONTAINER:              { MapObjectFactory::createContainer(columnValue); break; }
-      case MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER:   { MapObjectFactory::createNonPlayerCharacter(columnValue); break; }
-      case MAP_OBJECT_TYPE_STATIC_MAP_OBJECT:      { MapObjectFactory::createStaticMapObject(columnValue); break; }
-      case MAP_OBJECT_TYPE_TILE:                   { MapObjectFactory::createTile(columnValue); break; }
-      default:                                     { /* TODO: Error case... add logging */ break; }
+      createNonPlayerCharacter(db, stmt, gameEngine);
    }
-   
+   sqlite3_finalize(stmt);
+   delete [] query;
+  
+   // Build Containers
+   query = QueryGenerator::container(boxId);
+   stmt = 0;
+   sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+   while (sqlite3_step(stmt) == SQLITE_ROW)
+   {
+      createContainer(db, stmt, gameEngine);
+   }
+   sqlite3_finalize(stmt);
+   delete [] query;
+
+   // Build StaticMapObjects
+   query = QueryGenerator::staticMapObject(boxId);
+   stmt = 0;
+   sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+   while (sqlite3_step(stmt) == SQLITE_ROW)
+   {
+      createStaticMapObject(db, stmt, gameEngine);
+   }
+   sqlite3_finalize(stmt);
+   delete [] query;
+
+   // Build Tiles
+   query = QueryGenerator::tile(boxId);
+   stmt = 0;
+   sqlite3_prepare_v2(db, query, -1, &stmt, 0);
+   while (sqlite3_step(stmt) == SQLITE_ROW)
+   {
+      createTile(stmt, gameEngine);
+   }
+   sqlite3_finalize(stmt);
+   delete [] query;
+
    return 0;
 }
 
-void MapObjectFactory::createTile(char **columnValue)
+void MapObjectFactory::createTile(sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
    // Create new tile
    Tile *tile;
-      
-   // MapObject Req'd Members
-   int wc_x;
-   int wc_y;
-   int height;
-   int width;
-   
-   TileType tileType = (TileType)atoi(columnValue[TILE_COLUMN_TILE_TYPE]);
-   
+  
+   TileType tileType = (TileType)sqlite3_column_int(stmt, TILE_COLUMN_TILE_TYPE);
+
    switch(tileType)
    {
       case TILE_TYPE_WATER:   { tile = new WaterTile(); break; }
@@ -112,41 +107,23 @@ void MapObjectFactory::createTile(char **columnValue)
 
    if(tile != NULL)
    {
-      wc_x = atoi(columnValue[TILE_COLUMN_WC_X]);
-      wc_y = atoi(columnValue[TILE_COLUMN_WC_Y]);
-      width = atoi(columnValue[TILE_COLUMN_WIDTH]);
-      height = atoi(columnValue[TILE_COLUMN_HEIGHT]);
+      // Set Tile Map Object attributes
+      tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
+      tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
+      tile->setHeight(sqlite3_column_int(stmt, TILE_COLUMN_HEIGHT));
 
-      // Set tile Map Object variables
-      tile->setLeftCorner(Coordinate(wc_x, wc_y));
-      tile->setWidth(width);
-      tile->setHeight(height);
-      
-      // Get reference to GameEngine
-      GameEngine *gameEngine = GameEngine::getInstance();
-      
-      // Add tile to gameEngine
+      // Add Tile to gameEngine
       gameEngine->addMapObject((MapObject*)tile);
    }
 }
 
-void MapObjectFactory::createContainer(char **columnValue)
+void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   Database* db = Database::getInstance();
-   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
-
-   // MapObject Req'd Members
-   int wc_x;
-   int wc_y;
-   int height;
-   int width;
-
-   // Objects to Create
    Container* container = new Container();
 
    // Create Hardpoints
-   rs = loadHardpoints(asgardDb, atoi(columnValue[CONTAINER_COLUMN_MAP_OBJECT_ID]));
+   rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
 
    if (rs != NULL)
    {
@@ -155,46 +132,29 @@ void MapObjectFactory::createContainer(char **columnValue)
    }
 
    // TODO: Create Items; Not 0.3.0
-   
+  
 
    if (container != NULL)
    {
-      // Set MapObject Members 
-      wc_x = atoi(columnValue[CONTAINER_COLUMN_WC_X]);
-      wc_y = atoi(columnValue[CONTAINER_COLUMN_WC_Y]);
-      width = atoi(columnValue[CONTAINER_COLUMN_WIDTH]);
-      height = atoi(columnValue[CONTAINER_COLUMN_HEIGHT]);
+      // Set Container attributes
+      container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
+      container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
+      container->setHeight(sqlite3_column_int(stmt, CONTAINER_COLUMN_HEIGHT));
 
-      container->setLeftCorner(Coordinate(wc_x, wc_y));
-      container->setWidth(width);
-      container->setHeight(height);
-
-      // Get reference to GameEngine
-      GameEngine *gameEngine = GameEngine::getInstance();
-         
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)container);
    }
 }
 
-void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
+void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   Database* db = Database::getInstance();
-   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
-
-   // MapObject Req'd Members
-   int wc_x;
-   int wc_y;
-   int height;
-   int width;
-
    NonPlayerCharacter *npc = new NonPlayerCharacter();
-   
+  
    if (npc != NULL)
    {
       // Create Hardpoints
-      rs = loadHardpoints(asgardDb, atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+      rs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL)
       {
@@ -203,49 +163,32 @@ void MapObjectFactory::createNonPlayerCharacter(char **columnValue)
       }
 
       // Create NonPlayerCharacterPath
-      rs = loadNonPlayerCharacterPath(asgardDb, atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID]));
+      rs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL)
       {
          for (int row = 0; row < rs->getRowCount(); row++)
             npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
       }
-      
-      wc_x = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_X]);
-      wc_y = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WC_Y]);
-      width = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_WIDTH]);
-      height = atoi(columnValue[NON_PLAYER_CHARACTER_COLUMN_HEIGHT]);
-
-      npc->setLeftCorner(Coordinate(wc_x, wc_y));
-      npc->setWidth(width);
-      npc->setHeight(height);
-
-      // Get reference to GameEngine
-      GameEngine *gameEngine = GameEngine::getInstance();
-         
+     
+      npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
+      npc->setWidth(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WIDTH));
+      npc->setHeight(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_HEIGHT));
+        
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)npc);
    }
 }
 
-void MapObjectFactory::createStaticMapObject(char **columnValue)
+void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   Database* db = Database::getInstance();
-   sqlite3* asgardDb = db->getAsgardDb();
    RowSet* rs;
-   
-   // MapObject Req'd Members
-   int wc_x;
-   int wc_y;
-   int height;
-   int width;
-
    StaticMapObject *staticMapObject = new StaticMapObject();
 
    if (staticMapObject != NULL)
    {
       // Create Hardpoints
-      rs = loadHardpoints(asgardDb, atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID]));
+      rs = loadHardpoints(db, sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL)
       {
@@ -253,18 +196,10 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
             staticMapObject->addHardpoint(createHardpoint(rs,row));
       }
 
-      wc_x = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_X]);
-      wc_y = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WC_Y]);
-      width = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_WIDTH]);
-      height = atoi(columnValue[STATIC_MAP_OBJECT_COLUMN_HEIGHT]);
-
-      staticMapObject->setLeftCorner(Coordinate(wc_x, wc_y));
-      staticMapObject->setWidth(width);
-      staticMapObject->setHeight(height);
-
-      // Get reference to GameEngine
-      GameEngine *gameEngine = GameEngine::getInstance();
-         
+      staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
+      staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));
+      staticMapObject->setHeight(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_HEIGHT));
+       
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)staticMapObject);
    }
@@ -272,12 +207,8 @@ void MapObjectFactory::createStaticMapObject(char **columnValue)
 
 Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
 {
-      int x       = 0;
-      int y       = 0;
-      int height  = 0;
-      int width   = 0;
-      double r    = 0;
-      int type    = 0;
+      int x,y,height,width,type = 0;
+      double r = 0;
 
       // Rect and Circ Hardpoints need these.
       type = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HARDPOINT_TYPE));
@@ -306,8 +237,7 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
 
 Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row)
 {
-   int wc_x = 0;
-   int wc_y = 0;
+   int wc_x,wc_y = 0;
 
    wc_x = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X));
    wc_y = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y));
@@ -315,14 +245,14 @@ Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int 
    return new Coordinate(wc_x, wc_y);
 }
 
-RowSet* MapObjectFactory::loadHardpoints(sqlite3 *asgardDb, int smoId)
+RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId)
 {
    RowSet* rs = new RowSet();
    char* hpQuery;
-   int rc; 
+   int rc;
  
    hpQuery = QueryGenerator::hardpoint(smoId);
-   rc = rs->select(asgardDb, hpQuery);
+   rc = rs->select(db, hpQuery);
    delete [] hpQuery;
 
    if (rc == SQLITE_OK)
@@ -333,14 +263,14 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *asgardDb, int smoId)
    return rs;
 }
 
-RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *asgardDb, int npcId)
+RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *db, int npcId)
 {
    RowSet* rs = new RowSet();
    char* npcPathQuery;
    int rc;
 
    npcPathQuery = QueryGenerator::nonPlayerCharacterPath(npcId);
-   rc = rs->select(asgardDb, npcPathQuery);
+   rc = rs->select(db, npcPathQuery);
    delete [] npcPathQuery;
 
    if (rc == SQLITE_OK)

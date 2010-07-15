@@ -21,24 +21,24 @@
 #define MAP_OBJECT_FACTORY_H
 
 #include <sqlite3.h>
+#include "GameEngine.h"
 #include "Hardpoint.h"
 #include "RowSet.h"
  
 class MapObjectFactory
 {
    private:
-      static void createTile(char **columnValue);
-      static void createContainer(char **columnValue);
-      static void createNonPlayerCharacter(char **columnValue);
-      static void createStaticMapObject(char **columnValue);
+      static void createTile(sqlite3_stmt *stmt, GameEngine *gameEngine);
+      static void createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
+      static void createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
+      static void createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
       static Hardpoint* createHardpoint(RowSet* rs, int row);
       static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
-      static RowSet* loadHardpoints(sqlite3 *asgardDb, int smoId);
-      static RowSet* loadNonPlayerCharacterPath(sqlite3 *asgardDb, int npcId);
+      static RowSet* loadHardpoints(sqlite3 *db, int smoId);
+      static RowSet* loadNonPlayerCharacterPath(sqlite3 *db, int npcId);
       
    public:
       static int build(sqlite3 *db, int boxId);
-      static int processRow(void *mapObjectType, int columnCount, char **columnValue, char **columnName); 
 };
 
 #endif //MAP_OBJECT_FACTORY_H
