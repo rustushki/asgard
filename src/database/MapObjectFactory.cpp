@@ -48,25 +48,25 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    query = QueryGenerator::nonPlayerCharacter(boxId);
    type = MAP_OBJECT_TYPE_NON_PLAYER_CHARACTER;
    sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
+   delete [] query;
 
    // Container
    query = QueryGenerator::container(boxId);
    type = MAP_OBJECT_TYPE_CONTAINER;
    sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
+   delete [] query;
 
    // StaticMapObject
    query = QueryGenerator::staticMapObject(boxId);
    type = MAP_OBJECT_TYPE_STATIC_MAP_OBJECT;
    sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
+   delete [] query;
 
    // Tile
    query = QueryGenerator::tile(boxId);
    type = MAP_OBJECT_TYPE_TILE;
    sqlite3_exec(db, query, processRow, (void*)&type, &sqliteErrorCode);
-   delete query;
+   delete [] query;
 
    sqlite3_free(sqliteErrorCode);
 
@@ -323,7 +323,7 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *asgardDb, int smoId)
  
    hpQuery = QueryGenerator::hardpoint(smoId);
    rc = rs->select(asgardDb, hpQuery);
-   delete hpQuery;
+   delete [] hpQuery;
 
    if (rc == SQLITE_OK)
    {
@@ -341,7 +341,7 @@ RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *asgardDb, int npcI
 
    npcPathQuery = QueryGenerator::nonPlayerCharacterPath(npcId);
    rc = rs->select(asgardDb, npcPathQuery);
-   delete npcPathQuery;
+   delete [] npcPathQuery;
 
    if (rc == SQLITE_OK)
    {

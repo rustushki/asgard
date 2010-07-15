@@ -49,7 +49,7 @@ int DrawableFactory::build(sqlite3 *db, std::string dName)
    // Clean up
    sqlite3_finalize(stmt);
    sqlite3_close(db);
-   delete query;
+   delete [] query;
 
    // Send drawable to Graphics Engine for display
    MessageFactory::makeDisplayDrawable(d, "stageLayer");
