@@ -8,6 +8,8 @@
 #include "ScreenState.h"
 #include "Asgard.h"
 
+class Layer;
+
 class Screen
 {
    public:

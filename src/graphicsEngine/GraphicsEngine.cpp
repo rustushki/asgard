@@ -5,6 +5,7 @@
 using std::string;
 
 GraphicsEngine* GraphicsEngine::instance = NULL;
+boost::shared_mutex GraphicsEngine::updateLock;
 
 GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine")
 {
@@ -70,15 +71,39 @@ void GraphicsEngine::initScreen()
 
    s->pushLayer(bgLayer);
 
+   // TODO: make this a command so that this thread can terminate.
+   this->play();
+}
+
+void GraphicsEngine::play()
+{
    int time = 0;
+   Screen* s = Screen::getInstance();
+
    while(1)
    {
       time = SDL_GetTicks();
-      s->prepare();
+
+      // Wait for write access to layers.  Once obtained, update them.
+	  GraphicsEngine::obtainLock();
+	  s->prepare();
+	  GraphicsEngine::releaseLock();
+
       s->flip();
       time = SDL_GetTicks() - time;
       this->listen((1000/Screen::FPS)-time);
    }
+}
+
+// Wait for write access to the screen/layers.
+void GraphicsEngine::obtainLock()
+{
+   return GraphicsEngine::updateLock.lock_shared();
+}
+
+void GraphicsEngine::releaseLock()
+{
+   GraphicsEngine::updateLock.unlock_shared();
 }
 
 bool GraphicsEngine::interpretMessage(Message* message)

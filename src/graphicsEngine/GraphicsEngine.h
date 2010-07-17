@@ -23,6 +23,7 @@
 #include "Screen.h"
 #include "Message.h"
 #include "SystemComponent.h"
+#include <boost/thread/shared_mutex.hpp>
 
 class GraphicsEngine : public SystemComponent
 {
@@ -35,10 +36,17 @@ class GraphicsEngine : public SystemComponent
       virtual bool open();
       virtual bool close();
 
+      // Screen initiates it's updating loop
+	  void play();
+
+      static void obtainLock();
+      static void releaseLock();
+
    private:
       static GraphicsEngine* instance;
       void initScreen();
       virtual bool interpretMessage(Message* message);
+	  static boost::shared_mutex updateLock;
 };
 
 #endif // GRAPHICSENGINE_H

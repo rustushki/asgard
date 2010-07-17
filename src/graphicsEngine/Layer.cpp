@@ -25,30 +25,37 @@ LayerState Layer::getStatus()
 
 void Layer::insertDrawable(Drawable* drawable, int zIndex)
 {
+   GraphicsEngine::obtainLock();
    //TODO: Error handling...
    //  should throw duplicate name exception.
    //  should throw invalid zIndex exception.
    if (zIndex >= 0 && zIndex <= this->drawable.size())
       this->drawable.insert(this->drawable.begin()+zIndex, drawable);
+   GraphicsEngine::releaseLock();
 }
 
 void Layer::insertDrawableTop(Drawable* drawable)
 {
+   GraphicsEngine::obtainLock();
    //TODO: Error handling...
    //  should throw duplicate name exception.
    this->drawable.push_back(drawable);
+   GraphicsEngine::releaseLock();
 }
 
 void Layer::insertDrawableBottom(Drawable* drawable)
 {
+   GraphicsEngine::obtainLock();
    //TODO: Error handling...
    //  should throw duplicate name exception.
    std::vector<Drawable*>::iterator itr = this->drawable.begin();
    this->drawable.insert(itr, new Drawable(name));
+   GraphicsEngine::releaseLock();
 }
 
 bool Layer::removeDrawable(std::string name)
 {
+   GraphicsEngine::obtainLock();
    std::vector<Drawable*>::iterator itr;
    for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++)
    {
@@ -58,6 +65,7 @@ bool Layer::removeDrawable(std::string name)
          break;
       }
    }
+   GraphicsEngine::releaseLock();
 }
 
 void Layer::update()

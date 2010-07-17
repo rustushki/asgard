@@ -4,6 +4,7 @@
 #include <vector>
 #include <string>
 #include <SDL/SDL.h>
+#include "GraphicsEngine.h"
 #include "LayerState.h"
 class Drawable;
 
