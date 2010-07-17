@@ -14,21 +14,14 @@ Compiling is a little shakey right now.  The compilation method included with
 this source is scons.  You're welcome to use it if you like.  scons can be
 acquired at http://www.scons.org.
 
-2. Install boost 1.36 or greater
+2. Install boost 1.40 or greater
+2. Satisfy Requirements
+
 Our new threading system requires some of the features in boost 1.36, so you
 will need to install it as well.  Sources can be obtained from
-http://www.boost.org
-
-On a *nix system, you can compile boost by:
-% tar xvf ./boost_1_36_0.tar.bz2
-% cd ./boost-1_36_0/
-% ./configure --prefix=/usr/local  # our system looks in /usr/local for boost.
-% make
-% sudo make install
-
-3. Be sure you have SDL and sqlite3 as well.
-http://www.libsdl.org
-http://www.sqlite.org
+SDL    - http://www.libsdl.org
+SQLite - http://www.sqlite.org
+Boost  - http://www.boost.org
 
 4. Create the application database.
 You can do this by:
@@ -41,8 +34,12 @@ You can do this by:
 % cd $PKG/src/
 % scons
 
-6. To Run:
-% ./asgard
+6. To Run: (filename argument)
+% ./asgard test.py
+-or- (stdin)
+% ./asgard < test.py
+-or- (interactive mode)
+% ./asgard -i
 
 You should see the dancing blue cat in the top left hand corner.
 
@@ -50,5 +47,7 @@ New to Asgard?:
 ===============================================================================
 
 Check out our website and wiki:
-http://asgardrpg.org/
-http://wiki.asgardrpg.org/
+Home Page - http://asgardrpg.org/
+     Wiki - http://wiki.asgardrpg.org/
+ Bugzilla - http://bugzilla.asgardrpg.org/
+  Project - http://gna.org/projects/asgard/

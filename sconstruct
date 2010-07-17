@@ -1,0 +1,4 @@
+SConscript([
+   'database/sconscript',
+   'src/sconscript'
+])

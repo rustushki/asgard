@@ -1,0 +1,19 @@
+# List of Objects to Compile
+objects = [
+'./sqlite3.cpp',
+]
+
+env = Environment()
+
+runquery = env.Program('runquery', objects, LIBS=['sqlite3'], CXXFLAGS=['-g'])
+source = [
+   runquery,
+   'createdb.sql',
+   'populatedb.sql'
+]
+target = '../asgard.db3'
+create = './database/runquery $TARGET ./database/createdb.sql';
+populate = './database/runquery $TARGET ./database/populatedb.sql';
+
+dbbuild = env.Command(target, source, create+' && '+populate)
+Clean(dbbuild, 'asgard.db3')

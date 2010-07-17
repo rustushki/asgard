@@ -2,25 +2,17 @@
 # '#' indicates the directory that scons is executed in.
 # TODO: pkg-config for boost?
 
-# Sean's boost headers
 include_path =                     \
-    '#/common:'                    \
-   +'#/console:'                   \
-   +'#/database:'                  \
-   +'#/graphicsEngine:'            \
-   +'#/gui:'                       \
-   +'#/main:'                      \
-   +'#/message:'                   \
-   +'#/messageRouter:'             \
+    '#/src/common:'                \
+   +'#/src/console:'               \
+   +'#/src/database:'              \
+   +'#/src/graphicsEngine:'        \
+   +'#/src/gui:'                   \
+   +'#/src/main:'                  \
+   +'#/src/message:'               \
+   +'#/src/messageRouter:'         \
    +'/usr/include/SDL:'            \
    +'/usr/include/python2.6:'
-
-# Sean's Boost
-#include_path += '/usr/local/include/boost-1_36'
-
-# Russ's Boost
-#include_path += '/usr/local/include/boost-1_39'
-
 
 # List of Objects to Compile
 objects = [
@@ -60,4 +52,4 @@ objects = [
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
 
-env.Program('asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6'], CXXFLAGS=['-g'])
+env.Program('../asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6'], CXXFLAGS=['-g'])

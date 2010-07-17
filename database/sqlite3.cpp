@@ -50,9 +50,10 @@ int main(int argc, char **argv)
       cout << "Error " << rc << endl;
       cout << sqlite3_errmsg(db);
       cout << endl;
+      return 1;
    }
    else
-      cout << "Ok." << endl;
+      return 0;
 
    sqlite3_close(db);
 
