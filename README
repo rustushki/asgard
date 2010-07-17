@@ -9,37 +9,27 @@ dancing blue cat!
 
 We encourage you to attempt to compile and run it.  Let us know how things go.
 
-1. Get scons
-Compiling is a little shakey right now.  The compilation method included with
-this source is scons.  You're welcome to use it if you like.  scons can be
-acquired at http://www.scons.org.
+1. Satisfy Requirements
+scons      - http://scons.org
+SDL        - http://libsdl.org
+SQLite 3   - http://sqlite.org
+Boost 1.40 - http://boost.org
 
-2. Install boost 1.40 or greater
-2. Satisfy Requirements
-
-Our new threading system requires some of the features in boost 1.36, so you
-will need to install it as well.  Sources can be obtained from
-SDL    - http://www.libsdl.org
-SQLite - http://www.sqlite.org
-Boost  - http://www.boost.org
-
-4. Create the application database.
-You can do this by:
-% cd $PKG/database/
-% make
-% make create
-% make install
-
-5. Now compile the project..
-% cd $PKG/src/
+3. Now compile the project..
+% cd $PKG/
 % scons
 
-6. To Run: (filename argument)
+4. To Run: 
+     (filename argument)
 % ./asgard test.py
 -or- (stdin)
 % ./asgard < test.py
 -or- (interactive mode)
 % ./asgard -i
+
+5. To Clean Your Project Tree:
+% cd $PKG/
+% scons -c
 
 You should see the dancing blue cat in the top left hand corner.
 
