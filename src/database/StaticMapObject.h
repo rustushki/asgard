@@ -30,6 +30,7 @@ class StaticMapObject : public MapObject
 {
    public:
       StaticMapObject();
+      ~StaticMapObject();
       
       void addHardpoint(Hardpoint *hardpoint);
       bool collide(MapObject*);

@@ -90,6 +90,6 @@ RowSet::~RowSet()
 {
    if (table != NULL)
    {
-      sqlite3_free(table);
+      sqlite3_free_table(table);
    }
 }

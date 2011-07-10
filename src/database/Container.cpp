@@ -31,6 +31,10 @@ Container::Container() : StaticMapObject()
    
 }
 
+Container::~Container()
+{
+}
+
 /* Returns number of Items in Container */
 int Container::getItemCount()
 {

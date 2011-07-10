@@ -25,6 +25,9 @@ MapObject::MapObject()
    this->width = MAP_OBJECT_WIDTH_DEFAULT;
 }
 
+MapObject::~MapObject() {
+}
+
 MapObject::MapObject(const Coordinate& leftCorner,int height,int width)
 {
    this->leftCorner = leftCorner;

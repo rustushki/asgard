@@ -33,6 +33,7 @@ class MapObject
 {
    public:
       MapObject();
+      virtual ~MapObject();
       MapObject(const Coordinate& leftCorner, int height, int width);
       
       void setLeftCorner(const Coordinate& leftCorner);

@@ -25,6 +25,10 @@ CircHardpoint::CircHardpoint()
    this->radius = 0;
 }
 
+CircHardpoint::~CircHardpoint()
+{
+}
+
 CircHardpoint::CircHardpoint(int x, int y)
 {
    this->coordinate = Coordinate(x,y);

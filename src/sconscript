@@ -45,6 +45,8 @@ objects = [
 './graphicsEngine/Layer.cpp',
 './graphicsEngine/RectBlitter.cpp',
 './graphicsEngine/Screen.cpp',
+#'./database/test.cpp'
+#'./graphicsEngine/test.cpp'
 './main/main.cpp'
 ]
 

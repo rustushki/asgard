@@ -31,6 +31,7 @@ class RectHardpoint : public Hardpoint
       RectHardpoint();
       RectHardpoint(int x, int y);
       RectHardpoint(int x, int y, int h, int w);
+      ~RectHardpoint();
 
       bool conflict(const Coordinate & wc) const;
 };

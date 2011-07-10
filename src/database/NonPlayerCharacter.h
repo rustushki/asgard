@@ -20,6 +20,7 @@
 #ifndef NON_PLAYER_CHARACTER_H
 #define NON_PLAYER_CHARACTER_H
 
+#include <vector>
 #include "StaticMapObject.h"
 
 #define NON_PLAYER_CHARACTER_DEFAULT_SPEED   0
@@ -28,11 +29,12 @@ class NonPlayerCharacter : public StaticMapObject
 {
    public:
       NonPlayerCharacter();
+      ~NonPlayerCharacter();
       
       void setSpeed(int speed);
       void addCoordinateToPath(Coordinate *coordinate);
    private:
-      list<Coordinate*> path;
+      vector<Coordinate*> path;
       int speed;
 };
 

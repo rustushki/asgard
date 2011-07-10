@@ -22,6 +22,12 @@ StaticMapObject::StaticMapObject() : MapObject()
 {
 }
 
+StaticMapObject::~StaticMapObject() {
+   for (int x = 0; x < this->hardpoints.size(); x++) {
+      delete this->hardpoints[x];
+   }
+}
+
 void StaticMapObject::addHardpoint(Hardpoint *hardpoint)
 {
    this->hardpoints.push_back(hardpoint);

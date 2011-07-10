@@ -33,6 +33,10 @@ RectHardpoint::RectHardpoint(int x, int y, int height, int width)
    this->width = width;
 }
 
+RectHardpoint::~RectHardpoint()
+{
+}
+
 bool RectHardpoint::conflict(const Coordinate & wc) const
 {
    Coordinate br; 

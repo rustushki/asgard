@@ -179,7 +179,9 @@ std::string QueryGenerator::intToString(int bar)
    // All `integer` types are 11 characters wide maximally in MySQL.
    char* buf = new char[11];
    sprintf(buf, "%d", bar);
-   return std::string(buf);
+   std::string str = std::string(buf);
+   delete[] buf;
+   return str;
 }
 
 // Convert an std::string into a properly allocated char*

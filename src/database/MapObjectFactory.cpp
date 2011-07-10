@@ -93,7 +93,7 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
 void MapObjectFactory::createTile(sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
    // Create new tile
-   Tile *tile;
+   Tile *tile = NULL;
   
    TileType tileType = (TileType)sqlite3_column_int(stmt, TILE_COLUMN_TILE_TYPE);
 
@@ -119,17 +119,17 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt, GameEngine *gameEngine)
 
 void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   RowSet* rs;
    Container* container = new Container();
 
    // Create Hardpoints
-   rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
+   RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
 
    if (rs != NULL)
    {
       for (int row = 0; row < rs->getRowCount(); row++)
          container->addHardpoint(createHardpoint(rs,row));
    }
+   delete rs;
 
    // TODO: Create Items; Not 0.3.0
   
@@ -144,31 +144,33 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngi
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)container);
    }
+
 }
 
 void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   RowSet* rs;
    NonPlayerCharacter *npc = new NonPlayerCharacter();
   
    if (npc != NULL)
    {
       // Create Hardpoints
-      rs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
+      RowSet* hpRs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
-      if (rs != NULL)
+      if (hpRs != NULL)
       {
-         for (int row = 0; row < rs->getRowCount(); row++)
-            npc->addHardpoint(createHardpoint(rs,row));
+         for (int row = 0; row < hpRs->getRowCount(); row++)
+            npc->addHardpoint(createHardpoint(hpRs,row));
       }
 
-      // Create NonPlayerCharacterPath
-      rs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
+      delete hpRs;
 
-      if (rs != NULL)
+      // Create NonPlayerCharacterPath
+      RowSet* npcRs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
+
+      if (npcRs != NULL)
       {
-         for (int row = 0; row < rs->getRowCount(); row++)
-            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
+         for (int row = 0; row < npcRs->getRowCount(); row++)
+            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(npcRs,row));
       }
      
       npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
@@ -177,24 +179,25 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt,
         
       // Add container to gameEngine
       gameEngine->addMapObject((MapObject*)npc);
+      delete npcRs;
    }
 }
 
 void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
 {
-   RowSet* rs;
    StaticMapObject *staticMapObject = new StaticMapObject();
 
    if (staticMapObject != NULL)
    {
       // Create Hardpoints
-      rs = loadHardpoints(db, sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
+      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL)
       {
          for (int row = 0; row < rs->getRowCount(); row++)
             staticMapObject->addHardpoint(createHardpoint(rs,row));
       }
+      delete rs;
 
       staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
       staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));

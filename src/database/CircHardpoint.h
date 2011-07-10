@@ -28,6 +28,7 @@ class CircHardpoint : public Hardpoint
       double radius;
    public:
       CircHardpoint();
+      ~CircHardpoint();
       CircHardpoint(int x, int y);
       CircHardpoint(int x, int y, double r);
 

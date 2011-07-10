@@ -29,6 +29,7 @@ class Container : public StaticMapObject
 {
    public:
       Container();
+      ~Container();
       int getItemCount();
       Item* getItem(int index);
       bool putItem(Item* item);

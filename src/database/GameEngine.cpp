@@ -31,6 +31,7 @@ void GameEngine::loadVisibleBoxes()
 
 void GameEngine::addMapObject(MapObject* object)
 {
+   delete object;
 }
 
 

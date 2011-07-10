@@ -24,6 +24,13 @@ NonPlayerCharacter::NonPlayerCharacter() : StaticMapObject()
    this->speed = NON_PLAYER_CHARACTER_DEFAULT_SPEED;
 }
 
+NonPlayerCharacter::~NonPlayerCharacter()
+{
+   for (int x = 0; x < this->path.size(); x++) {
+      delete this->path[x];
+   }
+}
+
 void NonPlayerCharacter::setSpeed(int speed)
 {
    this->speed = speed;
