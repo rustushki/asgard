@@ -15,6 +15,7 @@
 #include "MessageFactory.h"
 #include "Database.h"
 #include "GraphicsEngine.h"
+#include "Map.h"
 #include "unistd.h"
 
 int main(int argc, char**argv)
@@ -25,9 +26,11 @@ int main(int argc, char**argv)
    
    SystemComponent* dbCont  = Database::getInstance();
    SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
+   SystemComponent* map = Map::getInstance();
 
    dbCont->open();
    graphicsEngine->open();
+   map->open();
 
    // TODO: make ready() instructions for SystemComponent's so that there is
    // not a race condition here.  Explanation: Screen in GraphicsEngine *MUST*

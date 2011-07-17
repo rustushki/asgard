@@ -9,6 +9,7 @@ include_path =                     \
    +'#/src/graphicsEngine:'        \
    +'#/src/gui:'                   \
    +'#/src/main:'                  \
+   +'#/src/map:'                   \
    +'#/src/message:'               \
    +'#/src/messageRouter:'         \
    +'/usr/include/SDL:'            \
@@ -45,6 +46,7 @@ objects = [
 './graphicsEngine/Layer.cpp',
 './graphicsEngine/RectBlitter.cpp',
 './graphicsEngine/Screen.cpp',
+'./map/Map.cpp',
 #'./database/test.cpp'
 #'./graphicsEngine/test.cpp'
 './main/main.cpp'
