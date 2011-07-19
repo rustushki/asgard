@@ -19,6 +19,7 @@ Screen::~Screen()
 {
    this->status = SCREENSTATE_DESTROYING;
    SDL_FreeSurface(this->nextFrame);
+   SDL_Quit();
 }
 
 Screen* Screen::getInstance()

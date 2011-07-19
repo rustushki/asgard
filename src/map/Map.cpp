@@ -47,7 +47,8 @@ bool Map::close()
 
 void Map::noop()
 {
-
+   // Wait until a message is received.
+   this->listen(-1);
 }
 
 bool Map::interpretMessage(Message* message)

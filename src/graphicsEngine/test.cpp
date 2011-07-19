@@ -7,7 +7,6 @@
 
 int main()
 {
-
    Screen* s = Screen::getInstance();
 
    std::string lsName = "stage";
@@ -54,8 +53,16 @@ int main()
    int y = 0;
    int cv = 0;
    int r = 0;
-   while(1)
+   bool run = true;
+   while(run)
    {
+      SDL_Event event; 
+      while(SDL_PollEvent(&event)) {
+         if (event.type == SDL_QUIT) {
+            run = false;
+         }
+      }
+
       time = SDL_GetTicks();
       s->prepare();
       s->flip();
@@ -70,20 +77,25 @@ int main()
             x++;
          d1->move(x,y);
       }
-         if (r == 25)
-         {
-            d2->swapAnimation("cecil");
-         }
-         else if (r == 50)
-         {
-            d2->swapAnimation("demo");
-            r=0;
-         }
-         r++;
 
-         cv = 0;
+      if (r == 25)
+      {
+         d2->swapAnimation("cecil");
+      }
+      else if (r == 50)
+      {
+         d2->swapAnimation("demo");
+         r=0;
+      }
+      r++;
 
-      SDL_Delay(  (1000 / Screen::FPS ) - time);
+      cv = 0;
+
+      int delay = (1000/Screen::FPS) - time;
+      if (delay <= 0) {
+         delay = 1;
+      }
+      SDL_Delay(delay);
    }
    
    delete s;

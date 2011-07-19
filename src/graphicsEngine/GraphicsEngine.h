@@ -32,12 +32,12 @@ class GraphicsEngine : public SystemComponent
       ~GraphicsEngine();
 
       static GraphicsEngine* getInstance();
-      
+
       virtual bool open();
       virtual bool close();
 
       // Screen initiates it's updating loop
-	  void play();
+      void play();
 
       static void obtainLock();
       static void releaseLock();
@@ -46,7 +46,8 @@ class GraphicsEngine : public SystemComponent
       static GraphicsEngine* instance;
       void initScreen();
       virtual bool interpretMessage(Message* message);
-	  static boost::shared_mutex updateLock;
+      static boost::shared_mutex updateLock;
+      bool eventHandler(SDL_Event& event);
 };
 
 #endif // GRAPHICSENGINE_H

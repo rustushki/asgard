@@ -75,23 +75,44 @@ void GraphicsEngine::initScreen()
    this->play();
 }
 
+bool GraphicsEngine::eventHandler(SDL_Event& event) {
+   bool run = true;
+   if (event.type == SDL_QUIT) {
+      // TODO: Need to signal Asgard to exit here.
+   }
+
+   return run;
+}
+
 void GraphicsEngine::play()
 {
    int time = 0;
    Screen* s = Screen::getInstance();
+   bool run = true;
 
-   while(1)
+   while(run)
    {
+      SDL_Event event; 
+      while(SDL_PollEvent(&event)) {
+         run = this->eventHandler(event);
+      }
+
       time = SDL_GetTicks();
 
       // Wait for write access to layers.  Once obtained, update them.
-	  GraphicsEngine::obtainLock();
-	  s->prepare();
-	  GraphicsEngine::releaseLock();
+      GraphicsEngine::obtainLock();
+      s->prepare();
+      GraphicsEngine::releaseLock();
 
       s->flip();
       time = SDL_GetTicks() - time;
-      this->listen((1000/Screen::FPS)-time);
+
+      // A delay of <= 0 causes this thread to never wake up
+      int delay = (1000/Screen::FPS)-time;
+      if (delay <= 0) {
+         delay = 1;
+      }
+      this->listen(delay);
    }
 }
 
