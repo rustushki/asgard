@@ -26,7 +26,6 @@ objects = [
 './database/QueryGenerator.cpp',
 './database/GrassTile.cpp',
 './database/RowSet.cpp',
-'./database/GameEngine.cpp',
 './database/RectHardpoint.cpp',
 './database/MapObjectFactory.cpp',
 './database/StaticMapObject.cpp',

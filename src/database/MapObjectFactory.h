@@ -21,17 +21,16 @@
 #define MAP_OBJECT_FACTORY_H
 
 #include <sqlite3.h>
-#include "GameEngine.h"
 #include "Hardpoint.h"
 #include "RowSet.h"
  
 class MapObjectFactory
 {
    private:
-      static void createTile(sqlite3_stmt *stmt, GameEngine *gameEngine);
-      static void createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
-      static void createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
-      static void createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine);
+      static void createTile(sqlite3_stmt *stmt);
+      static void createContainer(sqlite3 *db, sqlite3_stmt *stmt);
+      static void createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt);
+      static void createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt);
       static Hardpoint* createHardpoint(RowSet* rs, int row);
       static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
       static RowSet* loadHardpoints(sqlite3 *db, int smoId);

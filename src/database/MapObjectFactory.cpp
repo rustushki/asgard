@@ -40,16 +40,13 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    if (boxId <= 0)
       return false;
 
-   // Get pointer to GameEngine
-   GameEngine *gameEngine = GameEngine::getInstance();
- 
    // Build NonPlayerCharacters
    query = QueryGenerator::nonPlayerCharacter(boxId);
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
    while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      createNonPlayerCharacter(db, stmt, gameEngine);
+      createNonPlayerCharacter(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
@@ -60,7 +57,7 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
    while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      createContainer(db, stmt, gameEngine);
+      createContainer(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
@@ -71,7 +68,7 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
    while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      createStaticMapObject(db, stmt, gameEngine);
+      createStaticMapObject(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
@@ -82,7 +79,7 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
    while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      createTile(stmt, gameEngine);
+      createTile(stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
@@ -90,7 +87,7 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    return 0;
 }
 
-void MapObjectFactory::createTile(sqlite3_stmt *stmt, GameEngine *gameEngine)
+void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 {
    // Create new tile
    Tile *tile = NULL;
@@ -111,13 +108,10 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt, GameEngine *gameEngine)
       tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
       tile->setHeight(sqlite3_column_int(stmt, TILE_COLUMN_HEIGHT));
-
-      // Add Tile to gameEngine
-      gameEngine->addMapObject((MapObject*)tile);
    }
 }
 
-void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
+void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
 {
    Container* container = new Container();
 
@@ -140,14 +134,11 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt, GameEngi
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
       container->setHeight(sqlite3_column_int(stmt, CONTAINER_COLUMN_HEIGHT));
-
-      // Add container to gameEngine
-      gameEngine->addMapObject((MapObject*)container);
    }
 
 }
 
-void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
+void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 {
    NonPlayerCharacter *npc = new NonPlayerCharacter();
   
@@ -177,13 +168,11 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt,
       npc->setWidth(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WIDTH));
       npc->setHeight(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_HEIGHT));
         
-      // Add container to gameEngine
-      gameEngine->addMapObject((MapObject*)npc);
       delete npcRs;
    }
 }
 
-void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, GameEngine *gameEngine)
+void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
 {
    StaticMapObject *staticMapObject = new StaticMapObject();
 
@@ -202,9 +191,6 @@ void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt, Ga
       staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
       staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));
       staticMapObject->setHeight(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_HEIGHT));
-       
-      // Add container to gameEngine
-      gameEngine->addMapObject((MapObject*)staticMapObject);
    }
 }
 
