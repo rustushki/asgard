@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *  
  * Asgard is free software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@
 #include "LoadBoundingBox.h"
 #include "LoadDrawable.h"
 #include "PrintString.h"
+#include "InstallMapObject.h"
 
 struct Message
 {
@@ -35,6 +36,7 @@ struct Message
       LoadBoundingBox box;
       LoadDrawable loadDrawable;
       PrintString printString;
+      InstallMapObject installMapObject;
    } data;
 };
 

@@ -63,3 +63,14 @@ void MessageFactory::makePrintString(const char* output)
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);
 }
+
+void MessageFactory::makeInstallMapObject(MapObject* mo, Drawable* d)
+{
+   Message *msg = new Message();
+   msg->header.type = MESSAGE_TYPE_INSTALL_MAP_OBJECT;
+   msg->data.installMapObject.drawPtr = d;
+   msg->data.installMapObject.mapObjectPtr = mo;
+
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}

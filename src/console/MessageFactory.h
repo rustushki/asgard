@@ -22,6 +22,7 @@
 #include <string>
 #include "Message.h"
 #include "Drawable.h"
+#include "MapObject.h"
 
 class MessageFactory
 {
@@ -30,6 +31,7 @@ class MessageFactory
       static void makeLoadBoundingBox(int bbId);
       static void makeLoadDrawable(char *dName);
       static void makePrintString(const char* output);
+      static void makeInstallMapObject(MapObject* mo, Drawable* d);
 };
 
 #endif // MESSAGE_FACTORY_H
