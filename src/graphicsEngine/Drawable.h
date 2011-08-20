@@ -14,8 +14,11 @@ class Drawable
       // Return current animation's name.
       std::string getCurrentAnimation();
 
-      // Return the Drawable's name.
+      // Return the Drawable's name. (i.e. "tree")
       std::string getName();
+
+      // Return the Drawable's unique instance name. (i.e. "treeb01017f")
+      std::string getInstanceName();
 
       // Return the current status of the Drawable.
       DrawableState getStatus();

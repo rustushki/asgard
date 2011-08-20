@@ -1,4 +1,5 @@
 #include <cmath>
+#include <cstdio>
 #include "Screen.h"
 #include "Drawable.h"
 
@@ -14,9 +15,33 @@ Drawable::Drawable(std::string name)
    this->newY = 0;
 }
 
+/**
+ * getName()
+ *
+ * Returns the generic name of the drawable.  This is effectively the "type" or
+ * "class" of drawable.
+ *
+ * @return std::string - <drawableName> (i.e. "tree")
+ */
 std::string Drawable::getName()
 {
    return this->name;
+}
+
+/**
+ * getInstanceName()
+ *
+ * Returns a unique string for identifying the drawable of the form:
+ * <drawableName><uniqueNumber>
+ *
+ * @return std::string - "<drawableName><uniqueNumber>" (i.e. "treeb01017f")
+ */
+std::string Drawable::getInstanceName()
+{
+   char addr[20];
+   sprintf(addr, "%x", reinterpret_cast<int>(this));
+   std::string uniqueName = this->name + addr;
+   return uniqueName;
 }
 
 DrawableState Drawable::getStatus()
