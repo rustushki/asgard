@@ -23,7 +23,6 @@ create table NonPlayerCharacterPath
    WC_Y integer(10) not null,
    PathIndex integer(10) not null,
    foreign key (MapObjectId) references MapObject(MapObjectId)
-   
 );
 
 create table BoundingBox
@@ -42,7 +41,9 @@ create table MapObject
    WC_Y integer(10) null,
    Height integer(10) null,
    Width integer(10) null,
-   BoundingBoxId integer(10) null
+   BoundingBoxId integer(10) null,
+   DrawableName varchar(50) not null,
+   foreign key (DrawableName) references Drawable(DrawableName)
 );
 
 create table Container

@@ -5,23 +5,23 @@ values(NULL,0,0,100,100);
 
 --Palm Tree (id = 1)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId)
-values(NULL,3,5,5,5,1);
+(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
+values(NULL,3,5,5,5,1,"PalmTree");
 
 --Treasure Chest (id = 2)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId)
-values(NULL,40,40,3,7,1);
+(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
+values(NULL,40,40,3,7,1,"TreasureChest");
 
 --Hand (id = 3)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId)
-values(NULL,23,47,3,3,1);
+(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
+values(NULL,23,47,3,3,1,"HandSwingsSword");
 
 -- Puddle (id = 4)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId)
-values(NULL,1,1,2,2,1);
+(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
+values(NULL,1,1,2,2,1,"Puddle");
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container
@@ -90,6 +90,18 @@ values("HandSwingsSword","HandSwingsSwordWest");
 
 insert into Drawable
 (DrawableName,AnimationName)
+values("PalmTree","PalmTree");
+
+insert into Drawable
+(DrawableName,AnimationName)
+values("Puddle","Puddle");
+
+insert into Drawable
+(DrawableName,AnimationName)
+values("TreasureChest","TreasureChest");
+
+insert into Drawable
+(DrawableName,AnimationName)
 values("OsirisCat","OsirisCat");
 
 insert into SpriteSheet
@@ -127,6 +139,18 @@ values("HandSwingsSwordEast","HandSwingsSwordEast.bmp",100,50,4,4);
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("PalmTree","OsirisCat.png",75,25,3,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("Puddle","OsirisCat.png",75,25,3,4);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
+values("TreasureChest","OsirisCat.png",75,25,3,4);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
