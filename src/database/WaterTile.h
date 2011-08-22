@@ -25,7 +25,7 @@
 class WaterTile : public Tile
 {
    public:
-      WaterTile();
+      WaterTile(std::string drawableName);
       bool isWalkable() const;
 };
 

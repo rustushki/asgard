@@ -18,8 +18,8 @@
  ****************************************************************************/
 #include "StaticMapObject.h"
 
-StaticMapObject::StaticMapObject() : MapObject()
-{
+StaticMapObject::StaticMapObject(std::string drawableName) : MapObject(drawableName) {
+
 }
 
 StaticMapObject::~StaticMapObject() {

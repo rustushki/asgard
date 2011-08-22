@@ -19,20 +19,14 @@
 
 #include "MapObject.h"
 
-MapObject::MapObject()
+MapObject::MapObject(std::string drawableName)
 {
    this->height = MAP_OBJECT_HEIGHT_DEFAULT;
    this->width = MAP_OBJECT_WIDTH_DEFAULT;
+   this->drawableName = drawableName;
 }
 
 MapObject::~MapObject() {
-}
-
-MapObject::MapObject(const Coordinate& leftCorner,int height,int width)
-{
-   this->leftCorner = leftCorner;
-   this->height = height;
-   this->width = width;
 }
 
 void MapObject::setLeftCorner(const Coordinate& leftCorner)
@@ -57,4 +51,9 @@ void MapObject::setWidth(int width)
 void MapObject::addBoundingBox(int boundingBox)
 {
    this->boundingBoxes.push_back(boundingBox);
+}
+
+std::string MapObject::getDrawableName()
+{
+	return this->drawableName;
 }

@@ -1,6 +1,6 @@
 #include "WaterTile.h"
 
-WaterTile::WaterTile() : Tile()
+WaterTile::WaterTile(std::string drawableName) : Tile(drawableName)
 {
    this->tileType = TILE_TYPE_WATER;
 }

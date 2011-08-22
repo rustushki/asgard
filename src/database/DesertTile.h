@@ -25,7 +25,7 @@
 class DesertTile : public Tile
 {
    public:
-      DesertTile();
+      DesertTile(std::string drawableName);
       bool isWalkable() const;
 };
 

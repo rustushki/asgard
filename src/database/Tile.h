@@ -21,13 +21,14 @@
 #define TILE_H
 
 #include "TileType.h"
-#include "MapObject.h"
+#include "StaticMapObject.h"
 
-class Tile : public MapObject
+class Tile : public StaticMapObject
 {
    protected:
       TileType tileType;
    public:
+      Tile(std::string drawableName);
       virtual bool isWalkable() const = 0;
 };
 

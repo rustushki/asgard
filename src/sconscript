@@ -38,6 +38,7 @@ objects = [
 './database/CircHardpoint.cpp',
 './database/Container.cpp',
 './database/DesertTile.cpp',
+'./database/Tile.cpp',
 './database/DrawableFactory.cpp',
 './graphicsEngine/GraphicsEngine.cpp',
 './graphicsEngine/Animation.cpp',

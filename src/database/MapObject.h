@@ -22,6 +22,7 @@
 
 #include <list>
 #include <cassert>
+#include <string>
 #include "Coordinate.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
@@ -32,13 +33,14 @@ using std::list;
 class MapObject
 {
    public:
-      MapObject();
+      MapObject(std::string drawableName);
       virtual ~MapObject();
-      MapObject(const Coordinate& leftCorner, int height, int width);
       
       void setLeftCorner(const Coordinate& leftCorner);
       void setHeight(int height);
       void setWidth(int width);
+
+      std::string getDrawableName();
       
       void addBoundingBox(int boundingBox);
       
@@ -46,5 +48,6 @@ class MapObject
       Coordinate leftCorner;
       list<int> boundingBoxes;
       int height,width;
+      std::string drawableName;
 };
 #endif //MAP_OBJECT_H

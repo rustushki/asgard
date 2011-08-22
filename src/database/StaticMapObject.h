@@ -29,7 +29,7 @@ using std::vector;
 class StaticMapObject : public MapObject
 {
    public:
-      StaticMapObject();
+      StaticMapObject(std::string drawableName);
       ~StaticMapObject();
       
       void addHardpoint(Hardpoint *hardpoint);

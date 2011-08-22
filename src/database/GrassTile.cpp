@@ -1,6 +1,6 @@
 #include "GrassTile.h"
 
-GrassTile::GrassTile() : Tile()
+GrassTile::GrassTile(std::string drawableName) : Tile(drawableName)
 {
    this->tileType = TILE_TYPE_GRASS;
 }

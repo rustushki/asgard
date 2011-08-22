@@ -28,7 +28,7 @@
 class NonPlayerCharacter : public StaticMapObject
 {
    public:
-      NonPlayerCharacter();
+      NonPlayerCharacter(std::string drawableName);
       ~NonPlayerCharacter();
       
       void setSpeed(int speed);

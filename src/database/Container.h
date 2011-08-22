@@ -28,7 +28,7 @@
 class Container : public StaticMapObject
 {
    public:
-      Container();
+      Container(std::string drawableName);
       ~Container();
       int getItemCount();
       Item* getItem(int index);

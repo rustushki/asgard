@@ -96,9 +96,9 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 
    switch(tileType)
    {
-      case TILE_TYPE_WATER:   { tile = new WaterTile(); break; }
-      case TILE_TYPE_DESERT:  { tile = new DesertTile(); break; }
-      case TILE_TYPE_GRASS:   { tile = new GrassTile(); break; }
+      case TILE_TYPE_WATER:   { tile = new WaterTile("insertDrawableNameHere"); break; }
+      case TILE_TYPE_DESERT:  { tile = new DesertTile("insertDrawableNameHere"); break; }
+      case TILE_TYPE_GRASS:   { tile = new GrassTile("insertDrawableNameHere"); break; }
       default:                { break; }
    }
 
@@ -113,7 +113,7 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 
 void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   Container* container = new Container();
+   Container* container = new Container("insertDrawableNameHere");
 
    // Create Hardpoints
    RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
@@ -140,7 +140,7 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
 
 void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   NonPlayerCharacter *npc = new NonPlayerCharacter();
+   NonPlayerCharacter *npc = new NonPlayerCharacter("insertDrawableNameHere");
   
    if (npc != NULL)
    {
@@ -174,7 +174,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 
 void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   StaticMapObject *staticMapObject = new StaticMapObject();
+   StaticMapObject *staticMapObject = new StaticMapObject("insertDrawableNameHere");
 
    if (staticMapObject != NULL)
    {

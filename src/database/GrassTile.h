@@ -25,7 +25,7 @@
 class GrassTile : public Tile
 {
    public:
-      GrassTile();
+      GrassTile(std::string drawableName);
       bool isWalkable() const;
 };
 
