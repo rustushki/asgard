@@ -29,12 +29,18 @@
 #include "CircHardpoint.h"
 #include "RectHardpoint.h"
 #include "QueryGenerator.h"
+#include "Drawable.h"
+#include "DrawableFactory.h"
 #include <cstdlib>
+
+sqlite3* MapObjectFactory::db = NULL;
 
 int MapObjectFactory::build(sqlite3 *db, int boxId)
 {
    char *query;
    sqlite3_stmt *stmt;
+
+   MapObjectFactory::db = db;
 
    // Invalid Bounding Box
    if (boxId <= 0)
@@ -89,6 +95,13 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
 
 void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 {
+   Drawable* drawable = DrawableFactory::build(
+        MapObjectFactory::db
+	  , (const char *)sqlite3_column_text(stmt, TILE_COLUMN_DRAWABLE_NAME)
+   );
+
+   std::string drawableName = drawable->getInstanceName();
+
    // Create new tile
    Tile *tile = NULL;
   
@@ -96,9 +109,9 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 
    switch(tileType)
    {
-      case TILE_TYPE_WATER:   { tile = new WaterTile("insertDrawableNameHere"); break; }
-      case TILE_TYPE_DESERT:  { tile = new DesertTile("insertDrawableNameHere"); break; }
-      case TILE_TYPE_GRASS:   { tile = new GrassTile("insertDrawableNameHere"); break; }
+      case TILE_TYPE_WATER:   { tile = new WaterTile(drawableName); break; }
+      case TILE_TYPE_DESERT:  { tile = new DesertTile(drawableName); break; }
+      case TILE_TYPE_GRASS:   { tile = new GrassTile(drawableName); break; }
       default:                { break; }
    }
 
@@ -113,7 +126,14 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
 
 void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   Container* container = new Container("insertDrawableNameHere");
+   Drawable* drawable = DrawableFactory::build(
+        MapObjectFactory::db
+	  , (const char *)sqlite3_column_text(stmt, CONTAINER_COLUMN_DRAWABLE_NAME)
+   );
+
+   std::string drawableName = drawable->getInstanceName();
+
+   Container* container = new Container(drawableName);
 
    // Create Hardpoints
    RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
@@ -140,7 +160,14 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
 
 void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   NonPlayerCharacter *npc = new NonPlayerCharacter("insertDrawableNameHere");
+   Drawable* drawable = DrawableFactory::build(
+        MapObjectFactory::db
+	  , (const char *)sqlite3_column_text(stmt, NON_PLAYER_CHARACTER_COLUMN_DRAWABLE_NAME)
+   );
+
+   std::string drawableName = drawable->getInstanceName();
+
+   NonPlayerCharacter *npc = new NonPlayerCharacter(drawableName);
   
    if (npc != NULL)
    {
@@ -174,7 +201,14 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 
 void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
 {
-   StaticMapObject *staticMapObject = new StaticMapObject("insertDrawableNameHere");
+   Drawable* drawable = DrawableFactory::build(
+        MapObjectFactory::db
+	  , (const char *)sqlite3_column_text(stmt, STATIC_MAP_OBJECT_COLUMN_DRAWABLE_NAME)
+   );
+
+   std::string drawableName = drawable->getInstanceName();
+
+   StaticMapObject *staticMapObject = new StaticMapObject(drawableName);
 
    if (staticMapObject != NULL)
    {

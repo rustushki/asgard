@@ -22,11 +22,12 @@
 
 #include <sqlite3.h>
 #include <string>
+#include "Drawable.h"
 
 class DrawableFactory
 {
    public:
-      static int build(sqlite3 *db, std::string dName);
+      static Drawable* build(sqlite3 *db, std::string dName);
 };
 
 #endif //DRAWABLE_FACTORY_H

@@ -35,7 +35,8 @@ class MapObjectFactory
       static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
       static RowSet* loadHardpoints(sqlite3 *db, int smoId);
       static RowSet* loadNonPlayerCharacterPath(sqlite3 *db, int npcId);
-      
+
+      static sqlite3* db;
    public:
       static int build(sqlite3 *db, int boxId);
 };

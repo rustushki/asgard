@@ -31,7 +31,8 @@ char* QueryGenerator::staticMapObject(int boundingBoxId)
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
    qs += "mo.Height, ";
-   qs += "mo.Width ";
+   qs += "mo.Width, ";
+   qs += "mo.DrawableName ";
    qs += "from BoundingBox bb ";
    qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
    qs += "where mo.BoundingBoxId = " + QueryGenerator::intToString(boundingBoxId) + " ";
@@ -58,6 +59,7 @@ char* QueryGenerator::nonPlayerCharacter(int boundingBoxId)
    qs += "mo.WC_Y, ";
    qs += "mo.Height, ";
    qs += "mo.Width, ";
+   qs += "mo.DrawableName, ";
    qs += "npc.Speed, ";
    qs += "mo.BoundingBoxId ";
    qs += "from BoundingBox bb ";
@@ -91,6 +93,7 @@ char* QueryGenerator::container(int boundingBoxId)
    qs += "mo.WC_Y, ";
    qs += "mo.Height, ";
    qs += "mo.Width, ";
+   qs += "mo.DrawableName, ";
    qs += "c.item0, ";
    qs += "c.item1, ";
    qs += "c.item2, ";
@@ -123,6 +126,7 @@ char* QueryGenerator::tile(int boundingBoxId)
    qs += "mo.WC_Y, ";
    qs += "mo.Height, ";
    qs += "mo.Width, ";
+   qs += "mo.DrawableName, ";
    qs += "t.tileType ";
    qs += "from BoundingBox bb ";
    qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
