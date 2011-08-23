@@ -31,6 +31,7 @@
 #include "QueryGenerator.h"
 #include "Drawable.h"
 #include "DrawableFactory.h"
+#include "MessageFactory.h"
 #include <cstdlib>
 
 sqlite3* MapObjectFactory::db = NULL;
@@ -121,6 +122,7 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
       tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
       tile->setHeight(sqlite3_column_int(stmt, TILE_COLUMN_HEIGHT));
+      MessageFactory::makeInstallMapObject(tile, drawable);
    }
 }
 
@@ -154,6 +156,7 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
       container->setHeight(sqlite3_column_int(stmt, CONTAINER_COLUMN_HEIGHT));
+      MessageFactory::makeInstallMapObject(container, drawable);
    }
 
 }
@@ -194,6 +197,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
       npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
       npc->setWidth(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WIDTH));
       npc->setHeight(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_HEIGHT));
+      MessageFactory::makeInstallMapObject(npc, drawable);
         
       delete npcRs;
    }
@@ -225,6 +229,7 @@ void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
       staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
       staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));
       staticMapObject->setHeight(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_HEIGHT));
+      MessageFactory::makeInstallMapObject(staticMapObject, drawable);
    }
 }
 
