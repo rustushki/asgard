@@ -1,3 +1,4 @@
+#include "MessageFactory.h"
 #include "Map.h"
 
 Map* Map::instance = NULL;
@@ -53,4 +54,15 @@ void Map::noop()
 
 bool Map::interpretMessage(Message* message)
 {
+   if (message->header.type == MESSAGE_TYPE_INSTALL_MAP_OBJECT) {
+	  // Get the two parameters for InstallMapObject
+	  MapObject* mo = message->data.installMapObject.mapObjectPtr;
+	  Drawable* d = message->data.installMapObject.drawPtr;
+
+	  // Install the MapObject.
+	  this->mapObjectContainer.push_back(mo);
+
+	  // Now DisplayDrawable
+	  MessageFactory::makeDisplayDrawable(d, "stageLayer");
+   }
 }

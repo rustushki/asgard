@@ -1,6 +1,8 @@
 #ifndef MAP_H
 #define MAP_H
 
+#include <vector>
+#include "MapObject.h"
 #include "SystemComponent.h"
 
 class Map : public SystemComponent
@@ -15,6 +17,8 @@ class Map : public SystemComponent
 
    private:
       Map();
+
+      std::vector<MapObject*> mapObjectContainer;
 
       void noop();
 
