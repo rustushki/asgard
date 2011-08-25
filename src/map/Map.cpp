@@ -1,11 +1,13 @@
-#include "MessageFactory.h"
 #include "Map.h"
 
 Map* Map::instance = NULL;
 
-Map::Map() : SystemComponent("map")
-{
+Map::Map() : SystemComponent("map") {
 
+   this->setFocusPoint(Screen::WIDTH/2, Screen::HEIGHT/2);
+
+   Coordinate o(0, 0);
+   assert(this->display == o);
 }
 
 Map::~Map()
@@ -50,6 +52,27 @@ void Map::noop()
 {
    // Wait until a message is received.
    this->listen(-1);
+}
+
+void Map::setFocusPoint(int x, int y) {
+
+	if (x < 0) {
+		x = 0;
+	}
+
+	if (y < 0) {
+		y = 0;
+	}
+
+	// TODO: Maximum Map dimensions is currently out of scope.
+
+	this->focus = Coordinate(x, y);
+	this->adjustDisplay();
+}
+
+void Map::adjustDisplay() {
+	Coordinate offset(Screen::WIDTH/2, Screen::HEIGHT/2);
+	this->display = this->focus - offset;
 }
 
 bool Map::interpretMessage(Message* message)
