@@ -21,11 +21,14 @@
 #define DISPLAY_DRAWABLE_H
 
 #include "Drawable.h"
+#include "Coordinate.h"
 
 struct DisplayDrawable
 {
    Drawable *drawPtr;
-   char layName[50]; 
+   char layName[50];
+   int x;
+   int y;
 };
 
 #endif //DISPLAY_DRAWABLE_H

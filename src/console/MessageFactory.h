@@ -27,7 +27,7 @@
 class MessageFactory
 {
    public:
-      static void makeDisplayDrawable(Drawable *d, std::string layerName);
+      static void makeDisplayDrawable(Drawable *d, std::string layerName, int x, int y);
       static void makeLoadBoundingBox(int bbId);
       static void makeLoadDrawable(char *dName);
       static void makePrintString(const char* output);

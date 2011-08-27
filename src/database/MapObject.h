@@ -37,6 +37,7 @@ class MapObject
       virtual ~MapObject();
       
       void setLeftCorner(const Coordinate& leftCorner);
+      Coordinate getLeftCorner();
       void setHeight(int height);
       void setWidth(int width);
 

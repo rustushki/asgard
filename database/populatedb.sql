@@ -6,7 +6,7 @@ values(NULL,0,0,100,100);
 --Palm Tree (id = 1)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,3,5,5,5,1,"PalmTree");
+values(NULL,3,175,25,5,1,"PalmTree");
 
 --Treasure Chest (id = 2)
 insert into MapObject
@@ -16,12 +16,12 @@ values(NULL,40,40,3,7,1,"TreasureChest");
 --Hand (id = 3)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,23,47,3,3,1,"HandSwingsSword");
+values(NULL,430,170,3,3,1,"HandSwingsSword");
 
 -- Puddle (id = 4)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,1,1,2,2,1,"Puddle");
+values(NULL,100,500,2,2,1,"Puddle");
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container

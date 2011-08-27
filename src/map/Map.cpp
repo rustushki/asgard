@@ -85,7 +85,11 @@ bool Map::interpretMessage(Message* message)
 	  // Install the MapObject.
 	  this->mapObjectContainer.push_back(mo);
 
+	  Coordinate drawableCoord = mo->getLeftCorner() - this->display;
+	  int x = drawableCoord.getX();
+	  int y = drawableCoord.getY();
+
 	  // Now DisplayDrawable
-	  MessageFactory::makeDisplayDrawable(d, "stageLayer");
+	  MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
    }
 }

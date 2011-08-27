@@ -34,6 +34,10 @@ void MapObject::setLeftCorner(const Coordinate& leftCorner)
    this->leftCorner = leftCorner;
 }
 
+Coordinate MapObject::getLeftCorner() {
+   return this->leftCorner;
+}
+
 void MapObject::setHeight(int height)
 {
    assert(height != 0);

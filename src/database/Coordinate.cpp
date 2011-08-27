@@ -133,6 +133,14 @@ Coordinate operator/(const int r, const Coordinate& l)
    return Coordinate(r/l.x,r/l.y);
 }
 
+int Coordinate::getX() {
+	return this->x;
+}
+
+int Coordinate::getY() {
+	return this->y;
+}
+
 double distance(const Coordinate &l, const Coordinate &r)
 {
    return std::sqrt(std::pow(double(l.x - r.x), 2) + std::pow(double(l.y - r.y),2));

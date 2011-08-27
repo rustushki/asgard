@@ -133,10 +133,14 @@ bool GraphicsEngine::interpretMessage(Message* message)
    {
       string layerName = message->data.displayDrawable.layName;
       Drawable* drawable = message->data.displayDrawable.drawPtr;
+      int x = message->data.displayDrawable.x;
+      int y = message->data.displayDrawable.y;
 
       Screen* s = Screen::getInstance();
 
       Layer* l = s->getLayer(layerName);
+
+      drawable->move(x, y);
 
       // TODO: parameterize whether to play or not.
       drawable->play();

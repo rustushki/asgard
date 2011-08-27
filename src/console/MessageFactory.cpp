@@ -21,12 +21,14 @@
 #include "MessageFactory.h"
 #include "MessageRouter.h"
 
-void MessageFactory::makeDisplayDrawable(Drawable *d, std::string layerName)
+void MessageFactory::makeDisplayDrawable(Drawable *d, std::string layerName, int x, int y)
 {
    Message *msg = new Message();
    msg->header.type = MESSAGE_TYPE_DISPLAY_DRAWABLE;
    msg->data.displayDrawable.drawPtr = d;
    strcpy(msg->data.displayDrawable.layName, layerName.c_str());
+   msg->data.displayDrawable.x = x;
+   msg->data.displayDrawable.y = y;
 
    // Message should be picked up by Graphics Engine
    MessageRouter* mr = MessageRouter::getInstance();
