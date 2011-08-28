@@ -1,5 +1,3 @@
-#include <string>
-#include "Screen.h"
 #include "GraphicsEngine.h"
 
 using std::string;
@@ -51,14 +49,18 @@ bool GraphicsEngine::close()
 
 void GraphicsEngine::initScreen()
 {
+   LOG(INFO) << "Initializing Screen";
+
    Screen* s = Screen::getInstance();
 
+   LOG(INFO) << "Building Stage.";
    std::string lsName = "stageLayer";
    s->pushLayer(new Layer(lsName));
 
    // TODO: Another process should initialize the background layer.
    // Special Background Layer, Drawable and Animation. Needed so that there's
    // something to out-blit transparent pixels with.
+   LOG(INFO) << "Putting background on Stage.";
    std::string abName = "backgroundAnimation";
    Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
    std::string dbName = "testBackground";
@@ -72,6 +74,7 @@ void GraphicsEngine::initScreen()
    s->pushLayer(bgLayer);
 
    // TODO: make this a command so that this thread can terminate.
+   LOG(INFO) << "Playing GraphicsEngine.";
    this->play();
 }
 

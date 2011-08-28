@@ -19,11 +19,11 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-#include "AsgardThread.h"
+#include <boost/thread/shared_mutex.hpp>
+
+#include "SystemComponent.h"
 #include "Screen.h"
 #include "Message.h"
-#include "SystemComponent.h"
-#include <boost/thread/shared_mutex.hpp>
 
 class GraphicsEngine : public SystemComponent
 {

@@ -4,6 +4,7 @@ Map* Map::instance = NULL;
 
 Map::Map() : SystemComponent("map") {
 
+   LOG(INFO) << "Building  Map";
    this->setFocusPoint(Screen::WIDTH/2, Screen::HEIGHT/2);
 
    Coordinate o(0, 0);
@@ -64,6 +65,8 @@ void Map::setFocusPoint(int x, int y) {
 		y = 0;
 	}
 
+    LOG(INFO) << "Setting Map Focus Point = " << x << ", " << y;	
+
 	// TODO: Maximum Map dimensions is currently out of scope.
 
 	this->focus = Coordinate(x, y);
@@ -71,13 +74,19 @@ void Map::setFocusPoint(int x, int y) {
 }
 
 void Map::adjustDisplay() {
+
 	Coordinate offset(Screen::WIDTH/2, Screen::HEIGHT/2);
 	this->display = this->focus - offset;
+	
+	int x = this->display.getX();
+	int y = this->display.getY();
+    LOG(INFO) << "Set Map Display Point = " << x << ", " << y;	
 }
 
 bool Map::interpretMessage(Message* message)
 {
    if (message->header.type == MESSAGE_TYPE_INSTALL_MAP_OBJECT) {
+      LOG(INFO) << "Installing MapObject";
 	  // Get the two parameters for InstallMapObject
 	  MapObject* mo = message->data.installMapObject.mapObjectPtr;
 	  Drawable* d = message->data.installMapObject.drawPtr;
@@ -89,7 +98,8 @@ bool Map::interpretMessage(Message* message)
 	  int x = drawableCoord.getX();
 	  int y = drawableCoord.getY();
 
+      LOG(INFO) << "Displaying Drawable " << d->getInstanceName();
 	  // Now DisplayDrawable
-	  MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
+      MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
    }
 }

@@ -1,6 +1,6 @@
 #include <string>
 #include <boost/bind.hpp>
-#include <iostream>
+
 #include "MessageRouter.h"
 #include "SystemComponent.h"
 #include "Asgard.h"
@@ -9,6 +9,8 @@ SystemComponent::SystemComponent(std::string threadName)
 {
    this->state = SYSTEM_COMPONENT_STATE_CREATED;
    this->connectMessageRouter();
+
+   LOG(INFO) << "Creating Thread " << threadName;
    this->thread = new AsgardThread(threadName, &this->mailbox);
 }
 

@@ -2,6 +2,7 @@
 #define SYSTEM_COMPONENT_H
 
 #include <string>
+#include <glog/logging.h>
 #include "SystemComponentState.h"
 #include "AsgardThread.h"
 #include "Mailbox.h"

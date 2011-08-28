@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <boost/bind.hpp>
+#include <glog/logging.h>
 
 #include "MessageRouter.h"
 #include "Console.h"
@@ -24,6 +25,11 @@ int main(int argc, char**argv)
    // Open MessageRouter first always.
    MessageRouter* mr = MessageRouter::getInstance();
    
+   google::InitGoogleLogging("asgard");
+
+
+   LOG(INFO) << "Loading Asgard SystemComponents.";
+
    SystemComponent* dbCont  = Database::getInstance();
    SystemComponent* graphicsEngine = GraphicsEngine::getInstance();
    SystemComponent* map = Map::getInstance();

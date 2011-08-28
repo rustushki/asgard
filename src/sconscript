@@ -56,4 +56,4 @@ objects = [
 # Notice the high level dependencies list in LIBS
 env = Environment(CPPPATH=include_path)
 
-env.Program('../asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6'], CXXFLAGS=['-g'])
+env.Program('../asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-g'])
