@@ -1,3 +1,3 @@
 import asgard
-asgard.LoadBoundingBox(1)
+asgard.LoadBoundingBox(0, 0)
 asgard.LoadDrawable("OsirisCat")

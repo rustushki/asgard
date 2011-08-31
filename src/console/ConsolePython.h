@@ -4,11 +4,12 @@
 static PyObject*
 asgard_LoadBoundingBox(PyObject* self, PyObject* args)
 {
-   int boundingbox_id;
+   int x;
+   int y;
    Py_INCREF(Py_None);
-   if(!PyArg_ParseTuple(args, "i", &boundingbox_id))
+   if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   MessageFactory::makeLoadBoundingBox(boundingbox_id);
+   MessageFactory::makeLoadBoundingBox(x, y);
    return Py_None;
 }
 

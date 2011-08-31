@@ -20,6 +20,8 @@ class Map : public SystemComponent
 
       void setFocusPoint(int x, int y);
 
+      static const int BOUNDING_BOX_SIZE = 1000;
+
    private:
       Map();
 

@@ -22,7 +22,8 @@
 
 struct LoadBoundingBox
 {
-   int boundingBoxId;
+   int X;
+   int Y;
 };
 
 #endif //LOAD_BOUNDING_BOX_H

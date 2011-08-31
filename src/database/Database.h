@@ -42,7 +42,7 @@ class Database : public SystemComponent
       static Database* getInstance();
       sqlite3* getAsgardDb() const;
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
-      bool loadBoundingBox(int boxId);
+      bool loadBoundingBox(int boxX, int boxY);
       bool loadDrawable(std::string dName);
       
       virtual bool open();

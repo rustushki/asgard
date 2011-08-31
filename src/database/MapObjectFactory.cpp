@@ -36,7 +36,7 @@
 
 sqlite3* MapObjectFactory::db = NULL;
 
-int MapObjectFactory::build(sqlite3 *db, int boxId)
+int MapObjectFactory::build(sqlite3 *db, int boxX, int boxY)
 {
    char *query;
    sqlite3_stmt *stmt;
@@ -44,48 +44,48 @@ int MapObjectFactory::build(sqlite3 *db, int boxId)
    MapObjectFactory::db = db;
 
    // Invalid Bounding Box
-   if (boxId <= 0)
+   if (boxX < 0 || boxY < 0)
       return false;
 
    // Build NonPlayerCharacters
-   query = QueryGenerator::nonPlayerCharacter(boxId);
+   query = QueryGenerator::nonPlayerCharacter(boxX, boxY);
+   LOG(INFO) << "NonPlayerCharacter query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
-   while (sqlite3_step(stmt) == SQLITE_ROW)
-   {
+   while (sqlite3_step(stmt) == SQLITE_ROW) {
       createNonPlayerCharacter(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
   
    // Build Containers
-   query = QueryGenerator::container(boxId);
+   query = QueryGenerator::container(boxX, boxY);
+   LOG(INFO) << "Container query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
-   while (sqlite3_step(stmt) == SQLITE_ROW)
-   {
+   while (sqlite3_step(stmt) == SQLITE_ROW) {
       createContainer(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
 
    // Build StaticMapObjects
-   query = QueryGenerator::staticMapObject(boxId);
+   query = QueryGenerator::staticMapObject(boxX, boxY);
+   LOG(INFO) << "StaticMapObject query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
-   while (sqlite3_step(stmt) == SQLITE_ROW)
-   {
+   while (sqlite3_step(stmt) == SQLITE_ROW) {
       createStaticMapObject(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
 
    // Build Tiles
-   query = QueryGenerator::tile(boxId);
+   query = QueryGenerator::tile(boxX, boxY);
+   LOG(INFO) << "Tile query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
-   while (sqlite3_step(stmt) == SQLITE_ROW)
-   {
+   while (sqlite3_step(stmt) == SQLITE_ROW) {
       createTile(stmt);
    }
    sqlite3_finalize(stmt);

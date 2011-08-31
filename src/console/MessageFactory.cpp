@@ -17,9 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include <cstring>
 #include "MessageFactory.h"
-#include "MessageRouter.h"
 
 void MessageFactory::makeDisplayDrawable(Drawable *d, std::string layerName, int x, int y)
 {
@@ -35,11 +33,13 @@ void MessageFactory::makeDisplayDrawable(Drawable *d, std::string layerName, int
    mr->sendMessage(msg);
 }
 
-void MessageFactory::makeLoadBoundingBox(int bbId)
+void MessageFactory::makeLoadBoundingBox(int x, int y)
 {
+   LOG(INFO) << "Making LoadBoundingBox Message: (" << x << ", " << y << ")";
    Message *msg = new Message();
    msg->header.type = MESSAGE_TYPE_LOAD_BOUNDING_BOX;
-   msg->data.box.boundingBoxId = bbId;
+   msg->data.box.X = x;
+   msg->data.box.Y = y;
 
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);

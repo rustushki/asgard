@@ -1,27 +1,24 @@
---Tropical Island
-insert into BoundingBox
-(BoundingBoxId,WC_X,WC_Y,Height,Width)
-values(NULL,0,0,100,100);
+--Tropical Island Demo
 
 --Palm Tree (id = 1)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,3,175,25,5,1,"PalmTree");
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,3,175,25,5,"PalmTree");
 
 --Treasure Chest (id = 2)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,40,40,3,7,1,"TreasureChest");
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,40,40,3,7,"TreasureChest");
 
 --Hand (id = 3)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,430,170,3,3,1,"HandSwingsSword");
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,430,170,3,3,"HandSwingsSword");
 
 -- Puddle (id = 4)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,BoundingBoxId,DrawableName)
-values(NULL,100,500,2,2,1,"Puddle");
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,100,500,2,2,"Puddle");
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container

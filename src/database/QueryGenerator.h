@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -21,15 +21,21 @@
 #define QUERY_GENERATOR_H
 
 #include <string>
+#include <iostream>
+#include <sstream>
+#include <cstring>
+#include <stdio.h>
+
+#include "Map.h"
 
 class QueryGenerator
 {
    public:
-      static char* staticMapObject(int boundingBoxId);
-      static char* nonPlayerCharacter(int boundingBoxId);
+      static char* staticMapObject(int boxX, int boxY);
+      static char* nonPlayerCharacter(int boxX, int boxY);
       static char* nonPlayerCharacterPath(int mapObjectId);
-      static char* container(int boundingBoxId);
-      static char* tile(int boundingBoxId);
+      static char* container(int boxX, int boxY);
+      static char* tile(int boxX, int boxY);
       static char* hardpoint(int mapObjectId);
       static char* drawable(std::string dName);
    private:

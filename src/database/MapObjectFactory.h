@@ -38,7 +38,7 @@ class MapObjectFactory
 
       static sqlite3* db;
    public:
-      static int build(sqlite3 *db, int boxId);
+      static int build(sqlite3 *db, int boxX, int boxY);
 };
 
 #endif //MAP_OBJECT_FACTORY_H

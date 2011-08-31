@@ -61,9 +61,9 @@ void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBox
    visibleBoxes[0] =  1;
 }
 
-bool Database::loadBoundingBox(int boxId)
+bool Database::loadBoundingBox(int boxX, int boxY)
 {
-   MapObjectFactory::build(this->asgardDb, boxId);
+   MapObjectFactory::build(this->asgardDb, boxX, boxY);
 
    return true;
 }
@@ -82,7 +82,7 @@ bool Database::interpretMessage(Message* msg)
 
    if (msg->header.type == MESSAGE_TYPE_LOAD_BOUNDING_BOX)
    {
-      if (this->loadBoundingBox(msg->data.box.boundingBoxId))
+      if (this->loadBoundingBox(msg->data.box.X, msg->data.box.Y))
          printOutput = "bounding box loaded";
       else
          printOutput = "failed";

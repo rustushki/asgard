@@ -18,12 +18,8 @@
  ****************************************************************************/
 
 #include "QueryGenerator.h"
-#include <iostream>
-#include <sstream>
-#include <cstring>
-#include <stdio.h>
 
-char* QueryGenerator::staticMapObject(int boundingBoxId)
+char* QueryGenerator::staticMapObject(int boxX, int boxY)
 {
    std::string qs;
    qs += "select ";
@@ -33,9 +29,11 @@ char* QueryGenerator::staticMapObject(int boundingBoxId)
    qs += "mo.Height, ";
    qs += "mo.Width, ";
    qs += "mo.DrawableName ";
-   qs += "from BoundingBox bb ";
-   qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
-   qs += "where mo.BoundingBoxId = " + QueryGenerator::intToString(boundingBoxId) + " ";
+   qs += "from MapObject mo ";
+   qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
+   qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
+   qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
+   qs += "  and mo.WC_Y <= " + QueryGenerator::intToString(boxY + Map::BOUNDING_BOX_SIZE);
 
    // TODO:
    // This is not ideal.
@@ -50,7 +48,7 @@ char* QueryGenerator::staticMapObject(int boundingBoxId)
    return QueryGenerator::makeCStr(qs);
 }
 
-char* QueryGenerator::nonPlayerCharacter(int boundingBoxId)
+char* QueryGenerator::nonPlayerCharacter(int boxX, int boxY)
 {
    std::string qs;
    qs += "select ";
@@ -61,11 +59,12 @@ char* QueryGenerator::nonPlayerCharacter(int boundingBoxId)
    qs += "mo.Width, ";
    qs += "mo.DrawableName, ";
    qs += "npc.Speed, ";
-   qs += "mo.BoundingBoxId ";
-   qs += "from BoundingBox bb ";
-   qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   qs += "from MapObject mo ";
    qs += "inner join NonPlayerCharacter npc on npc.MapObjectId = mo.MapObjectId ";
-   qs += "where mo.BoundingBoxId = " + QueryGenerator::intToString(boundingBoxId) + ";";
+   qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
+   qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
+   qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
+   qs += "  and mo.WC_Y <= " + QueryGenerator::intToString(boxY + Map::BOUNDING_BOX_SIZE);
    
    return QueryGenerator::makeCStr(qs);
 }
@@ -84,7 +83,7 @@ char* QueryGenerator::nonPlayerCharacterPath(int mapObjectId)
    return QueryGenerator::makeCStr(qs);
 }
       
-char* QueryGenerator::container(int boundingBoxId)
+char* QueryGenerator::container(int boxX, int boxY)
 {
    std::string qs;
    qs += "select ";
@@ -109,15 +108,17 @@ char* QueryGenerator::container(int boundingBoxId)
    qs += "c.item12, ";
    qs += "c.item13, ";
    qs += "c.item14 ";
-   qs += "from BoundingBox bb ";
-   qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   qs += "from MapObject mo ";
    qs += "inner join Container c on c.MapObjectId = mo.MapObjectId ";
-   qs += "where bb.BoundingBoxId = " + QueryGenerator::intToString(boundingBoxId) + ";";
+   qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
+   qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
+   qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
+   qs += "  and mo.WC_Y <= " + QueryGenerator::intToString(boxY + Map::BOUNDING_BOX_SIZE);
    
    return QueryGenerator::makeCStr(qs);
 }
 
-char* QueryGenerator::tile(int boundingBoxId)
+char* QueryGenerator::tile(int boxX, int boxY)
 {
    std::string qs;
    qs += "select ";
@@ -128,10 +129,12 @@ char* QueryGenerator::tile(int boundingBoxId)
    qs += "mo.Width, ";
    qs += "mo.DrawableName, ";
    qs += "t.tileType ";
-   qs += "from BoundingBox bb ";
-   qs += "inner join MapObject mo on mo.BoundingBoxId = bb.BoundingBoxId ";
+   qs += "from MapObject mo ";
    qs += "inner join Tiles t on mo.MapObjectId = t.MapObjectId ";
-   qs += "where bb.BoundingBoxId = " + QueryGenerator::intToString(boundingBoxId) + ";";
+   qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
+   qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
+   qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
+   qs += "  and mo.WC_Y <= " + QueryGenerator::intToString(boxY + Map::BOUNDING_BOX_SIZE);
    
    return QueryGenerator::makeCStr(qs);
 }

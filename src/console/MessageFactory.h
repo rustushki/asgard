@@ -20,6 +20,9 @@
 #define MESSAGE_FACTORY_H
 
 #include <string>
+#include <cstring>
+#include <glog/logging.h>
+#include "MessageRouter.h"
 #include "Message.h"
 #include "Drawable.h"
 #include "MapObject.h"
@@ -28,7 +31,7 @@ class MessageFactory
 {
    public:
       static void makeDisplayDrawable(Drawable *d, std::string layerName, int x, int y);
-      static void makeLoadBoundingBox(int bbId);
+      static void makeLoadBoundingBox(int x, int y);
       static void makeLoadDrawable(char *dName);
       static void makePrintString(const char* output);
       static void makeInstallMapObject(MapObject* mo, Drawable* d);

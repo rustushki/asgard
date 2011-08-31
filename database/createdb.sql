@@ -1,6 +1,6 @@
 drop table if exists NonPlayerCharacter;
 drop table if exists NonPlayerCharacterPath;
-drop table if exists BoundingBox;
+drop table if exists BoundingBox; -- Remove after 2.3.5.
 drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
@@ -25,15 +25,6 @@ create table NonPlayerCharacterPath
    foreign key (MapObjectId) references MapObject(MapObjectId)
 );
 
-create table BoundingBox
-(
-   BoundingBoxId integer primary key,
-   WC_X integer(10) null,
-   WC_Y integer(10) null,
-   Height integer(10) null,
-   Width integer(10) null
-);
-
 create table MapObject
 (
    MapObjectId integer primary key,
@@ -41,7 +32,8 @@ create table MapObject
    WC_Y integer(10) null,
    Height integer(10) null,
    Width integer(10) null,
-   BoundingBoxId integer(10) null,
+   BoundingBoxX integer(10) null,
+   BoundingBoxY integer(10) null,
    DrawableName varchar(50) not null,
    foreign key (DrawableName) references Drawable(DrawableName)
 );
