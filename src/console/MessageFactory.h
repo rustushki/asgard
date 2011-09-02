@@ -35,6 +35,7 @@ class MessageFactory
       static void makeLoadDrawable(char *dName);
       static void makePrintString(const char* output);
       static void makeInstallMapObject(MapObject* mo, Drawable* d);
+      static void makeMoveFocusPoint(int x, int y);
 };
 
 #endif // MESSAGE_FACTORY_H

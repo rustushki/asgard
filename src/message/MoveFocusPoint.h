@@ -11,35 +11,19 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details. 
- * 
+ *  
  * You should have received a copy of the GNU General Public License
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef MOVE_FOCUS_POINT_H
+#define MOVE_FOCUS_POINT_H
 
-#include "MessageHeader.h"
-#include "DisplayDrawable.h"
-#include "LoadBoundingBox.h"
-#include "LoadDrawable.h"
-#include "PrintString.h"
-#include "InstallMapObject.h"
-#include "MoveFocusPoint.h"
-
-struct Message
+struct MoveFocusPoint
 {
-   MessageHeader header;
-   union
-   {
-      DisplayDrawable displayDrawable;
-      LoadBoundingBox box;
-      LoadDrawable loadDrawable;
-      PrintString printString;
-      InstallMapObject installMapObject;
-      MoveFocusPoint moveFocusPoint;
-   } data;
+   int X;
+   int Y;
 };
 
-#endif //MESSAGE_H
+#endif //MOVE_FOCUS_POINT_H

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -72,6 +72,18 @@ void MessageFactory::makeInstallMapObject(MapObject* mo, Drawable* d)
    msg->header.type = MESSAGE_TYPE_INSTALL_MAP_OBJECT;
    msg->data.installMapObject.drawPtr = d;
    msg->data.installMapObject.mapObjectPtr = mo;
+
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}
+
+void MessageFactory::makeMoveFocusPoint(int x, int y)
+{
+   LOG(INFO) << "Making MoveFocusPoint Message: (" << x << ", " << y << ")";
+   Message *msg = new Message();
+   msg->header.type = MESSAGE_TYPE_MOVE_FOCUS_POINT;
+   msg->data.box.X = x;
+   msg->data.box.Y = y;
 
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);

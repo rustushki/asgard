@@ -40,8 +40,7 @@ map_SetFocus(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   //MessageFactory::makeMoveFocusPoint(x, y);
-   LOG(INFO) << "Fake: MessageFactory::makeMoveFocusPoint(" << x << "," << y << ");";
+   MessageFactory::makeMoveFocusPoint(x, y);
    return Py_None;
 }
 

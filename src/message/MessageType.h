@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -27,6 +27,7 @@ enum MessageType
    MESSAGE_TYPE_LOAD_DRAWABLE,
    MESSAGE_TYPE_PRINT_STRING,
    MESSAGE_TYPE_INSTALL_MAP_OBJECT,
+   MESSAGE_TYPE_MOVE_FOCUS_POINT,
    MESSAGE_TYPE_COUNT
 };
 
