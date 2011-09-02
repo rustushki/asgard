@@ -1,5 +1,8 @@
-import asgard
-#import map
-asgard.LoadBoundingBox(0, 0)
-asgard.LoadDrawable("OsirisCat")
-#map.SetFocus(300, 500)
+# Demo #1
+#import asgard
+#asgard.LoadBoundingBox(0, 0)
+#asgard.LoadDrawable("OsirisCat")
+
+# Demo #2
+import map
+map.SetFocus(300, 300)

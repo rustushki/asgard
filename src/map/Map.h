@@ -22,6 +22,9 @@ class Map : public SystemComponent
 
       static const int BOUNDING_BOX_SIZE = 1000;
 
+      // N x N grid of bounding boxes.
+      static const int BOUNDING_BOX_MEM  = 3;
+
    private:
       Map();
 
@@ -31,10 +34,13 @@ class Map : public SystemComponent
 
       void noop();
       void adjustDisplay();
+      void loadBoundingBoxes();
 
       static Map* instance;
 
       virtual bool interpretMessage(Message* message);
+      void handleMoveFocusPoint(Message* message);
+      void handleInstallMapObject(Message* message);
 };
 
 #endif//MAP_H
