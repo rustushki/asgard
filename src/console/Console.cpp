@@ -71,7 +71,7 @@ bool Console::open()
 	}
 
 	Py_InitModule("asgard", AsgardMethods);
-
+	Py_InitModule("map",    MapMethods);
    
    this->thread->open(boost::bind(&Console::inputLoop, this));
    
