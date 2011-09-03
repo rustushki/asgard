@@ -35,6 +35,8 @@ class Map : public SystemComponent
       void noop();
       void adjustDisplay();
       void loadBoundingBoxes();
+      void unloadDrawables();
+      bool isMapObjectInScope(MapObject* mo);
 
       static Map* instance;
 

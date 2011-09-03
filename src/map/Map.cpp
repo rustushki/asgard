@@ -67,20 +67,69 @@ void Map::setFocusPoint(int x, int y) {
    this->focus = Coordinate(x, y);
    this->adjustDisplay();
    this->loadBoundingBoxes();
+   this->unloadDrawables();
 }
 
 void Map::loadBoundingBoxes() {
-   MessageFactory::makeLoadBoundingBox(0,0);
-
-// TODO: Determine which bounding boxes need to be loaded and unloaded.  Do
-// said loading and unloading.  This code below is a good starting point.
-/*
    for (int x = 0; x < Map::BOUNDING_BOX_MEM; x++) {
       for (int y = 0; y < Map::BOUNDING_BOX_MEM; y++) {
          MessageFactory::makeLoadBoundingBox(x*Map::BOUNDING_BOX_SIZE, y*Map::BOUNDING_BOX_SIZE);
       }
    }
-*/
+}
+
+void Map::unloadDrawables() {
+   std::vector<MapObject*>::iterator moIter;
+
+   for (moIter = this->mapObjectContainer.begin(); moIter != this->mapObjectContainer.end(); moIter++) {
+
+      if (!this->isMapObjectInScope(*moIter)) {
+         LOG(INFO) << "MapObject not in scope.  Unloading...";
+
+         MapObject* mo = *moIter;
+
+         // TODO: Unload MapObject
+
+         // TODO: Don't have this message type yet.
+         //MessageFactory::makeUnloadDrawable(mo->getDrawableName());
+      }
+   }
+}
+
+bool Map::isMapObjectInScope(MapObject* mo) {
+
+   // Top Left Corner of MapObject in Question.
+   Coordinate tl = mo->getLeftCorner();
+
+   // The current focus of the Map.
+   Coordinate f = this->focus;
+
+   // Determine the Bounding Box which contains the focus. (i.e. the Middle)
+   int bX = f.getX() - (f.getX() % Map::BOUNDING_BOX_SIZE);
+   int bY = f.getY() - (f.getY() % Map::BOUNDING_BOX_SIZE);
+
+   // Given the Middle determine the Top Left of the Region of Relevance.
+   int middle = Map::BOUNDING_BOX_MEM / 2;
+   int tlrrX = bX - middle * Map::BOUNDING_BOX_SIZE;
+   int tlrrY = bY - middle * Map::BOUNDING_BOX_SIZE;
+
+   // Determine Dimensions of Region of Relevance
+   int rrSize = Map::BOUNDING_BOX_SIZE*Map::BOUNDING_BOX_MEM;
+
+   // If the MapObject is x dimensionally out of bounds...
+   if (tl.getX() > tlrrX + rrSize || tl.getX() < tlrrX) {
+      // Out of Scope.
+      return false;
+   }
+
+   // If the MapObject is y dimensionally out of bounds...
+   if (tl.getY() > tlrrY + rrSize || tl.getY() < tlrrY) {
+      // Out of Scope.
+      return false;
+   }
+
+   // Otherwise, in Scope.
+   return true;
 }
 
 void Map::adjustDisplay() {
