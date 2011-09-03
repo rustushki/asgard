@@ -1,12 +1,9 @@
 #ifndef SCREEN_H
 #define SCREEN_H
 
-#include <SDL/SDL.h>
-#include <vector>
-#include <string>
+#include "externals.h"
 #include "Layer.h"
 #include "ScreenState.h"
-#include "Asgard.h"
 
 class Layer;
 

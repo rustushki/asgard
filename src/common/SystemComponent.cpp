@@ -1,9 +1,7 @@
-#include <string>
-#include <boost/bind.hpp>
+#include "externals.h"
 
 #include "MessageRouter.h"
 #include "SystemComponent.h"
-#include "Asgard.h"
 
 SystemComponent::SystemComponent(std::string threadName)
 {

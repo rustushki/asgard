@@ -1,8 +1,7 @@
 #ifndef SYSTEM_COMPONENT_H
 #define SYSTEM_COMPONENT_H
 
-#include <string>
-#include <glog/logging.h>
+#include "externals.h"
 #include "SystemComponentState.h"
 #include "AsgardThread.h"
 #include "Mailbox.h"

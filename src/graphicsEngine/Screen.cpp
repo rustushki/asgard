@@ -1,5 +1,3 @@
-#include <iostream>
-#include <algorithm>
 #include "Screen.h"
 
 Screen* Screen::instance = NULL;

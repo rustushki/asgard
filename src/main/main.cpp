@@ -6,18 +6,14 @@
 // Description : Hello World in C++, Ansi-style
 //============================================================================
 
-#include <iostream>
-#include <string>
-#include <boost/bind.hpp>
-#include <glog/logging.h>
 
+#include "externals.h"
 #include "MessageRouter.h"
 #include "Console.h"
 #include "MessageFactory.h"
 #include "Database.h"
 #include "GraphicsEngine.h"
 #include "Map.h"
-#include "unistd.h"
 
 int main(int argc, char**argv)
 {

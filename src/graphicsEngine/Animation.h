@@ -1,11 +1,8 @@
 #ifndef ANIMATION_H
 #define ANIMATION_H
-#include <SDL/SDL.h>
-#include <string>
-#include <SDL/SDL_image.h>
+#include "externals.h"
 #include "AnimationState.h"
 #include "RectBlitter.h"
-#include "Asgard.h"
 
 class Animation
 {

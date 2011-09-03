@@ -1,9 +1,8 @@
 #ifndef DRAWABLE_H
 #define DRAWABLE_H
-#include <map>
+#include "externals.h"
 #include "DrawableState.h"
 #include "Animation.h"
-#include "Asgard.h"
 
 class Drawable
 {

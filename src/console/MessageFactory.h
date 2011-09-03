@@ -19,9 +19,8 @@
 #ifndef MESSAGE_FACTORY_H
 #define MESSAGE_FACTORY_H
 
-#include <string>
-#include <cstring>
-#include <glog/logging.h>
+#include "externals.h"
+
 #include "MessageRouter.h"
 #include "Message.h"
 #include "Drawable.h"
