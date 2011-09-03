@@ -1,6 +1,6 @@
 --Tropical Island Demo
 
---Palm Tree (id = 1)
+--Palm Tree 1 (id = 1)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
 values(NULL,3,175,25,5,"PalmTree");
@@ -19,6 +19,27 @@ values(NULL,430,170,3,3,"HandSwingsSword");
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
 values(NULL,100,500,2,2,"Puddle");
+
+--Palm Tree 2 (id = 5)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,1300,250,25,5,"PalmTree");
+
+--Palm Tree 3 (id = 6)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,1100,500,25,5,"PalmTree");
+
+--Palm Tree 4 (id = 7)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,1050,1100,25,5,"PalmTree");
+
+--Palm Tree 5 (id = 8)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,700,1217,25,5,"PalmTree");
+
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container
@@ -66,6 +87,30 @@ values(2,0,0,0,5,5);
 insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(3,1,0,0,3);
+
+--Palm Tree's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(5,1,0,0,3);
+
+--Palm Tree's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(6,1,0,0,3);
+
+--Palm Tree's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(7,1,0,0,3);
+
+--Palm Tree's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(8,1,0,0,3);
 
 --Hand's Animations
 --Hand swings sword
