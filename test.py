@@ -5,4 +5,8 @@
 
 # Demo #2
 import map
-map.SetFocus(300, 300)
+import time
+
+for x in range(1, 2000, 20):
+	map.SetFocus(x, 300)
+	time.sleep (0.1)

@@ -67,15 +67,72 @@ void Map::setFocusPoint(int x, int y) {
    this->focus = Coordinate(x, y);
    this->adjustDisplay();
    this->loadBoundingBoxes();
-   this->unloadDrawables();
+   this->unloadBoundingBoxes();
 }
 
 void Map::loadBoundingBoxes() {
+   Coordinate tl = this->getTopLeftOfRegion();
    for (int x = 0; x < Map::BOUNDING_BOX_MEM; x++) {
       for (int y = 0; y < Map::BOUNDING_BOX_MEM; y++) {
-         MessageFactory::makeLoadBoundingBox(x*Map::BOUNDING_BOX_SIZE, y*Map::BOUNDING_BOX_SIZE);
+         Coordinate bb(
+              tl.getX() + x * Map::BOUNDING_BOX_SIZE
+            , tl.getY() + y * Map::BOUNDING_BOX_SIZE
+         );
+         this->loadBoundingBox(bb);
       }
    }
+}
+
+void Map::unloadBoundingBoxes() {
+   std::vector<Coordinate>::iterator bbIter;
+   for (bbIter = this->boundingBoxContainer.begin(); bbIter != this->boundingBoxContainer.end(); bbIter++) {
+      if (!this->isBoundingBoxInScope(*bbIter)) {
+         this->boundingBoxContainer.erase(bbIter);
+      }
+   }
+   this->unloadDrawables();
+}
+
+void Map::loadBoundingBox(Coordinate bb) {
+   if (this->isValidBoundingBox(bb)) {
+
+      if (!this->isBoundingBoxLoaded(bb)) {
+         LOG(INFO) << "Loading Bounding Box (" << bb.getX() << "," << bb.getY() << ")";
+
+         this->boundingBoxContainer.push_back(bb);
+         MessageFactory::makeLoadBoundingBox(bb.getX(), bb.getY());
+      } else {
+         LOG(INFO) << "Bounding Box (" << bb.getX() << "," << bb.getY() << ") already loaded.";
+      }
+   } else {
+      LOG(INFO) << "Invalid Bounding Box (" << bb.getX() << "," << bb.getY() << ")";
+   }
+}
+
+bool Map::isBoundingBoxLoaded(Coordinate bb) {
+   bool alreadyLoaded = false;
+   std::vector<Coordinate>::iterator bbIter;
+   for (bbIter = this->boundingBoxContainer.begin(); bbIter != this->boundingBoxContainer.end(); bbIter++) {
+
+      if ((*bbIter) == bb) {
+         alreadyLoaded = true;
+         break;
+      }
+   }
+
+   return alreadyLoaded;
+}
+
+bool Map::isValidBoundingBox(Coordinate bb) {
+   if (bb.getX() % Map::BOUNDING_BOX_SIZE != 0) {
+      return false;
+   }
+
+   if (bb.getY() % Map::BOUNDING_BOX_SIZE != 0) {
+      return false;
+   }
+
+   return true;
 }
 
 void Map::unloadDrawables() {
@@ -96,11 +153,52 @@ void Map::unloadDrawables() {
    }
 }
 
+bool Map::isBoundingBoxInScope(Coordinate bb) {
+   Coordinate tl = this->getTopLeftOfRegion();
+   for (int x = 0; x < Map::BOUNDING_BOX_MEM; x++) {
+      for (int y = 0; y < Map::BOUNDING_BOX_MEM; y++) {
+
+         Coordinate thisBB(
+              tl.getX() + x * Map::BOUNDING_BOX_SIZE
+            , tl.getY() + y * Map::BOUNDING_BOX_SIZE
+         );
+
+         if (bb == thisBB) {
+            return true;
+         }
+      }
+   }
+
+   return false;
+}
+
 bool Map::isMapObjectInScope(MapObject* mo) {
 
    // Top Left Corner of MapObject in Question.
    Coordinate tl = mo->getLeftCorner();
 
+   Coordinate rr = this->getTopLeftOfRegion();
+
+   // Determine Dimensions of Region of Relevance
+   int rrSize = Map::BOUNDING_BOX_SIZE*Map::BOUNDING_BOX_MEM;
+
+   // If the MapObject is x dimensionally out of bounds...
+   if (tl.getX() > rr.getX() + rrSize || tl.getX() < rr.getX()) {
+      // Out of Scope.
+      return false;
+   }
+
+   // If the MapObject is y dimensionally out of bounds...
+   if (tl.getY() > rr.getY() + rrSize || tl.getY() < rr.getY()) {
+      // Out of Scope.
+      return false;
+   }
+
+   // Otherwise, in Scope.
+   return true;
+}
+
+Coordinate Map::getFocusBoundingBox() {
    // The current focus of the Map.
    Coordinate f = this->focus;
 
@@ -108,28 +206,18 @@ bool Map::isMapObjectInScope(MapObject* mo) {
    int bX = f.getX() - (f.getX() % Map::BOUNDING_BOX_SIZE);
    int bY = f.getY() - (f.getY() % Map::BOUNDING_BOX_SIZE);
 
+   return Coordinate(bX, bY);
+}
+
+Coordinate Map::getTopLeftOfRegion() {
+   Coordinate bb = this->getFocusBoundingBox();
+
    // Given the Middle determine the Top Left of the Region of Relevance.
    int middle = Map::BOUNDING_BOX_MEM / 2;
-   int tlrrX = bX - middle * Map::BOUNDING_BOX_SIZE;
-   int tlrrY = bY - middle * Map::BOUNDING_BOX_SIZE;
+   int tlrrX = bb.getX() - middle * Map::BOUNDING_BOX_SIZE;
+   int tlrrY = bb.getY() - middle * Map::BOUNDING_BOX_SIZE;
 
-   // Determine Dimensions of Region of Relevance
-   int rrSize = Map::BOUNDING_BOX_SIZE*Map::BOUNDING_BOX_MEM;
-
-   // If the MapObject is x dimensionally out of bounds...
-   if (tl.getX() > tlrrX + rrSize || tl.getX() < tlrrX) {
-      // Out of Scope.
-      return false;
-   }
-
-   // If the MapObject is y dimensionally out of bounds...
-   if (tl.getY() > tlrrY + rrSize || tl.getY() < tlrrY) {
-      // Out of Scope.
-      return false;
-   }
-
-   // Otherwise, in Scope.
-   return true;
+   return Coordinate(tlrrX, tlrrY);
 }
 
 void Map::adjustDisplay() {

@@ -31,12 +31,20 @@ class Map : public SystemComponent
       Coordinate display;
       Coordinate focus;
       std::vector<MapObject*> mapObjectContainer;
+      std::vector<Coordinate> boundingBoxContainer;
 
       void noop();
       void adjustDisplay();
       void loadBoundingBoxes();
+      void unloadBoundingBoxes();
+      void loadBoundingBox(Coordinate bb);
       void unloadDrawables();
       bool isMapObjectInScope(MapObject* mo);
+      bool isValidBoundingBox(Coordinate bb);
+      bool isBoundingBoxLoaded(Coordinate bb);
+      bool isBoundingBoxInScope(Coordinate bb);
+      Coordinate getFocusBoundingBox();
+      Coordinate getTopLeftOfRegion();
 
       static Map* instance;
 
