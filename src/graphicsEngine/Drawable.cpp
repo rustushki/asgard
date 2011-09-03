@@ -101,10 +101,20 @@ bool Drawable::needsUpdate()
 
 bool Drawable::move(uint newX, uint newY)
 {
+   LOG(INFO) << "instance = " << this->getInstanceName();
+   LOG(INFO) << "oldX = " << this->x;
+   LOG(INFO) << "oldY = " << this->y;
+   LOG(INFO) << "newX = " << newX;
+   LOG(INFO) << "newY = " << newY;
+
    // Hold the new x,y pair until we're preparing the next Screen frame.
    this->newX = newX;
    this->newY = newY;
    this->moved = true;
+}
+
+bool Drawable::moveByOffset(int offX, int offY) {
+   this->move((int)this->x + offX, (int)this->y + offY);
 }
 
 void Drawable::play()

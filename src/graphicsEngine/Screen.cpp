@@ -37,8 +37,7 @@ bool Screen::flip()
    uint l2, r2, t2, b2;
 
    std::vector<SDL_Rect>::iterator itr;
-   for (itr = this->rectsToUpdate.begin(); itr != this->rectsToUpdate.end(); itr++)
-   {
+   for (itr = this->rectsToUpdate.begin(); itr != this->rectsToUpdate.end(); itr++) {
       // Compute the sides of the animation.
       l1 = 0;
       r1 = Screen::WIDTH;
@@ -53,8 +52,7 @@ bool Screen::flip()
 
       // Does the current animation intersect with the provided rect?  If so,
       // update the animation.
-      if (!(l1 > r2 || r1 < l2 || t1 > b2 || b1 < t2))
-      {
+      if (!(l1 > r2 || r1 < l2 || t1 > b2 || b1 < t2)) {
          SDL_Rect update;
          update.w = std::min(r1,r2) - std::max(l1,l2);
          update.h = std::min(b1,b2) - std::max(t1,t2);
@@ -95,10 +93,8 @@ void Screen::insertLayer(Layer* newLayer, int position)
 bool Screen::removeLayer(std::string name)
 {
    std::vector<Layer*>::iterator itr;
-   for (itr = this->layer.begin(); itr < this->layer.end(); itr++)
-   {
-      if ((*itr)->getName() == name)
-      {
+   for (itr = this->layer.begin(); itr < this->layer.end(); itr++) {
+      if ((*itr)->getName() == name) {
          this->layer.erase(itr);
          break;
       }
@@ -128,6 +124,18 @@ Layer* Screen::getLayer(std::string name) const
          return (*itr);
 
    return NULL;
+}
+
+Drawable* Screen::getDrawableByName(std::string name) {
+   Drawable* found = NULL;
+   std::vector<Layer*>::iterator itr;
+   for (itr = this->layer.begin(); itr < this->layer.end(); itr++) {
+      if ((found = (*itr)->getDrawableByName(name)) != NULL) {
+         break;
+      }
+   }
+
+   return found;
 }
 
 void Screen::updateRect(SDL_Rect r)

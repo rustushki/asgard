@@ -46,6 +46,8 @@ class GraphicsEngine : public SystemComponent
       static GraphicsEngine* instance;
       void initScreen();
       virtual bool interpretMessage(Message* message);
+      void handleDisplayDrawable(Message* message);
+      void handleTranslateDrawablesByOffset(Message* message);
       static boost::shared_mutex updateLock;
       bool eventHandler(SDL_Event& event);
 };

@@ -139,16 +139,16 @@ values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("PalmTree","OsirisCat.png",75,25,3,4);
+values("PalmTree","OsirisCat.png",75,25,3,15);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("Puddle","OsirisCat.png",75,25,3,4);
+values("Puddle","OsirisCat.png",75,25,3,5);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("TreasureChest","OsirisCat.png",75,25,3,4);
+values("TreasureChest","OsirisCat.png",75,25,3,9);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("OsirisCat","OsirisCat.png",75,25,3,4);
+values("OsirisCat","OsirisCat.png",75,25,3,9);

@@ -68,6 +68,21 @@ bool Layer::removeDrawable(std::string name)
    GraphicsEngine::releaseLock();
 }
 
+Drawable* Layer::getDrawableByName(std::string name) {
+   GraphicsEngine::obtainLock();
+   std::vector<Drawable*>::iterator itr;
+   Drawable* d = NULL;
+   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
+      if ((*itr)->getInstanceName().compare(name) == 0) {
+         d = *itr;
+	 break;
+      }
+   }
+
+   GraphicsEngine::releaseLock();
+   return d;
+}
+
 void Layer::update()
 {
    // Update Drawables for this Layer.

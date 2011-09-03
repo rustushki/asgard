@@ -1,12 +1,13 @@
-#include <string>
+#include "externals.h"
 #include "Screen.h"
 #include "Layer.h"
 #include "Drawable.h"
 #include "Animation.h"
-#include <iostream>
 
 int main()
 {
+   google::InitGoogleLogging("asgard");
+
    Screen* s = Screen::getInstance();
 
    std::string lsName = "stage";
@@ -49,8 +50,6 @@ int main()
    d2->play();
    db->play();
    int time = 0;
-   int x = 0;
-   int y = 0;
    int cv = 0;
    int r = 0;
    bool run = true;
@@ -69,14 +68,7 @@ int main()
       time = SDL_GetTicks() - time;
       cv++;
 
-      if (cv == 1)
-      {
-         if (x >= y)
-            y++;
-         else if (y >= x)
-            x++;
-         d1->move(x,y);
-      }
+      d1->moveByOffset(1,1);
 
       if (r == 25)
       {

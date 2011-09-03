@@ -34,6 +34,9 @@ class Drawable
       // Sets the new coordinate of the drawable.  Marks as moved.
       bool move(uint newX, uint newY);
 
+      // Move the Drawable by an Offset.  Marks as moved.
+      bool moveByOffset(int offX, int offY);
+
       // Sets the an animation to swap to.  Marks as swapped.
       bool swapAnimation(std::string name);
 
