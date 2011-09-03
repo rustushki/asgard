@@ -60,14 +60,30 @@ void Map::setFocusPoint(int x, int y) {
       y = 0;
    }
 
-    LOG(INFO) << "Setting Map Focus Point = " << x << ", " << y;	
+   LOG(INFO) << "Setting Map Focus Point = " << x << ", " << y;	
 
    // TODO: Maximum Map dimensions is currently out of scope.
 
-   this->focus = Coordinate(x, y);
+   Coordinate newFocus(x, y);
+   Coordinate offset = this->focus - newFocus;
+
+   this->focus = newFocus;
    this->adjustDisplay();
    this->loadBoundingBoxes();
    this->unloadBoundingBoxes();
+   this->moveDrawables(offset);
+}
+
+void Map::moveDrawables(Coordinate offset) {
+
+   std::vector<std::string>* drawableNames = new std::vector<std::string>();
+
+   std::vector<MapObject*>::iterator moIter;
+   for (moIter = this->mapObjectContainer.begin(); moIter != this->mapObjectContainer.end(); moIter++) {
+      drawableNames->push_back((*moIter)->getDrawableName());
+   }
+
+   MessageFactory::makeTranslateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
 }
 
 void Map::loadBoundingBoxes() {

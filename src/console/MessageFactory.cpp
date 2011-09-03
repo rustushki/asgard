@@ -88,3 +88,23 @@ void MessageFactory::makeMoveFocusPoint(int x, int y)
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);
 }
+
+void MessageFactory::makeTranslateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y) {
+   LOG(INFO) << "Making TranslateDrawablesByOffset Message for Offset = " << x << ", " << y << ")";
+   LOG(INFO) << "For these Drawables:";
+   
+   std::vector<std::string>::iterator dNameIter;
+   for (dNameIter = drawableNames->begin(); dNameIter != drawableNames->end(); dNameIter++) {
+      LOG(INFO) << (*dNameIter);
+   }
+
+   Message *msg = new Message();
+
+   msg->header.type = MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET;
+   msg->data.translateDrawablesByOffset.drawableNames = drawableNames;
+   msg->data.translateDrawablesByOffset.X = x;
+   msg->data.translateDrawablesByOffset.Y = y;
+
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}

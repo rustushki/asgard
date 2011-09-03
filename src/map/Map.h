@@ -38,6 +38,7 @@ class Map : public SystemComponent
       void loadBoundingBoxes();
       void unloadBoundingBoxes();
       void loadBoundingBox(Coordinate bb);
+      void moveDrawables(Coordinate offset);
       void unloadDrawables();
       bool isMapObjectInScope(MapObject* mo);
       bool isValidBoundingBox(Coordinate bb);

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *  
  * Asgard is free software; you can redistribute it and/or modify
@@ -11,37 +11,22 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details. 
- * 
+ *  
  * You should have received a copy of the GNU General Public License
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef MESSAGE_H
-#define MESSAGE_H
+#ifndef TRANSLATE_DRAWABLES_BY_OFFSET
+#define TRANSLATE_DRAWABLES_BY_OFFSET
 
-#include "MessageHeader.h"
-#include "DisplayDrawable.h"
-#include "LoadBoundingBox.h"
-#include "LoadDrawable.h"
-#include "PrintString.h"
-#include "InstallMapObject.h"
-#include "MoveFocusPoint.h"
-#include "TranslateDrawablesByOffset.h"
+#include "externals.h"
 
-struct Message
+struct TranslateDrawablesByOffset
 {
-   MessageHeader header;
-   union
-   {
-      DisplayDrawable displayDrawable;
-      LoadBoundingBox box;
-      LoadDrawable loadDrawable;
-      PrintString printString;
-      InstallMapObject installMapObject;
-      MoveFocusPoint moveFocusPoint;
-      TranslateDrawablesByOffset translateDrawablesByOffset;
-   } data;
+   std::vector<std::string>* drawableNames;
+   int X;
+   int Y;
 };
 
-#endif //MESSAGE_H
+#endif //TRANSLATE_DRAWABLES_BY_OFFSET
