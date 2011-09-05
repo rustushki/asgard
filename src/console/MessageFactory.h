@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -36,6 +36,7 @@ class MessageFactory
       static void makeInstallMapObject(MapObject* mo, Drawable* d);
       static void makeMoveFocusPoint(int x, int y);
       static void makeTranslateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
+      static void makeUnloadDrawable(std::string drawableName);
 };
 
 #endif // MESSAGE_FACTORY_H

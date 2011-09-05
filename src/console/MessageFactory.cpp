@@ -108,3 +108,15 @@ void MessageFactory::makeTranslateDrawablesByOffset(std::vector<std::string>* dr
    MessageRouter* mr = MessageRouter::getInstance();
    mr->sendMessage(msg);
 }
+
+void MessageFactory::makeUnloadDrawable(std::string drawableName) {
+   LOG(INFO) << "Unloading Drawable " << drawableName;
+   
+   Message *msg = new Message();
+
+   msg->header.type = MESSAGE_TYPE_UNLOAD_DRAWABLE;
+   msg->data.unloadDrawable.drawableName = new std::string(drawableName);
+
+   MessageRouter* mr = MessageRouter::getInstance();
+   mr->sendMessage(msg);
+}

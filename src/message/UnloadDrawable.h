@@ -1,7 +1,7 @@
 /*****************************************************************************
  * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
- * 
+ *  
  * Asgard is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -17,20 +17,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef MESSAGE_TYPE_H
-#define MESSAGE_TYPE_H
+#ifndef UNLOAD_DRAWABLE_H
+#define UNLOAD_DRAWABLE_H
 
-enum MessageType
+#include "externals.h"
+
+struct UnloadDrawable
 {
-   MESSAGE_TYPE_DISPLAY_DRAWABLE,
-   MESSAGE_TYPE_LOAD_BOUNDING_BOX,
-   MESSAGE_TYPE_LOAD_DRAWABLE,
-   MESSAGE_TYPE_PRINT_STRING,
-   MESSAGE_TYPE_INSTALL_MAP_OBJECT,
-   MESSAGE_TYPE_MOVE_FOCUS_POINT,
-   MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET,
-   MESSAGE_TYPE_UNLOAD_DRAWABLE,
-   MESSAGE_TYPE_COUNT
+   std::string* drawableName;
 };
 
-#endif //MESSAGE_TYPE_H
+#endif //UNLOAD_DRAWABLE_H

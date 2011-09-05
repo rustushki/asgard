@@ -28,6 +28,7 @@
 #include "InstallMapObject.h"
 #include "MoveFocusPoint.h"
 #include "TranslateDrawablesByOffset.h"
+#include "UnloadDrawable.h"
 
 struct Message
 {
@@ -41,6 +42,7 @@ struct Message
       InstallMapObject installMapObject;
       MoveFocusPoint moveFocusPoint;
       TranslateDrawablesByOffset translateDrawablesByOffset;
+      UnloadDrawable unloadDrawable;
    } data;
 };
 
