@@ -1,6 +1,3 @@
-#include "externals.h"
-
-#include "MessageRouter.h"
 #include "SystemComponent.h"
 
 SystemComponent::SystemComponent(std::string threadName)

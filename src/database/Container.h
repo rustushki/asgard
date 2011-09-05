@@ -20,8 +20,7 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-#include <iterator>
-#include <cassert>
+#include "externals.h"
 #include "StaticMapObject.h"
 #include "Item.h"
 
@@ -34,11 +33,11 @@ class Container : public StaticMapObject
       Item* getItem(int index);
       bool putItem(Item* item);
       bool isOpenable();
-      string peek(int index);
+      std::string peek(int index);
       
    private:
       const static int MAX_ITEMS = 15;
-      vector<Item*> items;
+      std::vector<Item*> items;
 };
 
 #endif //CONTAINER_H

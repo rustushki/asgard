@@ -16,12 +16,7 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#include <python2.6/Python.h>
-#include <iostream>
-#include <string>
 #include "Console.h"
-#include "ConsolePython.h"
-#include <boost/bind.hpp>
 
 using std::getline;
 using std::cin;

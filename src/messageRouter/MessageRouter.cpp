@@ -1,5 +1,4 @@
 #include "MessageRouter.h"
-#include <boost/bind.hpp>
 
 MessageRouter* MessageRouter::messageRouter = NULL;
 

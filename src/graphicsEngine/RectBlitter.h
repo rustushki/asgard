@@ -1,6 +1,7 @@
 #ifndef RECT_BLITTER_H
 #define RECT_BLITTER_H
-#include <SDL/SDL.h>
+#include "externals.h"
+
 class Animation;
 
 class RectBlitter

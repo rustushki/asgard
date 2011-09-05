@@ -20,8 +20,8 @@
 #ifndef INSTALL_MAP_OBJECT_H
 #define INSTALL_MAP_OBJECT_H
 
-#include "MapObject.h"
-#include "Drawable.h"
+class Drawable;
+class MapObject;
 
 struct InstallMapObject
 {

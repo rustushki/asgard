@@ -1,11 +1,10 @@
 #ifndef LAYER_H
 #define LAYER_H
 
-#include <vector>
-#include <string>
-#include <SDL/SDL.h>
+#include "externals.h"
 #include "GraphicsEngine.h"
 #include "LayerState.h"
+
 class Drawable;
 
 class Layer

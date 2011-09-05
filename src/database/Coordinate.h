@@ -20,6 +20,8 @@
 #ifndef COORDINATE_H
 #define COORDINATE_H
 
+#include "externals.h"
+
 class Coordinate
 {
    public:

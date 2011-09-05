@@ -19,10 +19,11 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include <string>
-#include "AsgardThread.h"
 #include "SystemComponent.h"
 #include "ConsoleType.h"
+#include "ConsolePython.h"
+#include "externals.h"
+
 
 using std::string;
 

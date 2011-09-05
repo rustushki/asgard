@@ -1,7 +1,5 @@
 #include "GraphicsEngine.h"
 
-using std::string;
-
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
@@ -142,7 +140,7 @@ bool GraphicsEngine::interpretMessage(Message* message)
 void GraphicsEngine::handleDisplayDrawable(Message* message) {
    LOG(INFO) << "Handling DisplayDrawable";
 
-   string layerName = message->data.displayDrawable.layName;
+   std::string layerName = message->data.displayDrawable.layName;
    Drawable* drawable = message->data.displayDrawable.drawPtr;
    int x = message->data.displayDrawable.x;
    int y = message->data.displayDrawable.y;

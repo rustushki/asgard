@@ -5,6 +5,9 @@
 #include "SystemComponentState.h"
 #include "AsgardThread.h"
 #include "Mailbox.h"
+#include "MessageRouter.h"
+
+struct Message;
 
 class SystemComponent
 {

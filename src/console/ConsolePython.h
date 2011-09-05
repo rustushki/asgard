@@ -1,4 +1,4 @@
-#include <python2.6/Python.h>
+#include "externals.h"
 #include "MessageFactory.h"
 
 static PyObject*

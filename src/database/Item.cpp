@@ -1,15 +1,12 @@
 #include "Item.h"
 
-Item::Item()
-{
+Item::Item() {
 }
 
-Item::Item(string n)
-{
+Item::Item(std::string n) {
    name = n;
 }
 
-string Item::getName()
-{
+std::string Item::getName() {
    return name;
 }

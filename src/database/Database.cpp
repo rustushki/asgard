@@ -17,13 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include <boost/bind.hpp>
-#include <boost/thread.hpp>
-#include <string>
 #include "Database.h"
-#include "MapObjectFactory.h"
-#include "MessageFactory.h"
-#include "DrawableFactory.h"
 
 Database* Database::instance = NULL;
 

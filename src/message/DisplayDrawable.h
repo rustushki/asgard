@@ -20,8 +20,7 @@
 #ifndef DISPLAY_DRAWABLE_H
 #define DISPLAY_DRAWABLE_H
 
-#include "Drawable.h"
-#include "Coordinate.h"
+class Drawable;
 
 struct DisplayDrawable
 {

@@ -20,9 +20,7 @@
 #ifndef MAP_OBJECT_H
 #define MAP_OBJECT_H
 
-#include <list>
-#include <cassert>
-#include <string>
+#include "externals.h"
 #include "Coordinate.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10

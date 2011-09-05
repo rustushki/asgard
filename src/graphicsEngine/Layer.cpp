@@ -1,5 +1,3 @@
-#include <vector>
-#include <string>
 #include "Layer.h"
 #include "Drawable.h"
 

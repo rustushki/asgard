@@ -20,12 +20,7 @@
 #ifndef QUERY_GENERATOR_H
 #define QUERY_GENERATOR_H
 
-#include <string>
-#include <iostream>
-#include <sstream>
-#include <cstring>
-#include <stdio.h>
-
+#include "externals.h"
 #include "Map.h"
 
 class QueryGenerator

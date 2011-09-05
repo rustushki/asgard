@@ -1,8 +1,7 @@
 #ifndef MAP_H
 #define MAP_H
 
-#include <vector>
-#include <cassert>
+#include "externals.h"
 #include "MapObject.h"
 #include "MessageFactory.h"
 #include "SystemComponent.h"

@@ -18,9 +18,6 @@
  ******************************************************************************/
 
 #include "DrawableFactory.h"
-#include "QueryGenerator.h"
-#include "DatabaseColumnMap.h"
-#include "MessageFactory.h" //TEMP: for displaying drawable
 
 Drawable* DrawableFactory::build(sqlite3 *db, std::string dName)
 {

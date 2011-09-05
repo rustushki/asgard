@@ -17,6 +17,8 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
  
+#ifndef DATABASECOLUMNMAP_H
+#define DATABASECOLUMNMAP_H
 enum DatabaseQuery
 {
    DATABASE_QUERY_STATIC_MAP_OBJECT,
@@ -141,3 +143,4 @@ enum DrawableColumn
    DRAWABLE_COLUMN_ANIMATION_NAME,
    DRAWABLE_COLUMN_COUNT
 };
+#endif//DATABASECOLUMNMAP_H

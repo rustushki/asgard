@@ -20,18 +20,16 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include <string>
-
-using std::string;
+#include "externals.h"
 
 class Item
 {
    public:
       Item();
-      Item(string);
-      string getName();
+      Item(std::string name);
+      std::string getName();
    private:
-      string name;
+      std::string name;
 };
 
 #endif //ITEM_H

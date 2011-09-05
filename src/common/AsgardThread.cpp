@@ -1,7 +1,4 @@
 #include "AsgardThread.h"
-#include <boost/bind.hpp>
-
-#include <iostream>
 
 AsgardThread::AsgardThread(std::string name, Mailbox* mb)
 {

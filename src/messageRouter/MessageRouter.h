@@ -1,11 +1,10 @@
 #ifndef MESSAGE_ROUTER_H
 #define MESSAGE_ROUTER_H
 
-#include <boost/signal.hpp>
-#include <boost/signals/trackable.hpp>
+#include "externals.h"
+#include "Message.h"
 #include "AsgardThread.h"
 #include "Mailbox.h"
-#include "Message.h"
 
 class MessageRouter : public boost::signals::trackable
 {
@@ -47,4 +46,4 @@ private:
    Mailbox mailbox;
 };
 
-#endif /*MESSAGE_ROUTER_H*/
+#endif//MESSAGE_ROUTER_H

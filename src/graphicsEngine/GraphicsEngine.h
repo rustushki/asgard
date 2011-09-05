@@ -19,11 +19,11 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-#include <boost/thread/shared_mutex.hpp>
-
 #include "SystemComponent.h"
 #include "Screen.h"
-#include "Message.h"
+#include "Drawable.h"
+
+struct Message;
 
 class GraphicsEngine : public SystemComponent
 {

@@ -1,10 +1,8 @@
 #ifndef MAILBOX_H
 #define MAILBOX_H
 
+#include "externals.h"
 #include "Message.h"
-#include <list>
-#include <boost/thread/mutex.hpp>
-#include <boost/signal.hpp>
 
 struct MailboxStorage
 {

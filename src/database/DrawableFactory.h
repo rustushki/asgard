@@ -20,9 +20,11 @@
 #ifndef DRAWABLE_FACTORY_H
 #define DRAWABLE_FACTORY_H
 
-#include <sqlite3.h>
-#include <string>
+#include "externals.h"
+#include "DatabaseColumnMap.h"
 #include "Drawable.h"
+#include "QueryGenerator.h"
+#include "MessageFactory.h"
 
 class DrawableFactory
 {

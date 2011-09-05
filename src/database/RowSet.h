@@ -20,9 +20,7 @@
 #ifndef ROWSET_H
 #define ROWSET_H
 
-#include <string>
-#include <sqlite3.h> 
-
+#include "externals.h"
 
 class RowSet
 {

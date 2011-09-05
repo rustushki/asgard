@@ -1,10 +1,7 @@
 #ifndef ASGARD_THREAD_H
 #define ASGARD_THREAD_H
 
-#include <boost/thread/thread.hpp>
-#include <boost/thread/condition_variable.hpp>
-#include <boost/function.hpp>
-#include <string>
+#include "externals.h"
 #include "AsgardThreadState.h"
 #include "Mailbox.h"
 

@@ -18,21 +18,6 @@
  ****************************************************************************/
 
 #include "MapObjectFactory.h"
-#include "Tile.h"
-#include "WaterTile.h"
-#include "GrassTile.h"
-#include "DesertTile.h"
-#include "Container.h"
-#include "StaticMapObject.h"
-#include "NonPlayerCharacter.h"
-#include "DatabaseColumnMap.h"
-#include "CircHardpoint.h"
-#include "RectHardpoint.h"
-#include "QueryGenerator.h"
-#include "Drawable.h"
-#include "DrawableFactory.h"
-#include "MessageFactory.h"
-#include <cstdlib>
 
 sqlite3* MapObjectFactory::db = NULL;
 

@@ -1,7 +1,4 @@
 #include "Mailbox.h"
-#include <iostream>
-#include <boost/thread/mutex.hpp>
-#include <boost/signal.hpp>
 
 Mailbox::Mailbox()
 {

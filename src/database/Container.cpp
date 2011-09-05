@@ -23,7 +23,7 @@ Container::Container(std::string drawableName) : StaticMapObject(drawableName)
 {
    items.reserve(MAX_ITEMS);
    
-   vector<Item*>::iterator currentItem;
+   std::vector<Item*>::iterator currentItem;
    for(currentItem = items.begin(); currentItem != items.end(); currentItem++)
    {
       *currentItem = NULL;
@@ -39,7 +39,7 @@ Container::~Container()
 int Container::getItemCount()
 {
    int validItemCount;
-   vector<Item*>::iterator currentItem;
+   std::vector<Item*>::iterator currentItem;
    for(currentItem = items.begin(); currentItem != items.end(); currentItem++)
    {
       if(*currentItem != NULL) validItemCount++;
@@ -68,7 +68,7 @@ bool Container::putItem(Item* item)
    
    assert(item);
    
-   vector<Item*>::iterator currentItem;
+   std::vector<Item*>::iterator currentItem;
    for(currentItem = items.begin(); currentItem != items.end() && !itemAdded; currentItem++)
    {
       if(*currentItem != NULL)
@@ -88,7 +88,7 @@ bool Container::isOpenable()
 }
 
 /* What Item is cursor pointing at? */
-string Container::peek(int index)
+std::string Container::peek(int index)
 {
    assert(index < MAX_ITEMS);
    

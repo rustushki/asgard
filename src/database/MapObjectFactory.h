@@ -20,10 +20,24 @@
 #ifndef MAP_OBJECT_FACTORY_H
 #define MAP_OBJECT_FACTORY_H
 
-#include <sqlite3.h>
+#include "externals.h"
 #include "Hardpoint.h"
 #include "RowSet.h"
- 
+#include "Tile.h"
+#include "WaterTile.h"
+#include "GrassTile.h"
+#include "DesertTile.h"
+#include "Container.h"
+#include "StaticMapObject.h"
+#include "NonPlayerCharacter.h"
+#include "DatabaseColumnMap.h"
+#include "CircHardpoint.h"
+#include "RectHardpoint.h"
+#include "QueryGenerator.h"
+#include "Drawable.h"
+#include "DrawableFactory.h"
+#include "MessageFactory.h"
+
 class MapObjectFactory
 {
    private:
