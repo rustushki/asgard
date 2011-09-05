@@ -33,8 +33,8 @@ bool Screen::flip()
    this->status = SCREENSTATE_FLIPPING;
 
 
-   uint l1, r1, t1, b1;
-   uint l2, r2, t2, b2;
+   int l1, r1, t1, b1;
+   int l2, r2, t2, b2;
 
    std::vector<SDL_Rect>::iterator itr;
    for (itr = this->rectsToUpdate.begin(); itr != this->rectsToUpdate.end(); itr++) {
@@ -54,8 +54,8 @@ bool Screen::flip()
       // update the animation.
       if (!(l1 > r2 || r1 < l2 || t1 > b2 || b1 < t2)) {
          SDL_Rect update;
-         update.w = std::min(r1,r2) - std::max(l1,l2);
-         update.h = std::min(b1,b2) - std::max(t1,t2);
+         update.w = std::abs(std::min(r1,r2) - std::max(l1,l2));
+         update.h = std::abs(std::min(b1,b2) - std::max(t1,t2));
          update.x = std::max(l1,l2);
          update.y = std::max(t1,t2);
 

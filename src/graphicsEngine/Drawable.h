@@ -32,7 +32,7 @@ class Drawable
       bool needsUpdate();
 
       // Sets the new coordinate of the drawable.  Marks as moved.
-      bool move(uint newX, uint newY);
+      bool move(int newX, int newY);
 
       // Move the Drawable by an Offset.  Marks as moved.
       bool moveByOffset(int offX, int offY);
@@ -80,10 +80,10 @@ class Drawable
       std::string newAnimation;
       
       // Current coordinates.
-      uint x, y;
+      int x, y;
 
       // Coordinates to be updated to.
-      uint newX, newY;
+      int newX, newY;
 
       // Have the coordinates been updated?  Reset in doAnim()
       bool moved;

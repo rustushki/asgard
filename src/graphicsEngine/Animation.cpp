@@ -1,7 +1,6 @@
 #include "Animation.h"
 #include "Screen.h"
-Animation::Animation(std::string filename, uint width, uint height, uint
-      stillCount, uint sps, uint ssRows, uint ssCols)
+Animation::Animation(std::string filename, uint width, uint height, uint stillCount, uint sps, uint ssRows, uint ssCols)
 {
    SDL_Surface* spriteSheetRaw = NULL;
    SDL_Surface* spriteSheet = NULL;

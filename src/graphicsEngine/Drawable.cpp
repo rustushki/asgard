@@ -99,7 +99,7 @@ bool Drawable::needsUpdate()
    return needsUpdate;
 }
 
-bool Drawable::move(uint newX, uint newY)
+bool Drawable::move(int newX, int newY)
 {
    LOG(INFO) << "instance = " << this->getInstanceName();
    LOG(INFO) << "oldX = " << this->x;
@@ -131,8 +131,8 @@ SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
 {
    Animation* ca = this->animation[this->currentAnimation];
 
-   uint l1, r1, t1, b1;
-   uint l2, r2, t2, b2;
+   int l1, r1, t1, b1;
+   int l2, r2, t2, b2;
 
    // Compute the sides of the provided rect.
    l1 = r.x;
@@ -148,18 +148,26 @@ SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
 
    // Compute the intersecting rectangle.
    SDL_Rect i;
-   i.w = std::abs((double)(std::min(r1,r2) - std::max(l1,l2)));
-   i.h = std::abs((double)(std::min(b1,b2) - std::max(t1,t2)));
+   i.w = ((double)(std::min(r1,r2) - std::max(l1,l2)));
+   i.h = ((double)(std::min(b1,b2) - std::max(t1,t2)));
    i.x = std::max(l1,l2);
    i.y = std::max(t1,t2);
+
+   if (i.w < 0) {
+      i.w = 0;
+   }
+
+   if (i.h < 0) {
+      i.h = 0;
+   }
 
    return i;
 }
 
 void Drawable::updateRect(SDL_Rect r)
 {
-   uint l1, r1, b1, t1;
-   uint l2, r2, b2, t2;
+   int l1, r1, b1, t1;
+   int l2, r2, b2, t2;
 
    Animation* ca = this->animation[this->currentAnimation];
 
@@ -180,12 +188,12 @@ void Drawable::updateRect(SDL_Rect r)
    if (!(l1 > r2 || r1 < l2 || t1 > b2 || b1 < t2))
    {
       // Get the intersecting rect.
-      r = this->getIntersectingRect(r);
+      SDL_Rect v = this->getIntersectingRect(r);
 
       // Update the intersecting rect.
-      uint offsetX = std::abs((double)(r.x - this->x));
-      uint offsetY = std::abs((double)(r.y - this->y));
-      ca->updateRect(r,offsetX,offsetY);
+      int offsetX = (double)(v.x - this->x);
+      int offsetY = (double)(v.y - this->y);
+      ca->updateRect(v,offsetX,offsetY);
    }
 }
 
