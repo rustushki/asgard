@@ -46,21 +46,11 @@ class Drawable
       // Triggers the current animation to stop animating.
       void stop();
 
-      void updateRect(SDL_Rect r);
+      // Triggers the Drawable to no longer display.
+      void hide();
 
-      // The following do**** ops should be called in the order provided:
-      // Handles situations when a Drawable coordinates changed.
-      // Specifically, it "erases" where the Drawable was.
-      void doMove();
-
-      // Handles situations when a Drawable has a swapped animation.
-      // Specifically, it "erases" the frame of the animation displayed before
-      // the animation swap.
-      void doSwap();
-
-      // Handles the default Animation still update scenario.
-      // Updates the current Animation.  Also resets the moved and swapped flags.
-      void doAnim();
+      // Triggers the Drawable to display.
+      void show();
 
    private:
 
@@ -88,6 +78,12 @@ class Drawable
       // Have the coordinates been updated?  Reset in doAnim()
       bool moved;
 
+      // Is the Drawable visible?
+      bool hidden;
+      
+      // Has the Drawable already been hidden?  If so, no need to updateRect again.
+      bool hasBeenHidden;
+
       // Has the current animation been changed?  Reset in doAnim()
       bool swapped;
 
@@ -96,6 +92,30 @@ class Drawable
       // Find the intersecting rectangle between the provided rect and the
       // current animation's rect.
       SDL_Rect getIntersectingRect(SDL_Rect r);
+
+      // The following do**** ops should be called in the order provided:
+      // Handles situations when a Drawable coordinates changed.
+      // Specifically, it "erases" where the Drawable was.
+      void doMove();
+
+      // Handles situations when a Drawable has a swapped animation.
+      // Specifically, it "erases" the frame of the animation displayed before
+      // the animation swap.
+      void doSwap();
+
+      // Handles the default Animation still update scenario.
+      // Updates the current Animation.  Also resets the moved and swapped flags.
+      void doAnim();
+
+      // Handles the hiding of a Drawable.
+      // When the Drawable::hidden bit is set this method will stop Animation
+      // and rects from Layers beneath the drawable are blitted on top of the
+      // Drawable.
+      void doHide();
+
+      void updateRect(SDL_Rect r);
+
+   friend class Layer;
 
 };
 #endif//DRAWABLE_H

@@ -11,6 +11,8 @@ Drawable::Drawable(std::string name)
    this->y = 0;
    this->newX = 0;
    this->newY = 0;
+   this->hidden = false;
+   this->hasBeenHidden = true;
 }
 
 /**
@@ -127,6 +129,20 @@ void Drawable::stop()
    this->status = DRAWABLESTATE_IDLE;
 }
 
+void Drawable::hide() {
+   
+   // Prevents animation from being blitted to screen.
+   this->hidden = true;
+
+   // Ensure that the visible portion of the drawable is hidden exactly once.
+   // No need to do it more than once.
+   this->hasBeenHidden = false;
+}
+
+void Drawable::show() {
+   this->hidden = false;
+}
+
 SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
 {
    Animation* ca = this->animation[this->currentAnimation];
@@ -166,6 +182,12 @@ SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
 
 void Drawable::updateRect(SDL_Rect r)
 {
+
+   // Do not have animation blit itself if the Drawable is hidden.
+   if (this->hidden) {
+      return;
+   }
+
    int l1, r1, b1, t1;
    int l2, r2, b2, t2;
 
@@ -241,6 +263,24 @@ void Drawable::doAnim()
 
       Screen* s = Screen::getInstance();
       s->updateRect(r);
+   }
+}
+
+void Drawable::doHide() {
+   if (this->hidden && !this->hasBeenHidden) {
+
+      // Notify screen that this Drawable's visible rect must be updated.
+      // (though the Drawable itself be hidden)  When Drawable::updateRect() is
+      // called, the Drawable::hidden flag will be 'true' causing the routine
+      // to not draw the drawable on the screen.  Layers above and below may,
+      // however, blit animations within the rect.  This effectively hides the
+      // Drawable.
+      SDL_Rect r = this->getRect();
+      Screen* s = Screen::getInstance();
+      s->updateRect(r);
+
+      // Prevent Drawable::doHide() from hiding the Drawable again.
+      this->hasBeenHidden = true;
    }
 }
 

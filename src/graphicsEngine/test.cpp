@@ -70,6 +70,14 @@ int main()
 
       d1->moveByOffset(1,1);
 
+      if (r == 35) {
+         LOG(INFO) << "Showing";
+         d1->show();
+      } else if (r == 15) {
+         LOG(INFO) << "Hiding";
+         d1->hide();
+      }
+
       if (r == 25)
       {
          d2->swapAnimation("cecil");
