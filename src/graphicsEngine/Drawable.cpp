@@ -13,6 +13,10 @@ Drawable::Drawable(std::string name)
    this->newY = 0;
    this->hidden = false;
    this->hasBeenHidden = true;
+   this->toBeRemoved = false;
+}
+
+Drawable::~Drawable() {
 }
 
 /**
@@ -141,6 +145,11 @@ void Drawable::hide() {
 
 void Drawable::show() {
    this->hidden = false;
+}
+
+void Drawable::unload() {
+   this->hide();
+   this->toBeRemoved = true;
 }
 
 SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)

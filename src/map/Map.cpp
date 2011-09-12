@@ -106,7 +106,7 @@ void Map::unloadBoundingBoxes() {
          this->boundingBoxContainer.erase(bbIter);
       }
    }
-   this->unloadDrawables();
+   this->unloadMapObjects();
 }
 
 void Map::loadBoundingBox(Coordinate bb) {
@@ -151,22 +151,39 @@ bool Map::isValidBoundingBox(Coordinate bb) {
    return true;
 }
 
-void Map::unloadDrawables() {
-   std::vector<MapObject*>::iterator moIter;
+/** Unload MapObjects from Map.
+ *
+ * Any MapObjects that have fallen out of the Region of Relevance must be
+ * removed from the Map.  Consequently, any Drawables associated with these
+ * MapObjects must also be removed from the Graphics Engine.  Send an
+ * UnloadDrawable message to Graphics Engine to accomplish this.
+ * 
+ * @return
+ */
+void Map::unloadMapObjects() {
+   // Grab a reference to the container for MapObjects for shorter code.
+   std::vector<MapObject*>* map = &(this->mapObjectContainer);
 
-   for (moIter = this->mapObjectContainer.begin(); moIter != this->mapObjectContainer.end(); moIter++) {
+   // Iterate through each MapObject loaded on the Map ...
+   std::vector<MapObject*>::iterator moIter = map->begin();
+   while (moIter != map->end()) {
 
-      if (!this->isMapObjectInScope(*moIter)) {
-         LOG(INFO) << "MapObject not in scope.  Unloading...";
+      MapObject* mo = *moIter;
 
-         MapObject* mo = *moIter;
+      // Is the MapObject in the Region of Relevance?
+      if (!this->isMapObjectInScope(mo)) {
+         LOG(INFO) << "MapObject not in scope.";
 
-         // TODO: Unload MapObject
+         // Send UnloadDrawable message to Graphics Engine.
+         MessageFactory::makeUnloadDrawable(mo->getDrawableName());
 
-         // TODO: Don't have this message type yet.
-         //MessageFactory::makeUnloadDrawable(mo->getDrawableName());
+         // Remove the MapObject from the Map; freeing its memory.
+		   moIter = map->erase(moIter);
+      } else {
+         moIter++;
       }
    }
+
 }
 
 bool Map::isBoundingBoxInScope(Coordinate bb) {

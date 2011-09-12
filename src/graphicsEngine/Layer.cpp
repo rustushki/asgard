@@ -55,10 +55,8 @@ bool Layer::removeDrawable(std::string name)
 {
    GraphicsEngine::obtainLock();
    std::vector<Drawable*>::iterator itr;
-   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++)
-   {
-      if ((*itr)->getName() == name)
-      {
+   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
+      if ((*itr)->getInstanceName().compare(name) == 0) {
          this->drawable.erase(itr);
          break;
       }
@@ -73,7 +71,7 @@ Drawable* Layer::getDrawableByName(std::string name) {
    for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
       if ((*itr)->getInstanceName().compare(name) == 0) {
          d = *itr;
-	 break;
+         break;
       }
    }
 
@@ -99,6 +97,13 @@ void Layer::update()
 void Layer::updateRect(SDL_Rect r)
 {
    std::vector<Drawable*>::iterator itr;
-   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++)
-      (*itr)->updateRect(r);
+   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
+      Drawable* d = (*itr);
+      if (d->hasBeenHidden && d->toBeRemoved) {
+         this->removeDrawable(d->getInstanceName());
+         delete d;
+      } else {
+         d->updateRect(r);
+      }
+   }
 }

@@ -134,7 +134,10 @@ bool GraphicsEngine::interpretMessage(Message* message)
       this->handleDisplayDrawable(message);
    } else if (message->header.type == MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET) {
       this->handleTranslateDrawablesByOffset(message);
+   } else if (message->header.type == MESSAGE_TYPE_UNLOAD_DRAWABLE) {
+      this->handleUnloadDrawable(message);
    }
+
 }
 
 void GraphicsEngine::handleDisplayDrawable(Message* message) {
@@ -180,5 +183,22 @@ void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
          LOG(INFO) << "Found it.  Moving by offset.";
          d->moveByOffset(xOffset, yOffset);
       }
+   }
+}
+
+void GraphicsEngine::handleUnloadDrawable(Message* message) {
+   LOG(INFO) << "Handling UnloadDrawable";
+
+   UnloadDrawable data = message->data.unloadDrawable;
+
+   Screen* s = Screen::getInstance();
+
+   Drawable* d = s->getDrawableByName(*(data.drawableName));
+
+   if (d != NULL) {
+	   LOG(INFO) << "Successfully found drawable to unload.";
+      d->unload();
+   } else {
+	   LOG(INFO) << "Unable to find Drawable for unloading.";
    }
 }

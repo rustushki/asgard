@@ -27,8 +27,10 @@ class Screen
       bool removeLayer(std::string name);
       void appendLayer(Layer* newLayer);
       void pushLayer(Layer* newLayer);
-      Drawable* getDrawableByName(std::string name);
       Layer* getLayer(std::string name) const;
+
+      Drawable* getDrawableByName(std::string name);
+
 
       // Do a blit onto the Screen from all layers that intersect with provided
       // rect.

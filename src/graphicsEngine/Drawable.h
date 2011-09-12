@@ -52,6 +52,10 @@ class Drawable
       // Triggers the Drawable to display.
       void show();
 
+      // Schedules the Drawable to be removed from the Layer and deleted from
+      // memory after first being hidden.
+      void unload();
+
    private:
 
       // Reference name of the drawable.
@@ -83,6 +87,10 @@ class Drawable
       
       // Has the Drawable already been hidden?  If so, no need to updateRect again.
       bool hasBeenHidden;
+
+      // Schedules the drawable to be removed.  Drawable must be hidden before
+      // being removed.  Use Drawable::unload()
+      bool toBeRemoved;
 
       // Has the current animation been changed?  Reset in doAnim()
       bool swapped;
