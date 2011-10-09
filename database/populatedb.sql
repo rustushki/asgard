@@ -3,7 +3,7 @@
 --Palm Tree 1 (id = 1)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,3,175,25,5,"PalmTree");
+values(NULL,3,175,200,141,"PalmTree");
 
 --Treasure Chest (id = 2)
 insert into MapObject
@@ -166,6 +166,10 @@ insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("OsirisCat.png",3,1);
 
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("palmtree.png",22,1);
+
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordSouth","HandSwingsSwordSouth.bmp",100,50,4,4);
@@ -184,7 +188,7 @@ values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("PalmTree","OsirisCat.png",75,25,3,15);
+values("PalmTree","palmtree.png",100,68,22,5);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
