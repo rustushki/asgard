@@ -6,15 +6,30 @@ Animation::Animation(std::string filename, uint width, uint height, uint stillCo
    SDL_Surface* spriteSheet = NULL;
 
    // TODO: File Exists?
+
+   // Handle PNG transparancy.
+   SDL_RWops *rwop;
+   rwop=SDL_RWFromFile(filename.c_str(), "rb");
+   bool alpha = false;
+   if (IMG_isPNG(rwop)) {
+      alpha = true;
+   }
+
    spriteSheetRaw = IMG_Load(filename.c_str());
+
    if (spriteSheetRaw != NULL)
    {
-      spriteSheet = SDL_DisplayFormat(spriteSheetRaw);
-      SDL_FreeSurface(spriteSheetRaw);
+      if (alpha) {
+         spriteSheet = SDL_DisplayFormatAlpha(spriteSheetRaw);
+         SDL_FreeSurface(spriteSheetRaw);
+      } else {
+         spriteSheet = SDL_DisplayFormat(spriteSheetRaw);
+         SDL_FreeSurface(spriteSheetRaw);
 
-      // Hot pink transparency color.
-      uint colorkey = SDL_MapRGB(spriteSheet->format, 0xff, 0, 0xff);
-      SDL_SetColorKey(spriteSheet, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+         // Hot pink transparency color.
+         uint colorkey = SDL_MapRGB(spriteSheet->format, 0xff, 0, 0xff);
+         SDL_SetColorKey(spriteSheet, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
+      }
    }
 
    this->spriteSheet = spriteSheet;
