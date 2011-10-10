@@ -40,6 +40,15 @@ insert into MapObject
 (MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
 values(NULL,700,1217,25,5,"PalmTree");
 
+--Treasure Chest 1 (id = 9)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,700,400,600,5,"TreasureChest");
+
+--Treasure Chest 2 (id = 10)
+insert into MapObject
+(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
+values(NULL,1200,500,600,5,"TreasureChest");
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container
@@ -112,6 +121,18 @@ insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(8,1,0,0,3);
 
+--Treasure Chests's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(9,1,0,0,3);
+
+--Treasure Chests's Hardpoint
+--Hardpoint Type = 1 = CircHardPoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(10,1,0,0,3);
+
 --Hand's Animations
 --Hand swings sword
 insert into Drawable
@@ -170,6 +191,10 @@ insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("palmtree.png",22,1);
 
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("treasurechest.png",12,1);
+
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordSouth","HandSwingsSwordSouth.bmp",100,50,4,4);
@@ -196,7 +221,7 @@ values("Puddle","OsirisCat.png",75,25,3,5);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("TreasureChest","OsirisCat.png",75,25,3,9);
+values("TreasureChest","treasurechest.png",25,36,12,6);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
