@@ -27,8 +27,6 @@
 #include "MessageFactory.h"
 #include "DrawableFactory.h"
  
-#define ASGARD_DATABASE "asgard.db3"
- 
 class Database : public SystemComponent
 {
    private:
@@ -39,10 +37,12 @@ class Database : public SystemComponent
       
       void loop();
       virtual bool interpretMessage(Message* message);
+      std::string getDatabasePath();
 
    public:
       static Database* getInstance();
       sqlite3* getAsgardDb() const;
+
       void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
       bool loadBoundingBox(int boxX, int boxY);
       bool loadDrawable(std::string dName);

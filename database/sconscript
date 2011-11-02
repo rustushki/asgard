@@ -11,7 +11,7 @@ source = [
    'createdb.sql',
    'populatedb.sql'
 ]
-target = '../asgard.db3'
+target = './asgard.db3'
 create = './database/runquery $TARGET ./database/createdb.sql';
 populate = './database/runquery $TARGET ./database/populatedb.sql';
 

@@ -18,12 +18,15 @@
  ****************************************************************************/
 
 #include "Database.h"
+#include "consts.h"
 
 Database* Database::instance = NULL;
 
 Database::Database() : SystemComponent("database")
 {
-   int status = sqlite3_open(ASGARD_DATABASE, &this->asgardDb);
+
+   std::string path = this->getDatabasePath();
+   int status = sqlite3_open(path.c_str(), &this->asgardDb);
    
    if(status != SQLITE_OK)
    {
@@ -47,6 +50,17 @@ Database* Database::getInstance()
 sqlite3* Database::getAsgardDb() const
 {
    return this->asgardDb;
+}
+
+/* Gets the path to the database. Uses RES resource path from consts.h
+ *
+ * @return std::string - path to database.
+ * @access private
+ */
+std::string Database::getDatabasePath() {
+   std::string path(RES);
+   path.append("database/asgard.db3");
+   return path;
 }
 
 void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes)
