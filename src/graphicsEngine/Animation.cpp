@@ -1,21 +1,28 @@
 #include "Animation.h"
 #include "Screen.h"
+#include "consts.h"
+
 Animation::Animation(std::string filename, uint width, uint height, uint stillCount, uint sps, uint ssRows, uint ssCols)
 {
    SDL_Surface* spriteSheetRaw = NULL;
    SDL_Surface* spriteSheet = NULL;
 
+   // Search for spritesheets in the RES directory.
+   std::string path(RES);
+   path.append("spritesheet/");
+   path.append(filename);
+
    // TODO: File Exists?
 
    // Handle PNG transparancy.
    SDL_RWops *rwop;
-   rwop=SDL_RWFromFile(filename.c_str(), "rb");
+   rwop=SDL_RWFromFile(path.c_str(), "rb");
    bool alpha = false;
    if (IMG_isPNG(rwop)) {
       alpha = true;
    }
 
-   spriteSheetRaw = IMG_Load(filename.c_str());
+   spriteSheetRaw = IMG_Load(path.c_str());
 
    if (spriteSheetRaw != NULL)
    {
