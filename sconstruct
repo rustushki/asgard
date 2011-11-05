@@ -47,7 +47,7 @@ env.Alias("manpage", manpage)
 
 # 'install' Alias
 env.Alias("install", env.Install("$PREFIX/usr/games", asgard))
-env.Alias("install", env.Install("$PREFIX/usr/share/asgard/scripts", Dir("scripts")))
-env.Alias("install", env.Install("$PREFIX/usr/share/asgard/spritesheet", Dir("spritesheet")))
+env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("scripts")))
+env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("spritesheet")))
 env.Alias("install", env.Install("$PREFIX/usr/share/asgard/database", asgarddb3))
 env.Alias("install", env.Install("$PREFIX/usr/share/man/man1", manpage))
