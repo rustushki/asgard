@@ -1,0 +1,1 @@
+shlibs:Depends=libboost-signals1.42.0 (>= 1.42.0-1), libboost-thread1.42.0 (>= 1.42.0-1), libc6 (>= 2.3.6-6~), libc6 (>= 2.4), libgcc1 (>= 1:4.1.1), libgoogle-glog0, libpython2.6 (>= 2.6), libsdl-image1.2 (>= 1.2.10), libsdl1.2debian (>= 1.2.10-1), libsqlite3-0 (>= 3.5.9), libstdc++6 (>= 4.6)

@@ -1,11 +1,14 @@
-Package: asgard
-Version: 0.3.6-1
-Architecture: i386
-Maintainer: Russ Adams <russ.adams@gmail.com>
-Installed-Size: 40
+Source: asgard
 Section: games
 Priority: extra
-Homepage: http://wiki.asgardrpg.org/
+Maintainer: Russ Adams <russ.adams@gmail.com>
+Build-Depends: debhelper (>= 8.0.0)
+Standards-Version: 3.9.2
+Homepage: http://wiki.asgardrpg.org
+
+Package: asgard
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: classic, epic video roleplaying game
  Asgard is a role playing game complete with menus, random battles, maps, towns
  and dungeons. But this is not just about the game. Join the community of
