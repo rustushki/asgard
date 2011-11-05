@@ -5,6 +5,7 @@ import os
 # scons -c        - cleans everything
 # scons asgard    - builds just asgard executable
 # scons db        - builds just asgard.db3
+# scons manpage   - compresses manpage
 # scons install   - install asgard to system
 
 AddOption(
@@ -24,12 +25,14 @@ Export('env')
 # Child conscripts
 SConscript([
    'database/sconscript',
-   'src/sconscript'
+   'src/sconscript',
+   'docs/sconscript'
 ])
 
 
 Import("asgard")
 Import("asgarddb3")
+Import("manpage")
 
 # Make our Aliases
 
@@ -40,7 +43,11 @@ env.Alias("asgard" , asgard)
 env.Alias("db"     , asgarddb3)
 
 # 'install' Alias
+env.Alias("manpage", manpage)
+
+# 'install' Alias
 env.Alias("install", env.Install("$PREFIX/usr/games", asgard))
 env.Alias("install", env.Install("$PREFIX/usr/share/asgard/scripts", Dir("scripts")))
 env.Alias("install", env.Install("$PREFIX/usr/share/asgard/spritesheet", Dir("spritesheet")))
 env.Alias("install", env.Install("$PREFIX/usr/share/asgard/database", asgarddb3))
+env.Alias("install", env.Install("$PREFIX/usr/share/man/man1", manpage))

@@ -1,0 +1,5 @@
+Import('env')
+
+manpage = env.Command('asgard.1.gz', [], 'gzip -9 -c docs/asgard.1 > docs/asgard.1.gz')
+
+Export('manpage')
