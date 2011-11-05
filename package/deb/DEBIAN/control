@@ -1,0 +1,13 @@
+Package: asgard
+Version: 0.3.6-1
+Architecture: i386
+Maintainer: Russ Adams <russ.adams@gmail.com>
+Installed-Size: 40
+Section: unknown
+Priority: extra
+Homepage: http://wiki.asgardrpg.org/
+Description: classic, epic video roleplaying game
+ Asgard is a role playing game complete with menus, random battles, maps, towns
+ and dungeons. But this is not just about the game. Join the community of
+ developers, writers and artists. Our goal is to deliver a rich and beautiful,
+ free software RPG to gamers everywhere.  Asgard is in pre-alpha development.
