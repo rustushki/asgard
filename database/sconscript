@@ -1,19 +1,27 @@
+# Get the environment from the parent sconscript
+Import('env')
+
 # List of Objects to Compile
 objects = [
 './sqlite3.cpp',
 ]
 
-env = Environment()
-
+# Build runquery
 runquery = env.Program('runquery', objects, LIBS=['sqlite3'], CXXFLAGS=['-g'])
 source = [
    runquery,
    'createdb.sql',
    'populatedb.sql'
 ]
+
+# Build asgard.db3
 target = './asgard.db3'
 create = './database/runquery $TARGET ./database/createdb.sql';
 populate = './database/runquery $TARGET ./database/populatedb.sql';
+asgarddb3 = env.Command(target, source, create+' && '+populate)
 
-dbbuild = env.Command(target, source, create+' && '+populate)
-Clean(dbbuild, 'asgard.db3')
+# Let scons know how to cleanup asgard.db3
+Clean(asgarddb3, 'asgard.db3')
+
+# Export asgard.db3 to parent sconscript.
+Export("asgarddb3")

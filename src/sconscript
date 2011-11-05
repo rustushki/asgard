@@ -2,6 +2,9 @@
 # '#' indicates the directory that scons is executed in.
 # TODO: pkg-config for boost?
 
+# Import the environment from parent class
+Import('env')
+
 include_path =                     \
     '#/src/common:'                \
    +'#/src/console:'               \
@@ -52,8 +55,5 @@ objects = [
 './main/main.cpp'
 ]
 
-# Main Target: Build the Full Executable
-# Notice the high level dependencies list in LIBS
-env = Environment(CPPPATH=include_path)
-
-env.Program('../asgard', objects, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-g'])
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-g'])
+Export("asgard")
