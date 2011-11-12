@@ -5,9 +5,6 @@ Screen* Screen::instance = NULL;
 Screen::Screen()
 {
    this->status = SCREENSTATE_INITTING;
-   SDL_Init(SDL_INIT_VIDEO);
-
-   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
 
    this->nextFrame = SDL_GetVideoSurface();
    this->status = SCREENSTATE_IDLE;

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -30,15 +30,19 @@ using std::string;
 class Console : public SystemComponent
 {
    public:
-      Console();
-      Console(bool interactive);
-      Console(string filename);
+      static Console* getInstance(int argc, char** argv);
       ~Console();
 
       virtual bool open();
       virtual bool close();
 
    private:
+      static Console* instance;
+
+      Console();
+      Console(bool interactive);
+      Console(string filename);
+
       void inputLoop();
       int readCode();
       int execPython();

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -23,6 +23,31 @@ using std::cin;
 using std::cout;
 using std::string;
 using std::endl;
+
+Console* Console::instance = NULL;
+
+Console* Console::getInstance(int argc, char** argv) {
+   
+   if (Console::instance == NULL) {
+
+      if (argc > 1) {
+         string arg1 = argv[1];
+         // Interactive Shell
+         if (arg1.compare("-i") == 0) {
+            Console::instance = new Console(true);
+
+         // Script
+         } else {
+            Console::instance = new Console(arg1);
+         }
+      } else {
+         Console::instance = new Console(false);
+      }
+
+   }
+
+   return Console::instance;
+}
 
 Console::Console(string filename) : SystemComponent("console")
 {
