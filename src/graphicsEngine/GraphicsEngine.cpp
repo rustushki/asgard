@@ -3,9 +3,14 @@
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
-GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine")
-{
+GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine") {
 
+   // Initialize SDL
+   SDL_Init(SDL_INIT_VIDEO);
+   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
+
+   // Initialize Screen.
+   Screen* s = Screen::getInstance();
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -47,18 +52,18 @@ bool GraphicsEngine::close()
 
 void GraphicsEngine::initScreen()
 {
-   LOG(INFO) << "Initializing Screen";
-
+   // Grab Screen Instance
    Screen* s = Screen::getInstance();
 
-   LOG(INFO) << "Building Stage.";
+   // Setup Screen Layers
    std::string lsName = "stageLayer";
    s->pushLayer(new Layer(lsName));
 
    // TODO: Another process should initialize the background layer.
    // Special Background Layer, Drawable and Animation. Needed so that there's
    // something to out-blit transparent pixels with.
-   LOG(INFO) << "Putting background on Stage.";
+
+   // Create Background
    std::string abName = "backgroundAnimation";
    Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
    std::string dbName = "testBackground";
@@ -68,11 +73,10 @@ void GraphicsEngine::initScreen()
    lsName = "background";
    Layer* bgLayer = new Layer(lsName);
    bgLayer->insertDrawableTop(db);
-
    s->pushLayer(bgLayer);
 
    // TODO: make this a command so that this thread can terminate.
-   LOG(INFO) << "Playing GraphicsEngine.";
+   LOG(INFO) << "Starting GraphicsEngine.";
    this->play();
 }
 

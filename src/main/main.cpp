@@ -34,13 +34,6 @@ int main(int argc, char**argv)
    graphicsEngine->open();
    map->open();
 
-   // TODO: make ready() instructions for SystemComponent's so that there is
-   // not a race condition here.  Explanation: Screen in GraphicsEngine *MUST*
-   // be initialized before many SDL calls will work properly.  Subsequent
-   // calls to the GraphicsEngine *NEED* to wait until GraphicsEngine is
-   // fininished loading.  This sleep is a work around:
-   sleep(2);
-
    SystemComponent* console;
    char script_fn[50];
    if (argc > 1)
