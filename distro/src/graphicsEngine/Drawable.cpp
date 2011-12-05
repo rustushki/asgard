@@ -1,6 +1,8 @@
 #include "Screen.h"
 #include "Drawable.h"
 
+unsigned int Drawable::nextUniqueNumber = 0;
+
 Drawable::Drawable(std::string name)
 {
    this->name = name;
@@ -14,6 +16,12 @@ Drawable::Drawable(std::string name)
    this->hidden = false;
    this->hasBeenHidden = true;
    this->toBeRemoved = false;
+
+   // Set the Unique Instance Name
+   char uniq[8];
+   sprintf(uniq, "%08x", nextUniqueNumber);
+   this->instanceName = this->name + uniq;
+   Drawable::nextUniqueNumber++;
 }
 
 Drawable::~Drawable() {
@@ -42,10 +50,7 @@ std::string Drawable::getName()
  */
 std::string Drawable::getInstanceName()
 {
-   char addr[20];
-   sprintf(addr, "%x", reinterpret_cast<int>(this));
-   std::string uniqueName = this->name + addr;
-   return uniqueName;
+   return this->instanceName;
 }
 
 DrawableState Drawable::getStatus()

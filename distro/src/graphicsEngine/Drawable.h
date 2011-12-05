@@ -123,6 +123,10 @@ class Drawable
 
       void updateRect(SDL_Rect r);
 
+	  static unsigned int nextUniqueNumber;
+
+	  std::string instanceName;
+
    friend class Layer;
 
 };
