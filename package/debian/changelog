@@ -1,3 +1,9 @@
+asgard (0.3.6-2) oneiric; urgency=low
+
+  * LP:9000099 amd64 compile fix.
+
+ -- Russ Adams <russ.adams@gmail.com>  Sat, 05 Dec 2011 15:25:00 -0400
+
 asgard (0.3.6-1) oneiric; urgency=low
 
   * Initial Ubuntu package.
