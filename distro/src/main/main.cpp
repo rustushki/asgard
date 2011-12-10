@@ -2,19 +2,23 @@
 #include "Screen.h"
 #include "GraphicsEngine.h"
 #include "Database.h"
+#include "Console.h"
 
 /*
 #include "MessageRouter.h"
-#include "Console.h"
 #include "MessageFactory.h"
 #include "Map.h"
 */
 
+int    argCount;
+char** argStrings;
+
 GraphicsEngine* ge;
 Database      * db;
+Console       * cl;
 
 void controller() {
-   std::cout << "Controller.";
+   cl->inputLoop();
 }
 
 void initExternal() {
@@ -24,11 +28,29 @@ void initExternal() {
 
    // Initialize Google Logger.
    google::InitGoogleLogging("asgard");
+
+   // Initialize Python
+	Py_Initialize();
+
+	if (Py_IsInitialized() != true)
+	{
+		std::cout << "Python failed to initialize." << std::endl;
+      exit(0);
+	}
+
+	Py_InitModule("asgard", AsgardMethods);
+	Py_InitModule("map",    MapMethods);
+
+}
+
+void killExternals() {
+   Py_Finalize();
 }
 
 void initModel() {
    ge = GraphicsEngine::getInstance();
    db =       Database::getInstance();
+   cl =        Console::getInstance(argCount, argStrings);
 }
 
 void startThreads() {
@@ -43,9 +65,16 @@ void startThreads() {
 
 int main(int argc, char**argv)
 {
+   argCount   = argc;
+   argStrings = argv;
+
    initExternal();
    initModel();
    startThreads();
+
+   // Wait for the User to Kill Vear.
+
+   killExternals();
 
    return 0;
 }
