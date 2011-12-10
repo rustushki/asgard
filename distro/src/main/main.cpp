@@ -29,11 +29,7 @@ void initModel() {
    ge = GraphicsEngine::getInstance();
 }
 
-int main(int argc, char**argv)
-{
-   initExternal();
-   initModel();
-
+void startThreads() {
    boost::function<void()> viewMethod = boost::bind(&GraphicsEngine::play, ge);
 
    boost::thread contThread(controller);
@@ -41,6 +37,13 @@ int main(int argc, char**argv)
 
    contThread.join();
    viewThread.join();
+}
+
+int main(int argc, char**argv)
+{
+   initExternal();
+   initModel();
+   startThreads();
 
    return 0;
 }
