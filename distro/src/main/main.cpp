@@ -34,7 +34,7 @@ int main(int argc, char**argv)
    initExternal();
    initModel();
 
-   boost::function<void()> viewMethod = boost::bind(&GraphicsEngine::initScreen, ge);
+   boost::function<void()> viewMethod = boost::bind(&GraphicsEngine::play, ge);
 
    boost::thread contThread(controller);
    boost::thread viewThread(viewMethod);

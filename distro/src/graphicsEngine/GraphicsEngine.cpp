@@ -4,50 +4,17 @@ GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
 GraphicsEngine::GraphicsEngine() {
-   // Initialize Screen.
+   // Ensure Screen has been initialized.
    Screen* s = Screen::getInstance();
 }
 
-GraphicsEngine::~GraphicsEngine()
-{
+GraphicsEngine::~GraphicsEngine() {
 
 }
 
-GraphicsEngine* GraphicsEngine::getInstance()
-{
+GraphicsEngine* GraphicsEngine::getInstance() {
    if(instance == NULL) instance = new GraphicsEngine();
    return instance;
-}
-
-
-void GraphicsEngine::initScreen()
-{
-   // Grab Screen Instance
-   Screen* s = Screen::getInstance();
-
-   // Setup Screen Layers
-   std::string lsName = "stageLayer";
-   s->pushLayer(new Layer(lsName));
-
-   // TODO: Another process should initialize the background layer.
-   // Special Background Layer, Drawable and Animation. Needed so that there's
-   // something to out-blit transparent pixels with.
-
-   // Create Background
-   std::string abName = "backgroundAnimation";
-   Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
-   std::string dbName = "testBackground";
-   Drawable* db = new Drawable(dbName);
-   db->addAnimation(ab, abName);
-   db->play();
-   lsName = "background";
-   Layer* bgLayer = new Layer(lsName);
-   bgLayer->insertDrawableTop(db);
-   s->pushLayer(bgLayer);
-
-   // TODO: make this a command so that this thread can terminate.
-   LOG(INFO) << "Starting GraphicsEngine.";
-   this->play();
 }
 
 bool GraphicsEngine::eventHandler(SDL_Event& event) {
@@ -59,8 +26,7 @@ bool GraphicsEngine::eventHandler(SDL_Event& event) {
    return run;
 }
 
-void GraphicsEngine::play()
-{
+void GraphicsEngine::play() {
    int time = 0;
    Screen* s = Screen::getInstance();
    bool run = true;
@@ -92,19 +58,16 @@ void GraphicsEngine::play()
 }
 
 // Wait for write access to the screen/layers.
-void GraphicsEngine::obtainLock()
-{
+void GraphicsEngine::obtainLock() {
    return GraphicsEngine::updateLock.lock_shared();
 }
 
-void GraphicsEngine::releaseLock()
-{
+void GraphicsEngine::releaseLock() {
    GraphicsEngine::updateLock.unlock_shared();
 }
 
 /*
-bool GraphicsEngine::interpretMessage(Message* message)
-{
+bool GraphicsEngine::interpretMessage(Message* message) {
    if (message->header.type == MESSAGE_TYPE_DISPLAY_DRAWABLE) {
       this->handleDisplayDrawable(message);
    } else if (message->header.type == MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET) {

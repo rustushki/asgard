@@ -2,31 +2,49 @@
 
 Screen* Screen::instance = NULL;
 
-Screen::Screen()
-{
+Screen::Screen() {
    this->status = SCREENSTATE_INITTING;
-
    this->nextFrame = SDL_GetVideoSurface();
    this->status = SCREENSTATE_IDLE;
+   this->init();
 }
 
-Screen::~Screen()
-{
+Screen::~Screen() {
    this->status = SCREENSTATE_DESTROYING;
    SDL_FreeSurface(this->nextFrame);
    SDL_Quit();
 }
 
-Screen* Screen::getInstance()
-{
+Screen* Screen::getInstance() {
    if (Screen::instance == NULL)
       Screen::instance = new Screen();
 
    return Screen::instance;
 }
 
-bool Screen::flip()
-{
+void Screen::init() {
+   // Setup Screen Layers
+   std::string lsName = "stageLayer";
+   this->pushLayer(new Layer(lsName));
+
+   // TODO: Another process should initialize the background layer.
+   // Special Background Layer, Drawable and Animation. Needed so that there's
+   // something to out-blit transparent pixels with.
+
+   // Create Background
+   std::string abName = "backgroundAnimation";
+   Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
+   std::string dbName = "testBackground";
+   Drawable* db = new Drawable(dbName);
+   db->addAnimation(ab, abName);
+   db->play();
+   lsName = "background";
+   Layer* bgLayer = new Layer(lsName);
+   bgLayer->insertDrawableTop(db);
+   this->pushLayer(bgLayer);
+}
+
+bool Screen::flip() {
    this->status = SCREENSTATE_FLIPPING;
 
 
@@ -64,8 +82,7 @@ bool Screen::flip()
    this->status = SCREENSTATE_IDLE;
 }
 
-bool Screen::prepare()
-{
+bool Screen::prepare() {
    this->status = SCREENSTATE_PREPARING;
    std::vector<Layer*>::iterator itr;
    for (itr = this->layer.begin(); itr != this->layer.end(); itr++)
@@ -73,13 +90,11 @@ bool Screen::prepare()
    this->status = SCREENSTATE_IDLE;
 }
 
-ScreenState Screen::getStatus() const
-{
+ScreenState Screen::getStatus() const {
    return this->status;
 }
 
-void Screen::insertLayer(Layer* newLayer, int position)
-{
+void Screen::insertLayer(Layer* newLayer, int position) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    //  should throw invalid position exception.
@@ -87,8 +102,7 @@ void Screen::insertLayer(Layer* newLayer, int position)
       this->layer.insert(this->layer.begin()+position, newLayer);
 }
 
-bool Screen::removeLayer(std::string name)
-{
+bool Screen::removeLayer(std::string name) {
    std::vector<Layer*>::iterator itr;
    for (itr = this->layer.begin(); itr < this->layer.end(); itr++) {
       if ((*itr)->getName() == name) {
@@ -98,23 +112,20 @@ bool Screen::removeLayer(std::string name)
    }
 }
 
-void Screen::appendLayer(Layer* newLayer)
-{
+void Screen::appendLayer(Layer* newLayer) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    this->layer.push_back(newLayer);
 }
 
-void Screen::pushLayer(Layer* newLayer)
-{
+void Screen::pushLayer(Layer* newLayer) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    std::vector<Layer*>::iterator itr = this->layer.begin();
    this->layer.insert(itr, newLayer);
 }
 
-Layer* Screen::getLayer(std::string name) const
-{
+Layer* Screen::getLayer(std::string name) const {
    std::vector<Layer*>::const_iterator itr;
    for (itr = this->layer.begin(); itr < this->layer.end(); itr++)
       if ((*itr)->getName() == name)
@@ -135,8 +146,7 @@ Drawable* Screen::getDrawableByName(std::string name) {
    return found;
 }
 
-void Screen::updateRect(SDL_Rect r)
-{
+void Screen::updateRect(SDL_Rect r) {
    this->rectsToUpdate.push_back(r);
    std::vector<Layer*>::const_iterator itr;
    for (itr = this->layer.begin(); itr < this->layer.end(); itr++)

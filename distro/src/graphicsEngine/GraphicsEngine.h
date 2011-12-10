@@ -38,8 +38,6 @@ class GraphicsEngine
       static void obtainLock();
       static void releaseLock();
 
-      void initScreen();
-
    private:
       static GraphicsEngine* instance;
       //void handleDisplayDrawable(Message* message);
