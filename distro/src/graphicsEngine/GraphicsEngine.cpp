@@ -3,7 +3,7 @@
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
-GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine") {
+GraphicsEngine::GraphicsEngine() {
    // Initialize Screen.
    Screen* s = Screen::getInstance();
 }
@@ -19,31 +19,6 @@ GraphicsEngine* GraphicsEngine::getInstance()
    return instance;
 }
 
-
-bool GraphicsEngine::open()
-{
-   bool status = true;
-   
-   this->thread->open(boost::bind(&GraphicsEngine::initScreen, this));
-   
-   status = SystemComponent::open();
-   
-   return status;
-}
-
-bool GraphicsEngine::close()
-{
-   bool status = true;
-   
-   if(!this->thread->isClosed())
-   {
-      this->thread->close();
-   }
-   
-   status = SystemComponent::close();
-   
-   return status;
-}
 
 void GraphicsEngine::initScreen()
 {
@@ -112,7 +87,7 @@ void GraphicsEngine::play()
       if (delay <= 0) {
          delay = 1;
       }
-      this->listen(delay);
+      boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
    }
 }
 
@@ -127,6 +102,7 @@ void GraphicsEngine::releaseLock()
    GraphicsEngine::updateLock.unlock_shared();
 }
 
+/*
 bool GraphicsEngine::interpretMessage(Message* message)
 {
    if (message->header.type == MESSAGE_TYPE_DISPLAY_DRAWABLE) {
@@ -201,3 +177,5 @@ void GraphicsEngine::handleUnloadDrawable(Message* message) {
 	   LOG(INFO) << "Unable to find Drawable for unloading.";
    }
 }
+
+*/
