@@ -2,7 +2,7 @@
 
 Map* Map::instance = NULL;
 
-Map::Map() : SystemComponent("map") {
+Map::Map() {
    LOG(INFO) << "Building  Map";
 }
 
@@ -17,37 +17,6 @@ Map* Map::getInstance()
       instance = new Map();
 
    return instance;
-}
-
-bool Map::open()
-{
-   bool status = true;
-
-   this->thread->open(boost::bind(&Map::noop, this));
-   
-   status = SystemComponent::open();
-   
-   return status;
-}
-
-bool Map::close()
-{
-   bool status = true;
-   
-   if(!this->thread->isClosed())
-   {
-      this->thread->close();
-   }
-   
-   status = SystemComponent::close();
-   
-   return status;
-}
-
-void Map::noop()
-{
-   // Wait until a message is received.
-   this->listen(-1);
 }
 
 void Map::setFocusPoint(int x, int y) {
@@ -83,7 +52,7 @@ void Map::moveDrawables(Coordinate offset) {
       drawableNames->push_back((*moIter)->getDrawableName());
    }
 
-   MessageFactory::makeTranslateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
+   //MessageFactory::makeTranslateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
 }
 
 void Map::loadBoundingBoxes() {
@@ -116,7 +85,7 @@ void Map::loadBoundingBox(Coordinate bb) {
          LOG(INFO) << "Loading Bounding Box (" << bb.getX() << "," << bb.getY() << ")";
 
          this->boundingBoxContainer.push_back(bb);
-         MessageFactory::makeLoadBoundingBox(bb.getX(), bb.getY());
+         //MessageFactory::makeLoadBoundingBox(bb.getX(), bb.getY());
       } else {
          LOG(INFO) << "Bounding Box (" << bb.getX() << "," << bb.getY() << ") already loaded.";
       }
@@ -175,7 +144,7 @@ void Map::unloadMapObjects() {
          LOG(INFO) << "MapObject not in scope.";
 
          // Send UnloadDrawable message to Graphics Engine.
-         MessageFactory::makeUnloadDrawable(mo->getDrawableName());
+         //MessageFactory::makeUnloadDrawable(mo->getDrawableName());
 
          // Remove the MapObject from the Map; freeing its memory.
 		   moIter = map->erase(moIter);
@@ -263,6 +232,7 @@ void Map::adjustDisplay() {
    LOG(INFO) << "Set Map Display Point = " << x << ", " << y;	
 }
 
+/*
 bool Map::interpretMessage(Message* message)
 {
    if (message->header.type == MESSAGE_TYPE_INSTALL_MAP_OBJECT) {
@@ -296,3 +266,4 @@ void Map::handleInstallMapObject(Message* message) {
    // Now DisplayDrawable
    MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
 }
+*/

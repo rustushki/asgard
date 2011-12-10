@@ -3,19 +3,15 @@
 #include "GraphicsEngine.h"
 #include "Database.h"
 #include "Console.h"
-
-/*
-#include "MessageRouter.h"
-#include "MessageFactory.h"
 #include "Map.h"
-*/
 
 int    argCount;
 char** argStrings;
 
 GraphicsEngine* ge;
-Database      * db;
-Console       * cl;
+      Database* db;
+       Console* cl;
+           Map* ma;
 
 void controller() {
    cl->inputLoop();
@@ -51,6 +47,7 @@ void initModel() {
    ge = GraphicsEngine::getInstance();
    db =       Database::getInstance();
    cl =        Console::getInstance(argCount, argStrings);
+   ma =            Map::getInstance();
 }
 
 void startThreads() {

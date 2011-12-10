@@ -3,17 +3,12 @@
 
 #include "externals.h"
 #include "MapObject.h"
-#include "MessageFactory.h"
-#include "SystemComponent.h"
 #include "Screen.h"
 
-class Map : public SystemComponent
+class Map
 {
    public:
       ~Map();
-
-      virtual bool open();
-      virtual bool close();
 
       static Map* getInstance();
 
@@ -48,9 +43,12 @@ class Map : public SystemComponent
 
       static Map* instance;
 
+/*
       virtual bool interpretMessage(Message* message);
       void handleMoveFocusPoint(Message* message);
       void handleInstallMapObject(Message* message);
+*/
+
 };
 
 #endif//MAP_H
