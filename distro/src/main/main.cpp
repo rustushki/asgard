@@ -1,34 +1,38 @@
 #include "externals.h"
+#include "Screen.h"
+
+/*
 #include "MessageRouter.h"
 #include "Console.h"
 #include "MessageFactory.h"
 #include "Database.h"
 #include "GraphicsEngine.h"
 #include "Map.h"
+*/
+
+void controller() {
+   std::cout << "Controller.";
+}
+
+void view() {
+   std::cout << "View.";
+}
 
 int main(int argc, char**argv)
 {
-   // Open MessageRouter first always.
-   MessageRouter* mr = MessageRouter::getInstance();
-   
+
+   // Initialize SDL
+   SDL_Init(SDL_INIT_VIDEO);
+   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
+
+   // Initialize Google Logger.
    google::InitGoogleLogging("asgard");
 
-   LOG(INFO) << "Loading Asgard SystemComponents.";
+   boost::thread contThread(controller);
+   boost::thread viewThread(view);
 
-   SystemComponent* db = Database::getInstance();
-   SystemComponent* ge = GraphicsEngine::getInstance();
-   SystemComponent* ma = Map::getInstance();
-   SystemComponent* cn = Console::getInstance(argc, argv);
-
-   db->open();
-   ge->open();
-   ma->open();
-   cn->open();
-
-   // Wait for user to kill Vear.
-   while(1) {
-      sleep(10);
-   }
+   contThread.join();
+   viewThread.join();
 
    return 0;
 }

@@ -4,11 +4,6 @@ GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
 GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine") {
-
-   // Initialize SDL
-   SDL_Init(SDL_INIT_VIDEO);
-   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
-
    // Initialize Screen.
    Screen* s = Screen::getInstance();
 }
