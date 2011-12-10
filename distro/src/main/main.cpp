@@ -1,16 +1,17 @@
 #include "externals.h"
 #include "Screen.h"
 #include "GraphicsEngine.h"
+#include "Database.h"
 
 /*
 #include "MessageRouter.h"
 #include "Console.h"
 #include "MessageFactory.h"
-#include "Database.h"
 #include "Map.h"
 */
 
 GraphicsEngine* ge;
+Database      * db;
 
 void controller() {
    std::cout << "Controller.";
@@ -27,6 +28,7 @@ void initExternal() {
 
 void initModel() {
    ge = GraphicsEngine::getInstance();
+   db =       Database::getInstance();
 }
 
 void startThreads() {

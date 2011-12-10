@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -21,14 +21,19 @@
 #define DATABASE_H
 
 #include "externals.h"
-#include "SystemComponent.h"
 #include "Coordinate.h"
 #include "MapObjectFactory.h"
-#include "MessageFactory.h"
 #include "DrawableFactory.h"
  
-class Database : public SystemComponent
+class Database
 {
+   public:
+      static Database* getInstance();
+      sqlite3* getAsgardDb() const;
+
+      bool loadBoundingBox(int boxX, int boxY);
+      bool loadDrawable(std::string dName);
+
    private:
       Database();
       ~Database();
@@ -36,19 +41,7 @@ class Database : public SystemComponent
       static Database* instance;
       
       void loop();
-      virtual bool interpretMessage(Message* message);
       std::string getDatabasePath();
-
-   public:
-      static Database* getInstance();
-      sqlite3* getAsgardDb() const;
-
-      void determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes);
-      bool loadBoundingBox(int boxX, int boxY);
-      bool loadDrawable(std::string dName);
-      
-      virtual bool open();
-      virtual bool close();
 };
 
 #endif //DATABASE_H

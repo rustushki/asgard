@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -22,9 +22,7 @@
 
 Database* Database::instance = NULL;
 
-Database::Database() : SystemComponent("database")
-{
-
+Database::Database() {
    std::string path = this->getDatabasePath();
    int status = sqlite3_open(path.c_str(), &this->asgardDb);
    
@@ -36,19 +34,16 @@ Database::Database() : SystemComponent("database")
    // TODO: Add some type of logging for status
 }
 
-Database::~Database()
-{
+Database::~Database() {
    sqlite3_close(this->asgardDb);
 }
 
-Database* Database::getInstance()
-{
+Database* Database::getInstance() {
    if(instance == NULL) instance = new Database();
    return instance;
 }
 
-sqlite3* Database::getAsgardDb() const
-{
+sqlite3* Database::getAsgardDb() const {
    return this->asgardDb;
 }
 
@@ -63,28 +58,18 @@ std::string Database::getDatabasePath() {
    return path;
 }
 
-void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes)
-{
-   // Map as of 0.3.0 is 1 boundbox, 0.
-   visibleBoxes[0] =  1;
-}
-
-bool Database::loadBoundingBox(int boxX, int boxY)
-{
+bool Database::loadBoundingBox(int boxX, int boxY) {
    MapObjectFactory::build(this->asgardDb, boxX, boxY);
-
    return true;
 }
 
-bool Database::loadDrawable(std::string dName)
-{
+bool Database::loadDrawable(std::string dName) {
    DrawableFactory::build(this->asgardDb, dName);
-
    return true;
 }
 
-bool Database::interpretMessage(Message* msg)
-{
+/*
+bool Database::interpretMessage(Message* msg) {
    bool messageHandled = false;
    std::string printOutput;
 
@@ -113,25 +98,4 @@ bool Database::interpretMessage(Message* msg)
    }
    return messageHandled;
 }
-
-void Database::loop()
-{
-   while(1)
-      this->listen();
-}
-
-bool Database::open()
-{
-   bool status = true;
-   
-   status = SystemComponent::open();
-   
-   this->thread->open(boost::bind(&Database::loop, this));
-   
-   return status;
-}
-
-bool Database::close()
-{
-
-}
+*/
