@@ -26,21 +26,21 @@ void initExternal() {
    google::InitGoogleLogging("asgard");
 
    // Initialize Python
-	Py_Initialize();
+   Py_Initialize();
 
-	if (Py_IsInitialized() != true)
-	{
-		std::cout << "Python failed to initialize." << std::endl;
+   if (Py_IsInitialized() != true) {
+      std::cout << "Python failed to initialize." << std::endl;
       exit(0);
-	}
+   }
 
-	Py_InitModule("asgard", AsgardMethods);
-	Py_InitModule("map",    MapMethods);
+   Py_InitModule("asgard", AsgardMethods);
+   Py_InitModule("map",    MapMethods);
 
 }
 
 void killExternals() {
    Py_Finalize();
+   SDL_Quit();
 }
 
 void initModel() {
