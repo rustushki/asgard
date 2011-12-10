@@ -36,7 +36,6 @@
 #include "QueryGenerator.h"
 #include "Drawable.h"
 #include "DrawableFactory.h"
-#include "MessageFactory.h"
 
 class MapObjectFactory
 {

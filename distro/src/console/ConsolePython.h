@@ -1,5 +1,4 @@
 #include "externals.h"
-#include "MessageFactory.h"
 
 static PyObject*
 asgard_LoadBoundingBox(PyObject* self, PyObject* args)
@@ -9,7 +8,7 @@ asgard_LoadBoundingBox(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   MessageFactory::makeLoadBoundingBox(x, y);
+   //MessageFactory::makeLoadBoundingBox(x, y);
    return Py_None;
 }
 
@@ -20,7 +19,7 @@ asgard_LoadDrawable(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "s", &drawableName))
       return Py_None;
-   MessageFactory::makeLoadDrawable(drawableName);
+   //MessageFactory::makeLoadDrawable(drawableName);
    return Py_None;
 }
 
@@ -40,7 +39,7 @@ map_SetFocus(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   MessageFactory::makeMoveFocusPoint(x, y);
+   //MessageFactory::makeMoveFocusPoint(x, y);
    return Py_None;
 }
 

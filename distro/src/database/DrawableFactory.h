@@ -24,7 +24,6 @@
 #include "DatabaseColumnMap.h"
 #include "Drawable.h"
 #include "QueryGenerator.h"
-#include "MessageFactory.h"
 
 class DrawableFactory
 {

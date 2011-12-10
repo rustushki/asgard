@@ -21,11 +21,6 @@ include_path =                     \
 # List of Objects to Compile
 objects = [
 './console/Console.cpp',
-'./console/MessageFactory.cpp',
-'./messageRouter/MessageRouter.cpp',
-'./common/SystemComponent.cpp',
-'./common/Mailbox.cpp',
-'./common/AsgardThread.cpp',
 './database/QueryGenerator.cpp',
 './database/GrassTile.cpp',
 './database/RowSet.cpp',
