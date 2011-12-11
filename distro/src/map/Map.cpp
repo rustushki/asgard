@@ -245,11 +245,3 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
 
    GraphicsEngine::getInstance()->displayDrawable(d, "stageLayer", x, y);
 }
-
-/*
-void Map::handleMoveFocusPoint(Message* message) {
-   int x = message->data.moveFocusPoint.X;
-   int y = message->data.moveFocusPoint.Y;
-   this->setFocusPoint(x, y);
-}
-*/

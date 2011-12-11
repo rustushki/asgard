@@ -163,15 +163,3 @@ int Console::execPython() {
 void Console::prompt() {
    std::cout << "> ";
 }
-
-/*
-bool Console::interpretMessage(Message* msg) {
-   bool messageHandled = false;
-   if (msg->header.type == MESSAGE_TYPE_PRINT_STRING)
-   {
-      std::cout << msg->data.printString.output << std::endl;
-      messageHandled = true;
-   }
-   return messageHandled;
-}
-*/
