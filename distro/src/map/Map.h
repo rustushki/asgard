@@ -4,6 +4,7 @@
 #include "externals.h"
 #include "MapObject.h"
 #include "Screen.h"
+#include "Database.h"
 
 class Map
 {

@@ -59,43 +59,27 @@ std::string Database::getDatabasePath() {
 }
 
 bool Database::loadBoundingBox(int boxX, int boxY) {
-   MapObjectFactory::build(this->asgardDb, boxX, boxY);
+
+   if (MapObjectFactory::build(this->asgardDb, boxX, boxY)) {
+      LOG(INFO) << "bounding box loaded";
+   } else {
+      LOG(ERROR) << "failed";
+   }
+
    return true;
 }
 
 bool Database::loadDrawable(std::string dName) {
-   DrawableFactory::build(this->asgardDb, dName);
+
+   if (dName.empty()) {
+      LOG(ERROR) << "no drawable name provided";
+   }
+   
+   if (DrawableFactory::build(this->asgardDb, dName)) {
+      LOG(INFO) << "drawable loaded";
+   } else {
+      LOG(ERROR) << "failed to load drawable";
+   }
+   
    return true;
 }
-
-/*
-bool Database::interpretMessage(Message* msg) {
-   bool messageHandled = false;
-   std::string printOutput;
-
-   if (msg->header.type == MESSAGE_TYPE_LOAD_BOUNDING_BOX)
-   {
-      if (this->loadBoundingBox(msg->data.box.X, msg->data.box.Y))
-         printOutput = "bounding box loaded";
-      else
-         printOutput = "failed";
-
-      MessageFactory::makePrintString(printOutput.c_str());
-      messageHandled = true;
-   }
-
-   else if (msg->header.type == MESSAGE_TYPE_LOAD_DRAWABLE)
-   {
-      std::string dName(msg->data.loadDrawable.drawableName);
-
-      if (dName.empty())
-         printOutput = "Failed: no drawable name provided";
-      else if (this->loadDrawable(dName))
-         printOutput = "drawable loaded";
-
-      MessageFactory::makePrintString(printOutput.c_str());
-      messageHandled = true;
-   }
-   return messageHandled;
-}
-*/

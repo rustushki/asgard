@@ -84,8 +84,10 @@ void Map::loadBoundingBox(Coordinate bb) {
       if (!this->isBoundingBoxLoaded(bb)) {
          LOG(INFO) << "Loading Bounding Box (" << bb.getX() << "," << bb.getY() << ")";
 
-         this->boundingBoxContainer.push_back(bb);
-         //MessageFactory::makeLoadBoundingBox(bb.getX(), bb.getY());
+         Database* db = Database::getInstance();
+         if (db->loadBoundingBox(bb.getX(), bb.getY())) {
+            this->boundingBoxContainer.push_back(bb);
+         }
       } else {
          LOG(INFO) << "Bounding Box (" << bb.getX() << "," << bb.getY() << ") already loaded.";
       }
