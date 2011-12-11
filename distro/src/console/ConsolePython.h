@@ -1,4 +1,6 @@
 #include "externals.h"
+#include "Map.h"
+#include "Database.h"
 
 static PyObject*
 asgard_LoadBoundingBox(PyObject* self, PyObject* args)
@@ -8,7 +10,7 @@ asgard_LoadBoundingBox(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   //MessageFactory::makeLoadBoundingBox(x, y);
+   Database::getInstance()->loadBoundingBox(x, y);
    return Py_None;
 }
 
@@ -19,7 +21,7 @@ asgard_LoadDrawable(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "s", &drawableName))
       return Py_None;
-   //MessageFactory::makeLoadDrawable(drawableName);
+   Database::getInstance()->loadDrawable(drawableName);
    return Py_None;
 }
 
@@ -39,7 +41,7 @@ map_SetFocus(PyObject* self, PyObject* args)
    Py_INCREF(Py_None);
    if(!PyArg_ParseTuple(args, "ii", &x, &y))
       return Py_None;
-   //MessageFactory::makeMoveFocusPoint(x, y);
+   Map::getInstance()->setFocusPoint(x, y);
    return Py_None;
 }
 

@@ -63,7 +63,7 @@ bool Database::loadBoundingBox(int boxX, int boxY) {
    if (MapObjectFactory::build(this->asgardDb, boxX, boxY)) {
       LOG(INFO) << "bounding box loaded";
    } else {
-      LOG(ERROR) << "failed";
+      LOG(ERROR) << "failed to load bounding box";
    }
 
    return true;
