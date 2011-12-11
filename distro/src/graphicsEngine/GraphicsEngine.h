@@ -38,9 +38,10 @@ class GraphicsEngine
       static void obtainLock();
       static void releaseLock();
 
+      void displayDrawable(Drawable* d, std::string layerName, int x, int y);
+
    private:
       static GraphicsEngine* instance;
-      //void handleDisplayDrawable(Message* message);
       //void handleTranslateDrawablesByOffset(Message* message);
       //void handleUnloadDrawable(Message* message);
       static boost::shared_mutex updateLock;

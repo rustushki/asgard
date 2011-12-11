@@ -20,6 +20,8 @@ class Map
       // N x N grid of bounding boxes.
       static const int BOUNDING_BOX_MEM  = 3;
 
+      void installMapObject(MapObject* mo, Drawable* d);
+
    private:
       Map();
 

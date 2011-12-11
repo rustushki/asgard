@@ -66,42 +66,25 @@ void GraphicsEngine::releaseLock() {
    GraphicsEngine::updateLock.unlock_shared();
 }
 
-/*
-bool GraphicsEngine::interpretMessage(Message* message) {
-   if (message->header.type == MESSAGE_TYPE_DISPLAY_DRAWABLE) {
-      this->handleDisplayDrawable(message);
-   } else if (message->header.type == MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET) {
-      this->handleTranslateDrawablesByOffset(message);
-   } else if (message->header.type == MESSAGE_TYPE_UNLOAD_DRAWABLE) {
-      this->handleUnloadDrawable(message);
-   }
-
-}
-
-void GraphicsEngine::handleDisplayDrawable(Message* message) {
-   LOG(INFO) << "Handling DisplayDrawable";
-
-   std::string layerName = message->data.displayDrawable.layName;
-   Drawable* drawable = message->data.displayDrawable.drawPtr;
-   int x = message->data.displayDrawable.x;
-   int y = message->data.displayDrawable.y;
+void GraphicsEngine::displayDrawable(Drawable* d, std::string layerName, int x, int y) {
+   LOG(INFO) << "Displaying Drawable";
 
    Screen* s = Screen::getInstance();
+   Layer * l = s->getLayer(layerName);
 
-   Layer* l = s->getLayer(layerName);
-
-   drawable->move(x, y);
+   d->move(x, y);
 
    // TODO: parameterize whether to play or not.
-   drawable->play();
+   d->play();
 
    // TODO: parameterize stack location on layer
    // Always on the top?
    if (l != NULL) {
-      l->insertDrawableTop(drawable);
+      l->insertDrawableTop(d);
    }
 }
 
+/*
 void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
    LOG(INFO) << "Handling TranslateDrawablesByOffset";
 

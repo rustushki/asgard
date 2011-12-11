@@ -234,6 +234,18 @@ void Map::adjustDisplay() {
    LOG(INFO) << "Set Map Display Point = " << x << ", " << y;	
 }
 
+void Map::installMapObject(MapObject* mo, Drawable* d) {
+   
+   // Install the MapObject.
+   this->mapObjectContainer.push_back(mo);
+
+   Coordinate drawableCoord = mo->getLeftCorner() - this->display;
+   int x = drawableCoord.getX();
+   int y = drawableCoord.getY();
+
+   GraphicsEngine::getInstance()->displayDrawable(d, "stageLayer", x, y);
+}
+
 /*
 bool Map::interpretMessage(Message* message)
 {
@@ -250,22 +262,5 @@ void Map::handleMoveFocusPoint(Message* message) {
    int x = message->data.moveFocusPoint.X;
    int y = message->data.moveFocusPoint.Y;
    this->setFocusPoint(x, y);
-}
-
-void Map::handleInstallMapObject(Message* message) {
-   // Get the two parameters for InstallMapObject
-   MapObject* mo = message->data.installMapObject.mapObjectPtr;
-   Drawable* d = message->data.installMapObject.drawPtr;
-
-   // Install the MapObject.
-   this->mapObjectContainer.push_back(mo);
-
-   Coordinate drawableCoord = mo->getLeftCorner() - this->display;
-   int x = drawableCoord.getX();
-   int y = drawableCoord.getY();
-
-   LOG(INFO) << "Displaying Drawable " << d->getInstanceName();
-   // Now DisplayDrawable
-   MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
 }
 */
