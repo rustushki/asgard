@@ -145,8 +145,8 @@ void Map::unloadMapObjects() {
       if (!this->isMapObjectInScope(mo)) {
          LOG(INFO) << "MapObject not in scope.";
 
-         // Send UnloadDrawable message to Graphics Engine.
-         //MessageFactory::makeUnloadDrawable(mo->getDrawableName());
+         // Unload the Drawable from the Graphics Engine.
+         GraphicsEngine::getInstance()->unloadDrawable(mo->getDrawableName());
 
          // Remove the MapObject from the Map; freeing its memory.
 		   moIter = map->erase(moIter);

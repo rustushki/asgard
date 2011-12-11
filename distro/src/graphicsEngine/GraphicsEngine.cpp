@@ -106,15 +106,14 @@ void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
       }
    }
 }
+*/
 
-void GraphicsEngine::handleUnloadDrawable(Message* message) {
-   LOG(INFO) << "Handling UnloadDrawable";
-
-   UnloadDrawable data = message->data.unloadDrawable;
+void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
+   LOG(INFO) << "Unloading Drawable.";
 
    Screen* s = Screen::getInstance();
 
-   Drawable* d = s->getDrawableByName(*(data.drawableName));
+   Drawable* d = s->getDrawableByName(drawableInstanceName);
 
    if (d != NULL) {
 	   LOG(INFO) << "Successfully found drawable to unload.";
@@ -124,4 +123,3 @@ void GraphicsEngine::handleUnloadDrawable(Message* message) {
    }
 }
 
-*/
