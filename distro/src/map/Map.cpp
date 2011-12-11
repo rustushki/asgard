@@ -52,7 +52,7 @@ void Map::moveDrawables(Coordinate offset) {
       drawableNames->push_back((*moIter)->getDrawableName());
    }
 
-   //MessageFactory::makeTranslateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
+   GraphicsEngine::getInstance()->translateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
 }
 
 void Map::loadBoundingBoxes() {
@@ -247,17 +247,6 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
 }
 
 /*
-bool Map::interpretMessage(Message* message)
-{
-   if (message->header.type == MESSAGE_TYPE_INSTALL_MAP_OBJECT) {
-      LOG(INFO) << "Received InstallMapObject";
-      this->handleInstallMapObject(message);
-   } else if (message->header.type == MESSAGE_TYPE_MOVE_FOCUS_POINT) {
-      LOG(INFO) << "Received MoveFocusPoint Message.";
-      this->handleMoveFocusPoint(message);      
-   }
-}
-
 void Map::handleMoveFocusPoint(Message* message) {
    int x = message->data.moveFocusPoint.X;
    int y = message->data.moveFocusPoint.Y;

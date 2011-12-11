@@ -40,10 +40,10 @@ class GraphicsEngine
 
       void displayDrawable(Drawable* d, std::string layerName, int x, int y);
       void unloadDrawable(std::string drawableInstanceName);
+      void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
 
    private:
       static GraphicsEngine* instance;
-      //void handleTranslateDrawablesByOffset(Message* message);
       static boost::shared_mutex updateLock;
       bool eventHandler(SDL_Event& event);
 };

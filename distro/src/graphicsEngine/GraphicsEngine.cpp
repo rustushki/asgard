@@ -84,16 +84,10 @@ void GraphicsEngine::displayDrawable(Drawable* d, std::string layerName, int x, 
    }
 }
 
-/*
-void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
-   LOG(INFO) << "Handling TranslateDrawablesByOffset";
-
-   TranslateDrawablesByOffset data = message->data.translateDrawablesByOffset;
+void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawableNames, int xOffset, int yOffset) {
+   LOG(INFO) << "Translating Drawables By an Offset";
 
    Screen* s = Screen::getInstance();
-   std::vector<std::string>* drawableNames = data.drawableNames;
-   int xOffset = data.X;
-   int yOffset = data.Y;
 
    std::vector<std::string>::iterator itr;
    for (itr = drawableNames->begin(); itr != drawableNames->end(); itr++) {
@@ -106,7 +100,6 @@ void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
       }
    }
 }
-*/
 
 void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
    LOG(INFO) << "Unloading Drawable.";
