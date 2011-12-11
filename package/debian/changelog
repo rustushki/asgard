@@ -3,4 +3,4 @@ asgard (0.3.6-1) oneiric; urgency=low
   * Initial Ubuntu package.
   * Spritesheet caching.
 
- -- Russ Adams <russ.adams@gmail.com>  Sat, 03 Dec 2011 12:10:00 -0400
+ -- Russ Adams <russ.adams@gmail.com>  Sat, 05 Dec 2011 16:56:00 -0400
