@@ -17,15 +17,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Console.h"
+#include "Asgard.h"
 
 Console* Console::instance = NULL;
 
-Console* Console::getInstance(int argc, char** argv) {
+Console* Console::getInstance() {
+   LOG(INFO) << "Console starting ...";
    
    if (Console::instance == NULL) {
 
-      if (argc > 1) {
-         std::string arg1 = argv[1];
+      if (Asgard::argc > 1) {
+         std::string arg1 = Asgard::argv[1];
          // Interactive Shell
          if (arg1.compare("-i") == 0) {
             Console::instance = new Console(true);

@@ -20,7 +20,6 @@
 #define CONSOLE_H
 
 #include "ConsoleType.h"
-#include "ConsolePython.h"
 #include "externals.h"
 
 
@@ -29,7 +28,7 @@ using std::string;
 class Console
 {
    public:
-      static Console* getInstance(int argc, char** argv);
+      static Console* getInstance();
       ~Console();
 
       void inputLoop();

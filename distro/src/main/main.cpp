@@ -1,77 +1,35 @@
-#include "externals.h"
-#include "Screen.h"
-#include "GraphicsEngine.h"
-#include "Database.h"
-#include "Console.h"
-#include "Map.h"
+/*****************************************************************************
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
 
-int    argCount;
-char** argStrings;
+#include "Asgard.h"
 
-GraphicsEngine* ge;
-      Database* db;
-       Console* cl;
-           Map* ma;
+int main(int argc, char** argv) {
 
-void controller() {
-   cl->inputLoop();
-}
+   Asgard::argc = argc;
+   Asgard::argv = argv;
 
-void initExternal() {
-   // Initialize SDL
-   SDL_Init(SDL_INIT_VIDEO);
-   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
-
-   // Initialize Google Logger.
-   google::InitGoogleLogging("asgard");
-
-   // Initialize Python
-   Py_Initialize();
-
-   if (Py_IsInitialized() != true) {
-      std::cout << "Python failed to initialize." << std::endl;
-      exit(0);
-   }
-
-   Py_InitModule("asgard", AsgardMethods);
-   Py_InitModule("map",    MapMethods);
-
-}
-
-void killExternals() {
-   Py_Finalize();
-   SDL_Quit();
-}
-
-void initModel() {
-   ge = GraphicsEngine::getInstance();
-   db =       Database::getInstance();
-   cl =        Console::getInstance(argCount, argStrings);
-   ma =            Map::getInstance();
-}
-
-void startThreads() {
-   boost::function<void()> viewMethod = boost::bind(&GraphicsEngine::play, ge);
-
-   boost::thread contThread(controller);
-   boost::thread viewThread(viewMethod);
-
-   contThread.join();
-   viewThread.join();
-}
-
-int main(int argc, char**argv)
-{
-   argCount   = argc;
-   argStrings = argv;
-
-   initExternal();
-   initModel();
-   startThreads();
+   Asgard* asgard = Asgard::getInstance();
+   asgard->start();
 
    // Wait for the User to Kill Vear.
 
-   killExternals();
+   delete asgard;
 
    return 0;
 }

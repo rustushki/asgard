@@ -1,18 +1,35 @@
+/*****************************************************************************
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
+
 #include "Map.h"
 
 Map* Map::instance = NULL;
 
 Map::Map() {
-   LOG(INFO) << "Building  Map";
+   LOG(INFO) << "Map starting ...";
 }
 
-Map::~Map()
-{
+Map::~Map() {
 
 }
 
-Map* Map::getInstance()
-{
+Map* Map::getInstance() {
    if (instance == NULL)
       instance = new Map();
 
@@ -36,11 +53,14 @@ void Map::setFocusPoint(int x, int y) {
    Coordinate newFocus(x, y);
    Coordinate offset = this->focus - newFocus;
 
-   this->focus = newFocus;
+   // Move the Existing Drawables.
+   this->moveDrawables(offset);
    this->adjustDisplay();
+
+   // Change Focus and Load/Unload Bounding Boxes.
+   this->focus = newFocus;
    this->loadBoundingBoxes();
    this->unloadBoundingBoxes();
-   this->moveDrawables(offset);
 }
 
 void Map::moveDrawables(Coordinate offset) {

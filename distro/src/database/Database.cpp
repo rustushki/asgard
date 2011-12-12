@@ -23,6 +23,8 @@
 Database* Database::instance = NULL;
 
 Database::Database() {
+   LOG(INFO) << "Database starting ...";
+
    std::string path = this->getDatabasePath();
    int status = sqlite3_open(path.c_str(), &this->asgardDb);
    

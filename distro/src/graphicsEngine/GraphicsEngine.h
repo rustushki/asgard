@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2009 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 
 #include "Drawable.h"
 #include "Screen.h"
+#include "Asgard.h"
 
 struct Message;
 
