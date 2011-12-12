@@ -29,21 +29,35 @@
 
 class Asgard {
    public:
+
+      // Asgard is singleton.
       static Asgard* getInstance();
+
+      // De-inits Externals
       ~Asgard();
 
+      // Starts View and Controller threads.
       void start();
 
+      // Gates the Controller from starting until the View thread unlocks.
       boost::mutex gate;
 
+      // argv and argc from program launch.
       static char** argv;
       static int argc;
 
    private:
+
+      // Instance for Singleton.
       static Asgard* instance;
 
+      // Constructor.
       Asgard();
+
+      // Start any External Dependencies.
       void initExternal();
+
+      // Build Model (Asgard's Components).
       void initModel();
 
       // Threads Methods

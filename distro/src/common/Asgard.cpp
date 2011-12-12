@@ -91,6 +91,10 @@ Asgard::~Asgard() {
    SDL_Quit();
 }
 
+/* Starts Controller and View threads.
+ *
+ * @return
+ */
 void Asgard::start() {
    // Gate the Controller Thread.
    this->gate.lock();
