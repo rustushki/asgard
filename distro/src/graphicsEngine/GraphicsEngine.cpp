@@ -83,7 +83,8 @@ void GraphicsEngine::initScreen()
 bool GraphicsEngine::eventHandler(SDL_Event& event) {
    bool run = true;
    if (event.type == SDL_QUIT) {
-      // TODO: Need to signal Asgard to exit here.
+      // This is not the right answer, but it does eliminate an annoyance.
+	  exit(0);
    }
 
    return run;
