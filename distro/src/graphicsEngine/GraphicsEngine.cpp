@@ -28,7 +28,7 @@ GraphicsEngine::GraphicsEngine() {
    LOG(INFO) << "GraphicsEngine starting ...";
 
    // Ensure Screen has been initialized.
-   Screen* s = Screen::getInstance();
+   Screen::getInstance();
 }
 
 GraphicsEngine::~GraphicsEngine() {
