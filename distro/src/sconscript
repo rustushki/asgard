@@ -10,11 +10,8 @@ include_path =                     \
    +'#/src/console:'               \
    +'#/src/database:'              \
    +'#/src/graphicsEngine:'        \
-   +'#/src/gui:'                   \
    +'#/src/main:'                  \
    +'#/src/map:'                   \
-   +'#/src/message:'               \
-   +'#/src/messageRouter:'         \
    +'/usr/include/SDL:'            \
    +'/usr/include/python2.6:'
 
@@ -53,5 +50,5 @@ objects = [
 './main/main.cpp'
 ]
 
-asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','boost_signals-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-g'])
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-g'])
 Export("asgard")
