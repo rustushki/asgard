@@ -33,8 +33,11 @@ Asgard* Asgard::getInstance() {
 }
 
 Asgard::Asgard() {
-   LOG(INFO) << "Initting Externals...";
    this->initExternal();
+
+   // Can't output before initting externals since GLOG is one of the
+   // externals.
+   LOG(INFO) << "Initted Externals...";
 
    LOG(INFO) << "Initting Model...";
    this->initModel();
