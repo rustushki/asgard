@@ -18,7 +18,7 @@ Drawable::Drawable(std::string name)
    this->toBeRemoved = false;
 
    // Set the Unique Instance Name
-   char uniq[8];
+   char uniq[9];
    sprintf(uniq, "%08x", nextUniqueNumber);
    this->instanceName = this->name + uniq;
    Drawable::nextUniqueNumber++;
