@@ -26,7 +26,7 @@ NonPlayerCharacter::NonPlayerCharacter(std::string drawableName) : StaticMapObje
 
 NonPlayerCharacter::~NonPlayerCharacter()
 {
-   for (int x = 0; x < this->path.size(); x++) {
+   for (unsigned int x = 0; x < this->path.size(); x++) {
       delete this->path[x];
    }
 }

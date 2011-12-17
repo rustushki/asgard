@@ -23,7 +23,7 @@ StaticMapObject::StaticMapObject(std::string drawableName) : MapObject(drawableN
 }
 
 StaticMapObject::~StaticMapObject() {
-   for (int x = 0; x < this->hardpoints.size(); x++) {
+   for (unsigned int x = 0; x < this->hardpoints.size(); x++) {
       delete this->hardpoints[x];
    }
 }
