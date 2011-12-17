@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "Asgard.h"
+#include "ConsolePython.h"
 
 Asgard* Asgard::instance = NULL;
 int     Asgard::argc     = 0;
@@ -74,16 +75,8 @@ void Asgard::initExternal() {
    // Initialize Google Logger.
    google::InitGoogleLogging("asgard");
 
-   // Initialize Python
-   Py_Initialize();
-
-   if (Py_IsInitialized() != true) {
-      std::cout << "Python failed to initialize." << std::endl;
-      exit(0);
-   }
-
-   Py_InitModule("asgard", AsgardMethods);
-   Py_InitModule("map",    MapMethods);
+   // Initialize Asgard's Python Interface.
+   InitAsgardPython();
 }
 
 Asgard::~Asgard() {

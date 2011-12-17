@@ -42,4 +42,6 @@ static PyMethodDef MapMethods[] = {
     {NULL, NULL, 0, NULL}
 };
 
+void InitAsgardPython();
+
 #endif//CONSOLEPYTHON_H

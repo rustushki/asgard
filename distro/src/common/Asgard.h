@@ -25,7 +25,6 @@
 #include "GraphicsEngine.h"
 #include "Database.h"
 #include "Map.h"
-#include "ConsolePython.h"
 
 class Asgard {
    public:
