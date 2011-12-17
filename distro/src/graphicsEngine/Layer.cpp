@@ -51,7 +51,7 @@ void Layer::insertDrawableBottom(Drawable* drawable)
    GraphicsEngine::releaseLock();
 }
 
-bool Layer::removeDrawable(std::string name)
+void Layer::removeDrawable(std::string name)
 {
    GraphicsEngine::obtainLock();
    std::vector<Drawable*>::iterator itr;

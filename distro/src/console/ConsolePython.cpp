@@ -1,5 +1,21 @@
 #include "ConsolePython.h"
 
+static PyMethodDef AsgardMethods[] = {
+    {"LoadBoundingBox", asgard_LoadBoundingBox, METH_VARARGS,
+     "Load the contents of a Bounding Box into memory."},
+    {"LoadDrawable", asgard_LoadDrawable, METH_VARARGS,
+     "Load a Drawable and Display it."},
+    {NULL, NULL, 0, NULL}
+};
+
+
+static PyMethodDef MapMethods[] = {
+    {"SetFocus", map_SetFocus, METH_VARARGS,
+     "Change the center of the Map."},
+    {NULL, NULL, 0, NULL}
+};
+
+
 /* Initialize Asgard's Python Interface.  It starts by starting Python.  Then
  * it creates Asgards modules based on the PyMethodDef objects define in
  * ConsolePython.h

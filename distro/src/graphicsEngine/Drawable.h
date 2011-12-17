@@ -32,10 +32,10 @@ class Drawable
       bool needsUpdate();
 
       // Sets the new coordinate of the drawable.  Marks as moved.
-      bool move(int newX, int newY);
+      void move(int newX, int newY);
 
       // Move the Drawable by an Offset.  Marks as moved.
-      bool moveByOffset(int offX, int offY);
+      void moveByOffset(int offX, int offY);
 
       // Sets the an animation to swap to.  Marks as swapped.
       bool swapAnimation(std::string name);

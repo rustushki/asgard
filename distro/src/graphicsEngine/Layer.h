@@ -26,7 +26,7 @@ class Layer
       void insertDrawable(Drawable* drawable, unsigned int zIndex);
       void insertDrawableTop(Drawable* drawable);
       void insertDrawableBottom(Drawable* drawable);
-      bool removeDrawable(std::string name);
+      void removeDrawable(std::string name);
       Drawable* getDrawableByName(std::string name);
 
       // Blit all data from this layer that intersects with the provided rect.

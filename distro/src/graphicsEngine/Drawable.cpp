@@ -110,7 +110,7 @@ bool Drawable::needsUpdate()
    return needsUpdate;
 }
 
-bool Drawable::move(int newX, int newY)
+void Drawable::move(int newX, int newY)
 {
    LOG(INFO) << "instance = " << this->getInstanceName();
    LOG(INFO) << "oldX = " << this->x;
@@ -124,7 +124,7 @@ bool Drawable::move(int newX, int newY)
    this->moved = true;
 }
 
-bool Drawable::moveByOffset(int offX, int offY) {
+void Drawable::moveByOffset(int offX, int offY) {
    this->move((int)this->x + offX, (int)this->y + offY);
 }
 

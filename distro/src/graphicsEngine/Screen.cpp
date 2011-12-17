@@ -82,7 +82,7 @@ void Screen::flip() {
    this->status = SCREENSTATE_IDLE;
 }
 
-bool Screen::prepare() {
+void Screen::prepare() {
    this->status = SCREENSTATE_PREPARING;
    std::vector<Layer*>::iterator itr;
    for (itr = this->layer.begin(); itr != this->layer.end(); itr++)
@@ -94,15 +94,16 @@ ScreenState Screen::getStatus() const {
    return this->status;
 }
 
-void Screen::insertLayer(Layer* newLayer, int position) {
+void Screen::insertLayer(Layer* newLayer, unsigned int position) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    //  should throw invalid position exception.
-   if (position >= 0 && position <= this->layer.size())
+   if (position >= 0 && position <= this->layer.size()) {
       this->layer.insert(this->layer.begin()+position, newLayer);
+   }
 }
 
-bool Screen::removeLayer(std::string name) {
+void Screen::removeLayer(std::string name) {
    std::vector<Layer*>::iterator itr;
    for (itr = this->layer.begin(); itr < this->layer.end(); itr++) {
       if ((*itr)->getName() == name) {

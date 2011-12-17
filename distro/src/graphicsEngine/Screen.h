@@ -17,14 +17,14 @@ class Screen
       void flip();
 
       // Prepare the next frame.
-      bool prepare();
+      void prepare();
 
       ScreenState getStatus() const;
       
       // Layers are displayed in stacking order.
       // Methods for adding and removing Layers.
-      void insertLayer(Layer* newLayer, int position);
-      bool removeLayer(std::string name);
+      void insertLayer(Layer* newLayer, unsigned int position);
+      void removeLayer(std::string name);
       void appendLayer(Layer* newLayer);
       void pushLayer(Layer* newLayer);
       Layer* getLayer(std::string name) const;
