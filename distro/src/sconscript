@@ -50,5 +50,5 @@ objects = [
 './main/main.cpp'
 ]
 
-asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-Wall'])
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','python2.6', 'glog'], CXXFLAGS=['-Wall', '-O2'])
 Export("asgard")
