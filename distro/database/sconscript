@@ -1,24 +1,13 @@
 # Get the environment from the parent sconscript
 Import('env')
 
-# List of Objects to Compile
-objects = [
-'./sqlite3.cpp',
-]
-
-# Build runquery
-runquery = env.Program('runquery', objects, LIBS=['sqlite3'], CXXFLAGS=['-g'])
-source = [
-   runquery,
-   'createdb.sql',
-   'populatedb.sql'
-]
-
 # Build asgard.db3
+# Note that this requires sqlite3; but you should already have that if you
+# expect to compile and run.
 target = './asgard.db3'
-create = './database/runquery $TARGET ./database/createdb.sql';
-populate = './database/runquery $TARGET ./database/populatedb.sql';
-asgarddb3 = env.Command(target, source, create+' && '+populate)
+create = 'sqlite3 $TARGET < ./database/createdb.sql'
+populate = 'sqlite3  $TARGET < ./database/populatedb.sql'
+asgarddb3 = env.Command(target, [], create+' && '+populate)
 
 # Let scons know how to cleanup asgard.db3
 Clean(asgarddb3, 'asgard.db3')
