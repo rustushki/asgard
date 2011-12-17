@@ -214,26 +214,23 @@ void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
 }
 
 Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
-      int x,y,height,width,type = 0;
-      double r = 0;
-
       // Rect and Circ Hardpoints need these.
-      type = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HARDPOINT_TYPE));
-      x = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_X));
-      y = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_Y));
+      int type = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HARDPOINT_TYPE));
+      int x = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_X));
+      int y = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_Y));
 
       // Only RectHardpoints
       if (type == HARDPOINT_TYPE_RECT)
       {
-         height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
-         width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
+         int height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
+         int width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
          return new RectHardpoint(x,y,height,width);
       }
       // Only CircHardpoints
       else if (type == HARDPOINT_TYPE_CIRC)
       {
-         r = atof(rs->getColumnValue(row,HARDPOINT_COLUMN_RADIUS));
-         return new CircHardpoint(x,y,type);
+         double r = atof(rs->getColumnValue(row,HARDPOINT_COLUMN_RADIUS));
+         return new CircHardpoint(x,y,r);
       }
       // Default
       else
