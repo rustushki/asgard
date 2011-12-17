@@ -21,7 +21,7 @@ LayerState Layer::getStatus()
    return this->status;
 }
 
-void Layer::insertDrawable(Drawable* drawable, int zIndex)
+void Layer::insertDrawable(Drawable* drawable, unsigned int zIndex)
 {
    GraphicsEngine::obtainLock();
    //TODO: Error handling...

@@ -23,7 +23,7 @@ class Layer
 
       // Methods for adding and removing Drawables.
       // Drawables are stored in the layer in stacking order.
-      void insertDrawable(Drawable* drawable, int zIndex);
+      void insertDrawable(Drawable* drawable, unsigned int zIndex);
       void insertDrawableTop(Drawable* drawable);
       void insertDrawableBottom(Drawable* drawable);
       bool removeDrawable(std::string name);
