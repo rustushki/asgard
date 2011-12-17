@@ -109,7 +109,11 @@ int Console::readCode() {
    {
       char input[1024];
 
-      fgets(input, 1024, stdin);
+      char* res = fgets(input, 1024, stdin);
+
+      if (res == NULL && strcmp(input, "") != 0) {
+         LOG(ERROR) << "Got error when reading script from STDIN: " << ferror(stdin);
+      }
 
       this->code += input;
 
