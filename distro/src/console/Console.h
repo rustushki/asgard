@@ -19,23 +19,19 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include "SystemComponent.h"
 #include "ConsoleType.h"
-#include "ConsolePython.h"
 #include "externals.h"
 
 
 using std::string;
 
-class Console : public SystemComponent
+class Console
 {
    public:
-      static Console* getInstance(int argc, char** argv);
+      static Console* getInstance();
       ~Console();
 
-      virtual bool open();
-      virtual bool close();
-
+      void inputLoop();
    private:
       static Console* instance;
 
@@ -43,7 +39,6 @@ class Console : public SystemComponent
       Console(bool interactive);
       Console(string filename);
 
-      void inputLoop();
       int readCode();
       int execPython();
       void prompt();
@@ -54,8 +49,6 @@ class Console : public SystemComponent
 
       ConsoleType consoleType;
    
-      virtual bool interpretMessage(Message* message);
-
       static const int CONTINUE_READ  = 100;
       static const int PYTHON_SUCCESS = 200;
       static const int PYTHON_FAIL    = 300;

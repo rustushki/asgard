@@ -1,34 +1,35 @@
-#include "externals.h"
-#include "MessageRouter.h"
-#include "Console.h"
-#include "MessageFactory.h"
-#include "Database.h"
-#include "GraphicsEngine.h"
-#include "Map.h"
+/*****************************************************************************
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
 
-int main(int argc, char**argv)
-{
-   // Open MessageRouter first always.
-   MessageRouter* mr = MessageRouter::getInstance();
-   
-   google::InitGoogleLogging("asgard");
+#include "Asgard.h"
 
-   LOG(INFO) << "Loading Asgard SystemComponents.";
+int main(int argc, char** argv) {
 
-   SystemComponent* db = Database::getInstance();
-   SystemComponent* ge = GraphicsEngine::getInstance();
-   SystemComponent* ma = Map::getInstance();
-   SystemComponent* cn = Console::getInstance(argc, argv);
+   Asgard::argc = argc;
+   Asgard::argv = argv;
 
-   db->open();
-   ge->open();
-   ma->open();
-   cn->open();
+   Asgard* asgard = Asgard::getInstance();
+   asgard->start();
 
-   // Wait for user to kill Vear.
-   while(1) {
-      sleep(10);
-   }
+   // Wait for the User to Kill Vear.
+
+   delete asgard;
 
    return 0;
 }

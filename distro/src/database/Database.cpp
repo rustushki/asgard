@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -22,8 +22,8 @@
 
 Database* Database::instance = NULL;
 
-Database::Database() : SystemComponent("database")
-{
+Database::Database() {
+   LOG(INFO) << "Database starting ...";
 
    std::string path = this->getDatabasePath();
    int status = sqlite3_open(path.c_str(), &this->asgardDb);
@@ -36,19 +36,16 @@ Database::Database() : SystemComponent("database")
    // TODO: Add some type of logging for status
 }
 
-Database::~Database()
-{
+Database::~Database() {
    sqlite3_close(this->asgardDb);
 }
 
-Database* Database::getInstance()
-{
+Database* Database::getInstance() {
    if(instance == NULL) instance = new Database();
    return instance;
 }
 
-sqlite3* Database::getAsgardDb() const
-{
+sqlite3* Database::getAsgardDb() const {
    return this->asgardDb;
 }
 
@@ -63,75 +60,28 @@ std::string Database::getDatabasePath() {
    return path;
 }
 
-void Database::determineVisibleBoxes(Coordinate currentPosition, int *visibleBoxes, int numVisibleBoxes)
-{
-   // Map as of 0.3.0 is 1 boundbox, 0.
-   visibleBoxes[0] =  1;
-}
+bool Database::loadBoundingBox(int boxX, int boxY) {
 
-bool Database::loadBoundingBox(int boxX, int boxY)
-{
-   MapObjectFactory::build(this->asgardDb, boxX, boxY);
+   if (MapObjectFactory::build(this->asgardDb, boxX, boxY)) {
+      LOG(INFO) << "bounding box loaded";
+   } else {
+      LOG(ERROR) << "failed to load bounding box";
+   }
 
    return true;
 }
 
-bool Database::loadDrawable(std::string dName)
-{
-   DrawableFactory::build(this->asgardDb, dName);
+bool Database::loadDrawable(std::string dName) {
 
+   if (dName.empty()) {
+      LOG(ERROR) << "no drawable name provided";
+   }
+   
+   if (DrawableFactory::build(this->asgardDb, dName)) {
+      LOG(INFO) << "drawable loaded";
+   } else {
+      LOG(ERROR) << "failed to load drawable";
+   }
+   
    return true;
-}
-
-bool Database::interpretMessage(Message* msg)
-{
-   bool messageHandled = false;
-   std::string printOutput;
-
-   if (msg->header.type == MESSAGE_TYPE_LOAD_BOUNDING_BOX)
-   {
-      if (this->loadBoundingBox(msg->data.box.X, msg->data.box.Y))
-         printOutput = "bounding box loaded";
-      else
-         printOutput = "failed";
-
-      MessageFactory::makePrintString(printOutput.c_str());
-      messageHandled = true;
-   }
-
-   else if (msg->header.type == MESSAGE_TYPE_LOAD_DRAWABLE)
-   {
-      std::string dName(msg->data.loadDrawable.drawableName);
-
-      if (dName.empty())
-         printOutput = "Failed: no drawable name provided";
-      else if (this->loadDrawable(dName))
-         printOutput = "drawable loaded";
-
-      MessageFactory::makePrintString(printOutput.c_str());
-      messageHandled = true;
-   }
-   return messageHandled;
-}
-
-void Database::loop()
-{
-   while(1)
-      this->listen();
-}
-
-bool Database::open()
-{
-   bool status = true;
-   
-   status = SystemComponent::open();
-   
-   this->thread->open(boost::bind(&Database::loop, this));
-   
-   return status;
-}
-
-bool Database::close()
-{
-
 }

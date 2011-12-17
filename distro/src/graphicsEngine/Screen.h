@@ -51,6 +51,9 @@ class Screen
       // Singleton instance.
       static Screen* instance;
 
+      // Initialize self by adding background stage.
+      void init();
+
       // Frame to be displayed next.
       SDL_Surface* nextFrame;
 

@@ -17,21 +17,17 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Console.h"
-
-using std::getline;
-using std::cin;
-using std::cout;
-using std::string;
-using std::endl;
+#include "Asgard.h"
 
 Console* Console::instance = NULL;
 
-Console* Console::getInstance(int argc, char** argv) {
+Console* Console::getInstance() {
+   LOG(INFO) << "Console starting ...";
    
    if (Console::instance == NULL) {
 
-      if (argc > 1) {
-         string arg1 = argv[1];
+      if (Asgard::argc > 1) {
+         std::string arg1 = Asgard::argv[1];
          // Interactive Shell
          if (arg1.compare("-i") == 0) {
             Console::instance = new Console(true);
@@ -49,22 +45,19 @@ Console* Console::getInstance(int argc, char** argv) {
    return Console::instance;
 }
 
-Console::Console(string filename) : SystemComponent("console")
-{
+Console::Console(std::string filename) {
    this->code = "";
    this->filename = filename;
    this->consoleType = CONSOLETYPE_FILE;
 }
 
-Console::Console() : SystemComponent("console")
-{
+Console::Console() {
    this->code = "";
    this->filename = "";
    this->consoleType = CONSOLETYPE_STDIN;
 }
 
-Console::Console(bool interactive) : SystemComponent("console")
-{
+Console::Console(bool interactive) {
    this->code = "";
    this->filename = "";
 
@@ -74,50 +67,10 @@ Console::Console(bool interactive) : SystemComponent("console")
       this->consoleType = CONSOLETYPE_STDIN;
 }
 
-Console::~Console()
-{
+Console::~Console() {
 }
 
-bool Console::open()
-{
-   bool status = true;
-
-	Py_Initialize();
-
-	if (Py_IsInitialized() != true)
-	{
-		cout << "python not initialized." << endl;
-      return SystemComponent::close();
-	}
-
-	Py_InitModule("asgard", AsgardMethods);
-	Py_InitModule("map",    MapMethods);
-   
-   this->thread->open(boost::bind(&Console::inputLoop, this));
-   
-   status = SystemComponent::open();
-   
-   return status;
-}
-
-bool Console::close()
-{
-   bool status = true;
-
-   Py_Finalize();
-   
-   if(!this->thread->isClosed())
-   {
-      this->thread->close();
-   }
-   
-   status = SystemComponent::close();
-   
-   return status;
-}
-
-void Console::inputLoop()
-{
+void Console::inputLoop() {
    // If a filename is provided, read that file in and execute it.
    if (this->filename != "")
    {
@@ -147,12 +100,11 @@ void Console::inputLoop()
          continue;
       }
 
-      this->listen(10);
+      boost::this_thread::sleep(boost::posix_time::milliseconds(10));
    }
 }
 
-int Console::readCode()
-{
+int Console::readCode() {
    if (!feof(stdin))
    {
       char input[1024];
@@ -189,8 +141,7 @@ int Console::readCode()
    return Console::FEOF;
 }
 
-int Console::execPython()
-{
+int Console::execPython() {
    bool success = false;
 
    if (this->consoleType == CONSOLETYPE_FILE)
@@ -211,18 +162,6 @@ int Console::execPython()
    return Console::PYTHON_FAIL;
 }
 
-void Console::prompt()
-{
-   cout << "> ";
-}
-
-bool Console::interpretMessage(Message* msg)
-{
-   bool messageHandled = false;
-   if (msg->header.type == MESSAGE_TYPE_PRINT_STRING)
-   {
-      std::cout << msg->data.printString.output << std::endl;
-      messageHandled = true;
-   }
-   return messageHandled;
+void Console::prompt() {
+   std::cout << "> ";
 }

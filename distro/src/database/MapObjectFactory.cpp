@@ -21,8 +21,7 @@
 
 sqlite3* MapObjectFactory::db = NULL;
 
-int MapObjectFactory::build(sqlite3 *db, int boxX, int boxY)
-{
+bool MapObjectFactory::build(sqlite3 *db, int boxX, int boxY) {
    char *query;
    sqlite3_stmt *stmt;
 
@@ -76,11 +75,10 @@ int MapObjectFactory::build(sqlite3 *db, int boxX, int boxY)
    sqlite3_finalize(stmt);
    delete [] query;
 
-   return 0;
+   return true;
 }
 
-void MapObjectFactory::createTile(sqlite3_stmt *stmt)
-{
+void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, TILE_COLUMN_DRAWABLE_NAME)
@@ -107,12 +105,11 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt)
       tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
       tile->setHeight(sqlite3_column_int(stmt, TILE_COLUMN_HEIGHT));
-      MessageFactory::makeInstallMapObject(tile, drawable);
+      Map::getInstance()->installMapObject(tile, drawable);
    }
 }
 
-void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
-{
+void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, CONTAINER_COLUMN_DRAWABLE_NAME)
@@ -141,13 +138,12 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt)
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
       container->setHeight(sqlite3_column_int(stmt, CONTAINER_COLUMN_HEIGHT));
-      MessageFactory::makeInstallMapObject(container, drawable);
+      Map::getInstance()->installMapObject(container, drawable);
    }
 
 }
 
-void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
-{
+void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, NON_PLAYER_CHARACTER_COLUMN_DRAWABLE_NAME)
@@ -182,14 +178,13 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
       npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
       npc->setWidth(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WIDTH));
       npc->setHeight(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_HEIGHT));
-      MessageFactory::makeInstallMapObject(npc, drawable);
+      Map::getInstance()->installMapObject(npc, drawable);
         
       delete npcRs;
    }
 }
 
-void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
-{
+void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, STATIC_MAP_OBJECT_COLUMN_DRAWABLE_NAME)
@@ -214,12 +209,11 @@ void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt)
       staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
       staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));
       staticMapObject->setHeight(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_HEIGHT));
-      MessageFactory::makeInstallMapObject(staticMapObject, drawable);
+      Map::getInstance()->installMapObject(staticMapObject, drawable);
    }
 }
 
-Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
-{
+Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
       int x,y,height,width,type = 0;
       double r = 0;
 
@@ -248,8 +242,7 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row)
       }
 }
 
-Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row)
-{
+Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row) {
    int wc_x,wc_y = 0;
 
    wc_x = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X));
@@ -258,8 +251,7 @@ Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int 
    return new Coordinate(wc_x, wc_y);
 }
 
-RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId)
-{
+RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    RowSet* rs = new RowSet();
    char* hpQuery;
    int rc;
@@ -276,8 +268,7 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId)
    return rs;
 }
 
-RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *db, int npcId)
-{
+RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *db, int npcId) {
    RowSet* rs = new RowSet();
    char* npcPathQuery;
    int rc;

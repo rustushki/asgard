@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2009 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -19,13 +19,13 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-#include "SystemComponent.h"
-#include "Screen.h"
 #include "Drawable.h"
+#include "Screen.h"
+#include "Asgard.h"
 
 struct Message;
 
-class GraphicsEngine : public SystemComponent
+class GraphicsEngine
 {
    public:
       GraphicsEngine();
@@ -33,22 +33,18 @@ class GraphicsEngine : public SystemComponent
 
       static GraphicsEngine* getInstance();
 
-      virtual bool open();
-      virtual bool close();
-
       // Screen initiates it's updating loop
       void play();
 
       static void obtainLock();
       static void releaseLock();
 
+      void displayDrawable(Drawable* d, std::string layerName, int x, int y);
+      void unloadDrawable(std::string drawableInstanceName);
+      void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
+
    private:
       static GraphicsEngine* instance;
-      void initScreen();
-      virtual bool interpretMessage(Message* message);
-      void handleDisplayDrawable(Message* message);
-      void handleTranslateDrawablesByOffset(Message* message);
-      void handleUnloadDrawable(Message* message);
       static boost::shared_mutex updateLock;
       bool eventHandler(SDL_Event& event);
 };

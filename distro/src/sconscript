@@ -21,11 +21,7 @@ include_path =                     \
 # List of Objects to Compile
 objects = [
 './console/Console.cpp',
-'./console/MessageFactory.cpp',
-'./messageRouter/MessageRouter.cpp',
-'./common/SystemComponent.cpp',
-'./common/Mailbox.cpp',
-'./common/AsgardThread.cpp',
+'./console/ConsolePython.cpp',
 './database/QueryGenerator.cpp',
 './database/GrassTile.cpp',
 './database/RowSet.cpp',
@@ -51,6 +47,7 @@ objects = [
 './graphicsEngine/Screen.cpp',
 './graphicsEngine/SpriteSheetCache.cpp',
 './map/Map.cpp',
+'./common/Asgard.cpp',
 #'./database/test.cpp'
 #'./graphicsEngine/test.cpp'
 './main/main.cpp'

@@ -1,53 +1,39 @@
+/*****************************************************************************
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
+
 #include "Map.h"
 
 Map* Map::instance = NULL;
 
-Map::Map() : SystemComponent("map") {
-   LOG(INFO) << "Building  Map";
+Map::Map() {
+   LOG(INFO) << "Map starting ...";
 }
 
-Map::~Map()
-{
+Map::~Map() {
 
 }
 
-Map* Map::getInstance()
-{
+Map* Map::getInstance() {
    if (instance == NULL)
       instance = new Map();
 
    return instance;
-}
-
-bool Map::open()
-{
-   bool status = true;
-
-   this->thread->open(boost::bind(&Map::noop, this));
-   
-   status = SystemComponent::open();
-   
-   return status;
-}
-
-bool Map::close()
-{
-   bool status = true;
-   
-   if(!this->thread->isClosed())
-   {
-      this->thread->close();
-   }
-   
-   status = SystemComponent::close();
-   
-   return status;
-}
-
-void Map::noop()
-{
-   // Wait until a message is received.
-   this->listen(-1);
 }
 
 void Map::setFocusPoint(int x, int y) {
@@ -67,11 +53,14 @@ void Map::setFocusPoint(int x, int y) {
    Coordinate newFocus(x, y);
    Coordinate offset = this->focus - newFocus;
 
-   this->focus = newFocus;
+   // Move the Existing Drawables.
+   this->moveDrawables(offset);
    this->adjustDisplay();
+
+   // Change Focus and Load/Unload Bounding Boxes.
+   this->focus = newFocus;
    this->loadBoundingBoxes();
    this->unloadBoundingBoxes();
-   this->moveDrawables(offset);
 }
 
 void Map::moveDrawables(Coordinate offset) {
@@ -83,7 +72,7 @@ void Map::moveDrawables(Coordinate offset) {
       drawableNames->push_back((*moIter)->getDrawableName());
    }
 
-   MessageFactory::makeTranslateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
+   GraphicsEngine::getInstance()->translateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
 }
 
 void Map::loadBoundingBoxes() {
@@ -115,8 +104,10 @@ void Map::loadBoundingBox(Coordinate bb) {
       if (!this->isBoundingBoxLoaded(bb)) {
          LOG(INFO) << "Loading Bounding Box (" << bb.getX() << "," << bb.getY() << ")";
 
-         this->boundingBoxContainer.push_back(bb);
-         MessageFactory::makeLoadBoundingBox(bb.getX(), bb.getY());
+         Database* db = Database::getInstance();
+         if (db->loadBoundingBox(bb.getX(), bb.getY())) {
+            this->boundingBoxContainer.push_back(bb);
+         }
       } else {
          LOG(INFO) << "Bounding Box (" << bb.getX() << "," << bb.getY() << ") already loaded.";
       }
@@ -174,8 +165,8 @@ void Map::unloadMapObjects() {
       if (!this->isMapObjectInScope(mo)) {
          LOG(INFO) << "MapObject not in scope.";
 
-         // Send UnloadDrawable message to Graphics Engine.
-         MessageFactory::makeUnloadDrawable(mo->getDrawableName());
+         // Unload the Drawable from the Graphics Engine.
+         GraphicsEngine::getInstance()->unloadDrawable(mo->getDrawableName());
 
          // Remove the MapObject from the Map; freeing its memory.
 		   moIter = map->erase(moIter);
@@ -263,28 +254,8 @@ void Map::adjustDisplay() {
    LOG(INFO) << "Set Map Display Point = " << x << ", " << y;	
 }
 
-bool Map::interpretMessage(Message* message)
-{
-   if (message->header.type == MESSAGE_TYPE_INSTALL_MAP_OBJECT) {
-      LOG(INFO) << "Received InstallMapObject";
-      this->handleInstallMapObject(message);
-   } else if (message->header.type == MESSAGE_TYPE_MOVE_FOCUS_POINT) {
-      LOG(INFO) << "Received MoveFocusPoint Message.";
-      this->handleMoveFocusPoint(message);      
-   }
-}
-
-void Map::handleMoveFocusPoint(Message* message) {
-   int x = message->data.moveFocusPoint.X;
-   int y = message->data.moveFocusPoint.Y;
-   this->setFocusPoint(x, y);
-}
-
-void Map::handleInstallMapObject(Message* message) {
-   // Get the two parameters for InstallMapObject
-   MapObject* mo = message->data.installMapObject.mapObjectPtr;
-   Drawable* d = message->data.installMapObject.drawPtr;
-
+void Map::installMapObject(MapObject* mo, Drawable* d) {
+   
    // Install the MapObject.
    this->mapObjectContainer.push_back(mo);
 
@@ -292,7 +263,5 @@ void Map::handleInstallMapObject(Message* message) {
    int x = drawableCoord.getX();
    int y = drawableCoord.getY();
 
-   LOG(INFO) << "Displaying Drawable " << d->getInstanceName();
-   // Now DisplayDrawable
-   MessageFactory::makeDisplayDrawable(d, "stageLayer", x, y);
+   GraphicsEngine::getInstance()->displayDrawable(d, "stageLayer", x, y);
 }

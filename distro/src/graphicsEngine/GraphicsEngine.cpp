@@ -1,83 +1,43 @@
+/*****************************************************************************
+ * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
+
 #include "GraphicsEngine.h"
 
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;
 
-GraphicsEngine::GraphicsEngine() : SystemComponent("graphicsEngine") {
+extern boost::mutex gate;
 
-   // Initialize SDL
-   SDL_Init(SDL_INIT_VIDEO);
-   SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
+GraphicsEngine::GraphicsEngine() {
+   LOG(INFO) << "GraphicsEngine starting ...";
 
-   // Initialize Screen.
+   // Ensure Screen has been initialized.
    Screen* s = Screen::getInstance();
 }
 
-GraphicsEngine::~GraphicsEngine()
-{
+GraphicsEngine::~GraphicsEngine() {
 
 }
 
-GraphicsEngine* GraphicsEngine::getInstance()
-{
+GraphicsEngine* GraphicsEngine::getInstance() {
    if(instance == NULL) instance = new GraphicsEngine();
    return instance;
-}
-
-
-bool GraphicsEngine::open()
-{
-   bool status = true;
-   
-   this->thread->open(boost::bind(&GraphicsEngine::initScreen, this));
-   
-   status = SystemComponent::open();
-   
-   return status;
-}
-
-bool GraphicsEngine::close()
-{
-   bool status = true;
-   
-   if(!this->thread->isClosed())
-   {
-      this->thread->close();
-   }
-   
-   status = SystemComponent::close();
-   
-   return status;
-}
-
-void GraphicsEngine::initScreen()
-{
-   // Grab Screen Instance
-   Screen* s = Screen::getInstance();
-
-   // Setup Screen Layers
-   std::string lsName = "stageLayer";
-   s->pushLayer(new Layer(lsName));
-
-   // TODO: Another process should initialize the background layer.
-   // Special Background Layer, Drawable and Animation. Needed so that there's
-   // something to out-blit transparent pixels with.
-
-   // Create Background
-   std::string abName = "backgroundAnimation";
-   Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
-   std::string dbName = "testBackground";
-   Drawable* db = new Drawable(dbName);
-   db->addAnimation(ab, abName);
-   db->play();
-   lsName = "background";
-   Layer* bgLayer = new Layer(lsName);
-   bgLayer->insertDrawableTop(db);
-   s->pushLayer(bgLayer);
-
-   // TODO: make this a command so that this thread can terminate.
-   LOG(INFO) << "Starting GraphicsEngine.";
-   this->play();
 }
 
 bool GraphicsEngine::eventHandler(SDL_Event& event) {
@@ -90,8 +50,7 @@ bool GraphicsEngine::eventHandler(SDL_Event& event) {
    return run;
 }
 
-void GraphicsEngine::play()
-{
+void GraphicsEngine::play() {
    int time = 0;
    Screen* s = Screen::getInstance();
    bool run = true;
@@ -118,66 +77,44 @@ void GraphicsEngine::play()
       if (delay <= 0) {
          delay = 1;
       }
-      this->listen(delay);
+
+      Asgard::getInstance()->gate.unlock();
+
+      boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
    }
 }
 
 // Wait for write access to the screen/layers.
-void GraphicsEngine::obtainLock()
-{
+void GraphicsEngine::obtainLock() {
    return GraphicsEngine::updateLock.lock_shared();
 }
 
-void GraphicsEngine::releaseLock()
-{
+void GraphicsEngine::releaseLock() {
    GraphicsEngine::updateLock.unlock_shared();
 }
 
-bool GraphicsEngine::interpretMessage(Message* message)
-{
-   if (message->header.type == MESSAGE_TYPE_DISPLAY_DRAWABLE) {
-      this->handleDisplayDrawable(message);
-   } else if (message->header.type == MESSAGE_TYPE_TRANSLATE_DRAWABLES_BY_OFFSET) {
-      this->handleTranslateDrawablesByOffset(message);
-   } else if (message->header.type == MESSAGE_TYPE_UNLOAD_DRAWABLE) {
-      this->handleUnloadDrawable(message);
-   }
-
-}
-
-void GraphicsEngine::handleDisplayDrawable(Message* message) {
-   LOG(INFO) << "Handling DisplayDrawable";
-
-   std::string layerName = message->data.displayDrawable.layName;
-   Drawable* drawable = message->data.displayDrawable.drawPtr;
-   int x = message->data.displayDrawable.x;
-   int y = message->data.displayDrawable.y;
+void GraphicsEngine::displayDrawable(Drawable* d, std::string layerName, int x, int y) {
+   LOG(INFO) << "Displaying Drawable";
 
    Screen* s = Screen::getInstance();
+   Layer * l = s->getLayer(layerName);
 
-   Layer* l = s->getLayer(layerName);
-
-   drawable->move(x, y);
+   d->move(x, y);
 
    // TODO: parameterize whether to play or not.
-   drawable->play();
+   d->play();
 
    // TODO: parameterize stack location on layer
    // Always on the top?
    if (l != NULL) {
-      l->insertDrawableTop(drawable);
+      l->insertDrawableTop(d);
    }
 }
 
-void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
-   LOG(INFO) << "Handling TranslateDrawablesByOffset";
-
-   TranslateDrawablesByOffset data = message->data.translateDrawablesByOffset;
+void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawableNames, int xOffset, int yOffset) {
+   LOG(INFO) << "Translating Drawables By an Offset";
 
    Screen* s = Screen::getInstance();
-   std::vector<std::string>* drawableNames = data.drawableNames;
-   int xOffset = data.X;
-   int yOffset = data.Y;
 
    std::vector<std::string>::iterator itr;
    for (itr = drawableNames->begin(); itr != drawableNames->end(); itr++) {
@@ -191,14 +128,12 @@ void GraphicsEngine::handleTranslateDrawablesByOffset(Message* message) {
    }
 }
 
-void GraphicsEngine::handleUnloadDrawable(Message* message) {
-   LOG(INFO) << "Handling UnloadDrawable";
-
-   UnloadDrawable data = message->data.unloadDrawable;
+void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
+   LOG(INFO) << "Unloading Drawable.";
 
    Screen* s = Screen::getInstance();
 
-   Drawable* d = s->getDrawableByName(*(data.drawableName));
+   Drawable* d = s->getDrawableByName(drawableInstanceName);
 
    if (d != NULL) {
 	   LOG(INFO) << "Successfully found drawable to unload.";
@@ -207,3 +142,4 @@ void GraphicsEngine::handleUnloadDrawable(Message* message) {
 	   LOG(INFO) << "Unable to find Drawable for unloading.";
    }
 }
+

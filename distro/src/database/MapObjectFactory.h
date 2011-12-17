@@ -36,7 +36,6 @@
 #include "QueryGenerator.h"
 #include "Drawable.h"
 #include "DrawableFactory.h"
-#include "MessageFactory.h"
 
 class MapObjectFactory
 {
@@ -52,7 +51,7 @@ class MapObjectFactory
 
       static sqlite3* db;
    public:
-      static int build(sqlite3 *db, int boxX, int boxY);
+      static bool build(sqlite3 *db, int boxX, int boxY);
 };
 
 #endif //MAP_OBJECT_FACTORY_H
