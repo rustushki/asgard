@@ -44,7 +44,7 @@ void Screen::init() {
    this->pushLayer(bgLayer);
 }
 
-bool Screen::flip() {
+void Screen::flip() {
    this->status = SCREENSTATE_FLIPPING;
 
 

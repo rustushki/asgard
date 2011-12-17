@@ -14,7 +14,7 @@ class Screen
       ~Screen();
 
       // Update the display with the next frame.
-      bool flip();
+      void flip();
 
       // Prepare the next frame.
       bool prepare();
