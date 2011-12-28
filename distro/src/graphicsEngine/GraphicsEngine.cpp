@@ -40,16 +40,6 @@ GraphicsEngine* GraphicsEngine::getInstance() {
    return instance;
 }
 
-bool GraphicsEngine::eventHandler(SDL_Event& event) {
-   bool run = true;
-   if (event.type == SDL_QUIT) {
-      // This is not the right answer, but it does eliminate an annoyance.
-	  exit(0);
-   }
-
-   return run;
-}
-
 void GraphicsEngine::play() {
    int time = 0;
    Screen* s = Screen::getInstance();
@@ -57,11 +47,6 @@ void GraphicsEngine::play() {
 
    while(run)
    {
-      SDL_Event event; 
-      while(SDL_PollEvent(&event)) {
-         run = this->eventHandler(event);
-      }
-
       time = SDL_GetTicks();
 
       // Wait for write access to layers.  Once obtained, update them.

@@ -75,6 +75,7 @@ void Console::inputLoop() {
    if (this->filename != "")
    {
       this->execPython();
+      return;
    }
 
    // Then switch to console input as Asgard is intended to continue running.

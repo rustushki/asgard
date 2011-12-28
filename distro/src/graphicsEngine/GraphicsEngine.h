@@ -46,7 +46,6 @@ class GraphicsEngine
    private:
       static GraphicsEngine* instance;
       static boost::shared_mutex updateLock;
-      bool eventHandler(SDL_Event& event);
 };
 
 #endif // GRAPHICSENGINE_H

@@ -58,8 +58,28 @@ void Asgard::controller() {
 
    // The View is now ready.
 
-   // Read from the Console.
+   // Read from the Console and Process all Input.
    Console::getInstance()->inputLoop();
+
+   // Wait for Events
+   SDL_Event event; 
+
+   while (true) {
+      SDL_WaitEvent(&event);
+
+      switch (event.type) {
+         case SDL_KEYDOWN:
+            //SDL_GetKeyName(event.key.keysym.sym));
+            break;
+         case SDL_MOUSEBUTTONDOWN:
+            //event.button.button, event.button.x, event.button.y
+            break;
+         case SDL_QUIT:
+            exit(0);
+            break;
+      }
+   }
+
 }
 
 void Asgard::view() {
