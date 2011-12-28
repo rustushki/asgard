@@ -40,7 +40,12 @@ Asgard::Asgard() {
    LOG(INFO) << "Initted Externals...";
 
    LOG(INFO) << "Initting Model...";
+
+   this->mode = ASGARDMODE_STARTING;
+
    this->initModel();
+
+   this->mode = ASGARDMODE_MAP;
 }
 
 void Asgard::initModel() {
@@ -62,6 +67,8 @@ void Asgard::controller() {
    Console::getInstance()->inputLoop();
 
    // Wait for Events
+   LOG(INFO) << "Waiting for Events ...";
+
    SDL_Event event; 
 
    while (true) {

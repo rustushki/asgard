@@ -16,11 +16,22 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef  CONSOLETYPE_H
-#define  CONSOLETYPE_H
-enum ConsoleType {
-     CONSOLETYPE_INTERACTIVE
-   , CONSOLETYPE_FILE
-   , CONSOLETYPE_STDIN
+#ifndef  ASGARDMODE_H
+#define  ASGARDMODE_H
+
+// AsgardMode -
+// These are the modes of operation for the game.  Modes are used for event
+// handling and thread synchronization.  The first two are special modes
+// pertaining to starting and ending the game.  The rest should be used to
+// indicate the Model Component which is currently accepting events.
+
+// Only the Controller thread may set the Mode of Operation.
+
+enum AsgardMode {
+     ASGARDMODE_STARTING  // Initializing the Model.
+   , ASGARDMODE_QUITTING  // Waiting for Threads to End.
+   , ASGARDMODE_MAP       // Displaying and Interacting with the Map
+   , ASGARDMODE_COUNT
 };
-#endif// CONSOLETYPE_H
+
+#endif// ASGARDMODE_H

@@ -25,6 +25,7 @@
 #include "GraphicsEngine.h"
 #include "Database.h"
 #include "Map.h"
+#include "AsgardMode.h"
 
 class Asgard {
    public:
@@ -45,6 +46,9 @@ class Asgard {
       static char** argv;
       static int argc;
 
+      // Get the Mode of Operation.
+      AsgardMode getMode();
+
    private:
 
       // Instance for Singleton.
@@ -52,6 +56,10 @@ class Asgard {
 
       // Constructor.
       Asgard();
+
+      // Mode of Operation. The Mode determines which components should handle
+      // events.
+      AsgardMode mode;
 
       // Start any External Dependencies.
       void initExternal();
