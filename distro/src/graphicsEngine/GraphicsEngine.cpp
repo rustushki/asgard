@@ -43,10 +43,15 @@ GraphicsEngine* GraphicsEngine::getInstance() {
 void GraphicsEngine::play() {
    int time = 0;
    Screen* s = Screen::getInstance();
-   bool run = true;
 
-   while(run)
-   {
+   while(true) {
+
+      // Handle the "Quitting" Mode of Operation.
+      if (Asgard::getInstance()->getMode() == ASGARDMODE_QUITTING) {
+         // Exit thread.
+         return;
+      }
+
       time = SDL_GetTicks();
 
       // Wait for write access to layers.  Once obtained, update them.
@@ -63,7 +68,8 @@ void GraphicsEngine::play() {
          delay = 1;
       }
 
-      Asgard::getInstance()->gate.unlock();
+      // Unlock the Controller Gate
+      Asgard::getInstance()->gate.notify_one();
 
       boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
    }

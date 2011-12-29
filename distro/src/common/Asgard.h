@@ -40,7 +40,7 @@ class Asgard {
       void start();
 
       // Gates the Controller from starting until the View thread unlocks.
-      boost::mutex gate;
+      boost::condition_variable gate;
 
       // argv and argc from program launch.
       static char** argv;

@@ -58,8 +58,12 @@ void Asgard::initModel() {
 void Asgard::controller() {
    LOG(INFO) << "Controller Thread started";
 
+   // Lock to use with the gate.
+   boost::mutex m;
+   boost::mutex::scoped_lock lock(m);
+
    // Block until View ungates the Controller.
-   this->gate.lock();
+   this->gate.wait(lock);
 
    // The View is now ready.
 
@@ -82,11 +86,16 @@ void Asgard::controller() {
             //event.button.button, event.button.x, event.button.y
             break;
          case SDL_QUIT:
-            exit(0);
+            this->mode = ASGARDMODE_QUITTING;
+            return;
             break;
       }
    }
 
+}
+
+AsgardMode Asgard::getMode() {
+   return this->mode;
 }
 
 void Asgard::view() {
@@ -119,8 +128,6 @@ Asgard::~Asgard() {
  * @return
  */
 void Asgard::start() {
-   // Gate the Controller Thread.
-   this->gate.lock();
 
    // Activate the View Thread.
    boost::thread viewThread(&Asgard::view, this);
