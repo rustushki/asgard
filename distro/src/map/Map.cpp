@@ -269,7 +269,7 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
 void Map::handle(SDL_Event event) {
    switch (event.type) {
       case SDL_KEYDOWN:
-         //SDL_GetKeyName(event.key.keysym.sym));
+         std::cout << SDL_GetKeyName(event.key.keysym.sym) << std::endl;
          break;
       case SDL_MOUSEBUTTONDOWN:
          //event.button.button, event.button.x, event.button.y

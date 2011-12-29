@@ -73,7 +73,7 @@ void Asgard::controller() {
    // Wait for Events
    LOG(INFO) << "Waiting for Events ...";
 
-   SDL_Event event; 
+   SDL_Event event;
 
    // Event Handling Loop (EHL)
    while (true) {
@@ -98,7 +98,8 @@ void Asgard::controller() {
          default:
             EventHandler* eh = this->getEventHandler();
             if (eh != NULL) {
-               eh->handle(event);
+               // Start an Event Handling Thread.
+               boost::thread(boost::bind(&EventHandler::handle, eh, event));
             }
             break;
       }
