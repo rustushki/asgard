@@ -5,9 +5,9 @@
 #include "MapObject.h"
 #include "Screen.h"
 #include "Database.h"
+#include "EventHandler.h"
 
-class Map
-{
+class Map : public EventHandler {
    public:
       ~Map();
 
@@ -21,6 +21,8 @@ class Map
       static const int BOUNDING_BOX_MEM  = 3;
 
       void installMapObject(MapObject* mo, Drawable* d);
+
+      virtual void handle(SDL_Event event);
 
    private:
       Map();

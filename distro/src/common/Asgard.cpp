@@ -79,12 +79,6 @@ void Asgard::controller() {
       SDL_WaitEvent(&event);
 
       switch (event.type) {
-         case SDL_KEYDOWN:
-            //SDL_GetKeyName(event.key.keysym.sym));
-            break;
-         case SDL_MOUSEBUTTONDOWN:
-            //event.button.button, event.button.x, event.button.y
-            break;
          case SDL_QUIT:
             this->mode = ASGARDMODE_QUITTING;
             return;

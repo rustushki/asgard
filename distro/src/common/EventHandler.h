@@ -16,35 +16,21 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef GRAPHICSENGINE_H
-#define GRAPHICSENGINE_H
+#ifndef EVENTHANDLER_H
+#define EVENTHANDLER_H
 
-#include "Drawable.h"
-#include "Screen.h"
-#include "Asgard.h"
+#include "externals.h"
 
-struct Message;
+/* EventHandler - Abstract interface class. Implement this interface in order
+ * to handle Events.
+ */
 
-class GraphicsEngine {
-   public:
-      GraphicsEngine();
-      ~GraphicsEngine();
+class EventHandler {
 
-      static GraphicsEngine* getInstance();
+public:
+   // Pass an event
+   virtual void handle(SDL_Event event) = 0;
 
-      // Screen initiates it's updating loop
-      void play();
-
-      static void obtainLock();
-      static void releaseLock();
-
-      void displayDrawable(Drawable* d, std::string layerName, int x, int y);
-      void unloadDrawable(std::string drawableInstanceName);
-      void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
-
-   private:
-      static GraphicsEngine* instance;
-      static boost::shared_mutex updateLock;
 };
 
-#endif // GRAPHICSENGINE_H
+#endif//EVENTHANDLER_H
