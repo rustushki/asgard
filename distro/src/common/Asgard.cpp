@@ -75,21 +75,51 @@ void Asgard::controller() {
 
    SDL_Event event; 
 
+   // Event Handling Loop (EHL)
    while (true) {
+      // Wait for another event. Blocks.
       SDL_WaitEvent(&event);
 
       switch (event.type) {
+         
+         // Handle the Quit Event.
          case SDL_QUIT:
+
+            // Set mode to Quiting and exit Controller thread.  Other threads
+            // will synchronize on the mode of operation.
             this->mode = ASGARDMODE_QUITTING;
             return;
+
+            // Good form.
+            break;
+
+         // All Else: Get the Current Event Handler and have it handle the
+         // event.
+         default:
+            EventHandler* eh = this->getEventHandler();
+            if (eh != NULL) {
+               eh->handle(event);
+            }
             break;
       }
    }
 
 }
 
+/* getMode - Return the current mode of operation. */
 AsgardMode Asgard::getMode() {
    return this->mode;
+}
+
+/* getEventHandler - Based on the current mode of operation, return the
+ * EventHandler which should be accepting events. Return NULL if in a non-event
+ * handling mode of operation. */
+EventHandler* Asgard::getEventHandler() {
+   if (this->mode == ASGARDMODE_MAP) {
+      return Map::getInstance();
+   } else {
+      return NULL;
+   }
 }
 
 void Asgard::view() {

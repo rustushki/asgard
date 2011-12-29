@@ -27,6 +27,8 @@
 #include "Map.h"
 #include "AsgardMode.h"
 
+class EventHandler;
+
 class Asgard {
    public:
 
@@ -48,6 +50,10 @@ class Asgard {
 
       // Get the Mode of Operation.
       AsgardMode getMode();
+
+      // Return the event handler currently accepting events, or NULL if there
+      // is none.
+      EventHandler* getEventHandler();
 
    private:
 

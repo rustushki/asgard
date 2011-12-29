@@ -23,8 +23,6 @@
 #include "Screen.h"
 #include "Asgard.h"
 
-struct Message;
-
 class GraphicsEngine {
    public:
       GraphicsEngine();
@@ -47,4 +45,4 @@ class GraphicsEngine {
       static boost::shared_mutex updateLock;
 };
 
-#endif // GRAPHICSENGINE_H
+#endif//GRAPHICSENGINE_H
