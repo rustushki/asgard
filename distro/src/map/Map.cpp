@@ -273,6 +273,7 @@ void Map::handle(SDL_Event event) {
          break;
       case SDL_MOUSEBUTTONDOWN:
          //event.button.button, event.button.x, event.button.y
+         std::cout << event.button.x << ", " << event.button.y << std::endl;
          break;
       default:
          break;
