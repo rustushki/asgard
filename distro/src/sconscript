@@ -27,6 +27,7 @@ objects = [
 './database/StaticMapObject.cpp',
 './database/Coordinate.cpp',
 './database/MapObject.cpp',
+'./database/MobileMapObject.cpp',
 './database/NonPlayerCharacter.cpp',
 './database/WaterTile.cpp',
 './database/Item.cpp',

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *
  * Asgard is free software; you can redistribute it and/or modify
@@ -28,12 +28,10 @@ StaticMapObject::~StaticMapObject() {
    }
 }
 
-void StaticMapObject::addHardpoint(Hardpoint *hardpoint)
-{
+void StaticMapObject::addHardpoint(Hardpoint *hardpoint) {
    this->hardpoints.push_back(hardpoint);
 }
 
-bool StaticMapObject::collide(MapObject*)
-{
+bool StaticMapObject::collide(MapObject*) {
    return false;
 }

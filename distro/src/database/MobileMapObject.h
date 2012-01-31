@@ -17,23 +17,20 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef STATIC_MAP_OBJECT_H
-#define STATIC_MAP_OBJECT_H
+#ifndef MOBILE_MAP_OBJECT_H
+#define MOBILE_MAP_OBJECT_H
 
-#include "externals.h"
-#include "MapObject.h"
-#include "Hardpoint.h"
+#include "StaticMapObject.h"
 
-class StaticMapObject : public MapObject
-{
+class MobileMapObject : public StaticMapObject {
    public:
-      StaticMapObject(std::string drawableName);
-      ~StaticMapObject();
-      
-      void addHardpoint(Hardpoint *hardpoint);
-      bool collide(MapObject*);
-   private:
-      std::vector<Hardpoint*> hardpoints;
+      MobileMapObject(std::string drawableName);
+
+      ~MobileMapObject();
+
+      void move(double angle, unsigned int distance);
+
+
 };
 
-#endif //STATIC_MAP_OBJECT_H
+#endif //MOBILE_MAP_OBJECT_H
