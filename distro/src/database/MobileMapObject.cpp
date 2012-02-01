@@ -19,7 +19,7 @@
 
 #include "MobileMapObject.h"
 
-MobileMapObject::MobileMapObject(std::string drawableName) : StaticMapObject(drawableName) {
+MobileMapObject::MobileMapObject(std::string drawableName, int step) : StaticMapObject(drawableName) {
 
 }
 
@@ -54,4 +54,8 @@ void MobileMapObject::move(int newX, int newY) {
    // TODO: implement the above 6 points.
 
    // Computational Handwaving.
+}
+
+void MobileMapObject::setState(MobileMapObjectState state) {
+   this->state = state;
 }

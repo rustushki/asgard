@@ -37,7 +37,7 @@ typedef unsigned int uint;
 #include <SDL/SDL_image.h>
 
 // Python
-#include <python2.6/Python.h>
+#include <python2.7/Python.h>
 
 // Sqlite
 #include <sqlite3.h>
