@@ -1,6 +1,5 @@
 drop table if exists NonPlayerCharacter;
 drop table if exists NonPlayerCharacterPath;
-drop table if exists BoundingBox; -- Remove after 2.3.5.
 drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
