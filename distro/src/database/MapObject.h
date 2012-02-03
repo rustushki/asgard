@@ -23,6 +23,7 @@
 #include "externals.h"
 #include "Hardpoint.h"
 #include "Coordinate.h"
+#include "MobileMapObjectState.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -46,6 +47,9 @@ class MapObject
 
       void addHardpoint(Hardpoint *hardpoint);
       bool collide(MapObject*);
+
+      void move(int newX, int newY);
+      void setState(MobileMapObjectState state);
       
    private:
       Coordinate leftCorner;
@@ -54,5 +58,8 @@ class MapObject
       std::string drawableName;
 
       std::vector<Hardpoint*> hardpoints;
+
+      MobileMapObjectState state;
+      int step;
 };
 #endif //MAP_OBJECT_H

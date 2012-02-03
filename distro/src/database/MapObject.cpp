@@ -24,6 +24,7 @@ MapObject::MapObject(std::string drawableName)
    this->height = MAP_OBJECT_HEIGHT_DEFAULT;
    this->width = MAP_OBJECT_WIDTH_DEFAULT;
    this->drawableName = drawableName;
+   this->step = 1;
 }
 
 MapObject::~MapObject() {
@@ -71,4 +72,36 @@ void MapObject::addHardpoint(Hardpoint *hardpoint) {
 
 bool MapObject::collide(MapObject*) {
    return false;
+}
+
+/***********************************************************
+ * move - Given a newX and a newY, do several things: 
+ *
+ * 1. Update MobileMapObject state to 'moving'.  'state' is an enumerated type
+ *    member of MobileMapObject.  It may be 'idle' or 'moving'.
+ * 2. Compute the angle of movement using Pythagorean Theorem.
+ * 3. Use the angle of movement to determine the animation to swap in for the
+ *    Drawable. 
+ * 4. Instruct the associated drawable to move Step by Step across the map in a
+ *    loop.  Step is a member of MobileMapObject.  Step is an integral distance.
+ * 5. Sleep a certain duration between each movement of the Drawable so that
+ *    the user has time to see the Drawable move.
+ * 6. Update the MapObject's World Coordinate each iteration of the loop.
+ *
+ * Points #4-6 are OK because 'move()' must be run in an event thread (thus it
+ * won't block the main thread of execution).
+ */
+void MapObject::move(int newX, int newY) {
+
+   // TODO: we should probably enforce that this run inside a special thread,
+   // but it's unclear how to discern threads right now.  feel free to leave
+   // this here as a cautionary tale to the next programmer.
+   
+   // TODO: implement the above 6 points.
+
+   // Computational Handwaving.
+}
+
+void MapObject::setState(MobileMapObjectState state) {
+   this->state = state;
 }
