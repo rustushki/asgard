@@ -53,13 +53,13 @@ bool MapObjectFactory::build(sqlite3 *db, int boxX, int boxY) {
    sqlite3_finalize(stmt);
    delete [] query;
 
-   // Build StaticMapObjects
+   // Build MapObjects
    query = QueryGenerator::staticMapObject(boxX, boxY);
-   LOG(INFO) << "StaticMapObject query: " << query;
+   LOG(INFO) << "MapObject query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
    while (sqlite3_step(stmt) == SQLITE_ROW) {
-      createStaticMapObject(db, stmt);
+      createMapObject(db, stmt);
    }
    sqlite3_finalize(stmt);
    delete [] query;
@@ -184,20 +184,20 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
    }
 }
 
-void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
+void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
-	  , (const char *)sqlite3_column_text(stmt, STATIC_MAP_OBJECT_COLUMN_DRAWABLE_NAME)
+	  , (const char *)sqlite3_column_text(stmt, MAP_OBJECT_COLUMN_DRAWABLE_NAME)
    );
 
    std::string drawableName = drawable->getInstanceName();
 
-   StaticMapObject *staticMapObject = new StaticMapObject(drawableName);
+   MapObject *staticMapObject = new MapObject(drawableName);
 
    if (staticMapObject != NULL)
    {
       // Create Hardpoints
-      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
+      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL)
       {
@@ -206,9 +206,9 @@ void MapObjectFactory::createStaticMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       }
       delete rs;
 
-      staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WC_Y)));
-      staticMapObject->setWidth(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_WIDTH));
-      staticMapObject->setHeight(sqlite3_column_int(stmt, STATIC_MAP_OBJECT_COLUMN_HEIGHT));
+      staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
+      staticMapObject->setWidth(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WIDTH));
+      staticMapObject->setHeight(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_HEIGHT));
       Map::getInstance()->installMapObject(staticMapObject, drawable);
    }
 }

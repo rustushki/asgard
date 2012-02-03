@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -27,6 +27,9 @@ MapObject::MapObject(std::string drawableName)
 }
 
 MapObject::~MapObject() {
+   for (unsigned int x = 0; x < this->hardpoints.size(); x++) {
+      delete this->hardpoints[x];
+   }
 }
 
 void MapObject::setLeftCorner(const Coordinate& leftCorner)
@@ -60,4 +63,12 @@ void MapObject::addBoundingBox(int boundingBox)
 std::string MapObject::getDrawableName()
 {
 	return this->drawableName;
+}
+
+void MapObject::addHardpoint(Hardpoint *hardpoint) {
+   this->hardpoints.push_back(hardpoint);
+}
+
+bool MapObject::collide(MapObject*) {
+   return false;
 }

@@ -20,10 +20,9 @@
 #ifndef MOBILE_MAP_OBJECT_H
 #define MOBILE_MAP_OBJECT_H
 
-#include "StaticMapObject.h"
 #include "MobileMapObjectState.h"
 
-class MobileMapObject : public StaticMapObject {
+class MobileMapObject : public MapObject {
    public:
       MobileMapObject(std::string drawableName,int step);
       ~MobileMapObject();

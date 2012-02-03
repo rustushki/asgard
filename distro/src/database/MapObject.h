@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *
  * Asgard is free software; you can redistribute it and/or modify
@@ -21,6 +21,7 @@
 #define MAP_OBJECT_H
 
 #include "externals.h"
+#include "Hardpoint.h"
 #include "Coordinate.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
@@ -42,11 +43,16 @@ class MapObject
       std::string getDrawableName();
       
       void addBoundingBox(int boundingBox);
+
+      void addHardpoint(Hardpoint *hardpoint);
+      bool collide(MapObject*);
       
    private:
       Coordinate leftCorner;
       list<int> boundingBoxes;
       int height,width;
       std::string drawableName;
+
+      std::vector<Hardpoint*> hardpoints;
 };
 #endif //MAP_OBJECT_H

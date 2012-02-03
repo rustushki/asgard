@@ -37,7 +37,7 @@ char* QueryGenerator::staticMapObject(int boxX, int boxY)
 
    // TODO:
    // This is not ideal.
-   // Instantiation of StaticMapObjects will need to be addressed.
+   // Instantiation of MapObjects will need to be addressed.
    qs += "  and mo.MapObjectId not in ";
    qs += "     (select MapObjectId from Container) ";
    qs += "  and mo.MapObjectId not in ";

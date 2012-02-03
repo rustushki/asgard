@@ -24,7 +24,6 @@ objects = [
 './database/RowSet.cpp',
 './database/RectHardpoint.cpp',
 './database/MapObjectFactory.cpp',
-'./database/StaticMapObject.cpp',
 './database/Coordinate.cpp',
 './database/MapObject.cpp',
 './database/MobileMapObject.cpp',

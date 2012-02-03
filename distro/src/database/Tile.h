@@ -21,9 +21,9 @@
 #define TILE_H
 
 #include "TileType.h"
-#include "StaticMapObject.h"
+#include "MapObject.h"
 
-class Tile : public StaticMapObject
+class Tile : public MapObject
 {
    protected:
       TileType tileType;

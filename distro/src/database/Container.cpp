@@ -19,7 +19,7 @@
 #include "Container.h"
 
 /* Constructor */
-Container::Container(std::string drawableName) : StaticMapObject(drawableName) {
+Container::Container(std::string drawableName) : MapObject(drawableName) {
    items.reserve(MAX_ITEMS);
    
    std::vector<Item*>::iterator currentItem;

@@ -21,11 +21,11 @@
 #define NON_PLAYER_CHARACTER_H
 
 #include "externals.h"
-#include "StaticMapObject.h"
+#include "MapObject.h"
 
 #define NON_PLAYER_CHARACTER_DEFAULT_SPEED   0
 
-class NonPlayerCharacter : public StaticMapObject
+class NonPlayerCharacter : public MapObject
 {
    public:
       NonPlayerCharacter(std::string drawableName);

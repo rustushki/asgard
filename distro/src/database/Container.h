@@ -21,10 +21,10 @@
 #define CONTAINER_H
 
 #include "externals.h"
-#include "StaticMapObject.h"
+#include "MapObject.h"
 #include "Item.h"
 
-class Container : public StaticMapObject
+class Container : public MapObject
 {
    public:
       Container(std::string drawableName);
