@@ -25,6 +25,7 @@ MapObject::MapObject(std::string drawableName)
    this->width = MAP_OBJECT_WIDTH_DEFAULT;
    this->drawableName = drawableName;
    this->step = 1;
+   this->setState(MAP_OBJECT_STATE_IDLE);
 }
 
 MapObject::~MapObject() {
@@ -102,6 +103,6 @@ void MapObject::move(int newX, int newY) {
    // Computational Handwaving.
 }
 
-void MapObject::setState(MobileMapObjectState state) {
+void MapObject::setState(MapObjectState state) {
    this->state = state;
 }

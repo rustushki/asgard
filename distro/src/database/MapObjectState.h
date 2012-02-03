@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -17,14 +17,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef MOBILE_MAP_OBJECT_STATE_H
-#define MOBILE_MAP_OBJECT_STATE_H
+#ifndef MAP_OBJECT_STATE_H
+#define MAP_OBJECT_STATE_H
 
-enum MobileMapObjectState
+enum MapObjectState
 {
-   MOBILE_MAP_OBJECT_STATE_IDLE,
-   MOBILE_MAP_OBJECT_STATE_MOVING,
-   MOBILE_MAP_OBJECT_STATE_COUNT
+   MAP_OBJECT_STATE_IDLE,
+   MAP_OBJECT_STATE_MOVING,
+   MAP_OBJECT_STATE_COUNT
 };
 
-#endif //MOBILE_MAP_OBJECT_STATE_H
+#endif //MAP_OBJECT_STATE_H
