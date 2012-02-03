@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -54,7 +54,7 @@ bool MapObjectFactory::build(sqlite3 *db, int boxX, int boxY) {
    delete [] query;
 
    // Build MapObjects
-   query = QueryGenerator::staticMapObject(boxX, boxY);
+   query = QueryGenerator::mapObject(boxX, boxY);
    LOG(INFO) << "MapObject query: " << query;
    stmt = 0;
    sqlite3_prepare_v2(db, query, -1, &stmt, 0);
@@ -192,9 +192,9 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
 
    std::string drawableName = drawable->getInstanceName();
 
-   MapObject *staticMapObject = new MapObject(drawableName);
+   MapObject *mapObject = new MapObject(drawableName);
 
-   if (staticMapObject != NULL)
+   if (mapObject != NULL)
    {
       // Create Hardpoints
       RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
@@ -202,14 +202,14 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       if (rs != NULL)
       {
          for (int row = 0; row < rs->getRowCount(); row++)
-            staticMapObject->addHardpoint(createHardpoint(rs,row));
+            mapObject->addHardpoint(createHardpoint(rs,row));
       }
       delete rs;
 
-      staticMapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
-      staticMapObject->setWidth(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WIDTH));
-      staticMapObject->setHeight(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_HEIGHT));
-      Map::getInstance()->installMapObject(staticMapObject, drawable);
+      mapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
+      mapObject->setWidth(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WIDTH));
+      mapObject->setHeight(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_HEIGHT));
+      Map::getInstance()->installMapObject(mapObject, drawable);
    }
 }
 

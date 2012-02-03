@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -19,7 +19,7 @@
 
 #include "QueryGenerator.h"
 
-char* QueryGenerator::staticMapObject(int boxX, int boxY)
+char* QueryGenerator::mapObject(int boxX, int boxY)
 {
    std::string qs;
    qs += "select ";

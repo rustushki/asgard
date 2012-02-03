@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -26,7 +26,7 @@
 class QueryGenerator
 {
    public:
-      static char* staticMapObject(int boxX, int boxY);
+      static char* mapObject(int boxX, int boxY);
       static char* nonPlayerCharacter(int boxX, int boxY);
       static char* nonPlayerCharacterPath(int mapObjectId);
       static char* container(int boxX, int boxY);
