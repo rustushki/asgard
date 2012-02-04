@@ -21,9 +21,22 @@
 #define CHARACTER_MAP_OBJECT_H
 #include "MapObject.h"
 
+/* CharacterMapObject - 
+ *
+ * This MapObject type will represent potentially controllable characters in
+ * the game.  There may be many aspects to CharacterMapObject, but the initial
+ * implementation only provides that they exist as a way of separating them
+ * from regular MapObjects.  The MapObject::move() method will need to be able
+ * to distinguish between regular MapObjects and CharacterMapObjects so that it
+ * is able to animate the latter.
+ */
+
 class CharacterMapObject : public MapObject {
+
     CharacterMapObject(std::string drawableName);
+
     ~CharacterMapObject();
+
 };
 
 #endif//CHARACTER_MAP_OBJECT_H
