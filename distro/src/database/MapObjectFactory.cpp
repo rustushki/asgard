@@ -91,16 +91,14 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
   
    TileType tileType = (TileType)sqlite3_column_int(stmt, TILE_COLUMN_TILE_TYPE);
 
-   switch(tileType)
-   {
+   switch(tileType) {
       case TILE_TYPE_WATER:   { tile = new WaterTile(drawableName); break; }
       case TILE_TYPE_DESERT:  { tile = new DesertTile(drawableName); break; }
       case TILE_TYPE_GRASS:   { tile = new GrassTile(drawableName); break; }
       default:                { break; }
    }
 
-   if(tile != NULL)
-   {
+   if(tile != NULL) {
       // Set Tile Map Object attributes
       tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
@@ -132,8 +130,7 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    // TODO: Create Items; Not 0.3.0
   
 
-   if (container != NULL)
-   {
+   if (container != NULL) {
       // Set Container attributes
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
@@ -158,8 +155,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
       // Create Hardpoints
       RowSet* hpRs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
-      if (hpRs != NULL)
-      {
+      if (hpRs != NULL) {
          for (int row = 0; row < hpRs->getRowCount(); row++)
             npc->addHardpoint(createHardpoint(hpRs,row));
       }
@@ -169,8 +165,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
       // Create NonPlayerCharacterPath
       RowSet* npcRs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
-      if (npcRs != NULL)
-      {
+      if (npcRs != NULL) {
          for (int row = 0; row < npcRs->getRowCount(); row++)
             npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(npcRs,row));
       }
@@ -194,13 +189,11 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
 
    MapObject *mapObject = new MapObject(drawableName);
 
-   if (mapObject != NULL)
-   {
+   if (mapObject != NULL) {
       // Create Hardpoints
       RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
-      if (rs != NULL)
-      {
+      if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
             mapObject->addHardpoint(createHardpoint(rs,row));
       }
