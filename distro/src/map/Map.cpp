@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "Map.h"
+#include "CharacterMapObject.h"
 
 Map* Map::instance = NULL;
 
@@ -274,6 +275,28 @@ void Map::handle(SDL_Event event) {
       case SDL_MOUSEBUTTONDOWN:
          //event.button.button, event.button.x, event.button.y
          std::cout << event.button.x << ", " << event.button.y << std::endl;
+
+         // As it turns out, you can't declare variables inside a switch case
+         // unless you restrict the scope with {}
+         {
+
+            // Get the x/y of the mouse click event.
+            int x = event.button.x;
+            int y = event.button.y;
+
+            // Iterate over MapObjects on the Map.  Find the one which is the
+            // CharacterMapObject and move it to the provided x/y.
+            std::vector<MapObject*>::iterator itr;
+            for (itr = mapObjectContainer.begin(); itr < mapObjectContainer.end(); itr++) {
+
+               // In Asgard 0.3.7, there will be only one CharacterMapObject.
+               if(dynamic_cast<CharacterMapObject*>(*itr)) {
+                  (*itr)->move(x, y);
+                  break;
+               }
+            }
+         }
+
          break;
       default:
          break;
