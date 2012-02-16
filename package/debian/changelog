@@ -1,3 +1,12 @@
+asgard (0.3.7-1) oneiric; urgency=low
+
+  * Event Handler.
+  * Well Defined MVC.
+  * Python 2.7 Support (lp:805540)
+  * -O2 compile support (lp:905717)
+
+ -- Russ Adams <russ.adams@gmail.com>  Wed, 15 Feb 2012 19:30:00 -0400
+
 asgard (0.3.6-1) oneiric; urgency=low
 
   * Initial Ubuntu package.

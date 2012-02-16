@@ -3,9 +3,9 @@ Upstream-Name: asgard
 Source: http://launchpad.net/asgard/0.3/0.3.5/+download/asgard-0.3.6.tar.gz
 
 Files: *
-2006-2011 Russ Adams <russ.adams@gmail.com>
-2006-2011 Sean Eubanks <seanmeu@gmail.com>
-2007-2011 Ben Markwardt <bmarkwa@gmail.com>
+2006-2012 Russ Adams <russ.adams@gmail.com>
+2006-2012 Sean Eubanks <seanmeu@gmail.com>
+2007-2012 Ben Markwardt <bmarkwa@gmail.com>
 
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
