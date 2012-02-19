@@ -33,6 +33,7 @@
 
 class CharacterMapObject : public MapObject {
 
+public:
     CharacterMapObject(std::string drawableName);
 
     ~CharacterMapObject();

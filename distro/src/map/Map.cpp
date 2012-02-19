@@ -24,6 +24,38 @@ Map* Map::instance = NULL;
 
 Map::Map() {
    LOG(INFO) << "Map starting ...";
+
+
+   //
+   // BEGIN -- CODE THAT DOES NOT BELONG HERE
+
+      // CharacterMapObjects don't belong in the database, but if not there,
+      // then where?  I would argue in a Binary Packed Save file, but we don't
+      // have such a thing just yet.  Let's temporarily build our CMO and it's
+      // drawable at Map instantiation.
+
+      Drawable* d = new Drawable("OsirisCat");
+
+      Animation* a = new Animation("OsirisCat.png", 25, 25, 3, 45, 1, 3);
+      
+      d->addAnimation(a, "OsirisCat");
+
+      CharacterMapObject* cmo = new CharacterMapObject("OsirisCat");
+
+      // These are mostly irrelevant at the moment.
+      // They become more important when hard points are used.
+      cmo->setWidth(100);
+      cmo->setHeight(100);
+
+      // x = 300, y = 300 puts this CMO in BB (0, 0)
+      cmo->setLeftCorner(Coordinate(300,300));
+
+      this->installMapObject(cmo, d);
+
+   // END -- CODE THAT DOES NOT BELONG HERE
+   //
+
+
 }
 
 Map::~Map() {
