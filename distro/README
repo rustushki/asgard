@@ -5,7 +5,7 @@ We thank you for taking interest in Asgard!  As this project is still in its
 infancy, this release is intended for testing, observation and interest
 piquing. 
 
-As of 0.3.6, Asgard supports a basic, bare bones map complete with only a few
+As of 0.3.7, Asgard supports a basic, bare bones map complete with only a few
 map objects.
 
 We encourage you to attempt to compile and run Asgard.  Let us know how things
@@ -16,7 +16,7 @@ scons      - http://scons.org
 SDL        - http://libsdl.org
 SQLite 3   - http://sqlite.org
 Boost 1.40 - http://boost.org
-Python 2.6 - http://python.org
+Python 2.7 - http://python.org
 
 2. Untar..
 $ tar xvf asgard-0.3.6.tar.gz
@@ -35,7 +35,7 @@ You should see the map panning around with Palm Trees, Treasure Chests, Rocks
 and possible small Blue Cat.
 
 6. To Clean Your Project Tree:
-$ cd asgard-0.3.6/
+$ cd asgard-0.3.7/
 $ scons -c
 
 Want to Help?
