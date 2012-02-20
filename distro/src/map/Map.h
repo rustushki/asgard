@@ -47,13 +47,6 @@ class Map : public EventHandler {
       Coordinate getTopLeftOfRegion();
 
       static Map* instance;
-
-/*
-      virtual bool interpretMessage(Message* message);
-      void handleMoveFocusPoint(Message* message);
-      void handleInstallMapObject(Message* message);
-*/
-
 };
 
 #endif//MAP_H
