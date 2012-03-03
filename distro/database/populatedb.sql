@@ -219,7 +219,7 @@ values("palmtree.png",22,1);
 
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
-values("treasurechest.png",12,1);
+values("treasurechest.png",1,1);
 
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
@@ -251,7 +251,7 @@ values("Puddle","OsirisCat.png",75,25,3,5);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("TreasureChest","treasurechest.png",25,36,12,6);
+values("TreasureChest","treasurechest.png",55,75,1,1);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
