@@ -259,4 +259,4 @@ values("OsirisCat","OsirisCat.png",75,25,3,9);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("Rock","rock.png",48,75,1,1);
+values("Rock","rock.png",96,145,1,1);
