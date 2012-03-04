@@ -215,7 +215,7 @@ values("OsirisCat.png",3,1);
 
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
-values("palmtree.png",22,1);
+values("palmtree.png",11,1);
 
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
@@ -243,7 +243,7 @@ values("HandSwingsSwordWest","HandSwingsSwordWest.bmp",100,50,4,4);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
-values("PalmTree","palmtree.png",100,68,22,5);
+values("PalmTree","palmtree.png",240,170,11,6);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
