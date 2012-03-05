@@ -225,6 +225,22 @@ insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("rock.png",1,1);
 
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("NotMatchStandingEast.png",1,1);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("NotMatchStandingWest.png",1,1);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("NotMatchWalkingWest.png",7,1);
+
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("NotMatchWalkingEast.png",7,1);
+
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillCount,StillsPerSecond)
 values("HandSwingsSwordSouth","HandSwingsSwordSouth.bmp",100,50,4,4);
