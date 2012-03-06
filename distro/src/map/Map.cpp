@@ -34,13 +34,13 @@ Map::Map() {
       // have such a thing just yet.  Let's temporarily build our CMO and it's
       // drawable at Map instantiation.
 
-      Drawable* d = new Drawable("OsirisCat");
+      Drawable* d = new Drawable("NotMatch");
 
-      Animation* a = new Animation("OsirisCat.png", 25, 25, 3, 45, 1, 3);
+      Animation* a = new Animation("NotMatchStandingEast.png", 59, 100, 1, 1, 1, 1);
       
-      d->addAnimation(a, "OsirisCat");
+      d->addAnimation(a, "NotMatchStandingEast");
 
-      CharacterMapObject* cmo = new CharacterMapObject("OsirisCat");
+      CharacterMapObject* cmo = new CharacterMapObject("NotMatch");
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
@@ -48,7 +48,7 @@ Map::Map() {
       cmo->setHeight(100);
 
       // x = 300, y = 300 puts this CMO in BB (0, 0)
-      cmo->setLeftCorner(Coordinate(300,300));
+      cmo->setLeftCorner(Coordinate(300,400));
 
       this->installMapObject(cmo, d);
 

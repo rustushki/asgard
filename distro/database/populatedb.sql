@@ -193,6 +193,10 @@ insert into Drawable
 (DrawableName,AnimationName)
 values("Rock","Rock");
 
+insert into Drawable
+(DrawableName,AnimationName)
+values("NotMatch","NotMatch");
+
 insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("HandSwingsSwordSouth.bmp",2,2);
