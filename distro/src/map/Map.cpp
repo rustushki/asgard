@@ -36,11 +36,17 @@ Map::Map() {
 
       Drawable* d = new Drawable("NotMatch");
 
-      Animation* a = new Animation("NotMatchStandingEast.png", 59, 100, 1, 1, 1, 1);
+      Animation* a1 = new Animation("NotMatchStandingEast.png", 59, 100, 1, 1, 1, 1);
+      Animation* a2 = new Animation("NotMatchStandingWest.png", 59, 100, 1, 1, 1, 1);
+      Animation* a3 = new Animation("NotMatchWalkingEast.png", 59, 100, 7, 7, 1, 7);
+      Animation* a4 = new Animation("NotMatchWalkingWest.png", 59, 100, 7, 7, 1, 7);
       
-      d->addAnimation(a, "NotMatchStandingEast");
+      d->addAnimation(a1, "NotMatchStandingEast");
+      d->addAnimation(a2, "NotMatchStandingWest");
+      d->addAnimation(a3, "NotMatchWalkingEast");
+      d->addAnimation(a4, "NotMatchWalkingWest");
 
-      CharacterMapObject* cmo = new CharacterMapObject("NotMatch");
+      CharacterMapObject* cmo = new CharacterMapObject("NotMatchStandingEast");
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
