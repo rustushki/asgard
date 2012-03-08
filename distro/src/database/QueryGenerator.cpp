@@ -168,7 +168,6 @@ char* QueryGenerator::drawable(std::string dName)
    qs += "ss.NumRows, ";
    qs += "a.Height, ";
    qs += "a.Width, ";
-   qs += "a.StillCount, ";
    qs += "a.StillsPerSecond ";
    qs += "from Animation a ";
    qs += "inner join SpriteSheet ss on ss.SpriteSheetName = a.SpriteSheetName ";

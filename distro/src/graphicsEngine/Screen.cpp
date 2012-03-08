@@ -33,7 +33,7 @@ void Screen::init() {
 
    // Create Background
    std::string abName = "backgroundAnimation";
-   Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1, 1);
+   Animation* ab = new Animation("background.png", 800, 600, 1, 1, 1);
    std::string dbName = "testBackground";
    Drawable* db = new Drawable(dbName);
    db->addAnimation(ab, abName);

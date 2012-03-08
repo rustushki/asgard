@@ -19,9 +19,6 @@ class Animation
       // Still being displayed currently.
       uint currentStill;
 
-      // Maximum still index for sprite sheet.
-      uint stillCount;
-
       // Rate at which stills are updated.  Stills per second.
       uint sps;
 
@@ -33,8 +30,8 @@ class Animation
 
    public:
       // Constructor.  Makes sprite sheet.
-      Animation(std::string filename, uint width, uint height, uint stillCount,
-            uint sps, uint ssRows, uint ssCols);
+	  Animation(std::string filename, uint width, uint height, uint sps, 
+		  uint ssRows, uint ssCols);
 
       // Updates the current still.
       void advance();
@@ -48,6 +45,9 @@ class Animation
       // Blits this animation to the screen, updating the provided rect on the
       // screen.
       void updateRect(SDL_Rect r, uint offsetX, uint offsetY);
+
+      // Return the total count of stills for the assigned spritesheet.
+      uint getStillCount();
 
       // Accessors.
       uint getWidth();

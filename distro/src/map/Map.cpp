@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -36,17 +36,17 @@ Map::Map() {
 
       Drawable* d = new Drawable("NotMatch");
 
-      Animation* a1 = new Animation("NotMatchStandingEast.png", 59, 100, 1, 1, 1, 1);
-      Animation* a2 = new Animation("NotMatchStandingWest.png", 59, 100, 1, 1, 1, 1);
-      Animation* a3 = new Animation("NotMatchWalkingEast.png", 59, 100, 7, 7, 1, 7);
-      Animation* a4 = new Animation("NotMatchWalkingWest.png", 59, 100, 7, 7, 1, 7);
+      Animation* a1 = new Animation("NotMatchStandingEast.png", 59, 100, 1, 1, 1);
+      Animation* a2 = new Animation("NotMatchStandingWest.png", 59, 100, 1, 1, 1);
+      Animation* a3 = new Animation("NotMatchWalkingEast.png", 59, 100, 7, 1, 7);
+      Animation* a4 = new Animation("NotMatchWalkingWest.png", 59, 100, 7, 1, 7);
       
       d->addAnimation(a1, "NotMatchStandingEast");
       d->addAnimation(a2, "NotMatchStandingWest");
       d->addAnimation(a3, "NotMatchWalkingEast");
       d->addAnimation(a4, "NotMatchWalkingWest");
 
-      CharacterMapObject* cmo = new CharacterMapObject("NotMatchStandingEast");
+      CharacterMapObject* cmo = new CharacterMapObject("NotMatch");
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
@@ -57,6 +57,9 @@ Map::Map() {
       cmo->setLeftCorner(Coordinate(300,400));
 
       this->installMapObject(cmo, d);
+
+      // Useful for testing animations ...
+      //d->swapAnimation("NotMatchWalkingEast");
 
    // END -- CODE THAT DOES NOT BELONG HERE
    //

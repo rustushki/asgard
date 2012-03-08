@@ -84,7 +84,6 @@ create table Animation
    SpriteSheetName varchar(50) not null,
    Height integer(5) not null,
    Width integer(5) not null,
-   StillCount integer(2) not null,
    StillsPerSecond integer(2) not null,
    primary key(AnimationName),
    foreign key(SpriteSheetName) references SpriteSheet(SpriteSheetName)

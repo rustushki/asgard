@@ -2,13 +2,12 @@
 #include "SpriteSheetCache.h"
 #include "Screen.h"
 
-Animation::Animation(std::string filename, uint width, uint height, uint stillCount, uint sps, uint ssRows, uint ssCols)
+Animation::Animation(std::string filename, uint width, uint height, uint sps, uint ssRows, uint ssCols)
 {
    SpriteSheetCache* ssCache = SpriteSheetCache::getInstance();
    this->spriteSheet = ssCache->retrieve(filename);
    this->width  = width;
    this->height = height;
-   this->stillCount = stillCount;
    this->currentStill = 0;
    this->sps = sps;
    this->status = ANIMATIONSTATE_IDLE;
@@ -34,7 +33,7 @@ AnimationState Animation::getStatus()
 
 void Animation::advance()
 {
-   if (this->currentStill < this->stillCount-1)
+   if (this->currentStill < this->getStillCount()-1)
       this->currentStill++;
    else
       this->currentStill = 0;
@@ -51,7 +50,7 @@ void Animation::incFrameCounter()
 bool Animation::needsUpdate()
 {
    // Animations with only 1 still do not need to update ever.
-   if (this->stillCount == 1)
+   if (this->getStillCount() == 1)
       return false;
 
    return (this->frameCounter == (Screen::FPS/this->sps));
@@ -74,7 +73,7 @@ void Animation::updateRect(SDL_Rect r, uint offsetX, uint offsetY)
 
    // Compute the slot X,Y for the still.
    // An animation with 1 still is a special case.
-   if (this->stillCount == 1)
+   if (this->getStillCount() == 1)
    {
       stillX = 0;
       stillY = 0;
@@ -95,4 +94,16 @@ void Animation::updateRect(SDL_Rect r, uint offsetX, uint offsetY)
    // Do a blit to the Screen.
    RectBlitter* rb = RectBlitter::getInstance();
    rb->blit(r, this->spriteSheet, stillClip);
+}
+
+/* -----------------------------------------------------------------------------
+ * getStillCount - Return an unsigned int which is defined as the number of
+ * columns times the number of rows in the spritesheet.  This is equal to the
+ * total number of stills available for the animation.
+ */
+uint Animation::getStillCount() {
+
+	// Rows * Cols == Still Count.
+	return this->ssRows * this->ssCols;
+
 }

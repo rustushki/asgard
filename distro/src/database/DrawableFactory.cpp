@@ -38,7 +38,7 @@ Drawable* DrawableFactory::build(sqlite3 *db, std::string dName)
    // Load Drawable object with Animations
    while (sqlite3_step(stmt) == SQLITE_ROW)
    {
-      a = new Animation((const char *)sqlite3_column_text(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NAME), sqlite3_column_int(stmt, ANIMATION_COLUMN_WIDTH), sqlite3_column_int(stmt, ANIMATION_COLUMN_HEIGHT), sqlite3_column_int(stmt, ANIMATION_COLUMN_STILL_COUNT), sqlite3_column_int(stmt, ANIMATION_COLUMN_STILLS_PER_SECOND), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_ROWS), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_COLUMNS));
+      a = new Animation((const char *)sqlite3_column_text(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NAME), sqlite3_column_int(stmt, ANIMATION_COLUMN_WIDTH), sqlite3_column_int(stmt, ANIMATION_COLUMN_HEIGHT), sqlite3_column_int(stmt, ANIMATION_COLUMN_STILLS_PER_SECOND), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_ROWS), sqlite3_column_int(stmt, ANIMATION_COLUMN_SPRITE_SHEET_NUM_COLUMNS));
       d->addAnimation(a, (const char *)sqlite3_column_text(stmt, ANIMATION_COLUMN_ANIMATION_NAME));
    }
 
