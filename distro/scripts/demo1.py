@@ -1,7 +1,6 @@
 # Demo #1 - Old stuff
 # The interface provided here should be deleted soon.
-import asgard
+import map
 
-asgard.LoadBoundingBox(0, 0)
-asgard.LoadDrawable("OsirisCat")
+map.SetFocus(0,0);
 

@@ -31,7 +31,7 @@ Map::Map() {
 
       // CharacterMapObjects don't belong in the database, but if not there,
       // then where?  I would argue in a Binary Packed Save file, but we don't
-      // have such a thing just yet.  Let's temporarily build our CMO and it's
+      // have such a thing just yet.  Let's temporarily build our CMO and its
       // drawable at Map instantiation.
 
       Drawable* d = new Drawable("NotMatch");
