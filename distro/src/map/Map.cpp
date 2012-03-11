@@ -46,7 +46,7 @@ Map::Map() {
       d->addAnimation(a3, "NotMatchWalkingEast");
       d->addAnimation(a4, "NotMatchWalkingWest");
 
-      CharacterMapObject* cmo = new CharacterMapObject("NotMatch");
+      CharacterMapObject* cmo = new CharacterMapObject(d->getInstanceName());
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
