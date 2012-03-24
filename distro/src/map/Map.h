@@ -24,6 +24,9 @@ class Map : public EventHandler {
 
       virtual void handle(SDL_Event event);
 
+      Coordinate convertWorldToScreen(Coordinate w);
+      Coordinate convertScreenToWorld(Coordinate s);
+
    private:
       Map();
 
@@ -43,6 +46,7 @@ class Map : public EventHandler {
       bool isValidBoundingBox(Coordinate bb);
       bool isBoundingBoxLoaded(Coordinate bb);
       bool isBoundingBoxInScope(Coordinate bb);
+
       Coordinate getFocusBoundingBox();
       Coordinate getTopLeftOfRegion();
 

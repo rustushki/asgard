@@ -301,7 +301,7 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
    // Install the MapObject.
    this->mapObjectContainer.push_back(mo);
 
-   Coordinate drawableCoord = mo->getLeftCorner() - this->display;
+   Coordinate drawableCoord = this->convertWorldToScreen(mo->getLeftCorner());
    int x = drawableCoord.getX();
    int y = drawableCoord.getY();
 
@@ -342,4 +342,29 @@ void Map::handle(SDL_Event event) {
       default:
          break;
    }
+}
+
+/* -----------------------------------------------------------------------------
+ * convertScreenToWorld - Given a screen coordinate, convert it into a World
+ * Coordinate--which is a point on the Map.
+ */
+Coordinate Map::convertScreenToWorld(Coordinate s) {
+
+   // Add the World Coordinate of the current location of the top left corner
+   // of the Screen to the provided screen coordinate and return the result.
+   return (this->display + s);
+
+}
+
+/* -----------------------------------------------------------------------------
+ * convertWorldToScreen - Given a world coordinate, convert it into a Screen
+ * coordinate.  Screen coordinates which are visible to the user are greater
+ * than (0,0), but less than the Height and Width of the screen.
+ */
+Coordinate Map::convertWorldToScreen(Coordinate w) {
+   
+    // The offset between the provided world coordinate and the current display
+    // coordinate is equivalent to its Screen Coordinate.
+    return (w - this->display);
+
 }
