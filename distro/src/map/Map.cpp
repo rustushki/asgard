@@ -384,7 +384,10 @@ void Map::handle(SDL_Event event) {
 
                   // Get Drawable for CharacterMapObject
                   drawableName = (*itr)->getDrawableName();
-                  d = GraphicsEngine::getInstance()->getDrawableByCommonName(drawableName);
+                  d = GraphicsEngine::getInstance()->getDrawableByName(drawableName);
+                  
+                  // Get Drawable's common name (not with unique ID)
+                  drawableName = d->getName();
 
                   // Compute MapObject's angle of movement
                   draw_oldX = d->getX();

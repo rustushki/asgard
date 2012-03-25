@@ -134,7 +134,7 @@ void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawab
    }
 }
 
-Drawable * GraphicsEngine::getDrawableByCommonName(std::string name)
+Drawable * GraphicsEngine::getDrawableByName(std::string name)
 {
-   return Screen::getInstance()->getDrawableByCommonName(name);
+   return Screen::getInstance()->getDrawableByName(name);
 }
