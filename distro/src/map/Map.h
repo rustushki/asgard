@@ -6,6 +6,7 @@
 #include "Screen.h"
 #include "Database.h"
 #include "EventHandler.h"
+#include "CharacterMapObject.h"
 
 class Map : public EventHandler {
    public:
@@ -56,6 +57,9 @@ class Map : public EventHandler {
 
       Coordinate getFocusBoundingBox();
       Coordinate getTopLeftOfRegion();
+
+      void checkOverMapPanThreshold() const;
+      CharacterMapObject* getCharacterMapObject() const;
 
       static Map* instance;
 };
