@@ -35,6 +35,11 @@ class Map : public EventHandler {
       std::vector<MapObject*> mapObjectContainer;
       std::vector<Coordinate> boundingBoxContainer;
 
+      // Distance from LEFT, RIGHT, BOTTOM and TOP sides of the screen which
+      // when crossed by a CharacterMapObject will cause the firing of a Map
+      // Pan event.
+      float threshold;
+
       void noop();
       void adjustDisplay();
       void loadBoundingBoxes();

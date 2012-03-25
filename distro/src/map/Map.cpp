@@ -65,6 +65,10 @@ Map::Map() {
    //
 
 
+
+   // Set the Map Pan Threshold to 10%.
+   this->threshold = 0.10;
+
 }
 
 Map::~Map() {
