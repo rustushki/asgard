@@ -28,6 +28,7 @@ class Layer
       void insertDrawableBottom(Drawable* drawable);
       void removeDrawable(std::string name);
       Drawable* getDrawableByName(std::string name);
+      Drawable* getDrawableByCommonName(std::string name);
 
       // Blit all data from this layer that intersects with the provided rect.
       void updateRect(SDL_Rect r);

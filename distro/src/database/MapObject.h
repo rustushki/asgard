@@ -48,8 +48,12 @@ class MapObject
       void addHardpoint(Hardpoint *hardpoint);
       bool collide(MapObject*);
 
+      int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
       void move(int newX, int newY);
       void setState(MapObjectState state);
+      MapObjectState getState();
+      void setStep(int step);
+      int getStep();
       
    private:
       Coordinate leftCorner;

@@ -30,6 +30,7 @@ class Screen
       Layer* getLayer(std::string name) const;
 
       Drawable* getDrawableByName(std::string name);
+      Drawable* getDrawableByCommonName(std::string name);
 
 
       // Do a blit onto the Screen from all layers that intersect with provided

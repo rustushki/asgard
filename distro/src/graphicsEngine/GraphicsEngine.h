@@ -40,6 +40,8 @@ class GraphicsEngine {
       void unloadDrawable(std::string drawableInstanceName);
       void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
 
+      Drawable * getDrawableByCommonName(std::string name);
+
    private:
       static GraphicsEngine* instance;
       static boost::shared_mutex updateLock;

@@ -58,6 +58,26 @@ DrawableState Drawable::getStatus()
    return this->status;
 }
 
+void Drawable::setX(int x)
+{
+   this->x = x;
+}
+
+void Drawable::setY(int y)
+{
+   this->y = y;
+}
+
+int Drawable::getX()
+{
+   return this->x;
+}
+
+int Drawable::getY()
+{
+   return this->y;
+}
+
 void Drawable::addAnimation(Animation* animation, std::string name)
 {
    //TODO: Error handling...

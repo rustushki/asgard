@@ -42,4 +42,7 @@ typedef unsigned int uint;
 // Sqlite
 #include <sqlite3.h>
 
+// Constants
+const float PI = 3.14159265;
+
 #endif//EXTERNALS_H

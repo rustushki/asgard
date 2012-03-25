@@ -25,7 +25,7 @@ MapObject::MapObject(std::string drawableName)
    this->width = MAP_OBJECT_WIDTH_DEFAULT;
    this->drawableName = drawableName;
    this->step = 1;
-   this->setState(MAP_OBJECT_STATE_IDLE);
+   this->state = MAP_OBJECT_STATE_IDLE;
 }
 
 MapObject::~MapObject() {
@@ -75,6 +75,82 @@ bool MapObject::collide(MapObject*) {
    return false;
 }
 
+int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
+{
+   int angle = 0;
+
+   if(newY == oldY)
+      if(newX > oldX)
+      {
+         angle = 0; // Move east
+      }
+      else
+         angle = 180; // Move west
+   else if(newX == oldX)
+      if(newY > oldY)
+         angle = 270; // Move south
+      else
+         angle = 90; // Move north
+   // Move southwest
+   else if((newX < oldX) && (newY > oldY))
+   {
+      int oppSide, adjSide;
+      oppSide = fabs(newY-oldY);
+      adjSide = fabs(newX-oldX);
+      angle = atan(oppSide/adjSide)*(double)((float)180/PI);
+      if(angle <= 22)
+         angle = 180;
+      else if((angle >= 23) && (angle <= 67))
+         angle = 225;
+      else if(angle >= 68)
+         angle = 270;
+   }
+   // Move southeast
+   else if((newX > oldX) && (newY > oldY))
+   {
+      int oppSide, adjSide;
+      oppSide = fabs(newY-oldY);
+      adjSide = fabs(newX-oldX);
+      angle = atan(oppSide/adjSide)*(double)((float)180/PI);
+      if(angle <= 22)
+         angle = 270;
+      else if((angle >= 23) && (angle <= 67))
+         angle = 315;
+      else if(angle >= 68)
+         angle = 0;
+   }
+   // Move northeast
+   else if((newX > oldX) && (newY < oldY))
+   {
+      int oppSide, adjSide;
+      oppSide = fabs(newY-oldY);
+      adjSide = fabs(newX-oldX);
+      angle = atan(oppSide/adjSide)*(double)((float)180/PI);
+      if(angle <= 22)
+         angle = 0;
+      else if((angle >= 23) && (angle <= 67))
+         angle = 45;
+      else if(angle >= 68)
+         angle = 90;
+   }
+   // Move northwest
+   else if((newX < oldX) && (newY < oldY))
+   {
+      int oppSide, adjSide;
+      oppSide = fabs(newY-oldY);
+      adjSide = fabs(newX-oldX);
+      angle = atan(oppSide/adjSide)*(double)((float)180/PI);
+      if(angle <= 22)
+         angle = 90;
+      else if((angle >= 23) && (angle <= 67))
+         angle = 135;
+      else if(angle >= 68)
+         angle = 180;
+   }
+ 
+   return angle;
+}
+
 /***********************************************************
  * move - Given a newX and a newY, do several things: 
  *
@@ -84,7 +160,7 @@ bool MapObject::collide(MapObject*) {
  * 3. Use the angle of movement to determine the animation to swap in for the
  *    Drawable. 
  * 4. Instruct the associated drawable to move Step by Step across the map in a
- *    loop.  Step is a member of MobileMapObject.  Step is an integral distance.
+ *    loop.  Step is a member of MapObject.  Step is an integral distance.
  * 5. Sleep a certain duration between each movement of the Drawable so that
  *    the user has time to see the Drawable move.
  * 6. Update the MapObject's World Coordinate each iteration of the loop.
@@ -100,9 +176,29 @@ void MapObject::move(int newX, int newY) {
    
    // TODO: implement the above 6 points.
 
-   // Computational Handwaving.
+   // Set state to 'moving'
+   this->state = MAP_OBJECT_STATE_MOVING;
+
+   // Set new LeftCorner
+   Coordinate *newLC = new Coordinate(newX,newY);
+   this->setLeftCorner(*newLC);
+
+   // Set state to 'idle'
+   this->state = MAP_OBJECT_STATE_IDLE;
 }
 
 void MapObject::setState(MapObjectState state) {
    this->state = state;
+}
+
+MapObjectState MapObject::getState() {
+   return this->state;
+}
+
+void MapObject::setStep(int step) {
+   this->step = step;
+}
+
+int MapObject::getStep() {
+   return this->step;
 }

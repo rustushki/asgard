@@ -102,6 +102,21 @@ void GraphicsEngine::displayDrawable(Drawable* d, std::string layerName, int x, 
    }
 }
 
+void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
+   LOG(INFO) << "Unloading Drawable.";
+
+   Screen* s = Screen::getInstance();
+
+   Drawable* d = s->getDrawableByName(drawableInstanceName);
+
+   if (d != NULL) {
+	   LOG(INFO) << "Successfully found drawable to unload.";
+      d->unload();
+   } else {
+	   LOG(INFO) << "Unable to find Drawable for unloading.";
+   }
+}
+
 void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawableNames, int xOffset, int yOffset) {
    LOG(INFO) << "Translating Drawables By an Offset";
 
@@ -119,18 +134,7 @@ void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawab
    }
 }
 
-void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
-   LOG(INFO) << "Unloading Drawable.";
-
-   Screen* s = Screen::getInstance();
-
-   Drawable* d = s->getDrawableByName(drawableInstanceName);
-
-   if (d != NULL) {
-	   LOG(INFO) << "Successfully found drawable to unload.";
-      d->unload();
-   } else {
-	   LOG(INFO) << "Unable to find Drawable for unloading.";
-   }
+Drawable * GraphicsEngine::getDrawableByCommonName(std::string name)
+{
+   return Screen::getInstance()->getDrawableByCommonName(name);
 }
-

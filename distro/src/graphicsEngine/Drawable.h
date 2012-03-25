@@ -22,6 +22,18 @@ class Drawable
       // Return the current status of the Drawable.
       DrawableState getStatus();
 
+      // Set screen x-coordinate of drawable
+      void setX(int x);
+
+      // Set screen y-coordinate of drawable
+      void setY(int y);
+
+      // Get screen x-coordinate of drawable
+      int getX();
+
+      // Get screen y-coordinate of drawable
+      int getY();
+
       // Add a new Animation to the Drawable with an associated name.
       void addAnimation(Animation* animation, std::string name);
 

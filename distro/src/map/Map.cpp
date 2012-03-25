@@ -52,6 +52,8 @@ Map::Map() {
       // They become more important when hard points are used.
       cmo->setWidth(100);
       cmo->setHeight(100);
+      cmo->setStep(1);
+      cmo->setState(MAP_OBJECT_STATE_IDLE);
 
       // x = 300, y = 300 puts this CMO in BB (0, 0)
       cmo->setLeftCorner(Coordinate(300,400));
@@ -345,6 +347,8 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
    Coordinate drawableCoord = this->convertWorldToScreen(mo->getLeftCorner());
    int x = drawableCoord.getX();
    int y = drawableCoord.getY();
+   d->setX(x);
+   d->setY(y);
 
    GraphicsEngine::getInstance()->displayDrawable(d, "stageLayer", x, y);
 }
@@ -373,7 +377,129 @@ void Map::handle(SDL_Event event) {
 
                // In Asgard 0.3.7, there will be only one CharacterMapObject.
                if(dynamic_cast<CharacterMapObject*>(*itr)) {
-                  (*itr)->move(x, y);
+               
+                  int angle, step, cmo_newX, cmo_newY, draw_oldX, draw_oldY, draw_newX, draw_newY;
+                  std::string drawableName, walkingAnimationName, standingAnimationName;
+                  Drawable *d;
+
+                  // Get Drawable for CharacterMapObject
+                  drawableName = (*itr)->getDrawableName();
+                  d = GraphicsEngine::getInstance()->getDrawableByCommonName(drawableName);
+
+                  // Compute MapObject's angle of movement
+                  draw_oldX = d->getX();
+                  draw_oldY = d->getY();
+                  angle = (*itr)->computeAngleOfMovement(x, y, draw_oldX, draw_oldY);
+                  switch (angle)
+                  {
+                     case 0:
+                        walkingAnimationName = drawableName + "WalkingEast";
+                        standingAnimationName = drawableName + "StandingEast";
+                        break;
+                     case 45:
+                        //animationName = drawableName + "NorthEast";
+                        walkingAnimationName = drawableName + "WalkingEast";
+                        standingAnimationName = drawableName + "StandingEast";
+                        break;
+                     case 90:
+                        //animationName = drawableName + "North";
+                        walkingAnimationName = drawableName + "WalkingEast";
+                        standingAnimationName = drawableName + "StandingEast";
+                        break;
+                     case 135:
+                        //animationName = drawableName + "NorthWest";
+                        walkingAnimationName = drawableName + "WalkingWest";
+                        standingAnimationName = drawableName + "StandingWest";
+                        break;
+                     case 180:
+                        walkingAnimationName = drawableName + "WalkingWest";
+                        standingAnimationName = drawableName + "StandingWest";
+                        break;
+                     case 225:
+                        //animationName = drawableName + "SouthWest";
+                        walkingAnimationName = drawableName + "WalkingWest";
+                        standingAnimationName = drawableName + "StandingWest";
+                        break;
+                     case 270:
+                        //animationName = drawableName + "South";
+                        walkingAnimationName = drawableName + "WalkingWest";
+                        standingAnimationName = drawableName + "StandingWest";
+                        break;
+                     case 315:
+                        //animationName = drawableName + "SouthEast";
+                        //animationName = drawableName + "WalkingWest";
+                        walkingAnimationName = drawableName + "WalkingEast";
+                        standingAnimationName = drawableName + "StandingEast";
+                        break;
+                     default:
+                        break;
+                  }
+
+                  if(d->swapAnimation(walkingAnimationName))
+                     LOG(INFO) << "Animation " << walkingAnimationName << " swapped into Drawable " << drawableName;
+
+                  /* Get step for MapObject */
+                  step = (*itr)->getStep();
+
+                  /* Move Drawable and MapObject by step */
+                  while((draw_oldX != x) || (draw_oldY != y))
+                  {
+                     /*DEBUG
+                     break; END-DEBUG */
+                     /* Determine new x location */
+                     if(draw_oldX > x)
+                     {
+                        if((draw_oldX - step) < x)
+                           draw_newX = x;
+                        else
+                           draw_newX = draw_oldX - step;
+                     }
+                     else if(draw_oldX < x)
+                     {
+                        if((draw_oldX + step) > x)
+                           draw_newX = x;
+                        else
+                           draw_newX = draw_oldX + step;
+                     }
+                     else
+                        draw_newX = draw_oldX;
+
+                     /* Determine new y location */
+                     if(draw_oldY > y)
+                     {
+                        if((draw_oldY - step) < y)
+                           draw_newY = y;
+                        else
+                           draw_newY = draw_oldY - step;
+                     }
+                     else if(draw_oldY < y)
+                     {
+                        if((draw_oldY + step) > y)
+                           draw_newY = y;
+                        else
+                           draw_newY = draw_oldY + step;
+                     }
+                     else
+                        draw_newY = draw_oldY;
+                     
+                     /* Move MapObject */
+                     cmo_newX = draw_newX + this->display.getX();
+                     cmo_newY = draw_newY + this->display.getY();
+                     (*itr)->move(cmo_newX,cmo_newY);
+                     /* Move Drawable */
+                     d->move(draw_newX,draw_newY);
+
+                     /* Set current location */
+                     draw_oldX = draw_newX;
+                     draw_oldY = draw_newY;
+
+                     SDL_Delay(20);
+                  }
+
+                  /* Swap in Animation for standing */
+                  if(d->swapAnimation(standingAnimationName))
+                     LOG(INFO) << "Animation " << standingAnimationName << " swapped into Drawable " << drawableName;
+
                   break;
                }
             }
