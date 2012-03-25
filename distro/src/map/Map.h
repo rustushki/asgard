@@ -15,6 +15,8 @@ class Map : public EventHandler {
 
       void setFocusPoint(int x, int y);
 
+      void panFocusPoint(int x, int y);
+
       static const int BOUNDING_BOX_SIZE = 1000;
 
       // N x N grid of bounding boxes.

@@ -84,14 +84,6 @@ Map* Map::getInstance() {
 
 void Map::setFocusPoint(int x, int y) {
 
-   if (x < 0) {
-      x = 0;
-   }
-
-   if (y < 0) {
-      y = 0;
-   }
-
    LOG(INFO) << "Setting Map Focus Point = " << x << ", " << y;	
 
    // TODO: Maximum Map dimensions is currently out of scope.
@@ -107,6 +99,51 @@ void Map::setFocusPoint(int x, int y) {
    this->focus = newFocus;
    this->loadBoundingBoxes();
    this->unloadBoundingBoxes();
+}
+
+void Map::panFocusPoint(int x, int y) {
+
+    // This is the focus point before the Map Pan started.
+    Coordinate startFocusPoint = this->focus;
+
+    // The point to which we would like to pan the focus point.
+    Coordinate finalFocusPoint(x, y);
+
+    // The difference between the two points.
+    Coordinate offset = startFocusPoint - finalFocusPoint;
+
+    // The total amount of time the panning should take (in milliseconds).
+    // This could be parameterized later.
+    int duration = 700;
+
+    // The number of times per the duration of time that we want to set the
+    // intermediate focus point.  This could be parameterized later.
+    int step = 15;
+
+    // Amount of time to pause between each intermediate setting of the focus point.
+    int wait = duration/step;
+
+
+    Coordinate stepOffset(offset.getX()/step, offset.getY()/step);
+
+    for (int stepCv = 0; stepCv < step; stepCv++) {
+        
+        // Determine the next temporary focus point.
+        Coordinate tempFocusPoint = this->focus - stepOffset;
+
+        // Set to the next temporary focus point.
+        this->setFocusPoint(tempFocusPoint.getX(), tempFocusPoint.getY());
+
+        // Wait.
+        SDL_Delay(wait);
+    }
+
+    // This method must ensure that the final focus point is set correctly.  Do
+    // this last step in case of any rounding errors in integer math.
+    if (this->focus != finalFocusPoint) {
+        this->setFocusPoint(finalFocusPoint.getX(), finalFocusPoint.getY());
+    }
+
 }
 
 void Map::moveDrawables(Coordinate offset) {
