@@ -489,6 +489,10 @@ void Map::handle(SDL_Event event) {
                draw_oldX = draw_newX;
                draw_oldY = draw_newY;
 
+               // Check if the CMO is over the Map Pan threshold.  Fire Map Pan
+               // event if so.
+               this->checkOverMapPanThreshold();
+
                SDL_Delay(20);
             }
 
@@ -507,7 +511,7 @@ void Map::handle(SDL_Event event) {
  * convertScreenToWorld - Given a screen coordinate, convert it into a World
  * Coordinate--which is a point on the Map.
  */
-Coordinate Map::convertScreenToWorld(Coordinate s) {
+Coordinate Map::convertScreenToWorld(Coordinate s) const {
 
    // Add the World Coordinate of the current location of the top left corner
    // of the Screen to the provided screen coordinate and return the result.
@@ -520,7 +524,7 @@ Coordinate Map::convertScreenToWorld(Coordinate s) {
  * coordinate.  Screen coordinates which are visible to the user are greater
  * than (0,0), but less than the Height and Width of the screen.
  */
-Coordinate Map::convertWorldToScreen(Coordinate w) {
+Coordinate Map::convertWorldToScreen(Coordinate w) const {
    
     // The offset between the provided world coordinate and the current display
     // coordinate is equivalent to its Screen Coordinate.
@@ -536,17 +540,30 @@ Coordinate Map::convertWorldToScreen(Coordinate w) {
  * If the CharacterMapObject is within the threshold, fire off a Map Pan Event.
  */
 void Map::checkOverMapPanThreshold() const {
-    
-   // Find the CharacterMapObject.
+
+   // Find the CharacterMapObject.  As of 0.3.8, there's only 1.
    CharacterMapObject* cmo = this->getCharacterMapObject();
 
-   // Check the Top Margin.
-   // Check the Bottom Margin.
-   // Check the Left Margin.
-   // Check the Right Margin.
+   // Get the current world coordinate of the CMO.
+   Coordinate wrldCrd = cmo->getLeftCorner();
 
-   // If any is exceeded, fire a Map Pan.
-   // TODO: Define Parameters of the Map Pan Event.
+   // Convert that coord to a screen coord.
+   Coordinate scrnCrd = this->convertWorldToScreen(wrldCrd);
+
+   int top    = Screen::HEIGHT * this->threshold;
+   int bottom = Screen::HEIGHT - top;
+   int left   = Screen::WIDTH  * this->threshold;
+   int right  = Screen::WIDTH  - left;
+
+   // Check the Top, Bottom, Left and Right Margins.
+   if (    scrnCrd.getY() < top  || scrnCrd.getY() > bottom
+        || scrnCrd.getX() < left || scrnCrd.getX() > right) {
+
+      // If any is exceeded, fire a Map Pan.
+      // TODO: Define Parameters of the Map Pan Event.
+      std::cout << "TODO: fire map pan event here" << std::endl;
+
+   }
 
 }
 

@@ -27,8 +27,8 @@ class Map : public EventHandler {
 
       virtual void handle(SDL_Event event);
 
-      Coordinate convertWorldToScreen(Coordinate w);
-      Coordinate convertScreenToWorld(Coordinate s);
+      Coordinate convertWorldToScreen(Coordinate w) const;
+      Coordinate convertScreenToWorld(Coordinate s) const;
 
    private:
       Map();
