@@ -477,7 +477,7 @@ void Map::handle(SDL_Event event) {
                }
                else
                   draw_newY = draw_oldY;
-               
+                     
                /* Move MapObject */
                cmo_newX = draw_newX + this->display.getX();
                cmo_newY = draw_newY + this->display.getY();

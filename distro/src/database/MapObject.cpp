@@ -109,8 +109,8 @@ int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
    else if((newX > oldX) && (newY > oldY))
    {
       int oppSide, adjSide;
-      oppSide = fabs(newY-oldY);
-      adjSide = fabs(newX-oldX);
+      oppSide = fabs(newX-oldX);
+      adjSide = fabs(newY-oldY);
       angle = atan(oppSide/adjSide)*(double)((float)180/PI);
       if(angle <= 22)
          angle = 270;
@@ -137,8 +137,8 @@ int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
    else if((newX < oldX) && (newY < oldY))
    {
       int oppSide, adjSide;
-      oppSide = fabs(newY-oldY);
-      adjSide = fabs(newX-oldX);
+      oppSide = fabs(newX-oldX);
+      adjSide = fabs(newY-oldY);
       angle = atan(oppSide/adjSide)*(double)((float)180/PI);
       if(angle <= 22)
          angle = 90;
