@@ -16,24 +16,13 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#ifndef EVENTHANDLER_H
-#define EVENTHANDLER_H
 
-#include "externals.h"
-#include "AsgardEvent.h"
+#ifndef ASGARD_EVENT_H
+#define ASGARD_EVENT_H
 
-/* EventHandler - Abstract interface class. Implement this interface in order
- * to handle Events.
- */
-
-class EventHandler {
-
-public:
-   // Pass an event
-   virtual void handle(SDL_Event event) = 0;
-
-   void fireEvent(AsgardEvent eventCode, void* eventData) const;
-
+enum AsgardEvent {
+     ASGARDEVENT_MAPPAN
+   , ASGARDEVENT_COUNT
 };
 
-#endif//EVENTHANDLER_H
+#endif//ASGARD_EVENT_H

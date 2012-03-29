@@ -7,6 +7,7 @@
 #include "Database.h"
 #include "EventHandler.h"
 #include "CharacterMapObject.h"
+#include "AsgardEvent.h"
 
 class Map : public EventHandler {
    public:

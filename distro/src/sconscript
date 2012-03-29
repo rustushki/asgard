@@ -44,6 +44,7 @@ objects = [
 './graphicsEngine/Screen.cpp',
 './graphicsEngine/SpriteSheetCache.cpp',
 './map/Map.cpp',
+'./common/EventHandler.cpp',
 './common/Asgard.cpp',
 #'./database/test.cpp'
 #'./graphicsEngine/test.cpp'
