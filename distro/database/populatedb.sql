@@ -2,63 +2,63 @@
 
 --Palm Tree 1 (id = 1)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,3,175,200,141,"PalmTree");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,3,175,"PalmTree");
 
 --Treasure Chest (id = 2)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,40,40,3,7,"TreasureChest");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,40,40,"TreasureChest");
 
 --Hand (id = 3)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,430,170,3,3,"HandSwingsSword");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,430,170,"HandSwingsSword");
 
 -- Puddle (id = 4)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,100,500,2,2,"Puddle");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,100,500,"Puddle");
 
 --Palm Tree 2 (id = 5)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,1300,250,25,5,"PalmTree");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,1300,250,"PalmTree");
 
 --Palm Tree 3 (id = 6)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,1100,500,25,5,"PalmTree");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,1100,500,"PalmTree");
 
 --Palm Tree 4 (id = 7)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,1050,1100,25,5,"PalmTree");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,1050,1100,"PalmTree");
 
 --Palm Tree 5 (id = 8)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,700,1217,25,5,"PalmTree");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,700,1217,"PalmTree");
 
 --Treasure Chest 1 (id = 9)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,700,400,600,5,"TreasureChest");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,700,400,"TreasureChest");
 
 --Treasure Chest 2 (id = 10)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,1200,500,600,5,"TreasureChest");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,1200,500,"TreasureChest");
 
 --Rock 1 (id = 11)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,250,250,600,5,"Rock");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,250,250,"Rock");
 
 --Rock 2 (id = 12)
 insert into MapObject
-(MapObjectId,WC_X,WC_Y,Height,Width,DrawableName)
-values(NULL,550,150,600,5,"Rock");
+(MapObjectId,WC_X,WC_Y,DrawableName)
+values(NULL,550,150,"Rock");
 
 --Treasure Chest's Container (Saftey Match)
 insert into Container

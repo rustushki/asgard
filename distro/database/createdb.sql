@@ -29,8 +29,6 @@ create table MapObject
    MapObjectId integer primary key,
    WC_X integer(10) null,
    WC_Y integer(10) null,
-   Height integer(10) null,
-   Width integer(10) null,
    BoundingBoxX integer(10) null,
    BoundingBoxY integer(10) null,
    DrawableName varchar(50) not null,

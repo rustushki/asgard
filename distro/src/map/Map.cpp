@@ -49,8 +49,6 @@ Map::Map() {
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
-      cmo->setWidth(100);
-      cmo->setHeight(100);
       cmo->setStep(1);
       cmo->setState(MAP_OBJECT_STATE_IDLE);
 

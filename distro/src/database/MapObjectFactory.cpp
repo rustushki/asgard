@@ -101,8 +101,6 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
    if(tile != NULL) {
       // Set Tile Map Object attributes
       tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
-      tile->setWidth(sqlite3_column_int(stmt, TILE_COLUMN_WIDTH));
-      tile->setHeight(sqlite3_column_int(stmt, TILE_COLUMN_HEIGHT));
       Map::getInstance()->installMapObject(tile, drawable);
    }
 }
@@ -133,8 +131,6 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    if (container != NULL) {
       // Set Container attributes
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
-      container->setWidth(sqlite3_column_int(stmt, CONTAINER_COLUMN_WIDTH));
-      container->setHeight(sqlite3_column_int(stmt, CONTAINER_COLUMN_HEIGHT));
       Map::getInstance()->installMapObject(container, drawable);
    }
 
@@ -171,8 +167,6 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
       }
      
       npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
-      npc->setWidth(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WIDTH));
-      npc->setHeight(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_HEIGHT));
       Map::getInstance()->installMapObject(npc, drawable);
         
       delete npcRs;
@@ -200,8 +194,6 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       delete rs;
 
       mapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
-      mapObject->setWidth(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WIDTH));
-      mapObject->setHeight(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_HEIGHT));
       Map::getInstance()->installMapObject(mapObject, drawable);
    }
 }

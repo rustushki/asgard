@@ -21,8 +21,6 @@
 
 MapObject::MapObject(std::string drawableName)
 {
-   this->height = MAP_OBJECT_HEIGHT_DEFAULT;
-   this->width = MAP_OBJECT_WIDTH_DEFAULT;
    this->drawableName = drawableName;
    this->step = 1;
    this->state = MAP_OBJECT_STATE_IDLE;
@@ -43,20 +41,14 @@ Coordinate MapObject::getLeftCorner() {
    return this->leftCorner;
 }
 
-void MapObject::setHeight(int height)
-{
-   assert(height != 0);
-   
-   this->height = height;
+int MapObject::getWidth() {
+	return 0;
 }
 
-void MapObject::setWidth(int width)
-{
-   assert(width != 0);
-   
-   this->width = width;
+int MapObject::getHeight() {
+	return 0;
 }
-      
+
 void MapObject::addBoundingBox(int boundingBox)
 {
    this->boundingBoxes.push_back(boundingBox);

@@ -26,8 +26,6 @@ char* QueryGenerator::mapObject(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.Height, ";
-   qs += "mo.Width, ";
    qs += "mo.DrawableName ";
    qs += "from MapObject mo ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
@@ -55,8 +53,6 @@ char* QueryGenerator::nonPlayerCharacter(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.Height, ";
-   qs += "mo.Width, ";
    qs += "mo.DrawableName, ";
    qs += "npc.Speed, ";
    qs += "from MapObject mo ";
@@ -90,8 +86,6 @@ char* QueryGenerator::container(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.Height, ";
-   qs += "mo.Width, ";
    qs += "mo.DrawableName, ";
    qs += "c.item0, ";
    qs += "c.item1, ";
@@ -125,8 +119,6 @@ char* QueryGenerator::tile(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.Height, ";
-   qs += "mo.Width, ";
    qs += "mo.DrawableName, ";
    qs += "t.tileType ";
    qs += "from MapObject mo ";
