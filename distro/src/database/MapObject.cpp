@@ -41,10 +41,18 @@ Coordinate MapObject::getLeftCorner() {
    return this->leftCorner;
 }
 
+/* -----------------------------------------------------------------------------
+ * getWidth - Return the width in pixels of the MapObject.  Internally, this
+ * maps to the width of the associated drawable.
+ */
 int MapObject::getWidth() {
 	return 0;
 }
 
+/* -----------------------------------------------------------------------------
+ * getHeight - Return the height in pixels of the MapObject.  Internally, this
+ * maps to the height of the associated drawable.
+ */
 int MapObject::getHeight() {
 	return 0;
 }
@@ -54,6 +62,9 @@ void MapObject::addBoundingBox(int boundingBox)
    this->boundingBoxes.push_back(boundingBox);
 }
 
+/* -----------------------------------------------------------------------------
+ * getDrawableName - Return the instance name of the associated drawable.
+ */
 std::string MapObject::getDrawableName()
 {
 	return this->drawableName;
