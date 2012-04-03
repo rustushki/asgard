@@ -3,8 +3,7 @@
 
 unsigned int Drawable::nextUniqueNumber = 0;
 
-Drawable::Drawable(std::string name)
-{
+Drawable::Drawable(std::string name) {
    this->name = name;
    this->moved = false;
    this->swapped = false;
@@ -35,8 +34,7 @@ Drawable::~Drawable() {
  *
  * @return std::string - <drawableName> (i.e. "tree")
  */
-std::string Drawable::getName()
-{
+std::string Drawable::getName() {
    return this->name;
 }
 
@@ -48,62 +46,69 @@ std::string Drawable::getName()
  *
  * @return std::string - "<drawableName><uniqueNumber>" (i.e. "treeb01017f")
  */
-std::string Drawable::getInstanceName()
-{
+std::string Drawable::getInstanceName() {
    return this->instanceName;
 }
 
-DrawableState Drawable::getStatus()
-{
+DrawableState Drawable::getStatus() {
    return this->status;
 }
 
-void Drawable::setX(int x)
-{
+void Drawable::setX(int x) {
    this->x = x;
 }
 
-void Drawable::setY(int y)
-{
+void Drawable::setY(int y) {
    this->y = y;
 }
 
-int Drawable::getX()
-{
+int Drawable::getX() {
    return this->x;
 }
 
-int Drawable::getY()
-{
+int Drawable::getY() {
    return this->y;
 }
 
-void Drawable::addAnimation(Animation* animation, std::string name)
-{
+/* -----------------------------------------------------------------------------
+ * getHeight - Return the height of the current animation of the Drawable.
+ */
+uint Drawable::getHeight() const {
+   // Use std::map::find() so that this function may be declared as const.
+   Animation* ca = this->animation.find(this->currentAnimation)->second;
+   return ca->getHeight();
+}
+
+/* -----------------------------------------------------------------------------
+ * getWidth - Return the width of the current animation of the Drawable.
+ */
+uint Drawable::getWidth() const {
+   // Use std::map::find() so that this function may be declared as const.
+   Animation* ca = this->animation.find(this->currentAnimation)->second;
+   return ca->getWidth();
+}
+
+void Drawable::addAnimation(Animation* animation, std::string name) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    this->animation[name] = animation;
 
    // Set the current animation if there wasn't one set before.
-   if (this->animation.size() == 1)
-   {
+   if (this->animation.size() == 1) {
       this->currentAnimation = name;
       if (this->newAnimation == "")
          this->newAnimation = name;
    }
 }
 
-bool Drawable::removeAnimation(std::string name)
-{
+bool Drawable::removeAnimation(std::string name) {
    if (this->animation.erase(name) >= 1)
       return true;
    return false;
 }
 
-bool Drawable::swapAnimation(std::string name)
-{
-   if (this->animation.find(name) != this->animation.end())
-   {
+bool Drawable::swapAnimation(std::string name) {
+   if (this->animation.find(name) != this->animation.end()) {
       this->swapped = true;
       this->newAnimation = name;
       return true;
@@ -111,13 +116,11 @@ bool Drawable::swapAnimation(std::string name)
    return false;
 }
 
-std::string Drawable::getCurrentAnimation()
-{
+std::string Drawable::getCurrentAnimation() {
    return this->currentAnimation;
 }
 
-bool Drawable::needsUpdate()
-{
+bool Drawable::needsUpdate() {
    Animation* ca = this->animation[this->currentAnimation];
 
    // Return true when the Drawable has moved OR the animation has changed OR
@@ -130,8 +133,7 @@ bool Drawable::needsUpdate()
    return needsUpdate;
 }
 
-void Drawable::move(int newX, int newY)
-{
+void Drawable::move(int newX, int newY) {
    LOG(INFO) << "instance = " << this->getInstanceName();
    LOG(INFO) << "oldX = " << this->x;
    LOG(INFO) << "oldY = " << this->y;
@@ -148,13 +150,11 @@ void Drawable::moveByOffset(int offX, int offY) {
    this->move((int)this->x + offX, (int)this->y + offY);
 }
 
-void Drawable::play()
-{
+void Drawable::play() {
    this->status = DRAWABLESTATE_PLAYING;
 }
 
-void Drawable::stop()
-{
+void Drawable::stop() {
    this->status = DRAWABLESTATE_IDLE;
 }
 
@@ -177,8 +177,7 @@ void Drawable::unload() {
    this->toBeRemoved = true;
 }
 
-SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
-{
+SDL_Rect Drawable::getIntersectingRect(SDL_Rect r) {
    Animation* ca = this->animation[this->currentAnimation];
 
    int l1, r1, t1, b1;
@@ -214,8 +213,7 @@ SDL_Rect Drawable::getIntersectingRect(SDL_Rect r)
    return i;
 }
 
-void Drawable::updateRect(SDL_Rect r)
-{
+void Drawable::updateRect(SDL_Rect r) {
 
    // Do not have animation blit itself if the Drawable is hidden.
    if (this->hidden) {
@@ -253,8 +251,7 @@ void Drawable::updateRect(SDL_Rect r)
    }
 }
 
-void Drawable::doMove()
-{
+void Drawable::doMove() {
    if (this->x != this->newX || this->y != this->newY)
    {
       SDL_Rect r = this->getRect();
@@ -267,8 +264,7 @@ void Drawable::doMove()
    }
 }
 
-void Drawable::doSwap()
-{
+void Drawable::doSwap() {
    if (this->currentAnimation != this->newAnimation)
    {
       SDL_Rect r = this->getRect();
@@ -280,8 +276,7 @@ void Drawable::doSwap()
    }
 }
 
-void Drawable::doAnim()
-{
+void Drawable::doAnim() {
    Animation* ca = this->animation[this->currentAnimation];
    ca->incFrameCounter();
 
@@ -318,8 +313,7 @@ void Drawable::doHide() {
    }
 }
 
-SDL_Rect Drawable::getRect()
-{
+SDL_Rect Drawable::getRect() {
    Animation* ca = this->animation[this->currentAnimation];
    SDL_Rect r;
    r.x = this->x;

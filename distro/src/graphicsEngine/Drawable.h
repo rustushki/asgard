@@ -34,6 +34,12 @@ class Drawable
       // Get screen y-coordinate of drawable
       int getY();
 
+      // Get height of current animation.
+      uint getHeight() const;
+
+      // Get width of current animation.
+      uint getWidth() const;
+
       // Add a new Animation to the Drawable with an associated name.
       void addAnimation(Animation* animation, std::string name);
 
