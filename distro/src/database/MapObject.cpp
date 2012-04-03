@@ -18,6 +18,8 @@
  ****************************************************************************/
 
 #include "MapObject.h"
+#include "GraphicsEngine.h"
+#include "Drawable.h"
 
 MapObject::MapObject(std::string drawableName)
 {
@@ -43,18 +45,42 @@ Coordinate MapObject::getLeftCorner() {
 
 /* -----------------------------------------------------------------------------
  * getWidth - Return the width in pixels of the MapObject.  Internally, this
- * maps to the width of the associated drawable.
+ * maps to the width of the associated drawable.  Fail miserably when
+ * associated drawable doesn't exist.
  */
-int MapObject::getWidth() {
-	return 0;
+uint MapObject::getWidth() const {
+
+   GraphicsEngine* ge = GraphicsEngine::getInstance();
+
+   Drawable* d = ge->getDrawableByName(this->getDrawableName());
+
+   if (d != NULL) {
+      return d->getWidth();
+   } else {
+      LOG(FATAL) << "Drawable " << this->getDrawableName() << "didn't exist";
+   }
+
+   return 0;
 }
 
 /* -----------------------------------------------------------------------------
  * getHeight - Return the height in pixels of the MapObject.  Internally, this
- * maps to the height of the associated drawable.
+ * maps to the height of the associated drawable.  Fail miserably when
+ * associated drawable doesn't exist.
  */
-int MapObject::getHeight() {
-	return 0;
+uint MapObject::getHeight() const {
+
+   GraphicsEngine* ge = GraphicsEngine::getInstance();
+
+   Drawable* d = ge->getDrawableByName(this->getDrawableName());
+
+   if (d != NULL) {
+      return d->getWidth();
+   } else {
+      LOG(FATAL) << "Drawable " << this->getDrawableName() << "didn't exist";
+   }
+
+   return 0;
 }
 
 void MapObject::addBoundingBox(int boundingBox)
@@ -65,7 +91,7 @@ void MapObject::addBoundingBox(int boundingBox)
 /* -----------------------------------------------------------------------------
  * getDrawableName - Return the instance name of the associated drawable.
  */
-std::string MapObject::getDrawableName()
+std::string MapObject::getDrawableName() const
 {
 	return this->drawableName;
 }

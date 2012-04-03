@@ -38,10 +38,10 @@ class MapObject
       
       void setLeftCorner(const Coordinate& leftCorner);
       Coordinate getLeftCorner();
-      int getHeight();
-      int getWidth();
+      uint getHeight() const;
+      uint getWidth() const;
 
-      std::string getDrawableName();
+      std::string getDrawableName() const;
       
       void addBoundingBox(int boundingBox);
 
