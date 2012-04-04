@@ -500,6 +500,18 @@ void Map::handle(SDL_Event event) {
          }
 
          break;
+      case SDL_USEREVENT:
+
+         if (event.user.code == ASGARDEVENT_MAPPAN) {
+
+            Coordinate *panHereCoord = (Coordinate*) event.user.data1;
+
+            this->panFocusPoint(panHereCoord->getX(), panHereCoord->getY());
+
+         }
+
+         break;
+      
       default:
          break;
    }
@@ -558,8 +570,11 @@ void Map::checkOverMapPanThreshold() const {
         || scrnCrd.getX() < left || scrnCrd.getX() > right) {
 
       // If any is exceeded, fire a Map Pan.
-      // TODO: Define Parameters of the Map Pan Event.
-      std::cout << "TODO: fire map pan event here" << std::endl;
+      LOG(INFO) << "firing map pan event";
+
+      Coordinate tLc = cmo->getLeftCorner();
+      Coordinate* panHereCoord = new Coordinate(tLc.getX(), tLc.getY());
+      this->fireEvent(ASGARDEVENT_MAPPAN, (void*)panHereCoord);
 
    }
 
