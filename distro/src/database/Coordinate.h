@@ -52,8 +52,8 @@ class Coordinate
       bool operator<= (const Coordinate rhwc) const;
       bool operator>= (const Coordinate rhwc) const;
 
-      int getX();
-      int getY();
+      int getX() const;
+      int getY() const;
 
       friend double distance(const Coordinate&,const Coordinate&); 
 

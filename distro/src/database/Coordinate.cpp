@@ -132,11 +132,11 @@ Coordinate operator/(const int r, const Coordinate& l)
    return Coordinate(r/l.x,r/l.y);
 }
 
-int Coordinate::getX() {
+int Coordinate::getX() const {
 	return this->x;
 }
 
-int Coordinate::getY() {
+int Coordinate::getY() const {
 	return this->y;
 }
 

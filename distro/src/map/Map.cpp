@@ -554,24 +554,26 @@ void Map::checkOverMapPanThreshold() const {
    // Find the CharacterMapObject.  As of 0.3.8, there's only 1.
    CharacterMapObject* cmo = this->getCharacterMapObject();
 
-   // Get the current world coordinate of the CMO.
-   Coordinate wrldCrd = cmo->getLeftCorner();
-
-   // Convert that coord to a screen coord.
-   Coordinate scrnCrd = this->convertWorldToScreen(wrldCrd);
-
-   int top    = Screen::HEIGHT * this->threshold;
+   // Compute top, bottom, right and left margins of the screen.
+   int top    = Screen::HEIGHT * threshold;
    int bottom = Screen::HEIGHT - top;
-   int left   = Screen::WIDTH  * this->threshold;
+   int left   = Screen::WIDTH  * threshold;
    int right  = Screen::WIDTH  - left;
 
-   // Check the Top, Bottom, Left and Right Margins.
-   if (    scrnCrd.getY() < top  || scrnCrd.getY() > bottom
-        || scrnCrd.getX() < left || scrnCrd.getX() > right) {
+   // Convert those margins into their world equivalents.
+   top    += this->display.getY();
+   bottom += this->display.getY();
+   left   += this->display.getX();
+   right  += this->display.getX();
 
-      // If any is exceeded, fire a Map Pan.
+   // Check if the CMO has exceeded the Top, Bottom, Left and Right Margins.
+   if (    cmo->getTop()  < top  || cmo->getBottom() > bottom
+        || cmo->getLeft() < left || cmo->getRight()  > right) {
+
+      // If any is exceeded, fire a Map Pan Event.
       LOG(INFO) << "firing map pan event";
 
+      // The Coordinate of the CMO is the parameter of the Map Pan Event.
       Coordinate tLc = cmo->getLeftCorner();
       Coordinate* panHereCoord = new Coordinate(tLc.getX(), tLc.getY());
       this->fireEvent(ASGARDEVENT_MAPPAN, (void*)panHereCoord);
