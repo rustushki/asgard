@@ -3,3 +3,4 @@ asgard.db3
 tags
 database/runquery
 *.dblite
+*.gz
