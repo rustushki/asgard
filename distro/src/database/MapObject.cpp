@@ -39,7 +39,7 @@ void MapObject::setLeftCorner(const Coordinate& leftCorner)
    this->leftCorner = leftCorner;
 }
 
-Coordinate MapObject::getLeftCorner() {
+Coordinate MapObject::getLeftCorner() const {
    return this->leftCorner;
 }
 
@@ -81,6 +81,40 @@ uint MapObject::getHeight() const {
    }
 
    return 0;
+}
+
+
+/* -----------------------------------------------------------------------------
+ * getBottom - Return the Y of the bottom edge of the MapObject.
+ */
+int MapObject::getBottom() const {
+	Coordinate topLc = this->getLeftCorner();
+	return topLc.getY() + this->getHeight();
+}
+
+/* -----------------------------------------------------------------------------
+ * getTop - Return the Y of the top edge of the MapObject.
+ */
+int MapObject::getTop() const {
+	Coordinate topLc = this->getLeftCorner();
+	return topLc.getY();
+
+}
+
+/* -----------------------------------------------------------------------------
+ * getLeft - Return the X of the left edge of the MapObject.
+ */
+int MapObject::getLeft() const {
+	Coordinate topLc = this->getLeftCorner();
+	return topLc.getX();
+}
+
+/* -----------------------------------------------------------------------------
+ * getRight - Return the X of the right edge of the MapObject.
+ */
+int MapObject::getRight() const {
+	Coordinate topLc = this->getLeftCorner();
+	return topLc.getX() + this->getWidth();
 }
 
 void MapObject::addBoundingBox(int boundingBox)

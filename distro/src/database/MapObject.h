@@ -37,9 +37,14 @@ class MapObject
       virtual ~MapObject();
       
       void setLeftCorner(const Coordinate& leftCorner);
-      Coordinate getLeftCorner();
+      Coordinate getLeftCorner() const;
       uint getHeight() const;
       uint getWidth() const;
+
+      int getBottom() const;
+      int getTop() const;
+      int getLeft() const;
+      int getRight() const;
 
       std::string getDrawableName() const;
       
@@ -66,4 +71,4 @@ class MapObject
       MapObjectState state;
       int step;
 };
-#endif //MAP_OBJECT_H
+#endif//MAP_OBJECT_H
