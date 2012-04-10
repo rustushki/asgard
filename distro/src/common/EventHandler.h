@@ -21,6 +21,7 @@
 
 #include "externals.h"
 #include "AsgardEvent.h"
+#include "ConcurrencyPolicy.h"
 
 /* EventHandler - Abstract interface class. Implement this interface in order
  * to handle Events.
@@ -32,7 +33,7 @@ public:
    // Pass an event
    virtual void handle(SDL_Event event) = 0;
 
-   void fireEvent(AsgardEvent eventCode, void* eventData) const;
+   void fireEvent(AsgardEvent eventCode, void* eventData, ConcurrencyPolicy policy) const;
 
 };
 

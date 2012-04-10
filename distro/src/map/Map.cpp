@@ -576,7 +576,7 @@ void Map::checkOverMapPanThreshold() const {
       // The Coordinate of the CMO is the parameter of the Map Pan Event.
       Coordinate tLc = cmo->getLeftCorner();
       Coordinate* panHereCoord = new Coordinate(tLc.getX(), tLc.getY());
-      this->fireEvent(ASGARDEVENT_MAPPAN, (void*)panHereCoord);
+      this->fireEvent(ASGARDEVENT_MAPPAN, (void*)panHereCoord, CONCURRENCY_POLICY_CANCEL);
 
    }
 

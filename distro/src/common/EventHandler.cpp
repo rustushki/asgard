@@ -6,7 +6,7 @@
  * eventCode signifies how the provided eventData should be interpretted by the
  * handler.
  */
-void EventHandler::fireEvent(AsgardEvent eventCode, void* eventData) const {
+void EventHandler::fireEvent(AsgardEvent eventCode, void* eventData, ConcurrencyPolicy policy) const {
    
    // Ensure that the AsgardEvent code is VALID.
    if (eventCode > ASGARDEVENT_COUNT || eventCode < 0) {
@@ -24,10 +24,13 @@ void EventHandler::fireEvent(AsgardEvent eventCode, void* eventData) const {
    // handling the event.
    event.user.code = eventCode;
 
-   // Depending on the eventCode, we may end up using data2 in the future.  For
-   // the moment, data1 should be sufficient.
+   // data1 is the Event's Parameters.
    event.user.data1 = eventData;
-   event.user.data2 = NULL;
+
+   // data2 is the Event Concurrency Policy.  See ConcurrencyPolicy for more
+   // details.
+   ConcurrencyPolicy* policyCopy = new ConcurrencyPolicy(policy);
+   event.user.data2 = (void*)policyCopy;
 
    // Stick the event on the SDL Event Queue.
    SDL_PushEvent(&event);
