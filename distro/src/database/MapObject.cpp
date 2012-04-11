@@ -117,6 +117,17 @@ int MapObject::getRight() const {
 	return topLc.getX() + this->getWidth();
 }
 
+/* -----------------------------------------------------------------------------
+ * getFoot - Return the world coordinate of the center of the bottom of the 
+ *           MapObject.
+ */
+Coordinate MapObject::getFoot() const
+{
+	Coordinate topLc = this->getLeftCorner();
+   Coordinate *foot = new Coordinate((topLc.getX()+this->getRight())/2, this->getBottom());
+   return *foot;
+}
+
 void MapObject::addBoundingBox(int boundingBox)
 {
    this->boundingBoxes.push_back(boundingBox);

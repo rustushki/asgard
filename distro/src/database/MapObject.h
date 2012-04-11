@@ -45,6 +45,7 @@ class MapObject
       int getTop() const;
       int getLeft() const;
       int getRight() const;
+      Coordinate getFoot() const;
 
       std::string getDrawableName() const;
       
