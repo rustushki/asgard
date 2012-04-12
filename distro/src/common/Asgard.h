@@ -26,6 +26,7 @@
 #include "Database.h"
 #include "Map.h"
 #include "AsgardMode.h"
+#include "AsgardEvent.h"
 
 class EventHandler;
 
@@ -76,6 +77,9 @@ class Asgard {
       // Threads Methods
       void controller();
       void view();
+
+      // Mapping of AsgardEvent Types to Thread IDs.
+      std::map<AsgardEvent, boost::thread*> asgardEventToThread;
 };
 
 #endif//ASGARD_H

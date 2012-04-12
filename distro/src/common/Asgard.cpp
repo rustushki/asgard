@@ -95,12 +95,82 @@ void Asgard::controller() {
 
          // All Else: Get the Current Event Handler and have it handle the
          // event.
-         default:
+         case SDL_MOUSEBUTTONDOWN:
+         case SDL_USEREVENT:
+
+            {
+
             EventHandler* eh = this->getEventHandler();
-            if (eh != NULL) {
-               // Start an Event Handling Thread.
-               boost::thread(boost::bind(&EventHandler::handle, eh, event));
+            if (eh == NULL) {
+               break;
             }
+
+            // SDL USER EVENTS are treated as special Asgard Events.  See
+            // EventHandler.h for more details on Firing Events and Concurrency
+            // Policies.
+
+            // Pre-Event Handling Thread Start Checks.
+            if (event.type == SDL_USEREVENT) {
+
+               // Get the Asgard Event Type and Concurrency Policy.
+               AsgardEvent eventCode = (AsgardEvent)event.user.code;
+               ConcurrencyPolicy* policy = (ConcurrencyPolicy*)event.user.data2;
+
+               // CANCEL concurrency policy.
+               if (*policy == CONCURRENCY_POLICY_CANCEL) {
+
+                  // Find an event handling thread for this type of event (if
+                  // one exists).
+                  std::map<AsgardEvent,boost::thread*>::iterator threadItr;
+                  threadItr = asgardEventToThread.find(eventCode);
+
+                  // If one exists, 
+                  if (threadItr != asgardEventToThread.end()) {
+
+                     // Then check to see if it's still running.  A thread
+                     // which fails to join in 0ms is considered to be still
+                     // running.  This check feels a bit kludgey to me, but
+                     // Stack Overflow assures me that this is the way to do
+                     // it.
+                     boost::thread* thread = threadItr->second;
+                     if (thread->timed_join(boost::posix_time::milliseconds(0)) == false) {
+
+                        // Don't start a new thread if it's still running.
+                        break;
+
+                     }
+                  }
+               }
+
+            }
+
+            // Start an Event Handling Thread.
+            boost::thread* eventHandlingThread = new boost::thread(
+               boost::bind(&EventHandler::handle, eh, event)
+            );
+
+
+            // Post-Event Handling Thread Start Activities for Asgard Events.
+            if (event.type == SDL_USEREVENT) {
+
+               // Get the Asgard Event Type and Concurrency Policy.
+               AsgardEvent eventCode = (AsgardEvent)event.user.code;
+               ConcurrencyPolicy* policy = (ConcurrencyPolicy*)event.user.data2;
+
+               // For the CANCEL policy we:
+               // Record the Event Type and it's thread object in a special map
+               // so that we know about it later on if another event tries to
+               // start.
+               if (*policy == CONCURRENCY_POLICY_CANCEL) {
+                  this->asgardEventToThread[eventCode] = eventHandlingThread;
+               }
+
+            }
+
+            }
+
+            break;
+         default:
             break;
       }
    }
