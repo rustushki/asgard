@@ -55,7 +55,10 @@ class MapObject
       bool collide(MapObject*);
 
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
+
+      void move(Coordinate newLoc);
       void move(int newX, int newY);
+
       void setState(MapObjectState state);
       MapObjectState getState();
       void setStep(int step);

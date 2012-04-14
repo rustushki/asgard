@@ -241,6 +241,13 @@ void MapObject::move(int newX, int newY) {
    this->state = MAP_OBJECT_STATE_IDLE;
 }
 
+/* ------------------------------------------------------------------------------
+ * move - Move the MapObject to the Coordinate.
+ */
+void MapObject::move(Coordinate newLoc) {
+   move(newLoc.getX(), newLoc.getY());
+}
+
 void MapObject::setState(MapObjectState state) {
    this->state = state;
 }

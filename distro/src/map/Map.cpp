@@ -383,12 +383,17 @@ void Map::handle(SDL_Event event) {
 
             // Get the x/y of the Move CMO Event.
             Coordinate* c = (Coordinate*)event.user.data1;
-            int x = c->getX();
-            int y = c->getY();
+
+            // Convert the provided screen coordinate into a world coordinate.
+            Coordinate newCMOWorldCoordinate = convertScreenToWorld(*c);
+
+            // x & y are the World Coordinate at which the CMO should end up.
+            int x = newCMOWorldCoordinate.getX();
+            int y = newCMOWorldCoordinate.getY();
 
             CharacterMapObject* cmo = this->getCharacterMapObject();
 
-            int angle, step, cmo_newX, cmo_newY, draw_oldX, draw_oldY, draw_newX, draw_newY;
+            int angle, step, draw_oldX, draw_oldY, draw_newX, draw_newY;
             std::string drawableName, walkingAnimationName, standingAnimationName;
             Drawable *d;
 
@@ -399,9 +404,13 @@ void Map::handle(SDL_Event event) {
             // Get Drawable's common name (not with unique ID)
             drawableName = d->getName();
 
+            // Convert the Drawable's X & Y into a World Coordinate.
+            Coordinate drawableOld(d->getX(), d->getY());
+            drawableOld = convertScreenToWorld(drawableOld);
+            draw_oldX = drawableOld.getX();
+            draw_oldY = drawableOld.getY();
+
             // Compute MapObject's angle of movement
-            draw_oldX = d->getX();
-            draw_oldY = d->getY();
             angle = cmo->computeAngleOfMovement(x, y, draw_oldX, draw_oldY);
             switch (angle)
             {
@@ -495,12 +504,13 @@ void Map::handle(SDL_Event event) {
                else
                   draw_newY = draw_oldY;
                      
-               /* Move MapObject */
-               cmo_newX = draw_newX + this->display.getX();
-               cmo_newY = draw_newY + this->display.getY();
-               cmo->move(cmo_newX,cmo_newY);
-               /* Move Drawable */
-               d->move(draw_newX,draw_newY);
+               /* Move MapObject with respect to World Coordinate */
+               Coordinate newLoc(draw_newX, draw_newY);
+               cmo->move(newLoc);
+
+               /* Move Drawable with respect to Screen Coordinate */
+               newLoc = convertWorldToScreen(newLoc);
+               d->move(newLoc.getX(),newLoc.getY());
 
                /* Set current location */
                draw_oldX = draw_newX;
