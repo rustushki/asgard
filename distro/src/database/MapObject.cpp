@@ -123,9 +123,9 @@ int MapObject::getRight() const {
  */
 Coordinate MapObject::getFoot() const
 {
-	Coordinate topLc = this->getLeftCorner();
-   Coordinate *foot = new Coordinate((topLc.getX()+this->getRight())/2, this->getBottom());
-   return *foot;
+   Coordinate topLc = this->getLeftCorner();
+   Coordinate foot(topLc.getX()+this->getWidth()/2, this->getBottom());
+   return foot;
 }
 
 void MapObject::addBoundingBox(int boundingBox)
@@ -234,8 +234,8 @@ void MapObject::move(int newX, int newY) {
    this->state = MAP_OBJECT_STATE_MOVING;
 
    // Set new LeftCorner
-   Coordinate *newLC = new Coordinate(newX,newY);
-   this->setLeftCorner(*newLC);
+   Coordinate newLC(newX,newY);
+   this->setLeftCorner(newLC);
 
    // Set state to 'idle'
    this->state = MAP_OBJECT_STATE_IDLE;

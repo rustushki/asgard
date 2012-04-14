@@ -357,7 +357,7 @@ void Map::handle(SDL_Event event) {
          break;
       case SDL_MOUSEBUTTONDOWN:
 
-         LOG(INFO) << "Map Click: " << event.button.x << ", " << event.button.y << std::endl;
+         LOG(INFO) << "Map Click: " << event.button.x << ", " << event.button.y;
 
          {
 
@@ -510,7 +510,7 @@ void Map::handle(SDL_Event event) {
                // event if so.
                this->checkOverMapPanThreshold();
 
-               SDL_Delay(20);
+               SDL_Delay(10);
             }
 
             /* Swap in Animation for standing */
