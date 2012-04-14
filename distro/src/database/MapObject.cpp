@@ -75,7 +75,7 @@ uint MapObject::getHeight() const {
    Drawable* d = ge->getDrawableByName(this->getDrawableName());
 
    if (d != NULL) {
-      return d->getWidth();
+      return d->getHeight();
    } else {
       LOG(FATAL) << "Drawable " << this->getDrawableName() << "didn't exist";
    }

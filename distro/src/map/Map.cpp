@@ -381,17 +381,23 @@ void Map::handle(SDL_Event event) {
 
          } else if (event.user.code == ASGARDEVENT_MOVECMO) {
 
+            // Grab the CMO.
+            CharacterMapObject* cmo = this->getCharacterMapObject();
+
             // Get the x/y of the Move CMO Event.
             Coordinate* c = (Coordinate*)event.user.data1;
 
             // Convert the provided screen coordinate into a world coordinate.
             Coordinate newCMOWorldCoordinate = convertScreenToWorld(*c);
 
+            // Offset the New World Coordinate by the distance between the Top
+            // Left Corner of the CMO and it's foot.  That way, the CMO will
+            // arrive at the provided coordinate "on it's foot"
+            newCMOWorldCoordinate -= cmo->getFoot() - cmo->getLeftCorner();
+
             // x & y are the World Coordinate at which the CMO should end up.
             int x = newCMOWorldCoordinate.getX();
             int y = newCMOWorldCoordinate.getY();
-
-            CharacterMapObject* cmo = this->getCharacterMapObject();
 
             int angle, step, draw_oldX, draw_oldY, draw_newX, draw_newY;
             std::string drawableName, walkingAnimationName, standingAnimationName;
