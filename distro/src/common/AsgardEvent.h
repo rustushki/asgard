@@ -22,6 +22,7 @@
 
 enum AsgardEvent {
      ASGARDEVENT_MAPPAN
+   , ASGARDEVENT_MOVECMO
    , ASGARDEVENT_COUNT
 };
 

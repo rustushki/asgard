@@ -356,16 +356,35 @@ void Map::handle(SDL_Event event) {
          std::cout << SDL_GetKeyName(event.key.keysym.sym) << std::endl;
          break;
       case SDL_MOUSEBUTTONDOWN:
-         //event.button.button, event.button.x, event.button.y
-         std::cout << event.button.x << ", " << event.button.y << std::endl;
 
-         // As it turns out, you can't declare variables inside a switch case
-         // unless you restrict the scope with {}
+         LOG(INFO) << "Map Click: " << event.button.x << ", " << event.button.y << std::endl;
+
          {
 
-            // Get the x/y of the mouse click event.
-            int x = event.button.x;
-            int y = event.button.y;
+            // Translate the SDL_MOUSEBUTTONDOWN into Asgard's move CMO event.
+            // Use CANCEL event concurrency policy to prevent multiple user
+            // clicks from creating erratic movement.
+            Coordinate* c = new Coordinate(event.button.x, event.button.y);
+            this->fireEvent(ASGARDEVENT_MOVECMO, c, CONCURRENCY_POLICY_CANCEL);
+
+         }
+
+
+         break;
+      case SDL_USEREVENT:
+
+         if (event.user.code == ASGARDEVENT_MAPPAN) {
+
+            Coordinate *panHereCoord = (Coordinate*) event.user.data1;
+
+            this->panFocusPoint(panHereCoord->getX(), panHereCoord->getY());
+
+         } else if (event.user.code == ASGARDEVENT_MOVECMO) {
+
+            // Get the x/y of the Move CMO Event.
+            Coordinate* c = (Coordinate*)event.user.data1;
+            int x = c->getX();
+            int y = c->getY();
 
             CharacterMapObject* cmo = this->getCharacterMapObject();
 
@@ -497,17 +516,6 @@ void Map::handle(SDL_Event event) {
             /* Swap in Animation for standing */
             if(d->swapAnimation(standingAnimationName))
                LOG(INFO) << "Animation " << standingAnimationName << " swapped into Drawable " << drawableName;
-         }
-
-         break;
-      case SDL_USEREVENT:
-
-         if (event.user.code == ASGARDEVENT_MAPPAN) {
-
-            Coordinate *panHereCoord = (Coordinate*) event.user.data1;
-
-            this->panFocusPoint(panHereCoord->getX(), panHereCoord->getY());
-
          }
 
          break;
