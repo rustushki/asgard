@@ -214,6 +214,7 @@ int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
       oppSide = fabs(newX-oldX);
       adjSide = fabs(newY-oldY);
       angle = atan(oppSide/adjSide)*(double)((float)180/PI);
+      LOG(ERROR) << angle;
       if(angle <= 22)
          angle = 90;
       else if((angle >= 23) && (angle <= 67))

@@ -5,8 +5,9 @@ We thank you for taking interest in Asgard!  As this project is still in its
 infancy, this release is intended for testing, observation and interest
 piquing. 
 
-As of 0.3.7, Asgard supports a basic, bare bones map complete with only a few
-map objects.
+Asgard 0.3.8 is a step in the right direction.  The bare-bones map now supports
+movement of a Character.  When the Character approaches the margins of the
+screen, the map automatically pans.
 
 We encourage you to attempt to compile and run Asgard.  Let us know how things
 go.  Thanks.
@@ -19,8 +20,8 @@ Boost 1.40 - http://boost.org
 Python 2.7 - http://python.org
 
 2. Untar..
-$ tar xvf asgard-0.3.6.tar.gz
-$ cd asgard-0.3.6/
+$ tar xvf asgard-0.3.8.tar.gz
+$ cd asgard-0.3.8/
 
 3. Compile
 $ scons
@@ -29,13 +30,13 @@ $ scons
 $ sudo scons install
 
 5. To Run: 
-$ asgard /usr/share/asgard/scripts/demo3.py
+$ asgard /usr/share/asgard/scripts/demo1.py
 
 You should see the map panning around with Palm Trees, Treasure Chests, Rocks
-and possible small Blue Cat.
+and possibly a small Blue Cat.
 
 6. To Clean Your Project Tree:
-$ cd asgard-0.3.7/
+$ cd asgard-0.3.8/
 $ scons -c
 
 Want to Help?

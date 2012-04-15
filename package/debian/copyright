@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
 Upstream-Name: asgard
-Source: http://launchpad.net/asgard/0.3/0.3.5/+download/asgard-0.3.6.tar.gz
+Source: http://launchpad.net/asgard/thegrandmap/0.3.8/+download/asgard-0.3.8.tar.gz
 
 Files: *
 2006-2012 Russ Adams <russ.adams@gmail.com>
