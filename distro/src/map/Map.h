@@ -44,7 +44,6 @@ class Map : public EventHandler {
       // Pan event.
       float threshold;
 
-      void noop();
       void adjustDisplay();
       void loadBoundingBoxes();
       void unloadBoundingBoxes();
