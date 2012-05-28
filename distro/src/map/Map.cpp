@@ -231,10 +231,10 @@ void Map::restack(MapObject* a, MapObject* b) const {
    // TODO: We need a stricter relationship between the Map and any layers that
    // it governs.
    Layer* lA = ge->getLayerOfDrawable(aName);
-   Layer* lB = ge->getLayerOfDrawable(aName);
+   Layer* lB = ge->getLayerOfDrawable(bName);
    assert(lA == lB);
 
-   if (a->getBottom() < b->getMiddle()) {
+   if (a->getBottom() > b->getMiddle()) {
       // Put A on Top.
       lA->stackAonB(aName, bName);
    } else {
@@ -552,6 +552,16 @@ void Map::handle(SDL_Event event) {
                /* Set current location */
                draw_oldX = draw_newX;
                draw_oldY = draw_newY;
+
+               // Restack MapObjects that Intersect.
+               std::vector<MapObject*>::iterator moItr;
+               for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++) {
+                  if (*moItr != cmo) {
+                     if (cmo->intersects(*moItr)) {
+                        this->restack(cmo, *moItr);
+                     }
+                  }
+               }
 
                // Check if the CMO is over the Map Pan threshold.  Fire Map Pan
                // event if so.

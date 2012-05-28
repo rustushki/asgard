@@ -163,7 +163,7 @@ void MapObject::addHardpoint(Hardpoint *hardpoint) {
  */
 bool MapObject::intersects(MapObject* that) {
 	return !(
-		   this->getBottom() > that->getTop()
+		   this->getBottom() < that->getTop()
 		|| this->getLeft()   > that->getRight()
 		|| this->getRight()  < that->getLeft()
 		|| this->getTop()    > that->getBottom()

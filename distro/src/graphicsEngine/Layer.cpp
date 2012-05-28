@@ -39,10 +39,10 @@ void Layer::stackAonB(std::string aName, std::string bName) {
       std::vector<Drawable*> newDrawableVec;
 
       // All elements from beginning of drawable vec up to A.
-      newDrawableVec.insert(newDrawableVec.end(), drawable.begin(), aItr-1);
+      newDrawableVec.insert(newDrawableVec.end(), drawable.begin(), aItr);
 
       // All elements in drawable vec after A up to B.
-      newDrawableVec.insert(newDrawableVec.end(), aItr+1, bItr-1);
+      newDrawableVec.insert(newDrawableVec.end(), aItr+1, bItr);
 
       // Insert B.
       newDrawableVec.insert(newDrawableVec.end(), b);
