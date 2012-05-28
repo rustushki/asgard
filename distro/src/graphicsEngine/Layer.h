@@ -7,8 +7,8 @@
 
 class Drawable;
 
-class Layer
-{
+class Layer {
+
    private:
       std::vector<Drawable*> drawable;
       std::string name;
@@ -27,14 +27,17 @@ class Layer
       void insertDrawableTop(Drawable* drawable);
       void insertDrawableBottom(Drawable* drawable);
       void removeDrawable(std::string name);
-      Drawable* getDrawableByName(std::string name);
-      Drawable* getDrawableByCommonName(std::string name);
+      Drawable* getDrawableByName(std::string name) const;
+      Drawable* getDrawableByCommonName(std::string name) const;
+
+      void stackAonB(std::string drawableAName, std::string drawableBName);
 
       // Blit all data from this layer that intersects with the provided rect.
       void updateRect(SDL_Rect r);
 
       // Do a data update on the Layer.
       void update();
+
 };
 
 #endif//LAYER_H

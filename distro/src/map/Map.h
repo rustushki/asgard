@@ -55,6 +55,8 @@ class Map : public EventHandler {
       bool isBoundingBoxLoaded(Coordinate bb);
       bool isBoundingBoxInScope(Coordinate bb);
 
+      void restack(MapObject* a, MapObject* b) const;
+
       Coordinate getFocusBoundingBox();
       Coordinate getTopLeftOfRegion();
 

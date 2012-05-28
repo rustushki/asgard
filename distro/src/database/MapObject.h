@@ -41,6 +41,7 @@ class MapObject
       uint getHeight() const;
       uint getWidth() const;
 
+      int getMiddle() const;
       int getBottom() const;
       int getTop() const;
       int getLeft() const;

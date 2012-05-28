@@ -162,6 +162,18 @@ Drawable* Screen::getDrawableByCommonName(std::string name) {
 void Screen::updateRect(SDL_Rect r) {
    this->rectsToUpdate.push_back(r);
    std::vector<Layer*>::const_iterator itr;
-   for (itr = this->layer.begin(); itr < this->layer.end(); itr++)
+   for (itr = layer.begin(); itr < layer.end(); itr++) {
       (*itr)->updateRect(r);
+   }
+}
+
+Layer* Screen::getLayerOfDrawable(std::string drawableName) {
+   std::vector<Layer*>::iterator itr;
+   for (itr = layer.begin(); itr < layer.end(); itr++) {
+      if ((*itr)->getDrawableByName(drawableName) != NULL) {
+         return *itr;
+      }
+   }
+
+   return NULL;
 }

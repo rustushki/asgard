@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -23,6 +23,8 @@
 #include "Screen.h"
 #include "Asgard.h"
 
+class Layer;
+
 class GraphicsEngine {
    public:
       GraphicsEngine();
@@ -41,6 +43,7 @@ class GraphicsEngine {
       void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
 
       Drawable * getDrawableByName(std::string name);
+      Layer* getLayerOfDrawable(std::string drawableName);
 
    private:
       static GraphicsEngine* instance;

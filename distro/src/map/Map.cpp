@@ -212,6 +212,37 @@ bool Map::isBoundingBoxLoaded(Coordinate bb) {
    return alreadyLoaded;
 }
 
+/** Restack MapObjects
+ *
+ * Given two MapObjects A and B, put A on top of B if A's bottom is lower than
+ * B's middle.  Otherwise, stack A beneath B.
+ * 
+ */
+void Map::restack(MapObject* a, MapObject* b) const {
+   // Need the Drawable Names so that we may perform operations on the
+   // GraphicsEngine.
+   std::string aName = a->getDrawableName();
+   std::string bName = b->getDrawableName();
+
+   // Grab an instance of the GraphicsEngine.
+   GraphicsEngine* ge = GraphicsEngine::getInstance();
+
+   // Get the Layer of the Drawables for these MapObjects.
+   // TODO: We need a stricter relationship between the Map and any layers that
+   // it governs.
+   Layer* lA = ge->getLayerOfDrawable(aName);
+   Layer* lB = ge->getLayerOfDrawable(aName);
+   assert(lA == lB);
+
+   if (a->getBottom() < b->getMiddle()) {
+      // Put A on Top.
+      lA->stackAonB(aName, bName);
+   } else {
+      // Put B on Top.
+      lA->stackAonB(bName, aName);
+   }
+}
+
 bool Map::isValidBoundingBox(Coordinate bb) {
    if (bb.getX() % Map::BOUNDING_BOX_SIZE != 0) {
       return false;
@@ -251,7 +282,7 @@ void Map::unloadMapObjects() {
          GraphicsEngine::getInstance()->unloadDrawable(mo->getDrawableName());
 
          // Remove the MapObject from the Map; freeing its memory.
-		   moIter = map->erase(moIter);
+         moIter = map->erase(moIter);
       } else {
          moIter++;
       }

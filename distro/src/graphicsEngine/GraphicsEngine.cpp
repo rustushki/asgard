@@ -134,7 +134,21 @@ void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawab
    }
 }
 
-Drawable * GraphicsEngine::getDrawableByName(std::string name)
-{
+/* ------------------------------------------------------------------------------
+ * getDrawableByName - Return the Drawable denoted by the provided instance name.
+ *
+ * Returns NULL if there is no such Drawable.
+ */
+Drawable * GraphicsEngine::getDrawableByName(std::string name) {
    return Screen::getInstance()->getDrawableByName(name);
+}
+
+/* ------------------------------------------------------------------------------
+ * getLayerOfDrawable - Return the Layer of a Drawable by the provided drawable
+ * instance name.
+ *
+ * Returns NULL if no Layer.
+ */
+Layer* GraphicsEngine::getLayerOfDrawable(std::string drawableName) {
+   return Screen::getInstance()->getLayerOfDrawable(drawableName);
 }

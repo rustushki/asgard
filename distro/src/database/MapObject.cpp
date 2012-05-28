@@ -83,6 +83,15 @@ uint MapObject::getHeight() const {
    return 0;
 }
 
+/* -----------------------------------------------------------------------------
+ * getMiddle - Return the Y of the horizontal line dividing the MapObject in
+ * half.
+ */
+int MapObject::getMiddle() const {
+	Coordinate topLc = this->getLeftCorner();
+	return topLc.getY() + this->getHeight()/2;
+}
+
 
 /* -----------------------------------------------------------------------------
  * getBottom - Return the Y of the bottom edge of the MapObject.
