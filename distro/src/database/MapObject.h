@@ -53,7 +53,7 @@ class MapObject
       void addBoundingBox(int boundingBox);
 
       void addHardpoint(Hardpoint *hardpoint);
-      bool collide(MapObject*);
+      bool intersects(MapObject*);
 
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
 

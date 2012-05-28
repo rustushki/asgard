@@ -154,8 +154,20 @@ void MapObject::addHardpoint(Hardpoint *hardpoint) {
    this->hardpoints.push_back(hardpoint);
 }
 
-bool MapObject::collide(MapObject*) {
-   return false;
+/* ------------------------------------------------------------------------------
+ * intersects - Return true if this MapObject intersects with the provided
+ * MapObject.
+ *
+ * Please note that this is not a hard point collision.  This merely means that
+ * the two MapObjects' Drawables are occupying some of the same x/y space.
+ */
+bool MapObject::intersects(MapObject* that) {
+	return !(
+		   this->getBottom() > that->getTop()
+		|| this->getLeft()   > that->getRight()
+		|| this->getRight()  < that->getLeft()
+		|| this->getTop()    > that->getBottom()
+	);
 }
 
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
