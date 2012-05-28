@@ -18,7 +18,6 @@ SDL        - http://libsdl.org
 SQLite 3   - http://sqlite.org
 Boost 1.40 - http://boost.org
 Python 2.7 - http://python.org
-glog       - http://code.google.com/p/google-glog/
 
 2. Untar..
 $ tar xvf asgard-0.3.8.tar.gz

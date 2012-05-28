@@ -207,7 +207,7 @@ void Asgard::initExternal() {
    SDL_SetVideoMode(Screen::WIDTH, Screen::HEIGHT, 16, SDL_DOUBLEBUF);
 
    // Initialize Google Logger.
-   google::InitGoogleLogging("asgard");
+   //google::InitGoogleLogging("asgard");
 
    // Initialize Asgard's Python Interface.
    InitAsgardPython();
