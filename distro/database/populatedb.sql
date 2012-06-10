@@ -119,6 +119,12 @@ insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(3,1,0,0,3);
 
+--Puddle #1's Hardpoints (actually a Dancing Cat)
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(4,1,15,19,6);
+--End Puddle #1's Hardpoints
+
 --Palm Tree #2's Hardpoints
 insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
