@@ -89,17 +89,29 @@ insert into NonPlayerCharacterPath
 (MapObjectId,WC_X,WC_Y,PathIndex)
 values(3,23,47,3);
 
---Palm Tree's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Palm Tree #1's Hardpoints
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(1,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(1,0,47,224,14,8); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(1,0,61,219,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(1,0,63,205,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(1,0,67,192,20,39); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(1,0,85,222,10,14); --Rect
+--End Palm Tree #1's Hardpoints
 
 --Treasure Chest's Hardpoint
 --Hardpoint Type = 0 = RectHardPoint
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Height,Width)
-values(2,0,0,0,5,5);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(2,0,6,31,62,20);
 
 --Hand's Hardpoint
 --Hardpoint Type = 1 = CircHardPoint
@@ -107,41 +119,89 @@ insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(3,1,0,0,3);
 
---Palm Tree's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Palm Tree #2's Hardpoints
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(5,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(5,0,47,224,14,8); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(5,0,61,219,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(5,0,63,205,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(5,0,67,192,20,39); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(5,0,85,222,10,14); --Rect
+--End Palm Tree #2's Hardpoints
 
---Palm Tree's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Palm Tree #3's Hardpoints
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(6,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(6,0,47,224,14,8); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(6,0,61,219,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(6,0,63,205,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(6,0,67,192,20,39); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(6,0,85,222,10,14); --Rect
+--End Palm Tree #3's Hardpoints
 
---Palm Tree's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Palm Tree #4's Hardpoints
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(7,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(7,0,47,224,14,8); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(7,0,61,219,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(7,0,63,205,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(7,0,67,192,20,39); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(7,0,85,222,10,14); --Rect
+--End Palm Tree #4's Hardpoints
 
---Palm Tree's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Palm Tree #5's Hardpoints
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(8,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(8,0,47,224,14,8); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(8,0,61,219,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(8,0,63,205,7,15); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(8,0,67,192,20,39); --Rect
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(8,0,85,222,10,14); --Rect
+--End Palm Tree #5's Hardpoints
 
---Treasure Chests's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Treasure Chest's Hardpoint
+--Hardpoint Type = 0 = RectHardPoint
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(9,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(9,0,6,31,62,20);
 
---Treasure Chests's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Treasure Chest's Hardpoint
+--Hardpoint Type = 0 = RectHardPoint
 insert into Hardpoints
-(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(10,1,0,0,3);
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(10,0,6,31,62,20);
 
 --Rock's Hardpoint
 --Hardpoint Type = 1 = CircHardPoint
@@ -149,11 +209,77 @@ insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
 values(11,1,0,0,3);
 
---Rock's Hardpoint
---Hardpoint Type = 1 = CircHardPoint
+--Rock #1's Hardpoint
 insert into Hardpoints
 (MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
-values(12,1,0,0,3);
+values(11,1,18,51,11);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,13,63,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,22,67,15);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,34,70,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,46,67,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,65,72,16);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,71,81,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,121,80,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(11,1,128,70,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(11,0,72,77,48,17);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(11,0,16,39,125,21);
+--End Rock #1's Hardpoints
+
+--Rock #2's Hardpoint
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,18,51,11);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,13,63,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,22,67,15);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,34,70,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,46,67,9);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,65,72,16);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,71,81,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,121,80,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Radius)
+values(12,1,128,70,12);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(12,0,72,77,48,17);
+insert into Hardpoints
+(MapObjectId,HardpointType,RelativeX,RelativeY,Width,Height)
+values(12,0,16,39,125,21);
+--End Rock #2's Hardpoints
 
 --Hand's Animations
 --Hand swings sword
