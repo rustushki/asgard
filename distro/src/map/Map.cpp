@@ -92,10 +92,14 @@ void Map::setFocusPoint(int x, int y) {
 
    // Move the Existing Drawables.
    this->moveDrawables(offset);
-   this->adjustDisplay();
 
    // Change Focus and Load/Unload Bounding Boxes.
    this->focus = newFocus;
+
+   // Order is important here ... the display should only be adjusted AFTER
+   // changing the location of the map focus.
+   this->adjustDisplay();
+
    this->loadBoundingBoxes();
    this->unloadBoundingBoxes();
 }
