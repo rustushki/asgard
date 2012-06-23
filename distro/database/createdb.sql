@@ -46,23 +46,10 @@ create table MapObject
 
 create table Container
 (
-   MapObjectId integer(10) null,
-   item0 integer(10) null,
-   item1 integer(10) null,
-   item2 integer(10) null,
-   item3 integer(10) null,
-   item4 integer(10) null,
-   item5 integer(10) null,
-   item6 integer(10) null,
-   item7 integer(10) null,
-   item8 integer(10) null,
-   item9 integer(10) null,
-   item10 integer(10) null,
-   item11 integer(10) null,
-   item12 integer(10) null,
-   item13 integer(10) null,
-   item14 integer(10) null,
-   foreign key(MapObjectId) references MapObject(MapObjectId)
+   MapObjectId integer(10) not null,
+   InventoryId integer(10) not null,
+   foreign key(MapObjectId) references MapObject(MapObjectId),
+   foreign key(InventoryId) references Inventory(InventoryId)
 );
 
 create table Hardpoints
@@ -109,4 +96,24 @@ create table Drawable
    DrawableName varchar(50) not null,
    AnimationName varchar(100) not null,
    foreign key(AnimationName) references Animation(AnimationName)
+);
+
+create table Inventory
+(
+    InventoryId integer primary key
+);
+
+create table InventoryHasItem
+(
+   InventoryId integer(10) not null,
+   ItemId integer(10) not null,
+   Quantity integer(10) not null,
+   foreign key(ItemId) references Item(ItemId),
+   foreign key(InventoryId) references Inventory(InventoryId)
+);
+
+create table Item
+(
+    ItemId integer primary key,
+    ItemName varchar(50) not null
 );
