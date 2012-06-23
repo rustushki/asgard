@@ -50,8 +50,6 @@ class MapObject
 
       std::string getDrawableName() const;
       
-      void addBoundingBox(int boundingBox);
-
       void addHardpoint(Hardpoint *hardpoint);
       bool intersects(MapObject*);
 

@@ -137,11 +137,6 @@ Coordinate MapObject::getFoot() const
    return foot;
 }
 
-void MapObject::addBoundingBox(int boundingBox)
-{
-   this->boundingBoxes.push_back(boundingBox);
-}
-
 /* -----------------------------------------------------------------------------
  * getDrawableName - Return the instance name of the associated drawable.
  */
