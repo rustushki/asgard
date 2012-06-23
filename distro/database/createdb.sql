@@ -1,5 +1,6 @@
 drop table if exists NonPlayerCharacter;
 drop table if exists NonPlayerCharacterPath;
+drop table if exists MapObjectType;
 drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
@@ -24,6 +25,14 @@ create table NonPlayerCharacterPath
    foreign key (MapObjectId) references MapObject(MapObjectId)
 );
 
+create table MapObjectType
+(
+   MapObjectTypeId integer primary key,
+   TypeName varchar(50) not null,
+   DrawableName varchar(50) not null,
+   foreign key (DrawableName) references Drawable(DrawableName)
+);
+
 create table MapObject
 (
    MapObjectId integer primary key,
@@ -31,8 +40,8 @@ create table MapObject
    WC_Y integer(10) null,
    BoundingBoxX integer(10) null,
    BoundingBoxY integer(10) null,
-   DrawableName varchar(50) not null,
-   foreign key (DrawableName) references Drawable(DrawableName)
+   MapObjectTypeId integer(10) not null,
+   foreign key (MapObjectTypeId) references MapObjectType(MapObjecTypeId)
 );
 
 create table Container
@@ -58,15 +67,15 @@ create table Container
 
 create table Hardpoints
 (
-   MapObjectId integer(10) not null,
+   MapObjectTypeId integer(10) not null,
    RelativeX integer(10) not null,
    RelativeY integer(10) not null,
    HardpointType integer(10) not null,
    Width integer(10) null,
    Height integer(10) null,
    Radius integer(10) null,
-   primary key (MapObjectId, RelativeX, RelativeY, HardpointType),
-   foreign key (MapObjectId) references MapObject(MapObjectId)
+   primary key (MapObjectTypeId, RelativeX, RelativeY, HardpointType),
+   foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
 );
 
 create table Tiles

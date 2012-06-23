@@ -26,8 +26,9 @@ char* QueryGenerator::mapObject(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.DrawableName ";
+   qs += "mot.DrawableName ";
    qs += "from MapObject mo ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
    qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
    qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
@@ -143,7 +144,8 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    qs += "h.Height, ";
    qs += "h.Radius ";
    qs += "from MapObject mo ";
-   qs += "inner join Hardpoints h on h.MapObjectId = mo.MapObjectId ";
+   qs += "inner join MapObjectType on mo.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "inner join Hardpoints h on h.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
    
    return QueryGenerator::makeCStr(qs);
