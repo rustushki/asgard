@@ -31,8 +31,8 @@ class Inventory {
 
         void addItem(Item item);
         Inventory getItemsByName(std::string name);
-        void mergeInventory(const Inventory* inventory);
-        bool transferItemToInventory(std::string name, const Inventory* inventory);
+        void mergeInventory(Inventory* inventory);
+        bool transferItemToInventory(std::string name, Inventory* inventory);
 
         unsigned int countUniqueItems() const;
         unsigned int countItems() const;

@@ -9,6 +9,9 @@ Inventory::~Inventory() {
 }
 
 
+/*------------------------------------------------------------------------------
+ * addItem - Add an item to this inventory.
+ */
 void Inventory::addItem(Item item) {
     this->item.push_back(item);
 }
@@ -41,22 +44,39 @@ Inventory Inventory::getItemsByName(std::string name) {
 
 }
 
-void Inventory::mergeInventory(const Inventory* inventory) {
+/*------------------------------------------------------------------------------
+ * mergeInventory - Takes all items in the provided inventory and puts them in
+ * this inventory.
+ */
+void Inventory::mergeInventory(Inventory* inventory) {
 
 }
 
-bool Inventory::transferItemToInventory(std::string name, const Inventory* inventory) {
+/*------------------------------------------------------------------------------
+ * transferItemToInventory - Given an item name, transfer all of that kind of
+ * item from the provided inventory to this inventory.
+ */
+bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) {
     return true;
 }
 
+/*------------------------------------------------------------------------------
+ * countUniqueItems - Count item types in the inventory.
+ */
 unsigned int Inventory::countUniqueItems() const {
     return 0;
 }
 
+/*------------------------------------------------------------------------------
+ * countItems - Count all items in the inventory.
+ */
 unsigned int Inventory::countItems() const {
     return 0;
 }
 
+/*------------------------------------------------------------------------------
+ * countItems - Given an item name, count how many of them are in this inventory.
+ */
 unsigned int Inventory::getCountOfItemByName(std::string name) const {
     return 0;
 }
