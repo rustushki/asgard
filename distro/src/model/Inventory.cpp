@@ -77,6 +77,6 @@ unsigned int Inventory::countItems() const {
 /*------------------------------------------------------------------------------
  * countItems - Given an item name, count how many of them are in this inventory.
  */
-unsigned int Inventory::getCountOfItemByName(std::string name) const {
+unsigned int Inventory::countItemsByName(std::string name) const {
     return 0;
 }

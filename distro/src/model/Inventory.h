@@ -36,7 +36,7 @@ class Inventory {
 
         unsigned int countUniqueItems() const;
         unsigned int countItems() const;
-        unsigned int getCountOfItemByName(std::string name) const;
+        unsigned int countItemsByName(std::string name) const;
 
 
     private:

@@ -50,6 +50,7 @@ objects = [
 './common/Asgard.cpp',
 #'./database/test.cpp'
 #'./graphicsEngine/test.cpp'
+#'./model/test.cpp'
 './main/main.cpp'
 ]
 
