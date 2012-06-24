@@ -12,6 +12,7 @@ include_path =                     \
    +'#/src/graphicsEngine:'        \
    +'#/src/main:'                  \
    +'#/src/map:'                   \
+   +'#/src/model:'                 \
    +'/usr/include/SDL:'            \
    +'/usr/include/python2.7:'
 
@@ -29,7 +30,6 @@ objects = [
 './database/NonPlayerCharacter.cpp',
 './database/CharacterMapObject.cpp',
 './database/WaterTile.cpp',
-'./database/Item.cpp',
 './database/Database.cpp',
 './database/CircHardpoint.cpp',
 './database/Container.cpp',
@@ -44,6 +44,8 @@ objects = [
 './graphicsEngine/Screen.cpp',
 './graphicsEngine/SpriteSheetCache.cpp',
 './map/Map.cpp',
+'./model/Inventory.cpp',
+'./model/Item.cpp',
 './common/EventHandler.cpp',
 './common/Asgard.cpp',
 #'./database/test.cpp'
