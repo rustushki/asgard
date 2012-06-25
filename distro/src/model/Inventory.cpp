@@ -35,7 +35,7 @@ Inventory Inventory::getItemsByName(std::string name) {
         std::string cName = (*itemI).getName();
         std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
-        if (cName.compare(name)) {
+        if (cName.compare(name) == 0) {
             inv.addItem(*itemI);
         }
     }
@@ -64,14 +64,26 @@ bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) 
  * countUniqueItems - Count item types in the inventory.
  */
 unsigned int Inventory::countUniqueItems() const {
-    return 0;
+
+	std::set<std::string> uniqueSet;
+    std::vector<Item>::const_iterator itemI;
+
+    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
+        
+        std::string cName = (*itemI).getName();
+        std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
+
+		uniqueSet.insert(cName);
+    }
+
+    return uniqueSet.size();
 }
 
 /*------------------------------------------------------------------------------
  * countItems - Count all items in the inventory.
  */
 unsigned int Inventory::countItems() const {
-    return 0;
+    return this->item.size();
 }
 
 /*------------------------------------------------------------------------------

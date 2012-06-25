@@ -27,7 +27,7 @@ class Item
    public:
       Item();
       Item(std::string name);
-      std::string getName();
+      std::string getName() const ;
    private:
       std::string name;
 };
