@@ -90,5 +90,23 @@ unsigned int Inventory::countItems() const {
  * countItems - Given an item name, count how many of them are in this inventory.
  */
 unsigned int Inventory::countItemsByName(std::string name) const {
-    return 0;
+    std::vector<Item>::const_iterator itemI;
+
+    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+	unsigned int count = 0;
+
+    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
+        
+        std::string cName = (*itemI).getName();
+        std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
+
+		if (cName.compare(name) == 0) {
+			count++;
+		}
+
+    }
+
+	return count;
+
 }
