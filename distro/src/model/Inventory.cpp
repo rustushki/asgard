@@ -24,24 +24,14 @@ void Inventory::addItem(Item item) {
  */
 Inventory Inventory::getItemsByName(std::string name) {
 
-    Inventory inv;
+   Inventory inv;
 
-    std::vector<Item>::iterator itemI;
+   bool stillFoundItems = true;
+   while(stillFoundItems) {
+      stillFoundItems = this->transferItemToInventory(name, &inv);
+   }
 
-    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
-
-    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
-        
-        std::string cName = (*itemI).getName();
-        std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
-
-        if (cName.compare(name) == 0) {
-            inv.addItem(*itemI);
-        }
-    }
-
-    return inv;
-
+   return inv;
 }
 
 /*------------------------------------------------------------------------------
@@ -53,11 +43,51 @@ void Inventory::mergeInventory(Inventory* inventory) {
 }
 
 /*------------------------------------------------------------------------------
- * transferItemToInventory - Given an item name, transfer all of that kind of
+ * transferItemToInventory - Given an item name, transfer one of that kind of
  * item from the provided inventory to this inventory.
  */
 bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) {
-    return true;
+   std::vector<Item>::iterator itemI;
+
+   std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+   bool found = false;
+
+   for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
+
+      std::string cName = (*itemI).getName();
+      std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
+
+      if (cName.compare(name) == 0) {
+         Item toBeTransferred = *itemI;
+         this->item.erase(itemI);
+         inventory->addItem(toBeTransferred);
+         found = true;
+         break;
+      }
+
+   }
+
+   return found;
+}
+
+/*------------------------------------------------------------------------------
+ * transferItemToInventory - Given an item name, transfer n of that kind of
+ * item from the provided inventory to this inventory.
+ */
+unsigned int Inventory::transferItemToInventory(std::string name, Inventory* inventory, unsigned int count) {
+   unsigned int totalFound = 0;
+
+   while (totalFound < count) {
+
+      if (this->transferItemToInventory(name, inventory)) {
+         totalFound++;
+      } else {
+         break;
+      }
+   }
+
+   return totalFound;
 }
 
 /*------------------------------------------------------------------------------
