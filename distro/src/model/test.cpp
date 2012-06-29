@@ -37,5 +37,14 @@ int main() {
    assert(i3.countItems() == 2);
    assert(i3.countItemsByName("potion") == 2);
 
+   i2.transferAll(&i1);
+   i3.transferAll(&i1);
+   assert(i1.countUniqueItems() == 2);
+   assert(i1.countItems() == 3);
+   assert(i1.countItemsByName("potion") == 2);
+   assert(i3.countItems() == 0);
+   assert(i2.countItems() == 0);
+
+
     return 0;
 }

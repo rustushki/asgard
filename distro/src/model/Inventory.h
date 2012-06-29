@@ -31,7 +31,7 @@ class Inventory {
 
         void addItem(Item item);
         Inventory getItemsByName(std::string name);
-        void mergeInventory(Inventory* inventory);
+        void transferAll(Inventory* inventory);
         bool transferItemToInventory(std::string name, Inventory* inventory);
         unsigned int transferItemToInventory(std::string name, Inventory* inventory, unsigned int count);
 

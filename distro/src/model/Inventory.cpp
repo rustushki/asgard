@@ -35,16 +35,19 @@ Inventory Inventory::getItemsByName(std::string name) {
 }
 
 /*------------------------------------------------------------------------------
- * mergeInventory - Takes all items in the provided inventory and puts them in
- * this inventory.
+ * transferAll - Takes all items in this inventory and put them in the
+ * provided inventory.
  */
-void Inventory::mergeInventory(Inventory* inventory) {
-
+void Inventory::transferAll(Inventory* inventory) {
+   while (this->countItems() > 0) {
+         std::string name = this->item[0].getName();
+         this->transferItemToInventory(name, inventory);
+   }
 }
 
 /*------------------------------------------------------------------------------
  * transferItemToInventory - Given an item name, transfer one of that kind of
- * item from the provided inventory to this inventory.
+ * item from this inventory to the provided inventory.
  */
 bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) {
    std::vector<Item>::iterator itemI;
@@ -55,7 +58,7 @@ bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) 
 
    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
 
-      std::string cName = (*itemI).getName();
+      std::string cName = itemI->getName();
       std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
       if (cName.compare(name) == 0) {
@@ -73,7 +76,7 @@ bool Inventory::transferItemToInventory(std::string name, Inventory* inventory) 
 
 /*------------------------------------------------------------------------------
  * transferItemToInventory - Given an item name, transfer n of that kind of
- * item from the provided inventory to this inventory.
+ * item from this inventory to the provided inventory.
  */
 unsigned int Inventory::transferItemToInventory(std::string name, Inventory* inventory, unsigned int count) {
    unsigned int totalFound = 0;
@@ -100,7 +103,7 @@ unsigned int Inventory::countUniqueItems() const {
 
     for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
         
-        std::string cName = (*itemI).getName();
+        std::string cName = itemI->getName();
         std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
 		uniqueSet.insert(cName);
@@ -128,7 +131,7 @@ unsigned int Inventory::countItemsByName(std::string name) const {
 
     for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
         
-        std::string cName = (*itemI).getName();
+        std::string cName = itemI->getName();
         std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
 		if (cName.compare(name) == 0) {
