@@ -3,22 +3,22 @@
 --Palm Tree MapObjectType (id = 1)
 insert into MapObjectType
 (MapObjectTypeId, TypeName, DrawableName)
-values(NULL, "Palm Tree", "PalmTree");
+values(1, "Palm Tree", "PalmTree");
 
 --Rock MapObjectType (id = 2)
 insert into MapObjectType
 (MapObjectTypeId, TypeName, DrawableName)
-values(NULL, "Rock", "Rock");
+values(2, "Rock", "Rock");
 
 --Treasure Chest MapObjectType (id = 3)
 insert into MapObjectType
 (MapObjectTypeId, TypeName, DrawableName)
-values(NULL, "Treasure Chest", "TreasureChest");
+values(3, "Treasure Chest", "TreasureChest");
 
 --Osiris Cat MapObjectType (id = 4)
 insert into MapObjectType
 (MapObjectTypeId, TypeName, DrawableName)
-values(NULL, "Osiris Cat", "OsirisCat");
+values(4, "Osiris Cat", "OsirisCat");
 
 --Palm Tree 1 (id = 1)
 insert into MapObject

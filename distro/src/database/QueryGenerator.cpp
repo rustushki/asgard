@@ -129,7 +129,7 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    qs += "h.Height, ";
    qs += "h.Radius ";
    qs += "from MapObject mo ";
-   qs += "inner join MapObjectType on mo.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "inner join Hardpoints h on h.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
    
