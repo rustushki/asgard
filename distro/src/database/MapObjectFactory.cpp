@@ -189,7 +189,9 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
 
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
+         {
             mapObject->addHardpoint(createHardpoint(rs,row));
+         }
       }
       delete rs;
 
@@ -207,8 +209,8 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
       // Only RectHardpoints
       if (type == HARDPOINT_TYPE_RECT)
       {
-         int height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
-         int width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
+         int height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
+         int width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
          return new RectHardpoint(x,y,height,width);
       }
       // Only CircHardpoints
