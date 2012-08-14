@@ -32,8 +32,11 @@ class CircHardpoint : public Hardpoint
       CircHardpoint(int x, int y);
       CircHardpoint(int x, int y, double r);
 
-      bool conflict(const Coordinate & wc) const;
+      bool conflict(const Coordinate & wc, const Coordinate & moc) const;
 
+      /*TEST*/
+      Coordinate getCoord() const;
+      /*ENDTEST*/
 };
 
 #endif //CIRC_HARDPOINT_H

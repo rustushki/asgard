@@ -37,11 +37,30 @@ RectHardpoint::~RectHardpoint()
 {
 }
 
-bool RectHardpoint::conflict(const Coordinate & wc) const
+bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
 {
    Coordinate br; 
-   Coordinate tl = this->coordinate;
+   Coordinate tl = this->coordinate + moc;
    br = tl + Coordinate(this->width, this->height);
 
-   return (wc > tl && wc < br);
+   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
+      return true;
+   else
+      return false;
+//   return (wc > tl && wc < br);
+}
+
+Coordinate RectHardpoint::getCoord() const
+{
+   return this->coordinate;
+}
+
+int RectHardpoint::getHeight() const
+{
+   return this->height;
+}
+
+int RectHardpoint::getWidth() const
+{
+   return this->width;
 }

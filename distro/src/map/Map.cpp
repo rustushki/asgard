@@ -286,7 +286,7 @@ void Map::unloadMapObjects() {
          GraphicsEngine::getInstance()->unloadDrawable(mo->getDrawableName());
 
          // Remove the MapObject from the Map; freeing its memory.
-         moIter = map->erase(moIter);
+	 moIter = map->erase(moIter);
       } else {
          moIter++;
       }
@@ -434,9 +434,11 @@ void Map::handle(SDL_Event event) {
             int x = newCMOWorldCoordinate.getX();
             int y = newCMOWorldCoordinate.getY();
 
-            int angle, step, draw_oldX, draw_oldY, draw_newX, draw_newY;
+            int angle, step, draw_oldX, draw_oldY;
             std::string drawableName, walkingAnimationName, standingAnimationName;
             Drawable *d;
+            std::vector<MapObject*>::const_iterator moItr;
+            std::vector<Coordinate> path;
 
             // Get Drawable for CharacterMapObject
             drawableName = cmo->getDrawableName();
@@ -505,73 +507,50 @@ void Map::handle(SDL_Event event) {
             step = cmo->getStep();
 
             /* Move Drawable and MapObject by step */
-            while((draw_oldX != x) || (draw_oldY != y))
+            // Construct path for CMO to follow
+            path = constructPath(cmo->getFoot().getX(), cmo->getFoot().getY(), draw_oldX, draw_oldY, x, y);
+
+            // Increment through path by step, if path exists
+            if(!path.empty())
             {
-               /*DEBUG
-               break; END-DEBUG */
-               /* Determine new x location */
-               if(draw_oldX > x)
+               int i = 0;
+               // Prevent from going out of range
+               if(step > 1)
                {
-                  if((draw_oldX - step) < x)
-                     draw_newX = x;
+                  if((step - 1) >= path.size()) // (step - 1) because first Coordinate in path is one pixel ahead of current position of CMO
+                     i = (int)path.size() - 1; 
                   else
-                     draw_newX = draw_oldX - step;
+                     i = step - 1;
                }
-               else if(draw_oldX < x)
+
+               Coordinate screenLoc;
+               while(i < (int)path.size()) 
                {
-                  if((draw_oldX + step) > x)
-                     draw_newX = x;
-                  else
-                     draw_newX = draw_oldX + step;
-               }
-               else
-                  draw_newX = draw_oldX;
+                  // Move MapObject with respect to World Coordinate
+                  cmo->move(path[i]);
 
-               /* Determine new y location */
-               if(draw_oldY > y)
-               {
-                  if((draw_oldY - step) < y)
-                     draw_newY = y;
-                  else
-                     draw_newY = draw_oldY - step;
-               }
-               else if(draw_oldY < y)
-               {
-                  if((draw_oldY + step) > y)
-                     draw_newY = y;
-                  else
-                     draw_newY = draw_oldY + step;
-               }
-               else
-                  draw_newY = draw_oldY;
-                     
-               /* Move MapObject with respect to World Coordinate */
-               Coordinate newLoc(draw_newX, draw_newY);
-               cmo->move(newLoc);
+                  // Move Drawable with respect to Screen Coordinate
+                  screenLoc = convertWorldToScreen(path[i]);
+                  d->move(screenLoc.getX(),screenLoc.getY());
 
-               /* Move Drawable with respect to Screen Coordinate */
-               newLoc = convertWorldToScreen(newLoc);
-               d->move(newLoc.getX(),newLoc.getY());
-
-               /* Set current location */
-               draw_oldX = draw_newX;
-               draw_oldY = draw_newY;
-
-               // Restack MapObjects that Intersect.
-               std::vector<MapObject*>::iterator moItr;
-               for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++) {
-                  if (*moItr != cmo) {
-                     if (cmo->intersects(*moItr)) {
-                        this->restack(cmo, *moItr);
+                  // Restack MapObjects that Intersect.
+                  std::vector<MapObject*>::iterator moItr;
+                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++) {
+                     if (*moItr != cmo) {
+                        if (cmo->intersects(*moItr)) {
+                           this->restack(cmo, *moItr);
+                        }
                      }
                   }
+
+                  // Check if the CMO is over the Map Pan threshold.  Fire Map Pan
+                  // event if so.
+                  this->checkOverMapPanThreshold();
+
+                  SDL_Delay(10);
+
+                  i = i + step;
                }
-
-               // Check if the CMO is over the Map Pan threshold.  Fire Map Pan
-               // event if so.
-               this->checkOverMapPanThreshold();
-
-               SDL_Delay(10);
             }
 
             /* Swap in Animation for standing */
@@ -584,6 +563,88 @@ void Map::handle(SDL_Event event) {
       default:
          break;
    }
+}
+
+/* ---------------------------------------------------------------------------------------------------------------
+ * constructPath - Construct path of World Coordinates where to move CMO and its Drawable. Path will contain
+ * the Coordinates to which the left corner of the CMO and its Drawable will be set.  The last Coordinate of the
+ * path will either be the destination World Coordinate or the last World Coordinate that is not located in a 
+ * Hardpoint. Hardpoint conflicts use the CMO's foot for comparison.
+ */
+std::vector<Coordinate> Map::constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const {
+   std::vector<Coordinate> path;
+   std::vector<MapObject*>::const_iterator moItr;
+   int old_moX, old_moY, new_moX, new_moY, old_drawX, old_drawY, new_drawX, new_drawY;
+   bool isHardpoint = false;
+
+   old_moX = moX;
+   old_moY = moY;
+   old_drawX = drawX;
+   old_drawY = drawY;
+   while((old_drawX != destX) || (old_drawY != destY))
+   {
+      /* Determine new x location */
+      if(old_drawX > destX)
+      {
+         new_moX = old_moX - 1;
+         new_drawX = old_drawX - 1;
+      }
+      else if(old_drawX < destX)
+      {
+         new_moX = old_moX + 1;
+         new_drawX = old_drawX + 1;
+      }
+      else
+      {
+         new_moX = old_moX;
+         new_drawX = old_drawX;
+      }
+
+      /* Determine new y location */
+      if(old_drawY > destY)
+      {
+         new_moY = old_moY - 1;
+         new_drawY = old_drawY - 1;
+      }
+      else if(old_drawY < destY)
+      {
+         new_moY = old_moY + 1;
+         new_drawY = old_drawY + 1;
+      }
+      else
+      {
+         new_moY = old_moY;
+         new_drawY = old_drawY;
+      }
+                     
+      /* Create Coordinate to which MapObject is to move */
+      Coordinate newLoc(new_drawX, new_drawY);
+      Coordinate newFoot(new_moX, new_moY);
+
+      /* Check for Hardpoint conflict */
+      for (moItr = this->mapObjectContainer.begin(); moItr < this->mapObjectContainer.end(); moItr++)
+      {
+         // Leave loop if Hardpoint detected
+         isHardpoint = (*moItr)->conflict(newFoot);
+         if(isHardpoint)
+            break;
+      }
+
+      /* Add Coordinate to MapObject path if not Hardpoint */
+      if(!isHardpoint)
+      {
+         path.push_back(newLoc);
+         old_moX = new_moX;
+         old_drawX = new_drawX;
+         old_moY = new_moY;
+         old_drawY = new_drawY;
+      }
+      /* Otherwise, stop CMO at Hardpoint */
+      else
+         break;
+   }
+
+   return path;
 }
 
 /* -----------------------------------------------------------------------------
@@ -676,3 +737,4 @@ CharacterMapObject* Map::getCharacterMapObject() const {
 
    return cmo;
 }
+

@@ -60,6 +60,8 @@ class Map : public EventHandler {
       Coordinate getFocusBoundingBox();
       Coordinate getTopLeftOfRegion();
 
+      std::vector<Coordinate> constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const;
+
       void checkOverMapPanThreshold() const;
       CharacterMapObject* getCharacterMapObject() const;
 

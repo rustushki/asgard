@@ -27,7 +27,7 @@ class Hardpoint
       Coordinate coordinate;
 
    public:
-      virtual bool conflict(const Coordinate&) const = 0;
+      virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
 };
 
 enum HARDPOINT_TYPE

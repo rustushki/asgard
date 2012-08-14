@@ -33,7 +33,12 @@ class RectHardpoint : public Hardpoint
       RectHardpoint(int x, int y, int h, int w);
       ~RectHardpoint();
 
-      bool conflict(const Coordinate & wc) const;
+      bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      /* TEST */
+      Coordinate getCoord() const;
+      int getHeight() const;
+      int getWidth() const;
+      /* ENDTEST */
 };
 
 #endif //RECT_HARDPOINT_H

@@ -51,6 +51,7 @@ class MapObject
       std::string getDrawableName() const;
       
       void addHardpoint(Hardpoint *hardpoint);
+      bool conflict(Coordinate c);
       bool intersects(MapObject*);
 
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);

@@ -41,8 +41,12 @@ CircHardpoint::CircHardpoint(int x, int y, double radius)
    this->radius = radius;
 }
       
-bool CircHardpoint::conflict(const Coordinate & wc) const
+bool CircHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
 {
-   
-   return (distance(this->coordinate,wc) < this->radius); 
+   return (distance(this->coordinate + moc,wc) < this->radius); 
+}
+
+Coordinate CircHardpoint::getCoord() const
+{
+   return this->coordinate;
 }

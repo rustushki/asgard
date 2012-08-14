@@ -149,6 +149,23 @@ void MapObject::addHardpoint(Hardpoint *hardpoint) {
    this->hardpoints.push_back(hardpoint);
 }
 
+bool MapObject::conflict(Coordinate c) {
+   std::vector<Hardpoint*>::const_iterator hpItr;
+   bool isConflict = false;
+   for(hpItr = hardpoints.begin(); hpItr < hardpoints.end(); hpItr++)
+   {
+      // Does Coordinate c conflict with MapObject's Hardpoint?
+      if((*hpItr)->conflict(c,this->leftCorner))
+      {
+         // TO DO: Implement algorithm for maneuvering around Hardpoint
+         isConflict = true;
+         break;
+      }
+   }
+
+   return isConflict;
+}
+
 /* ------------------------------------------------------------------------------
  * intersects - Return true if this MapObject intersects with the provided
  * MapObject.
