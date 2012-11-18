@@ -19,7 +19,8 @@ AddOption(
 )
 
 # Build the environment and export it for child sconscripts
-env = Environment(PREFIX = GetOption('prefix'))
+#env = Environment(PREFIX = GetOption('prefix'), CXX='clang++')
+env = Environment(PREFIX = GetOption('prefix'), CXX='g++')
 Export('env')
 
 # Child conscripts
