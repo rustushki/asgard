@@ -10,6 +10,7 @@ include_path =                     \
    +'#/src/console:'               \
    +'#/src/database:'              \
    +'#/src/graphicsEngine:'        \
+   +'#/src/gui:'                   \
    +'#/src/main:'                  \
    +'#/src/map:'                   \
    +'#/src/model:'                 \
@@ -43,6 +44,10 @@ objects = [
 './graphicsEngine/RectBlitter.cpp',
 './graphicsEngine/Screen.cpp',
 './graphicsEngine/SpriteSheetCache.cpp',
+'./gui/Box.cpp',
+'./gui/GuiFactory.cpp',
+'./gui/Dialog.cpp',
+'./gui/Theme.cpp',
 './map/Map.cpp',
 './model/Inventory.cpp',
 './model/Item.cpp',

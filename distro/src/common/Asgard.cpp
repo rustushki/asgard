@@ -19,6 +19,7 @@
 
 #include "Asgard.h"
 #include "ConsolePython.h"
+#include "GuiFactory.h"
 
 Asgard* Asgard::instance = NULL;
 int     Asgard::argc     = 0;
@@ -198,7 +199,9 @@ void Asgard::view() {
 
    // Start the Graphics Engine page flip loop.
    GraphicsEngine::getInstance()->play();
-
+   
+   GuiFactory* gf = GuiFactory::GetInstance();
+   gf->buildDialog("match.png", "This place sure is dark. But there are palm trees and that makes me feel safe.");
 }
 
 void Asgard::initExternal() {
