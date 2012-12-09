@@ -72,6 +72,20 @@ create table Tiles
    foreign key (MapObjectId) references MapObject(MapObjectId)
 );
 
+create table Interaction
+(
+   InteractionId integer(10) not null,
+   MapObjectId integer(10) not null,
+   Priority integer(3) not null,
+   AnimationName varchar(100),
+   ItemId integer,
+   DialogId integer,
+   foreign key(MapObjectId) references MapObject(MapObjectId),
+   foreign key(AnimationName) references Animation(AnimationName),
+   foreign key(ItemId) references Item(ItemId)
+   /*foreign key(DialogId) references Dialog(DialogId)*/
+);
+
 create table Animation
 (
    AnimationName varchar(100) not null,
