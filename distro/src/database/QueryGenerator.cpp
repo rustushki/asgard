@@ -136,6 +136,18 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    return QueryGenerator::makeCStr(qs);
 }
 
+char* QueryGenerator::interaction(int mapObjectId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.AnimationName, ";
+   qs += "i.ItemId, ";
+   qs += "i.DialogId ";
+   qs += "from Interaction i ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
+}
+
 char* QueryGenerator::drawable(std::string dName)
 {
    std::string qs;

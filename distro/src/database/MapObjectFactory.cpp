@@ -195,6 +195,18 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       }
       delete rs;
 
+      // Create Interactions
+      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
+
+      if (rs != NULL) {
+         for (int row = 0; row < rs->getRowCount(); row++)
+         {
+            /* Determine type of Interaction here*/
+            mapObject->addInteraction(createInteraction(rs,row));
+         }
+      }
+      delete rs;
+
       mapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(mapObject, drawable);
    }
@@ -226,6 +238,10 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
       }
 }
 
+Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row) {
+   return new Interaction();
+}
+
 Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row) {
    int wc_x,wc_y = 0;
 
@@ -247,6 +263,23 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    if (rc == SQLITE_OK)
    {
       assert(rs->getColCount() == HARDPOINT_COLUMN_COUNT);
+   }
+
+   return rs;
+}
+
+Interaction* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId) {
+   RowSet* rs = new RowSet();
+   char* iQuery;
+   int rc;
+ 
+   iQuery = QueryGenerator::interaction(smoId);
+   rc = rs->select(db, iQuery);
+   delete [] iQuery;
+
+   if (rc == SQLITE_OK)
+   {
+      assert(rs->getColCount() == INTERACTION_COLUMN_COUNT);
    }
 
    return rs;

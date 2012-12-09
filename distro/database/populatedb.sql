@@ -58,7 +58,7 @@ values(NULL,700,1217,1);
 --Treasure Chest 1 (id = 8)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,MapObjectTypeId)
-values(NULL,700,400,3);
+values(1000,700,400,3);
 
 --Treasure Chest 2 (id = 9)
 insert into MapObject
@@ -229,3 +229,12 @@ values("TreasureChest","treasurechest.png",55,75,1);
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
 values("Rock","rock.png",96,145,1);
+
+insert into Item
+(ItemId,ItemName)
+values(1,"Balloon Sword");
+
+/* Interaction for Treasure Chest 1 */
+insert into Interaction
+(InteractionId,MapObjectId,Priority,AnimationName,ItemId)
+values(1,1000,0,NULL,1);

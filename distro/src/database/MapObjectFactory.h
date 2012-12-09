@@ -22,6 +22,7 @@
 
 #include "externals.h"
 #include "Hardpoint.h"
+#include "Interaction.h"
 #include "RowSet.h"
 #include "Tile.h"
 #include "WaterTile.h"
@@ -44,8 +45,10 @@ class MapObjectFactory
       static void createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt);
       static void createMapObject(sqlite3 *db, sqlite3_stmt *stmt);
       static Hardpoint* createHardpoint(RowSet* rs, int row);
+      static Interaction* createInteraction(RowSet* rs, int row);
       static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
       static RowSet* loadHardpoints(sqlite3 *db, int smoId);
+      static RowSet* loadInteractions(sqlite3 *db, int smoId);
       static RowSet* loadNonPlayerCharacterPath(sqlite3 *db, int npcId);
 
       static sqlite3* db;

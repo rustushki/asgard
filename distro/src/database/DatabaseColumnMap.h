@@ -89,6 +89,17 @@ enum HardpointColumn
    HARDPOINT_COLUMN_COUNT
 };
 
+enum InteractionColumn
+{
+   INTERACTION_COLUMN_INTERACTION_ID,
+   INTERACTION_COLUMN_MAP_OBJECT_ID,
+   INTERACTION_COLUMN_PRIORITY,
+   INTERACTION_COLUMN_ANIMATION_NAME,
+   INTERACTION_COLUMN_ITEM_ID,
+   INTERACTION_COLUMN_DIALOG_ID,
+   INTERACTION_COLUMN_COUNT
+};
+
 /* Animation inner joined to SpriteSheet inner joined to Drawable */
 /* See QueryGenerator::drawable(std::string dName)                */
 
