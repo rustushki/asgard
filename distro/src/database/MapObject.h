@@ -24,6 +24,7 @@
 #include "Hardpoint.h"
 #include "Coordinate.h"
 #include "MapObjectState.h"
+#include "Interaction.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -54,6 +55,9 @@ class MapObject
       bool conflict(Coordinate c);
       bool intersects(MapObject*);
 
+      void addInteraction(Interaction *interaction);
+      std::vector<Interaction*>* getInteractions() const;
+
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
 
       void move(Coordinate newLoc);
@@ -71,6 +75,7 @@ class MapObject
       std::string drawableName;
 
       std::vector<Hardpoint*> hardpoints;
+      std::vector<Interaction*> interactions;
 
       MapObjectState state;
       int step;

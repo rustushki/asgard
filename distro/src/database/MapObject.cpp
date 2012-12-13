@@ -32,6 +32,9 @@ MapObject::~MapObject() {
    for (unsigned int x = 0; x < this->hardpoints.size(); x++) {
       delete this->hardpoints[x];
    }
+   for (unsigned int x = 0; x < this->interactions.size(); x++) {
+      delete this->interactions[x];
+   }
 }
 
 void MapObject::setLeftCorner(const Coordinate& leftCorner)
@@ -180,6 +183,16 @@ bool MapObject::intersects(MapObject* that) {
 		|| this->getRight()  < that->getLeft()
 		|| this->getTop()    > that->getBottom()
 	);
+}
+
+void MapObject::addInteraction(Interaction *interaction)
+{
+   this->interactions.push_back(interaction);
+}
+
+std::vector<Interaction *>* MapObject::getInteractions() const
+{
+   return this->interactions;
 }
 
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
