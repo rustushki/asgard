@@ -17,23 +17,35 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef DIALOG_INTERACTION_H
-#define DIALOG_INTERACTION_H
+#include "AnimationInteraction.h"
 
-#include "Interaction.h"
-#include "Dialog.h"
-
-class DialogInteraction : public Interaction
+AnimationInteraction::AnimationInteraction(int priority, Animation *a)
 {
-   public:
-      DialogInteraction(int priority, Dialog *d);
-      ~DialogInteraction();
-      void setPriority(int priority);
-      int getPriority() const;
-      void setDialog(Dialog *d);
-      Dialog* getDialog() const;
-   private:
-      Dialog *d;
-};
+   this->priority = priority;
+   this->a = a;
+}
 
-#endif //DIALOG_INTERACTION_H
+AnimationInteraction::~AnimationInteraction()
+{
+
+}
+
+void Animation::setPriority(int priority)
+{
+   this->priority = priority;
+}
+
+int Animation::getPriority() const
+{
+   return this->priority;
+}
+
+void Animation::setAnimation(Animation *a)
+{
+   this->a = a;
+}
+
+Animation* Animation::getAnimation() const
+{
+   return this->a;
+}

@@ -26,13 +26,14 @@
 class ItemInteraction : public Interaction
 {
    public:
-      ItemInteraction(int priority);
+      ItemInteraction(int priority, Item *i);
       ~ItemInteraction();
       void setPriority(int priority);
       int getPriority() const;
+      void setItem(Item *i);
+      Item* getItem() const;
    private:
-      int priority;
-      Item i;
+      Item *i;
 };
 
 #endif //ITEM_INTERACTION_H

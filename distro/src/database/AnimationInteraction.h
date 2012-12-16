@@ -26,13 +26,14 @@
 class AnimationInteraction : public Interaction
 {
    public:
-      AnimationInteraction(int priority);
+      AnimationInteraction(int priority, Animation *a);
       ~AnimationInteraction();
       void setPriority(int priority);
       int getPriority() const;
+      void setAnimation(Animation *a);
+      Animation* getAnimation() const;
    private:
-      int priority;
-      Animation a;
+      Animation *a;
 };
 
 #endif //ANIMATION_INTERACTION_H

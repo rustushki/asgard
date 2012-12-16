@@ -23,8 +23,6 @@
 class Interaction
 {
    public:
-      Interaction(int priority);
-      ~Interaction();
       virtual void setPriority(int priority) = 0;
       virtual int getPriority() const = 0;
    private:
