@@ -77,13 +77,14 @@ create table Interaction
    InteractionId integer(10) not null,
    MapObjectId integer(10) not null,
    Priority integer(3) not null,
+   InteractionType integer(1) not null,
    AnimationName varchar(100),
    ItemId integer,
    DialogId integer,
    foreign key(MapObjectId) references MapObject(MapObjectId),
    foreign key(AnimationName) references Animation(AnimationName),
-   foreign key(ItemId) references Item(ItemId)
-   /*foreign key(DialogId) references Dialog(DialogId)*/
+   foreign key(ItemId) references Item(ItemId),
+   foreign key(DialogId) references Dialog(DialogId)
 );
 
 create table Animation
@@ -130,4 +131,11 @@ create table Item
 (
     ItemId integer primary key,
     ItemName varchar(50) not null
+);
+
+/* TEMPORARY Prototype for testing */
+create table Dialog
+(
+   DialogId integer primary key not null,
+   Quote varchar(1000) not null
 );

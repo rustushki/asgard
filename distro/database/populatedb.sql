@@ -236,5 +236,5 @@ values(1,"Balloon Sword");
 
 /* Interaction for Treasure Chest 1 */
 insert into Interaction
-(InteractionId,MapObjectId,Priority,AnimationName,ItemId)
-values(1,1000,0,NULL,1);
+(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
+values(1,1000,0,1,NULL,1,NULL);
