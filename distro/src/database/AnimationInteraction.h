@@ -26,14 +26,14 @@
 class AnimationInteraction : public Interaction
 {
    public:
-      AnimationInteraction(int priority, Animation *a);
+      AnimationInteraction(int priority, std::string animationName);
       ~AnimationInteraction();
       void setPriority(int priority);
       int getPriority() const;
-      void setAnimation(Animation *a);
-      Animation* getAnimation() const;
+      void setAnimationName(std::string animationName);
+      std::string getAnimationName() const;
    private:
-      Animation *a;
+      std::string animationName;
 };
 
 #endif //ANIMATION_INTERACTION_H

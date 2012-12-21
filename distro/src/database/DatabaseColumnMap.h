@@ -89,15 +89,30 @@ enum HardpointColumn
    HARDPOINT_COLUMN_COUNT
 };
 
-enum InteractionColumn
+/* Interaction inner joined to Animation */
+/* See QueryGenerator::animationInteraction() */
+enum AnimationInteractionColumn
 {
-   INTERACTION_COLUMN_INTERACTION_ID,
-   INTERACTION_COLUMN_MAP_OBJECT_ID,
    INTERACTION_COLUMN_PRIORITY,
-   INTERACTION_COLUMN_INTERACTION_TYPE,
    INTERACTION_COLUMN_ANIMATION_NAME,
-   INTERACTION_COLUMN_ITEM_ID,
-   INTERACTION_COLUMN_DIALOG_ID,
+   INTERACTION_COLUMN_COUNT
+};
+
+/* Interaction inner joined to Item */
+/* See QueryGenerator::itemInteraction() */
+enum ItemInteractionColumn
+{
+   INTERACTION_COLUMN_PRIORITY,
+   INTERACTION_COLUMN_ITEM_NAME,
+   INTERACTION_COLUMN_COUNT
+};
+
+/* Interaction inner joined to Dialog */
+/* See QueryGenerator::dialogInteraction() */
+enum DialogInteractionColumn
+{
+   INTERACTION_COLUMN_PRIORITY,
+   INTERACTION_COLUMN_QUOTE,
    INTERACTION_COLUMN_COUNT
 };
 

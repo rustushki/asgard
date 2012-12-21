@@ -19,10 +19,10 @@
 
 #include "ItemInteraction.h"
 
-ItemInteraction::ItemInteraction(int priority, Item *i)
+ItemInteraction::ItemInteraction(int priority, std::string itemName)
 {
    this->priority = priority;
-   this->i = i;
+   this->itemName = itemName;
 }
 
 ItemInteraction::~ItemInteraction()
@@ -40,12 +40,12 @@ int ItemInteraction::getPriority() const
    return this->priority;
 }
 
-void ItemInteraction::setItem(Item *i)
+void ItemInteraction::setItemName(std::string itemName)
 {
-   this->i = i;
+   this->itemName = itemName;
 }
 
-Item* ItemInteraction::getItem() const
+std::string ItemInteraction::getItemName() const
 {
-   return this->i;
+   return this->itemName;
 }

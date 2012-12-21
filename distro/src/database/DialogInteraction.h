@@ -26,14 +26,14 @@
 class DialogInteraction : public Interaction
 {
    public:
-      DialogInteraction(int priority, Dialog *d);
+      DialogInteraction(int priority, std::string quote);
       ~DialogInteraction();
       void setPriority(int priority);
       int getPriority() const;
-      void setDialog(Dialog *d);
-      Dialog* getDialog() const;
+      void setQuote(std::string quote);
+      std::string getQuote() const;
    private:
-      Dialog *d;
+      std::string quote;
 };
 
 #endif //DIALOG_INTERACTION_H

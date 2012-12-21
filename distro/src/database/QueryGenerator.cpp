@@ -136,16 +136,39 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    return QueryGenerator::makeCStr(qs);
 }
 
-char* QueryGenerator::interaction(int mapObjectId)
+char* QueryGenerator::animationInteraction(int mapObjectId, int interactionType)
 {
    std::string qs;
    qs += "select ";
    qs += "i.Priority, ";
-   qs += "i.AnimationName, ";
-   qs += "i.ItemId, ";
-   qs += "i.DialogId ";
+   qs += "i.AnimationName ";
    qs += "from Interaction i ";
-   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+}
+
+char* QueryGenerator::itemInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "it.ItemName ";
+   qs += "from Interaction i ";
+   qs += "inner join Item it on i.ItemId = it.ItemId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+}
+
+char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "d.Quote ";
+   qs += "from Interaction i ";
+   qs += "inner join Dialog d on i.DialogId = d.DialogId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
 }
 
 char* QueryGenerator::drawable(std::string dName)

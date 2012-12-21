@@ -195,14 +195,32 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       }
       delete rs;
 
-      // Create Interactions
-      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
-
+      // Create AnimationInteractions
+      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
          {
-            /* Determine type of Interaction here*/
-            mapObject->addInteraction(createInteraction(rs,row));
+            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ANIMATION));
+         }
+      }
+      delete rs;
+
+      // Create ItemInteractions
+      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
+      if (rs != NULL) {
+         for (int row = 0; row < rs->getRowCount(); row++)
+         {
+            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ITEM));
+         }
+      }
+      delete rs;
+
+      // Create DialogInteractions
+      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
+      if (rs != NULL) {
+         for (int row = 0; row < rs->getRowCount(); row++)
+         {
+            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_DIALOG));
          }
       }
       delete rs;
@@ -238,8 +256,27 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
       }
 }
 
-Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row) {
-   return new Interaction();
+Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int interactionType) {
+   int priority = atoi(rs->getColumnValue(row,INTERACTION_COLUMN_PRIORITY));
+
+   // AnimationInteractions
+   switch (interactionType)
+   {
+      // AnimationInteractions
+      case INTERACTION_TYPE_ANIMATION:
+         return new AnimationInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_ANIMATION_NAME));
+         break;
+      // ItemInteractions
+      case INTERACTION_TYPE_ITEM:
+         return new ItemInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_ITEM_NAME));
+         break;
+      // DialogInteractions
+      case INTERACTION_TYPE_DIALOG:
+         return new DialogInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_QUOTE));
+         break;
+      default:
+         return new AnimationInteraction();
+   }
 }
 
 Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row) {
@@ -268,12 +305,29 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    return rs;
 }
 
-Interaction* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId) {
+Rowset* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interactionType) {
    RowSet* rs = new RowSet();
    char* iQuery;
    int rc;
  
-   iQuery = QueryGenerator::interaction(smoId);
+   switch (interactionType)
+   {
+      // Load AnimationInteractions
+      case INTERACTION_TYPE_ANIMATION:
+         iQuery = QueryGenerator::animationInteraction(smoId,interactionType);
+         break;
+      // Load ItemInteractions
+      case INTERACTION_TYPE_ITEM:
+         iQuery = QueryGenerator::itemInteraction(smoId,interactionType);
+         break;
+      // Load DialogInteractions
+      case INTERACTION_TYPE_DIALOG:
+         iQuery = QueryGenerator::dialogInteraction(smoId,interactionType);
+         break;
+      default:
+         iQuery = 0;
+   }
+
    rc = rs->select(db, iQuery);
    delete [] iQuery;
 

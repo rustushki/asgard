@@ -19,10 +19,10 @@
 
 #include "DialogInteraction.h"
 
-DialogInteraction::DialogInteraction(int priority, Dialog *d)
+DialogInteraction::DialogInteraction(int priority, std::string quote)
 {
    this->priority = priority;
-   this->d = d;
+   this->quote = quote;
 }
 
 DialogInteraction::~DialogInteraction()
@@ -40,12 +40,12 @@ int DialogInteraction::getPriority() const
    return this->priority;
 }
 
-void DialogInteraction::setDialog(Dialog *d)
+void DialogInteraction::setQuote(std::string quote)
 {
-   this->d = d;
+   this->quote = quote;
 }
 
-Dialog* DialogInteraction::getDialog() const
+std::string DialogInteraction::getQuote() const
 {
-   return this->d;
+   return this->quote;
 }

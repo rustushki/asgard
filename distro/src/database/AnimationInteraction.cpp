@@ -19,10 +19,10 @@
 
 #include "AnimationInteraction.h"
 
-AnimationInteraction::AnimationInteraction(int priority, Animation *a)
+AnimationInteraction::AnimationInteraction(int priority, std::string animationName)
 {
    this->priority = priority;
-   this->a = a;
+   this->animationName = animationName;
 }
 
 AnimationInteraction::~AnimationInteraction()
@@ -40,12 +40,12 @@ int Animation::getPriority() const
    return this->priority;
 }
 
-void Animation::setAnimation(Animation *a)
+void Animation::setAnimationName(std::string animationName)
 {
-   this->a = a;
+   this->animationName = animationName;
 }
 
-Animation* Animation::getAnimation() const
+std::string Animation::getAnimationName() const
 {
-   return this->a;
+   return this->animationName;
 }
