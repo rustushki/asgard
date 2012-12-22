@@ -196,7 +196,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       delete rs;
 
       // Create AnimationInteractions
-      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
+      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
          {
@@ -206,7 +206,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       delete rs;
 
       // Create ItemInteractions
-      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
+      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
          {
@@ -216,7 +216,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       delete rs;
 
       // Create DialogInteractions
-      RowSet* rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
+      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
          {
@@ -257,6 +257,7 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
 }
 
 Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int interactionType) {
+   // Priority column value is same for each interaction type
    int priority = atoi(rs->getColumnValue(row,INTERACTION_COLUMN_PRIORITY));
 
    // AnimationInteractions
@@ -264,18 +265,19 @@ Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int intera
    {
       // AnimationInteractions
       case INTERACTION_TYPE_ANIMATION:
-         return new AnimationInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_ANIMATION_NAME));
+         return new AnimationInteraction(priority, rs->getColumnValue(row,ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME));
          break;
       // ItemInteractions
       case INTERACTION_TYPE_ITEM:
-         return new ItemInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_ITEM_NAME));
+         return new ItemInteraction(priority, rs->getColumnValue(row,ITEM_INTERACTION_COLUMN_ITEM_NAME));
          break;
       // DialogInteractions
       case INTERACTION_TYPE_DIALOG:
-         return new DialogInteraction(priority, rs->getColumnValue(row,INTERACTION_COLUMN_QUOTE));
+         return new DialogInteraction(priority, rs->getColumnValue(row,DIALOG_INTERACTION_COLUMN_QUOTE));
          break;
       default:
-         return new AnimationInteraction();
+         std::cout<<"ERROR:  Undefined Interaction Type!"<<std::endl;
+         return 0;
    }
 }
 
@@ -305,7 +307,7 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    return rs;
 }
 
-Rowset* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interactionType) {
+RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interactionType) {
    RowSet* rs = new RowSet();
    char* iQuery;
    int rc;
@@ -315,25 +317,35 @@ Rowset* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
       // Load AnimationInteractions
       case INTERACTION_TYPE_ANIMATION:
          iQuery = QueryGenerator::animationInteraction(smoId,interactionType);
+         rc = rs->select(db, iQuery);
+         delete [] iQuery;
+         if (rc == SQLITE_OK)
+         {
+            assert(rs->getColCount() == ANIMATION_INTERACTION_COLUMN_COUNT);
+         }
          break;
       // Load ItemInteractions
       case INTERACTION_TYPE_ITEM:
          iQuery = QueryGenerator::itemInteraction(smoId,interactionType);
+         rc = rs->select(db, iQuery);
+         delete [] iQuery;
+         if (rc == SQLITE_OK)
+         {
+            assert(rs->getColCount() == ITEM_INTERACTION_COLUMN_COUNT);
+         }
          break;
       // Load DialogInteractions
       case INTERACTION_TYPE_DIALOG:
          iQuery = QueryGenerator::dialogInteraction(smoId,interactionType);
+         rc = rs->select(db, iQuery);
+         delete [] iQuery;
+         if (rc == SQLITE_OK)
+         {
+            assert(rs->getColCount() == DIALOG_INTERACTION_COLUMN_COUNT);
+         }
          break;
       default:
          iQuery = 0;
-   }
-
-   rc = rs->select(db, iQuery);
-   delete [] iQuery;
-
-   if (rc == SQLITE_OK)
-   {
-      assert(rs->getColCount() == INTERACTION_COLUMN_COUNT);
    }
 
    return rs;

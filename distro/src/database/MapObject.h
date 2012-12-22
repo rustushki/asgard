@@ -56,7 +56,6 @@ class MapObject
       bool intersects(MapObject*);
 
       void addInteraction(Interaction *interaction);
-      std::vector<Interaction*>* getInteractions() const;
 
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
 

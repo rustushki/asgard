@@ -30,22 +30,22 @@ AnimationInteraction::~AnimationInteraction()
 
 }
 
-void Animation::setPriority(int priority)
+void AnimationInteraction::setPriority(int priority)
 {
    this->priority = priority;
 }
 
-int Animation::getPriority() const
+int AnimationInteraction::getPriority() const
 {
    return this->priority;
 }
 
-void Animation::setAnimationName(std::string animationName)
+void AnimationInteraction::setAnimationName(std::string animationName)
 {
    this->animationName = animationName;
 }
 
-std::string Animation::getAnimationName() const
+std::string AnimationInteraction::getAnimationName() const
 {
    return this->animationName;
 }

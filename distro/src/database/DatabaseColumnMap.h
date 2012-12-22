@@ -89,31 +89,38 @@ enum HardpointColumn
    HARDPOINT_COLUMN_COUNT
 };
 
+/* Default Interaction selection */
+enum InteractionColumn
+{
+   INTERACTION_COLUMN_PRIORITY,
+   INTERACTION_COLUMN_COUNT
+};
+
 /* Interaction inner joined to Animation */
 /* See QueryGenerator::animationInteraction() */
 enum AnimationInteractionColumn
 {
-   INTERACTION_COLUMN_PRIORITY,
-   INTERACTION_COLUMN_ANIMATION_NAME,
-   INTERACTION_COLUMN_COUNT
+   ANIMATION_INTERACTION_COLUMN_PRIORITY,
+   ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME,
+   ANIMATION_INTERACTION_COLUMN_COUNT
 };
 
 /* Interaction inner joined to Item */
 /* See QueryGenerator::itemInteraction() */
 enum ItemInteractionColumn
 {
-   INTERACTION_COLUMN_PRIORITY,
-   INTERACTION_COLUMN_ITEM_NAME,
-   INTERACTION_COLUMN_COUNT
+   ITEM_INTERACTION_COLUMN_PRIORITY,
+   ITEM_INTERACTION_COLUMN_ITEM_NAME,
+   ITEM_INTERACTION_COLUMN_COUNT
 };
 
 /* Interaction inner joined to Dialog */
 /* See QueryGenerator::dialogInteraction() */
 enum DialogInteractionColumn
 {
-   INTERACTION_COLUMN_PRIORITY,
-   INTERACTION_COLUMN_QUOTE,
-   INTERACTION_COLUMN_COUNT
+   DIALOG_INTERACTION_COLUMN_PRIORITY,
+   DIALOG_INTERACTION_COLUMN_QUOTE,
+   DIALOG_INTERACTION_COLUMN_COUNT
 };
 
 /* Animation inner joined to SpriteSheet inner joined to Drawable */

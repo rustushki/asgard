@@ -25,7 +25,7 @@ class Interaction
    public:
       virtual void setPriority(int priority) = 0;
       virtual int getPriority() const = 0;
-   private:
+   protected:
       int priority;
 };
 

@@ -190,11 +190,6 @@ void MapObject::addInteraction(Interaction *interaction)
    this->interactions.push_back(interaction);
 }
 
-std::vector<Interaction *>* MapObject::getInteractions() const
-{
-   return this->interactions;
-}
-
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
 {
    int angle = 0;

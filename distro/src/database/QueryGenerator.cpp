@@ -145,6 +145,8 @@ char* QueryGenerator::animationInteraction(int mapObjectId, int interactionType)
    qs += "from Interaction i ";
    qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
    qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
 }
 
 char* QueryGenerator::itemInteraction(int mapObjectId, int interactionType)
@@ -157,6 +159,8 @@ char* QueryGenerator::itemInteraction(int mapObjectId, int interactionType)
    qs += "inner join Item it on i.ItemId = it.ItemId ";
    qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
    qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
 }
 
 char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
@@ -169,6 +173,8 @@ char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
    qs += "inner join Dialog d on i.DialogId = d.DialogId ";
    qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
    qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
 }
 
 char* QueryGenerator::drawable(std::string dName)
