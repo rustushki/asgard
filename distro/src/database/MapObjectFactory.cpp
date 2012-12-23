@@ -319,7 +319,7 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
          iQuery = QueryGenerator::animationInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if (rc == SQLITE_OK)
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
          {
             assert(rs->getColCount() == ANIMATION_INTERACTION_COLUMN_COUNT);
          }
@@ -329,7 +329,7 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
          iQuery = QueryGenerator::itemInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if (rc == SQLITE_OK)
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
          {
             assert(rs->getColCount() == ITEM_INTERACTION_COLUMN_COUNT);
          }
@@ -339,7 +339,7 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
          iQuery = QueryGenerator::dialogInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if (rc == SQLITE_OK)
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
          {
             assert(rs->getColCount() == DIALOG_INTERACTION_COLUMN_COUNT);
          }

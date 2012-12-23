@@ -230,11 +230,32 @@ insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
 values("Rock","rock.png",96,145,1);
 
+/** TEST:  Database load of Interactions **/
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
+values("TreasureChestOpening","treasurechest.png",55,75,1);
+
 insert into Item
 (ItemId,ItemName)
 values(1,"Balloon Sword");
 
-/* Interaction for Treasure Chest 1 */
+insert into Dialog
+(DialogId,Quote)
+values(1,"You found a...Balloon Sword?!?");
+
+/* Item Interaction for Treasure Chest 1 */
 insert into Interaction
 (InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
-values(1,1000,0,1,NULL,1,NULL);
+values(1,1000,1,1,NULL,1,NULL);
+
+/* Animation Interaction for Treasure Chest 1 */
+insert into Interaction
+(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
+values(2,1000,0,0,"TreasureChestOpening",NULL,NULL);
+
+/* Dialog Interaction for Treasure Chest 1 */
+insert into Interaction
+(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
+values(3,1000,2,2,NULL,NULL,1);
+
+/** END TEST **/
