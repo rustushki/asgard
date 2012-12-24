@@ -187,7 +187,14 @@ bool MapObject::intersects(MapObject* that) {
 
 void MapObject::addInteraction(Interaction *interaction)
 {
-   this->interactions.push_back(interaction);
+   int priority = interaction->getPriority();
+
+   // Ensure that enough space is allocated to the vector to accommodate 
+   // insertion of interaction at position interactions[priority]
+   if(priority >= (int)interactions.capacity())
+      interactions.resize(priority+1);
+
+   interactions[priority] = interaction;
 }
 
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
