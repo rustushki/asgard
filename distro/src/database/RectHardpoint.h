@@ -35,9 +35,9 @@ class RectHardpoint : public Hardpoint
 
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
       /* TEST */
-      Coordinate getCoord() const;
-      int getHeight() const;
-      int getWidth() const;
+      //Coordinate getCoord() const;
+      //int getHeight() const;
+      //int getWidth() const;
       /* ENDTEST */
 };
 

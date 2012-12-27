@@ -17,34 +17,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#ifndef RECT_INTERACTIONPOINT_H
+#define RECT_INTERACTIONPOINT_H
 
-RectHardpoint::RectHardpoint()
+#include "Interactionpoint.h"
+
+class RectInteractionpoint : public Interactionpoint
 {
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
-}
+   private:
+      int height;
+      int width;
+   public:
+      RectInteractionpoint();
+      RectInteractionpoint(int x, int y);
+      RectInteractionpoint(int x, int y, int h, int w);
+      ~RectInteractionpoint();
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
-{
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
-}
+      bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      /* TEST */
+      //Coordinate getCoord() const;
+      //int getHeight() const;
+      //int getWidth() const;
+      /* ENDTEST */
+};
 
-RectHardpoint::~RectHardpoint()
-{
-}
-
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
-{
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
-
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
-}
+#endif //RECT_INTERACTIONPOINT_H

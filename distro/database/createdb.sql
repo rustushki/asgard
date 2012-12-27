@@ -4,10 +4,16 @@ drop table if exists MapObjectType;
 drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
+drop table if exists Interactionpoints;
 drop table if exists Tiles;
+drop table if exists Interaction;
 drop table if exists Animation;
 drop table if exists SpriteSheet;
 drop table if exists Drawable;
+drop table if exists Inventory;
+drop table if exists InventoryHasItem;
+drop table if exists Item;
+drop table if exists Dialog;
 
 create table NonPlayerCharacter
 (
@@ -62,6 +68,19 @@ create table Hardpoints
    Height integer(10) null,
    Radius integer(10) null,
    primary key (MapObjectTypeId, RelativeX, RelativeY, HardpointType),
+   foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
+);
+
+create table Interactionpoints
+(
+   MapObjectTypeId integer(10) not null,
+   RelativeX integer(10) not null,
+   RelativeY integer(10) not null,
+   InteractionpointType integer(1) not null,
+   Width integer(10) null,
+   Height integer(10) null,
+   Radius integer(10) null,
+   primary key (MapObjectTypeId, RelativeX, RelativeY, InteractionpointType),
    foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
 );
 

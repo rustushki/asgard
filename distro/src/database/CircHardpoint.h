@@ -35,7 +35,7 @@ class CircHardpoint : public Hardpoint
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
 
       /*TEST*/
-      Coordinate getCoord() const;
+      //Coordinate getCoord() const;
       /*ENDTEST*/
 };
 

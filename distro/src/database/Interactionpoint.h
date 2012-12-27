@@ -16,35 +16,25 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
+#include "Coordinate.h"
 
-#include "RectHardpoint.h"
+#ifndef INTERACTIONPOINT_H
+#define INTERACTIONPOINT_H
 
-RectHardpoint::RectHardpoint()
+class Interactionpoint
 {
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
-}
+   protected:
+      Coordinate coordinate;
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+   public:
+      virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
+};
+
+enum INTERACTIONPOINT_TYPE
 {
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
-}
+   INTERACTIONPOINT_TYPE_RECT,
+   INTERACTIONPOINT_TYPE_CIRC,
+   INTERACTIONPOINT_TYPE_COUNT
+};
 
-RectHardpoint::~RectHardpoint()
-{
-}
-
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
-{
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
-
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
-}
+#endif //INTERACTIONPOINT_H

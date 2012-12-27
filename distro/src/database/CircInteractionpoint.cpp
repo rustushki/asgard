@@ -17,34 +17,31 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#include "CircInteractionpoint.h"
 
-RectHardpoint::RectHardpoint()
+CircInteractionpoint::CircInteractionpoint()
 {
    this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
+   this->radius = 0;
 }
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+CircInteractionpoint::~CircInteractionpoint()
+{
+}
+
+CircInteractionpoint::CircInteractionpoint(int x, int y)
 {
    this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
+   this->radius = 0;
 }
 
-RectHardpoint::~RectHardpoint()
+CircInteractionpoint::CircInteractionpoint(int x, int y, double radius)
 {
+   this->coordinate = Coordinate(x,y);
+   this->radius = radius;
 }
-
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+      
+bool CircInteractionpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
 {
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
-
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
+   return (distance(this->coordinate + moc,wc) < this->radius); 
 }

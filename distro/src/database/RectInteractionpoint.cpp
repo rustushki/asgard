@@ -17,27 +17,27 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#include "RectInteractionpoint.h"
 
-RectHardpoint::RectHardpoint()
+RectInteractionpoint::RectInteractionpoint()
 {
    this->coordinate = Coordinate(0,0);
    this->height = 0;
    this->width = 0;
 }
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+RectInteractionpoint::RectInteractionpoint(int x, int y, int height, int width)
 {
    this->coordinate = Coordinate(x,y);
    this->height = height;
    this->width = width;
 }
 
-RectHardpoint::~RectHardpoint()
+RectInteractionpoint::~RectInteractionpoint()
 {
 }
 
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+bool RectInteractionpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
 {
    Coordinate br; 
    Coordinate tl = this->coordinate + moc;
