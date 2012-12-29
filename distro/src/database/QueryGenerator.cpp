@@ -136,6 +136,26 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    return QueryGenerator::makeCStr(qs);
 }
 
+char* QueryGenerator::interactionpoint(int mapObjectId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "mo.MapObjectId, ";
+   qs += "i.RelativeX, ";
+   qs += "i.RelativeY, ";
+   qs += "i.InteractionpointType, ";
+   qs += "i.Width, ";
+   qs += "i.Height, ";
+   qs += "i.Radius, ";
+   qs += "i.requiresMouseClick ";
+   qs += "from MapObject mo ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "inner join Interactionpoints i on i.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
 char* QueryGenerator::animationInteraction(int mapObjectId, int interactionType)
 {
    std::string qs;

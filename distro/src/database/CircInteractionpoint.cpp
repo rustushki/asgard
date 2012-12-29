@@ -35,13 +35,24 @@ CircInteractionpoint::CircInteractionpoint(int x, int y)
    this->radius = 0;
 }
 
-CircInteractionpoint::CircInteractionpoint(int x, int y, double radius)
+CircInteractionpoint::CircInteractionpoint(int x, int y, double radius, bool requiresMouseClick)
 {
    this->coordinate = Coordinate(x,y);
    this->radius = radius;
+   this->requiresMouseClick = requiresMouseClick;
 }
       
 bool CircInteractionpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
 {
    return (distance(this->coordinate + moc,wc) < this->radius); 
+}
+
+void CircInteractionpoint::setRequiresMouseClick(bool requiresMouseClick)
+{
+   this->requiresMouseClick = requiresMouseClick;
+}
+
+bool CircInteractionpoint::requiresMouseClick() const
+{
+   return this->requiresMouseClick;
 }

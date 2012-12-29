@@ -33,6 +33,8 @@ class CircInteractionpoint : public Interactionpoint
       CircInteractionpoint(int x, int y, double r);
 
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      void setRequiresMouseClick(bool requiresMouseClick);
+      bool requiresMouseClick() const;
 
       /*TEST*/
       //Coordinate getCoord() const;

@@ -40,6 +40,8 @@ objects = [
 './database/AnimationInteraction.cpp',
 './database/ItemInteraction.cpp',
 './database/DialogInteraction.cpp',
+'./database/RectInteractionpoint.cpp',
+'./database/CircInteractionpoint.cpp',
 './graphicsEngine/GraphicsEngine.cpp',
 './graphicsEngine/Animation.cpp',
 './graphicsEngine/Drawable.cpp',

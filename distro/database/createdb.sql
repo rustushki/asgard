@@ -80,6 +80,7 @@ create table Interactionpoints
    Width integer(10) null,
    Height integer(10) null,
    Radius integer(10) null,
+   requiresMouseClick boolean null,
    primary key (MapObjectTypeId, RelativeX, RelativeY, InteractionpointType),
    foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
 );

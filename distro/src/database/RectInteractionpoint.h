@@ -34,6 +34,8 @@ class RectInteractionpoint : public Interactionpoint
       ~RectInteractionpoint();
 
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      void setRequiresMouseClick(bool requiresMouseClick);
+      bool requiresMouseClick() const;
       /* TEST */
       //Coordinate getCoord() const;
       //int getHeight() const;

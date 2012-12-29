@@ -26,11 +26,12 @@ RectInteractionpoint::RectInteractionpoint()
    this->width = 0;
 }
 
-RectInteractionpoint::RectInteractionpoint(int x, int y, int height, int width)
+RectInteractionpoint::RectInteractionpoint(int x, int y, int height, int width, bool requiresMouseClick)
 {
    this->coordinate = Coordinate(x,y);
    this->height = height;
    this->width = width;
+   this->requiresMouseClick = requiresMouseClick;
 }
 
 RectInteractionpoint::~RectInteractionpoint()
@@ -47,4 +48,14 @@ bool RectInteractionpoint::conflict(const Coordinate & wc, const Coordinate & mo
       return true;
    else
       return false;
+}
+
+void RectInteractionpoint::setRequiresMouseClick(bool requiresMouseClick)
+{
+   this->requiresMouseClick = requiresMouseClick;
+}
+
+bool RectInteractionpoint::requiresMouseClick() const
+{
+   return this->requiresMouseClick;
 }

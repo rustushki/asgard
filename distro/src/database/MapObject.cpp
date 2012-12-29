@@ -185,6 +185,11 @@ bool MapObject::intersects(MapObject* that) {
 	);
 }
 
+void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
+{
+   this->interactionpoints.push_back(interactionpoint);
+}
+
 void MapObject::addInteraction(Interaction *interaction)
 {
    int priority = interaction->getPriority();

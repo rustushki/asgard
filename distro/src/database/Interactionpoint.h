@@ -25,9 +25,12 @@ class Interactionpoint
 {
    protected:
       Coordinate coordinate;
+      bool requiresMouseClick; // Handle Interactions whether or not user clicks within point
 
    public:
       virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
+      virtual void setRequiresMouseClick(bool requiresMouseClick) = 0;
+      virtual bool requiresMouseClick() const = 0;
 };
 
 enum INTERACTIONPOINT_TYPE
