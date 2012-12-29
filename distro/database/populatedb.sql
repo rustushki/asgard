@@ -245,17 +245,17 @@ values(1,"You found a...Balloon Sword?!?");
 
 /* Item Interaction for Treasure Chest 1 */
 insert into Interaction
-(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
-values(1,1000,1,1,NULL,1,NULL);
+(InteractionId,MapObjectId,Priority,isHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(1,1000,1,1,1,NULL,1,NULL);
 
 /* Animation Interaction for Treasure Chest 1 */
 insert into Interaction
-(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
-values(2,1000,0,0,"TreasureChestOpening",NULL,NULL);
+(InteractionId,MapObjectId,Priority,isHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(2,1000,0,1,0,"TreasureChestOpening",NULL,NULL);
 
 /* Dialog Interaction for Treasure Chest 1 */
 insert into Interaction
-(InteractionId,MapObjectId,Priority,InteractionType,AnimationName,ItemId,DialogId)
-values(3,1000,2,2,NULL,NULL,1);
+(InteractionId,MapObjectId,Priority,isHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(3,1000,2,1,2,NULL,NULL,1);
 
 /** END TEST **/

@@ -26,10 +26,12 @@
 class DialogInteraction : public Interaction
 {
    public:
-      DialogInteraction(int priority, std::string quote);
+      DialogInteraction(int priority, bool isHandledOnce, std::string quote);
       ~DialogInteraction();
       void setPriority(int priority);
       int getPriority() const;
+      void setIsHandledOnce(bool isHandledOnce);
+      bool isHandledOnce() const;
       void setQuote(std::string quote);
       std::string getQuote() const;
    private:

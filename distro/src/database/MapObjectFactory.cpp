@@ -259,21 +259,23 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
 Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int interactionType) {
    // Priority column value is same for each interaction type
    int priority = atoi(rs->getColumnValue(row,INTERACTION_COLUMN_PRIORITY));
+   // isHandledOnce column value is same for each interaction type
+   bool isHandledOnce = atoi(rs->getColumnValue(row,INTERACTION_COLUMN_IS_HANDLED_ONCE)) != 0;
 
    // AnimationInteractions
    switch (interactionType)
    {
       // AnimationInteractions
       case INTERACTION_TYPE_ANIMATION:
-         return new AnimationInteraction(priority, rs->getColumnValue(row,ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME));
+         return new AnimationInteraction(priority, isHandledOnce, rs->getColumnValue(row,ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME));
          break;
       // ItemInteractions
       case INTERACTION_TYPE_ITEM:
-         return new ItemInteraction(priority, rs->getColumnValue(row,ITEM_INTERACTION_COLUMN_ITEM_NAME));
+         return new ItemInteraction(priority, isHandledOnce, rs->getColumnValue(row,ITEM_INTERACTION_COLUMN_ITEM_NAME));
          break;
       // DialogInteractions
       case INTERACTION_TYPE_DIALOG:
-         return new DialogInteraction(priority, rs->getColumnValue(row,DIALOG_INTERACTION_COLUMN_QUOTE));
+         return new DialogInteraction(priority, isHandledOnce, rs->getColumnValue(row,DIALOG_INTERACTION_COLUMN_QUOTE));
          break;
       default:
          std::cout<<"ERROR:  Undefined Interaction Type!"<<std::endl;

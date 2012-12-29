@@ -26,10 +26,12 @@
 class ItemInteraction : public Interaction
 {
    public:
-      ItemInteraction(int priority, std::string itemName);
+      ItemInteraction(int priority, bool isHandledOnce, std::string itemName);
       ~ItemInteraction();
       void setPriority(int priority);
       int getPriority() const;
+      void setIsHandledOnce(bool isHandledOnce);
+      bool isHandledOnce() const;
       void setItemName(std::string itemName);
       std::string getItemName() const;
    private:

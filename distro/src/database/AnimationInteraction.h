@@ -26,10 +26,12 @@
 class AnimationInteraction : public Interaction
 {
    public:
-      AnimationInteraction(int priority, std::string animationName);
+      AnimationInteraction(int priority, bool isHandledOnce, std::string animationName);
       ~AnimationInteraction();
       void setPriority(int priority);
       int getPriority() const;
+      void setIsHandledOnce(bool isHandledOnce);
+      bool isHandledOnce() const;
       void setAnimationName(std::string animationName);
       std::string getAnimationName() const;
    private:

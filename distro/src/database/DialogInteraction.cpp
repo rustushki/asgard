@@ -40,6 +40,16 @@ int DialogInteraction::getPriority() const
    return this->priority;
 }
 
+void DialogInteraction::setIsHandledOnce(bool isHandledOnce)
+{
+   this->isHandledOnce = isHandledOnce;
+}
+
+bool DialogInteraction::isHandledOnce() const
+{
+   return this->isHandledOnce;
+}
+
 void DialogInteraction::setQuote(std::string quote)
 {
    this->quote = quote;

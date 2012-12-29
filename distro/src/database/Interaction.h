@@ -25,8 +25,12 @@ class Interaction
    public:
       virtual void setPriority(int priority) = 0;
       virtual int getPriority() const = 0;
+      virtual void setIsHandledOnce(bool isHandledOnce) = 0;
+      virtual bool isHandledOnce() const = 0;
+      virtual bool handle() = 0;
    protected:
       int priority;
+      bool isHandledOnce;
 };
 
 enum INTERACTION_TYPE

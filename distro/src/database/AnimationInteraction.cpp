@@ -40,6 +40,16 @@ int AnimationInteraction::getPriority() const
    return this->priority;
 }
 
+void AnimationInteraction::setIsHandledOnce(bool isHandledOnce)
+{
+   this->isHandledOnce = isHandledOnce;
+}
+
+bool AnimationInteraction::isHandledOnce() const
+{
+   return this->isHandledOnce;
+}
+
 void AnimationInteraction::setAnimationName(std::string animationName)
 {
    this->animationName = animationName;

@@ -40,6 +40,16 @@ int ItemInteraction::getPriority() const
    return this->priority;
 }
 
+void ItemInteraction::setIsHandledOnce(bool isHandledOnce)
+{
+   this->isHandledOnce = isHandledOnce;
+}
+
+bool ItemInteraction::isHandledOnce() const
+{
+   return this->isHandledOnce;
+}
+
 void ItemInteraction::setItemName(std::string itemName)
 {
    this->itemName = itemName;
