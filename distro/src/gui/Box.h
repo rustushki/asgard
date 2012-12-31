@@ -17,6 +17,10 @@ public:
 	uint getHeight() const;
 	uint getWidth() const;
 
+	void show() const;
+	void hide() const;
+	void refresh();
+
 protected:
 	Box();
 
