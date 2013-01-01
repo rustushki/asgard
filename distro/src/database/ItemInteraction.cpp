@@ -19,7 +19,7 @@
 
 #include "ItemInteraction.h"
 
-ItemInteraction::ItemInteraction(int priority, std::string itemName)
+ItemInteraction::ItemInteraction(int priority, bool isHandledOnce, std::string itemName)
 {
    this->priority = priority;
    this->itemName = itemName;
@@ -45,7 +45,7 @@ void ItemInteraction::setIsHandledOnce(bool isHandledOnce)
    this->isHandledOnce = isHandledOnce;
 }
 
-bool ItemInteraction::isHandledOnce() const
+bool ItemInteraction::getIsHandledOnce() const
 {
    return this->isHandledOnce;
 }

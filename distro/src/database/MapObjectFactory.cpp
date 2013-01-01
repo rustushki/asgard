@@ -125,50 +125,6 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    }
    delete rs;
 
-   // Create Interactionpoints
-   RowSet* rs = loadInteractionpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
-
-   if (rs != NULL) {
-      for (int row = 0; row < rs->getRowCount(); row++)
-      {
-         mapObject->addInteractionpoint(createInteractionpoint(rs,row));
-      }
-   }
-   delete rs;
-
-   // Create AnimationInteractions
-   rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
-   if (rs != NULL) {
-      for (int row = 0; row < rs->getRowCount(); row++)
-      {
-         mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ANIMATION));
-      }
-   }
-   delete rs;
-
-   // Create ItemInteractions
-   rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
-   if (rs != NULL) {
-      for (int row = 0; row < rs->getRowCount(); row++)
-      {
-         mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ITEM));
-      }
-   }
-   delete rs;
-
-   // Create DialogInteractions
-   rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
-   if (rs != NULL) {
-      for (int row = 0; row < rs->getRowCount(); row++)
-      {
-         mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_DIALOG));
-      }
-   }
-   delete rs;
-
-   // TODO: Create Items; Not 0.3.0
-  
-
    if (container != NULL) {
       // Set Container attributes
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
@@ -190,68 +146,27 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
    if (npc != NULL)
    {
       // Create Hardpoints
-      RowSet* hpRs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
+      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
-      if (hpRs != NULL) {
-         for (int row = 0; row < hpRs->getRowCount(); row++)
-            npc->addHardpoint(createHardpoint(hpRs,row));
+      if (rs != NULL) {
+         for (int row = 0; row < rs->getRowCount(); row++)
+            npc->addHardpoint(createHardpoint(rs,row));
       }
 
-      delete hpRs;
+      delete rs;
 
       // Create NonPlayerCharacterPath
-      RowSet* npcRs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
-
-      if (npcRs != NULL) {
-         for (int row = 0; row < npcRs->getRowCount(); row++)
-            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(npcRs,row));
-      }
-     
-      // Create Interactionpoints
-      RowSet* rs = loadInteractionpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
+      rs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteractionpoint(createInteractionpoint(rs,row));
-         }
+            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
       }
-      delete rs;
-
-      // Create AnimationInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ANIMATION));
-         }
-      }
-      delete rs;
-
-      // Create ItemInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ITEM));
-         }
-      }
-      delete rs;
-
-      // Create DialogInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_DIALOG));
-         }
-      }
-      delete rs;
 
       npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(npc, drawable);
         
-      delete npcRs;
+      delete rs;
    }
 }
 
@@ -278,7 +193,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
       delete rs;
 
       // Create Interactionpoints
-      RowSet* rs = loadInteractionpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
+      rs = loadInteractionpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
@@ -438,7 +353,7 @@ RowSet* MapObjectFactory::loadInteractionpoints(sqlite3 *db, int smoId) {
    rc = rs->select(db, ipQuery);
    delete [] ipQuery;
 
-   if (rc == SQLITE_OK)
+   if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
    {
       assert(rs->getColCount() == INTERACTIONPOINT_COLUMN_COUNT);
    }

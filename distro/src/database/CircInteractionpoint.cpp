@@ -52,7 +52,7 @@ void CircInteractionpoint::setRequiresMouseClick(bool requiresMouseClick)
    this->requiresMouseClick = requiresMouseClick;
 }
 
-bool CircInteractionpoint::requiresMouseClick() const
+bool CircInteractionpoint::getRequiresMouseClick() const
 {
    return this->requiresMouseClick;
 }

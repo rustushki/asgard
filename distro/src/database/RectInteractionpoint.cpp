@@ -55,7 +55,7 @@ void RectInteractionpoint::setRequiresMouseClick(bool requiresMouseClick)
    this->requiresMouseClick = requiresMouseClick;
 }
 
-bool RectInteractionpoint::requiresMouseClick() const
+bool RectInteractionpoint::getRequiresMouseClick() const
 {
    return this->requiresMouseClick;
 }

@@ -80,7 +80,7 @@ create table Interactionpoints
    Width integer(10) null,
    Height integer(10) null,
    Radius integer(10) null,
-   requiresMouseClick boolean null,
+   RequiresMouseClick boolean null,
    primary key (MapObjectTypeId, RelativeX, RelativeY, InteractionpointType),
    foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
 );
@@ -97,7 +97,7 @@ create table Interaction
    InteractionId integer(10) not null,
    MapObjectId integer(10) not null,
    Priority integer(3) not null,
-   isHandledOnce boolean not null,
+   IsHandledOnce boolean not null,
    InteractionType integer(1) not null,
    AnimationName varchar(100),
    ItemId integer,

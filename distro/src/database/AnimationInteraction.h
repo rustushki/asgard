@@ -31,7 +31,7 @@ class AnimationInteraction : public Interaction
       void setPriority(int priority);
       int getPriority() const;
       void setIsHandledOnce(bool isHandledOnce);
-      bool isHandledOnce() const;
+      bool getIsHandledOnce() const;
       void setAnimationName(std::string animationName);
       std::string getAnimationName() const;
    private:

@@ -19,7 +19,7 @@
 
 #include "AnimationInteraction.h"
 
-AnimationInteraction::AnimationInteraction(int priority, std::string animationName)
+AnimationInteraction::AnimationInteraction(int priority, bool isHandledOnce, std::string animationName)
 {
    this->priority = priority;
    this->animationName = animationName;
@@ -45,7 +45,7 @@ void AnimationInteraction::setIsHandledOnce(bool isHandledOnce)
    this->isHandledOnce = isHandledOnce;
 }
 
-bool AnimationInteraction::isHandledOnce() const
+bool AnimationInteraction::getIsHandledOnce() const
 {
    return this->isHandledOnce;
 }

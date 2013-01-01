@@ -19,7 +19,7 @@
 
 #include "DialogInteraction.h"
 
-DialogInteraction::DialogInteraction(int priority, std::string quote)
+DialogInteraction::DialogInteraction(int priority, bool isHandledOnce, std::string quote)
 {
    this->priority = priority;
    this->quote = quote;
@@ -45,7 +45,7 @@ void DialogInteraction::setIsHandledOnce(bool isHandledOnce)
    this->isHandledOnce = isHandledOnce;
 }
 
-bool DialogInteraction::isHandledOnce() const
+bool DialogInteraction::getIsHandledOnce() const
 {
    return this->isHandledOnce;
 }

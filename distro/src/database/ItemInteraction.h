@@ -31,7 +31,7 @@ class ItemInteraction : public Interaction
       void setPriority(int priority);
       int getPriority() const;
       void setIsHandledOnce(bool isHandledOnce);
-      bool isHandledOnce() const;
+      bool getIsHandledOnce() const;
       void setItemName(std::string itemName);
       std::string getItemName() const;
    private:

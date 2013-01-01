@@ -30,12 +30,12 @@ class RectInteractionpoint : public Interactionpoint
    public:
       RectInteractionpoint();
       RectInteractionpoint(int x, int y);
-      RectInteractionpoint(int x, int y, int h, int w);
+      RectInteractionpoint(int x, int y, int h, int w, bool requiresMouseClick);
       ~RectInteractionpoint();
 
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
       void setRequiresMouseClick(bool requiresMouseClick);
-      bool requiresMouseClick() const;
+      bool getRequiresMouseClick() const;
       /* TEST */
       //Coordinate getCoord() const;
       //int getHeight() const;

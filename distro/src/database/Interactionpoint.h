@@ -30,7 +30,10 @@ class Interactionpoint
    public:
       virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
       virtual void setRequiresMouseClick(bool requiresMouseClick) = 0;
-      virtual bool requiresMouseClick() const = 0;
+      virtual bool getRequiresMouseClick() const = 0;
+      /* TEST */
+      //virtual Coordinate getCoord() const = 0;
+      /* ENDTEST */
 };
 
 enum INTERACTIONPOINT_TYPE

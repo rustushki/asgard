@@ -31,7 +31,7 @@ class DialogInteraction : public Interaction
       void setPriority(int priority);
       int getPriority() const;
       void setIsHandledOnce(bool isHandledOnce);
-      bool isHandledOnce() const;
+      bool getIsHandledOnce() const;
       void setQuote(std::string quote);
       std::string getQuote() const;
    private:

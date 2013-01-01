@@ -35,6 +35,9 @@ MapObject::~MapObject() {
    for (unsigned int x = 0; x < this->interactions.size(); x++) {
       delete this->interactions[x];
    }
+   for (unsigned int x = 0; x < this->interactions.size(); x++) {
+      delete this->interactionpoints[x];
+   }
 }
 
 void MapObject::setLeftCorner(const Coordinate& leftCorner)

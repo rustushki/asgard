@@ -32,7 +32,7 @@ class QueryGenerator
       static char* container(int boxX, int boxY);
       static char* tile(int boxX, int boxY);
       static char* hardpoint(int mapObjectId);
-      static char* interactionpoint(int mapObjectId)
+      static char* interactionpoint(int mapObjectId);
       static char* animationInteraction(int mapObjectId, int interactionType);
       static char* itemInteraction(int mapObjectId, int interactionType);
       static char* dialogInteraction(int mapObjectId, int interactionType);
