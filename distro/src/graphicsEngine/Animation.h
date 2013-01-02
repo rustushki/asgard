@@ -7,6 +7,10 @@
 class Animation
 {
    private:
+
+      // Helper for Constructors.  Initialize Animation members.
+      void init(uint width, uint height, uint sps, uint ssRows, uint ssCols);
+
       // Status of animation for observation.
       AnimationState status;
 
@@ -29,9 +33,16 @@ class Animation
       uint ssCols, ssRows;
 
    public:
-      // Constructor.  Makes sprite sheet.
-	  Animation(std::string filename, uint width, uint height, uint sps, 
+      // Constructor.  Makes sprite sheet by reading a File.
+      Animation(std::string filename, uint width, uint height, uint sps, 
 		  uint ssRows, uint ssCols);
+
+      // Constructor.  Makes sprite sheet with an SDL_Surface*
+      Animation(SDL_Surface* surf, uint width, uint height, uint sps, uint
+        ssRows, uint ssCols);
+
+      // Constructor.  Makes sprite sheet and assumes there is only 1 frame.
+      Animation(SDL_Surface* surf);
 
       // Updates the current still.
       void advance();

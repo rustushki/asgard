@@ -6,6 +6,22 @@ Animation::Animation(std::string filename, uint width, uint height, uint sps, ui
 {
    SpriteSheetCache* ssCache = SpriteSheetCache::getInstance();
    this->spriteSheet = ssCache->retrieve(filename);
+   this->init(width, height, sps, ssRows, ssCols);
+}
+
+Animation::Animation(SDL_Surface* surf, uint width, uint height, uint sps, uint ssRows, uint ssCols)
+{
+   this->spriteSheet = surf;
+   this->init(width, height, sps, ssRows, ssCols);
+}
+
+Animation::Animation(SDL_Surface* surf)
+{
+   this->spriteSheet = surf;
+   this->init(surf->w, surf->h, 1, 1, 1);
+}
+
+void Animation::init(uint width, uint height, uint sps, uint ssRows, uint ssCols) {
    this->width  = width;
    this->height = height;
    this->currentStill = 0;
