@@ -547,6 +547,15 @@ void Map::handle(SDL_Event event) {
                   // event if so.
                   this->checkOverMapPanThreshold();
 
+                  // Is CMO interacting with a MapObject?
+                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
+                  {
+			            if((*moItr)->interacts(newFoot))
+                     {
+                        // Handle any Interactions which don't require a mouse click
+                     }
+			         }
+                  
                   SDL_Delay(10);
 
                   i = i + step;

@@ -57,6 +57,7 @@ class MapObject
       bool intersects(MapObject*);
 
       void addInteractionpoint(Interactionpoint *interactionpoint);
+      bool interacts(Coordinate c);
 
       void addInteraction(Interaction *interaction);
 

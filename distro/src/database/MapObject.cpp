@@ -193,6 +193,23 @@ void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
    this->interactionpoints.push_back(interactionpoint);
 }
 
+bool MapObject::interacts(Coordinate c)
+{
+   std::vector<Interactionpoint*>::const_iterator ipItr;
+   bool interacts = false;
+   for(ipItr = interactionpoints.begin(); ipItr < interactionpoints.end(); ipItr++)
+   {
+      // Does Coordinate c conflict with MapObject's Interactionpoint?
+      if((*ipItr)->conflict(c,this->leftCorner))
+      {
+         interacts = true;
+         break;
+      }
+   }
+
+   return interacts;
+}
+
 void MapObject::addInteraction(Interaction *interaction)
 {
    int priority = interaction->getPriority();
