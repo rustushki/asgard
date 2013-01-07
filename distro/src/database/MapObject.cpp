@@ -193,21 +193,26 @@ void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
    this->interactionpoints.push_back(interactionpoint);
 }
 
-bool MapObject::interacts(Coordinate c)
+void MapObject::interacts(MapObject *accepter)
 {
    std::vector<Interactionpoint*>::const_iterator ipItr;
-   bool interacts = false;
-   for(ipItr = interactionpoints.begin(); ipItr < interactionpoints.end(); ipItr++)
+   std::vector<Interaction*>::const_iterator iItr;
+
+   for(ipItr = accepter->interactionpoints.begin(); ipItr < accepter->interactionpoints.end(); ipItr++)
    {
-      // Does Coordinate c conflict with MapObject's Interactionpoint?
-      if((*ipItr)->conflict(c,this->leftCorner))
+      // Is initiator MapObject's foot within accepter MapObject's Interactionpoint(s)?
+      if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
       {
-         interacts = true;
-         break;
+         // Handle Interactions
+         for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
+         {
+            (*iItr)->handle(this,accepter);
+            if((*iItr)->getIsHandledOnce()) // Remove Interaction if it is only handled once
+               interactions.erase(iItr);
+         }
+         break; // This MapObject's foot only needs to be within one Interactionpoint
       }
    }
-
-   return interacts;
 }
 
 void MapObject::addInteraction(Interaction *interaction)
@@ -336,4 +341,12 @@ void MapObject::setStep(int step) {
 
 int MapObject::getStep() {
    return this->step;
+}
+
+void MapObject::setDrawable(Drawable *d) {
+   this->drawable = d;
+}
+
+Drawable* MapObject::getDrawable() const {
+   return this->drawable;
 }

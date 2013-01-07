@@ -20,6 +20,8 @@
 #ifndef INTERACTION_H
 #define INTERACTION_H
 
+#include "MapObject.h"
+
 class Interaction
 {
    public:
@@ -27,7 +29,7 @@ class Interaction
       virtual int getPriority() const = 0;
       virtual void setIsHandledOnce(bool isHandledOnce) = 0;
       virtual bool getIsHandledOnce() const = 0;
-      //virtual bool handle() = 0;
+      virtual void handle(MapObject *initiator, MapObject *accepter) = 0;
    protected:
       int priority;
       bool isHandledOnce;

@@ -59,3 +59,9 @@ std::string DialogInteraction::getQuote() const
 {
    return this->quote;
 }
+
+void DialogInteraction::handle(MapObject *initiator, MapObject *accepter)
+{
+   // Insert code for setting Dialog in MapObject
+
+}

@@ -59,3 +59,9 @@ std::string AnimationInteraction::getAnimationName() const
 {
    return this->animationName;
 }
+
+void AnimationInteraction::handle(MapObject *initiator, MapObject *accepter)
+{
+   // Swap Animation of MapObject accepter's Drawable for Interaction
+   accepter->getDrawable()->swapAnimation(this->animationName);
+}

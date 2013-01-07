@@ -26,6 +26,7 @@
 #include "MapObjectState.h"
 #include "Interaction.h"
 #include "Interactionpoint.h"
+#include "Drawable.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -57,7 +58,10 @@ class MapObject
       bool intersects(MapObject*);
 
       void addInteractionpoint(Interactionpoint *interactionpoint);
-      bool interacts(Coordinate c);
+
+      // Determines if this MapObject is within one of the accepter's Interactionpoints.
+      // If so, then the accepter will allow its Interactions to be handled.
+      void interacts(MapObject *accepter);
 
       void addInteraction(Interaction *interaction);
 
@@ -70,12 +74,17 @@ class MapObject
       MapObjectState getState();
       void setStep(int step);
       int getStep();
+
+      // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
+      void setDrawable(Drawable *d);
+      Drawable *getDrawable() const;
       
    private:
       Coordinate leftCorner;
       list<int> boundingBoxes;
       int height,width;
       std::string drawableName;
+      Drawable *drawable; // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
 
       std::vector<Hardpoint*> hardpoints;
       std::vector<Interactionpoint*> interactionpoints;

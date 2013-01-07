@@ -547,14 +547,9 @@ void Map::handle(SDL_Event event) {
                   // event if so.
                   this->checkOverMapPanThreshold();
 
-                  // Is CMO interacting with a MapObject?
+                  // Handle any Interactions between the CMO and another MapObject, if necessary
                   for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
-                  {
-			            if((*moItr)->interacts(newFoot))
-                     {
-                        // Handle any Interactions which don't require a mouse click
-                     }
-			         }
+			            cmo->interacts(*moItr);
                   
                   SDL_Delay(10);
 
@@ -746,4 +741,3 @@ CharacterMapObject* Map::getCharacterMapObject() const {
 
    return cmo;
 }
-

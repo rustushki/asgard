@@ -21,7 +21,6 @@
 #define ANIMATION_INTERACTION_H
 
 #include "Interaction.h"
-#include "Animation.h"
 
 class AnimationInteraction : public Interaction
 {
@@ -34,6 +33,7 @@ class AnimationInteraction : public Interaction
       bool getIsHandledOnce() const;
       void setAnimationName(std::string animationName);
       std::string getAnimationName() const;
+      void handle(MapObject *initiator, MapObject *accepter);
    private:
       std::string animationName;
 };
