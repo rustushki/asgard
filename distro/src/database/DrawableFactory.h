@@ -29,6 +29,7 @@ class DrawableFactory
 {
    public:
       static Drawable* build(sqlite3 *db, std::string dName);
+      static Drawable* build(SDL_Surface* surf, std::string dName);
 };
 
 #endif //DRAWABLE_FACTORY_H

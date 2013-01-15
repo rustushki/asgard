@@ -19,8 +19,7 @@
 
 #include "DrawableFactory.h"
 
-Drawable* DrawableFactory::build(sqlite3 *db, std::string dName)
-{
+Drawable* DrawableFactory::build(sqlite3 *db, std::string dName) {
    Drawable *d;
    Animation *a;
    char *query;
@@ -46,6 +45,24 @@ Drawable* DrawableFactory::build(sqlite3 *db, std::string dName)
    sqlite3_finalize(stmt);
    sqlite3_close(db);
    delete [] query;
+
+   return d;
+}
+
+/* ------------------------------------------------------------------------------
+ * build - Given an SDL_Surface and a Drawable Name, build a drawable.  This
+ * drawable will have only 1 animation named 'default', and it will be
+ * single-still.
+ */
+Drawable* DrawableFactory::build(SDL_Surface *surf, std::string dName) {
+
+   // Build Animation.
+   std::string aName = "default";
+   Animation *a = new Animation(surf);
+
+   // Create Drawable object
+   Drawable *d = new Drawable(dName);
+   d->addAnimation(a, aName.c_str());
 
    return d;
 }
