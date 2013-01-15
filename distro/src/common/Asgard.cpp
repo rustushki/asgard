@@ -68,6 +68,12 @@ void Asgard::controller() {
 
    // The View is now ready.
 
+   GuiFactory* gf = GuiFactory::GetInstance();
+   Dialog* dia = gf->buildDialog("match.png", "This place sure is dark. But there are palm trees and that makes me feel safe.");
+   dia->setDimension(500, 300);
+   dia->refresh();
+   dia->show();
+
    // Read from the Console and Process all Input.
    Console::getInstance()->inputLoop();
 
@@ -199,9 +205,6 @@ void Asgard::view() {
 
    // Start the Graphics Engine page flip loop.
    GraphicsEngine::getInstance()->play();
-   
-   GuiFactory* gf = GuiFactory::GetInstance();
-   gf->buildDialog("match.png", "This place sure is dark. But there are palm trees and that makes me feel safe.");
 }
 
 void Asgard::initExternal() {
