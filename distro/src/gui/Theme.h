@@ -19,13 +19,13 @@ class Theme {
 public:
    Theme(std::string themeName);
 
+   // Build Drawable for associated with the special string provided.
+   SDL_Surface* buildElement(std::string elementName);
+
 private:
 
-	// This name is used to construct the path to the theme resource elements.
-	std::string name;
-
-	// Build Drawable for associated with the special string provided.
-	SDL_Surface* buildElement(std::string elementName);
+   // This name is used to construct the path to the theme resource elements.
+   std::string name;
 
 };
 

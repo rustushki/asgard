@@ -4,7 +4,7 @@ Theme::Theme(std::string themeName) {
    this->name = themeName;
 }
 
-SDL_Surface* buildElement(std::string elementName) {
+SDL_Surface* Theme::buildElement(std::string elementName) {
    // Do something with element name.
 
    // TODO: Real work starts here.
