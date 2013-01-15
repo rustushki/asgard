@@ -14,11 +14,8 @@ SDL_Surface* ResourceLoader::LoadSDLSurface(std::string elementPath) {
 
    // Handle PNG transparency.
    SDL_RWops *rwop;
-   rwop=SDL_RWFromFile(path.c_str(), "rb");
-   bool alpha = false;
-   if (IMG_isPNG(rwop)) {
-      alpha = true;
-   }
+   rwop = SDL_RWFromFile(path.c_str(), "rb");
+   bool alpha = IMG_isPNG(rwop);
 
    surfaceRaw = IMG_Load(path.c_str());
 
