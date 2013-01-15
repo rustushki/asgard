@@ -14,7 +14,7 @@ SDL_Surface* Theme::buildElement(std::string elementName) {
    SDL_Surface* spriteSheet = NULL;
    SDL_Surface* spriteSheetRaw = NULL;
 
-   std::string path  = "spritesheet/";
+   std::string path  = "gui/";
                path += this->name + "/";
                path += elementName + ".png";
 
