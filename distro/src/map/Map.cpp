@@ -382,7 +382,7 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
    d->setX(x);
    d->setY(y);
 
-   GraphicsEngine::getInstance()->displayDrawable(d, "stageLayer", x, y);
+   GraphicsEngine::getInstance()->displayDrawable(d, "map", x, y);
 }
 
 void Map::handle(SDL_Event event) {

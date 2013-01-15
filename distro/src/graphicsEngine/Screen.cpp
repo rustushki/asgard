@@ -24,7 +24,14 @@ Screen* Screen::getInstance() {
 
 void Screen::init() {
    // Setup Screen Layers
-   std::string lsName = "stageLayer";
+
+
+   // Gui Layer
+   std::string lsName = "gui";
+   this->pushLayer(new Layer(lsName));
+
+   // Map Layer
+   lsName = "map";
    this->pushLayer(new Layer(lsName));
 
    // TODO: Another process should initialize the background layer.
