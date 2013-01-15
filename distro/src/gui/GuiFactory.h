@@ -31,7 +31,7 @@ public:
 
 	void setThemeName(std::string themeName);
 	std::string getThemeName() const;
-	const Theme* getTheme() const;
+	Theme* getTheme() const;
 
 };
 

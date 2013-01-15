@@ -52,6 +52,6 @@ std::string GuiFactory::getThemeName() const {
    return this->themeName;
 }
 
-const Theme* GuiFactory::getTheme() const {
+Theme* GuiFactory::getTheme() const {
    return this->theme;
 }
