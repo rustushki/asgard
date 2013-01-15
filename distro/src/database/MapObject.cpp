@@ -193,22 +193,38 @@ void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
    this->interactionpoints.push_back(interactionpoint);
 }
 
-void MapObject::interacts(MapObject *accepter)
+void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
 {
    std::vector<Interactionpoint*>::const_iterator ipItr;
    std::vector<Interaction*>::const_iterator iItr;
 
    for(ipItr = accepter->interactionpoints.begin(); ipItr < accepter->interactionpoints.end(); ipItr++)
    {
+      // Do not allow Interactions when mouse was not clicked on an Interactionpoint
+      // requiring a click (e.g. Interactionpoint for a treasure chest)
+      if(((*ipItr)->getRequiresMouseClick() == true) && (wasMouseClicked == false))
+         continue;
+
       // Is initiator MapObject's foot within accepter MapObject's Interactionpoint(s)?
       if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
       {
          // Handle Interactions
          for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
          {
-            (*iItr)->handle(this,accepter);
+            switch ((*iItr)->getType())
+            {
+               case INTERACTION_TYPE_ANIMATION:
+                  accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
+                  break;
+               case INTERACTION_TYPE_ITEM:
+                  break;
+               case INTERACTION_TYPE_DIALOG:
+                  break;
+               default:
+                  ;
+            }
             if((*iItr)->getIsHandledOnce()) // Remove Interaction if it is only handled once
-               interactions.erase(iItr);
+               interactions.erase(interactions.begin() + (*iItr)->getPriority());
          }
          break; // This MapObject's foot only needs to be within one Interactionpoint
       }

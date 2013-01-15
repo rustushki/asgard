@@ -60,8 +60,7 @@ std::string ItemInteraction::getItemName() const
    return this->itemName;
 }
 
-void ItemInteraction::handle(MapObject *initiator, MapObject *accepter)
+int ItemInteraction::getType() const
 {
-   // Move Item from MapObject accepter's Inventory to MapObject initiator's Inventory
-
+   return INTERACTION_TYPE_ITEM;
 }

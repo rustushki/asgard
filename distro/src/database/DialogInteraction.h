@@ -20,6 +20,7 @@
 #ifndef DIALOG_INTERACTION_H
 #define DIALOG_INTERACTION_H
 
+#include "externals.h"
 #include "Interaction.h"
 
 class DialogInteraction : public Interaction
@@ -33,7 +34,7 @@ class DialogInteraction : public Interaction
       bool getIsHandledOnce() const;
       void setQuote(std::string quote);
       std::string getQuote() const;
-      void handle(MapObject *initiator, MapObject *accepter);
+      int getType() const;
    private:
       std::string quote;
 };

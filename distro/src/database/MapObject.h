@@ -24,8 +24,8 @@
 #include "Hardpoint.h"
 #include "Coordinate.h"
 #include "MapObjectState.h"
-#include "Interaction.h"
 #include "Interactionpoint.h"
+#include "Interaction.h"
 #include "Drawable.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
@@ -61,7 +61,7 @@ class MapObject
 
       // Determines if this MapObject is within one of the accepter's Interactionpoints.
       // If so, then the accepter will allow its Interactions to be handled.
-      void interacts(MapObject *accepter);
+      void interacts(MapObject *accepter, bool wasMouseClicked);
 
       void addInteraction(Interaction *interaction);
 

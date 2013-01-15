@@ -20,6 +20,7 @@
 #ifndef ITEM_INTERACTION_H
 #define ITEM_INTERACTION_H
 
+#include "externals.h"
 #include "Interaction.h"
 
 class ItemInteraction : public Interaction
@@ -33,7 +34,7 @@ class ItemInteraction : public Interaction
       bool getIsHandledOnce() const;
       void setItemName(std::string itemName);
       std::string getItemName() const;
-      void handle(MapObject *initiator, MapObject *accepter);
+      int getType() const;
    private:
       std::string itemName;
 };
