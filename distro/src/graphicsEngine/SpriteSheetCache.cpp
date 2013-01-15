@@ -1,3 +1,4 @@
+#include "ResourceLoader.h"
 #include "SpriteSheetCache.h"
 #include "consts.h"
 
@@ -33,41 +34,5 @@ SDL_Surface* SpriteSheetCache::retrieve(std::string name) {
       return iter->second;
    }
 
-   // Otherwise, read and create from hard disk.
-   SDL_Surface* spriteSheet = NULL;
-   SDL_Surface* spriteSheetRaw = NULL;
-
-   // Search for spritesheets in the RES directory.
-   std::string path(RES);
-   path.append("spritesheet/");
-   path.append(name);
-
-   // TODO: File Exists?
-
-   // Handle PNG transparency.
-   SDL_RWops *rwop;
-   rwop=SDL_RWFromFile(path.c_str(), "rb");
-   bool alpha = false;
-   if (IMG_isPNG(rwop)) {
-      alpha = true;
-   }
-
-   spriteSheetRaw = IMG_Load(path.c_str());
-
-   if (spriteSheetRaw != NULL)
-   {
-      if (alpha) {
-         spriteSheet = SDL_DisplayFormatAlpha(spriteSheetRaw);
-         SDL_FreeSurface(spriteSheetRaw);
-      } else {
-         spriteSheet = SDL_DisplayFormat(spriteSheetRaw);
-         SDL_FreeSurface(spriteSheetRaw);
-
-         // Hot pink transparency color.
-         uint colorkey = SDL_MapRGB(spriteSheet->format, 0xff, 0, 0xff);
-         SDL_SetColorKey(spriteSheet, SDL_SRCCOLORKEY | SDL_RLEACCEL, colorkey);
-      }
-   }
-
-   return spriteSheet;
+   return ResourceLoader::LoadSDLSurface(std::string("spritesheet/"+name));
 }

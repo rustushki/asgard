@@ -4,6 +4,8 @@
 #include <string>
 #include <SDL/SDL.h>
 
+#include "ResourceLoader.h"
+
 
 /*
  * Basenames for image files which contain theme elements.

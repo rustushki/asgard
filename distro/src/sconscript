@@ -47,6 +47,7 @@ objects = [
 './gui/Box.cpp',
 './gui/GuiFactory.cpp',
 './gui/Dialog.cpp',
+'./gui/ResourceLoader.cpp',
 './gui/Theme.cpp',
 './map/Map.cpp',
 './model/Inventory.cpp',

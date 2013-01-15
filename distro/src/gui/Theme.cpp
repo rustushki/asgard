@@ -5,16 +5,20 @@ Theme::Theme(std::string themeName) {
 }
 
 SDL_Surface* Theme::buildElement(std::string elementName) {
-   // Do something with element name.
-
-   // TODO: Real work starts here.
-   //
 
    // TODO: Optimize Theme by storing each theme element in an std::map.  This
    // method then looks up the element in tha map rather than rebuilding a new
    // SDL_Surface.
    //
 
+   SDL_Surface* spriteSheet = NULL;
+   SDL_Surface* spriteSheetRaw = NULL;
+
+   std::string path  = "spritesheet/";
+               path += this->name + "/";
+               path += elementName + ".png";
+
    // Return SDL_Surface.
-   return NULL;
+   return ResourceLoader::LoadSDLSurface(path);
+
 }
