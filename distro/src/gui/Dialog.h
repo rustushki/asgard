@@ -8,6 +8,8 @@ class Dialog : public Box {
 
 public:
 	~Dialog();
+   void setText(std::string text);
+   std::string getText() const;
 
 private:
 	Dialog(std::string image, std::string text);

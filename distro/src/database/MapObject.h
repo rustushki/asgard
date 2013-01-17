@@ -27,6 +27,8 @@
 #include "Interactionpoint.h"
 #include "Interaction.h"
 #include "Drawable.h"
+#include "Dialog.h"
+#include "Inventory.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -78,7 +80,7 @@ class MapObject
       // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
       void setDrawable(Drawable *d);
       Drawable *getDrawable() const;
-      
+
    private:
       Coordinate leftCorner;
       list<int> boundingBoxes;
@@ -92,5 +94,8 @@ class MapObject
 
       MapObjectState state;
       int step;
+
+      Dialog *dialog;
+      Inventory *inv;
 };
 #endif//MAP_OBJECT_H

@@ -217,13 +217,16 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
                   accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
                   break;
                case INTERACTION_TYPE_ITEM:
+                  accepter->inv->transferItemToInventory(((ItemInteraction *)(*iItr))->getItemName(),this->inv);
                   break;
                case INTERACTION_TYPE_DIALOG:
+                  accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
                   break;
                default:
-                  ;
+                  std::cout<<"ERROR: Undefined Interaction"<<std::endl;
             }
-            if((*iItr)->getIsHandledOnce()) // Remove Interaction if it is only handled once
+            // Remove Interaction if it is only handled once
+            if((*iItr)->getIsHandledOnce()) 
                interactions.erase(interactions.begin() + (*iItr)->getPriority());
          }
          break; // This MapObject's foot only needs to be within one Interactionpoint
