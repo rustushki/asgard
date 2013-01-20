@@ -4,10 +4,10 @@
 #include <vector>
 #include <string>
 
-class Theme;
-class Box;
+#include "Dialog.h"
+#include "Box.h"
+#include "Theme.h"
 class Menu;
-class Dialog;
 
 class GuiFactory {
 

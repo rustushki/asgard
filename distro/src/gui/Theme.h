@@ -10,8 +10,8 @@
 /*
  * Basenames for image files which contain theme elements.
  *	Box Corners:        tl tr bl br
- *	Box Edges:          re le te be
- *	Box Background:     tile
+ *	Box Edges:          bh bw (i.e. border height and border width)
+ *	Box Background:     bg
  *	Menu Cursor:        cursor
  *
  */

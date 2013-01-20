@@ -4,6 +4,8 @@
 #include "externals.h"
 #include "Coordinate.h"
 #include "Drawable.h"
+#include "GraphicsEngine.h"
+#include "Theme.h"
 
 class Box {
 
@@ -24,6 +26,11 @@ public:
 protected:
 	Box();
 
+   void twoDimTile    (SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w, Uint16 h);
+   void horzLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w);
+   void vertLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 h);
+   void singBlit      (SDL_Surface* surf, Uint16 x, Uint16 y);
+
 private:
 
 	// Position and Dimension Details
@@ -33,6 +40,9 @@ private:
 
 	// Drawable for this box.
 	Drawable* box;
+
+   // Construct the surface for the Drawable here.
+   SDL_Surface* tempSurf;
 
 };
 
