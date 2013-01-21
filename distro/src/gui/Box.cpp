@@ -2,7 +2,7 @@
 #include "GuiFactory.h"
 
 Box::Box() {
-
+   this->tempSurf = NULL;
 }
 
 Box::~Box() {
@@ -70,43 +70,7 @@ void Box::hide() const {
  */
 void Box::refresh() {
 
-   // Create an SDL_Surface.
-   this->tempSurf = SDL_CreateRGBSurface(
-        SDL_HWSURFACE
-      , this->width
-      , this->height
-      , 32
-      , 0,0,0,0
-   );
-
-   // Get the Theme object.
-   Theme* theme = GuiFactory::GetInstance()->getTheme();
-
-   SDL_Surface* bg = theme->buildElement("bg");
-
-   SDL_Surface* bh = theme->buildElement("bh");
-   SDL_Surface* bw = theme->buildElement("bw");
-
-   SDL_Surface* tl = theme->buildElement("tl");
-   SDL_Surface* tr = theme->buildElement("tr");
-   SDL_Surface* bl = theme->buildElement("bl");
-   SDL_Surface* br = theme->buildElement("br");
-
-   // Tile the Background onto the Surface.
-   this->twoDimTile(bg, tl->w/2, tl->h/2, this->tempSurf->w - br->w, this->tempSurf->h - br->h);
-
-   // Tiles the Edges onto the Surface.
-   this->horzLinearTile(bw, tl->w, 0, this->tempSurf->w - tl->w);
-   this->vertLinearTile(bh, 0, tl->h, this->tempSurf->h - bl->h);
-   this->horzLinearTile(bw, br->w, this->getHeight() - br->h, this->tempSurf->w - tl->w);
-   this->vertLinearTile(bh, this->getWidth() - tr->w, tl->h, this->tempSurf->h - br->h);
-
-   // Draw the Corners onto the surface.
-   this->singBlit(tl, 0, 0);
-   this->singBlit(tr, this->getWidth() - tr->w, 0);
-   this->singBlit(bl, 0, this->getHeight() - bl->h);
-   this->singBlit(br, this->getWidth() - br->w, this->getHeight() - br->h);
-
+   this->buildSurface();
 
    // Glue In Four Corners and Four Borders.
 
@@ -137,6 +101,57 @@ void Box::refresh() {
       ge->displayDrawable(this->box, "gui", 0, 0);
    }
 }
+
+/* ------------------------------------------------------------------------------
+ * buildSurface - Create the tempSurf (SDL_Surface) by blitting corners, edges
+ * and background onto it (effectively an empty box).
+ *
+ * Override to implement additional behavior.
+ */
+void Box::buildSurface() {
+
+   // Create an SDL_Surface.
+   this->tempSurf = SDL_CreateRGBSurface(
+        SDL_HWSURFACE
+      , this->width
+      , this->height
+      , 32
+      , 0,0,0,0
+   );
+
+   // Get the Theme object.
+   Theme* theme = GuiFactory::GetInstance()->getTheme();
+
+   // Tile
+   SDL_Surface* bg = theme->buildElement("bg");
+
+   // Edges
+   SDL_Surface* bh = theme->buildElement("bh");
+   SDL_Surface* bw = theme->buildElement("bw");
+
+   // Corners
+   SDL_Surface* tl = theme->buildElement("tl");
+   SDL_Surface* tr = theme->buildElement("tr");
+   SDL_Surface* bl = theme->buildElement("bl");
+   SDL_Surface* br = theme->buildElement("br");
+
+   // Tile the Background onto the Surface.
+   this->twoDimTile(bg, tl->w/2, tl->h/2, this->tempSurf->w - br->w, this->tempSurf->h - br->h);
+
+   // Tiles the Edges onto the Surface.
+   this->horzLinearTile(bw, tl->w, 0, this->tempSurf->w - tl->w);
+   this->vertLinearTile(bh, 0, tl->h, this->tempSurf->h - bl->h);
+   this->horzLinearTile(bw, br->w, this->getHeight() - br->h, this->tempSurf->w - tl->w);
+   this->vertLinearTile(bh, this->getWidth() - tr->w, tl->h, this->tempSurf->h - br->h);
+
+   // Draw the Corners onto the surface.
+   this->singBlit(tl, 0, 0);
+   this->singBlit(tr, this->getWidth() - tr->w, 0);
+   this->singBlit(bl, 0, this->getHeight() - bl->h);
+   this->singBlit(br, this->getWidth() - br->w, this->getHeight() - br->h);
+
+}
+
 
 /* ------------------------------------------------------------------------------
  * singBlit - Blit exactly the provided surface onto the tempSurf at the

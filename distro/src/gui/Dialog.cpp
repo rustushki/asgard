@@ -10,3 +10,7 @@ Dialog::Dialog(std::string image, std::string text) {
 Dialog::~Dialog() {
 
 }
+
+void Dialog::buildSurface() {
+   Box::buildSurface();
+}

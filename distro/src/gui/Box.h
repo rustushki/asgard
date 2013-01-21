@@ -31,6 +31,11 @@ protected:
    void vertLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 h);
    void singBlit      (SDL_Surface* surf, Uint16 x, Uint16 y);
 
+   virtual void buildSurface();
+
+   // Construct the surface for the Drawable here.
+   SDL_Surface* tempSurf;
+
 private:
 
 	// Position and Dimension Details
@@ -40,9 +45,6 @@ private:
 
 	// Drawable for this box.
 	Drawable* box;
-
-   // Construct the surface for the Drawable here.
-   SDL_Surface* tempSurf;
 
 };
 

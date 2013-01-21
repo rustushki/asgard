@@ -9,6 +9,9 @@ class Dialog : public Box {
 public:
 	~Dialog();
 
+protected:
+   virtual void buildSurface();
+
 private:
 	Dialog(std::string image, std::string text);
 
