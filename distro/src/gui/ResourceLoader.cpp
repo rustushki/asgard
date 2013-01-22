@@ -38,3 +38,33 @@ SDL_Surface* ResourceLoader::LoadSDLSurface(std::string elementPath) {
 
 }
 
+/* ------------------------------------------------------------------------------
+ * GetFont - Load a font for usage.
+ *
+ * TODO:
+ * Optimize this by keeping the font loaded in memory.
+ */
+TTF_Font* ResourceLoader::GetFont(std::string fontFn, Uint16 pointSize) {
+
+   // Build path to the Font Resource.
+   std::string path(RES);
+   path.append("font/");
+   path.append(fontFn);
+
+   // Load Font
+   TTF_Font* font = TTF_OpenFont(path.c_str(), pointSize);
+
+   TTF_SetFontHinting(font, TTF_HINTING_NORMAL);
+
+
+   // Handle Font Load Error.
+   if (!font) {
+      LOG(INFO) << "Failure to load font";
+      LOG(INFO) << "Path:" << path;
+      LOG(ERROR) << TTF_GetError();
+      exit(1);
+   }
+
+   // Return the font.
+   return font;
+}

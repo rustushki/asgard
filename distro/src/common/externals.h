@@ -38,6 +38,7 @@ typedef unsigned int uint;
 // SDL
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
+#include <SDL/SDL_ttf.h>
 
 // Python
 #include <python2.7/Python.h>

@@ -217,6 +217,9 @@ void Asgard::initExternal() {
 
    // Initialize Asgard's Python Interface.
    InitAsgardPython();
+
+   // Initialize SDL_ttf
+   TTF_Init();
 }
 
 Asgard::~Asgard() {

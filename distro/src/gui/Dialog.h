@@ -3,21 +3,25 @@
 
 #include <string>
 #include "Box.h"
+#include "ResourceLoader.h"
+#include "externals.h"
 
 class Dialog : public Box {
 
-public:
-	~Dialog();
+   public:
+      ~Dialog();
 
-protected:
-   virtual void buildSurface();
+   protected:
+      virtual void buildSurface();
 
-private:
-	Dialog(std::string image, std::string text);
+   private:
+      Dialog(std::string image, std::string text);
 
-	std::string text;
+      std::string text;
 
-	friend class GuiFactory;
+      void drawText();
+
+      friend class GuiFactory;
 };
 
 #endif//DIALOG_H

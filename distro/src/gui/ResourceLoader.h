@@ -8,6 +8,7 @@ class ResourceLoader {
 
 public:
    static SDL_Surface* LoadSDLSurface(std::string path);
+   static TTF_Font* GetFont(std::string fontFn, Uint16 pointSize);
 
 };
 
