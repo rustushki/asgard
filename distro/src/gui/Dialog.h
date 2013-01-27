@@ -19,6 +19,7 @@ class Dialog : public Box {
 
       std::string text;
 
+      static std::string getNextLine(std::string& remainingText, TTF_Font* font, Uint16 maxWidth);
       static int getWordNPos(int n, std::string text);
       static int getWordCount(std::string text);
       static std::string getUpToWordN(int n, std::string text);

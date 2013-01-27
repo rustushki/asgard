@@ -56,6 +56,40 @@ std::string Dialog::getAfterWordN(int n, std::string text) {
    return text.substr(pos+1);
 }
 
+std::string Dialog::getNextLine(std::string & remainingText, TTF_Font* font, Uint16 maxWidth) {
+
+   // Let n = Count Number of Words in String
+   Uint16 n = Dialog::getWordCount(remainingText);
+   Uint16 l = 0;
+   Uint16 r = n;
+   Uint16 m = 0;
+
+   std::string line = "";
+
+   while (l < r) {
+
+      m = (r - l)/2 + l + 1;
+
+      line = Dialog::getUpToWordN(m, remainingText);
+
+      // determine rendered width of m words
+      int h = 0;
+      int w = 0;
+      TTF_SizeText(font, line.c_str(), &w, &h);
+
+      // rendered width > dialog width
+      if (w > maxWidth) {
+         r = m - 1;
+      } else {
+         l = m + 1;
+      }
+   }
+
+   remainingText = Dialog::getAfterWordN(m, remainingText);
+   
+   return line;
+}
+
 void Dialog::drawText() {
 
    // Black
@@ -78,39 +112,14 @@ void Dialog::drawText() {
    Uint16 lineNum = 0;
    while (lineNum < maxLines && remainingText != "") {
 
-      // Let n = Count Number of Words in String
-      Uint16 n = Dialog::getWordCount(remainingText);
-      Uint16 l = 0;
-      Uint16 r = n;
-      Uint16 m = 0;
-
-      std::string chunk = "";
-
-      while (l < r) {
-
-         m = (r - l)/2 + l + 1;
-
-         chunk = Dialog::getUpToWordN(m, remainingText);
-
-         // determine rendered width of m words
-         int h = 0;
-         int w = 0;
-         TTF_SizeText(font, chunk.c_str(), &w, &h);
-
-         // rendered width > dialog width
-         if (w > this->getWidth() - margin) {
-            r = m - 1;
-         } else {
-            l = m + 1;
-         }
-      }
-
-      remainingText = Dialog::getAfterWordN(m, remainingText);
+      // Get the next line of output and chop it off the remaining text.
+      Uint16 maxWidth = this->getWidth() - margin;
+      std::string line = this->getNextLine(remainingText, font, maxWidth);
 
       // Build the text surface containing the given string.
       SDL_Surface* text_surface = TTF_RenderText_Solid(
            font
-         , chunk.c_str()
+         , line.c_str()
          , color
       );
 
