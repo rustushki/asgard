@@ -19,9 +19,10 @@ class Dialog : public Box {
 
       std::string text;
 
-      int getWordNPos(int n);
-      int getWordCount(std::string text);
-      std::string chopUpToWordN(int n);
+      static int getWordNPos(int n, std::string text);
+      static int getWordCount(std::string text);
+      static std::string getUpToWordN(int n, std::string text);
+      static std::string getAfterWordN(int n, std::string text);
 
       void drawText();
 
