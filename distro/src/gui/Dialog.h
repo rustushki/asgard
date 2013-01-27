@@ -19,6 +19,10 @@ class Dialog : public Box {
 
       std::string text;
 
+      int getWordNPos(int n);
+      int getWordCount(std::string text);
+      std::string chopUpToWordN(int n);
+
       void drawText();
 
       friend class GuiFactory;
