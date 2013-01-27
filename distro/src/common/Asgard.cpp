@@ -69,7 +69,7 @@ void Asgard::controller() {
    // The View is now ready.
 
    GuiFactory* gf = GuiFactory::GetInstance();
-   Dialog* dia = gf->buildDialog("match.png", "This place sure is dark. But there are palm trees and that makes me feel safe.");
+   Dialog* dia = gf->buildDialog("match.png", "Welcome to Asgard. This is a simple interactive demo used by the developers to test out new features. In Asgard 0.3.11, we support Interactions, Dialogs and Menus.\n\nInteractions are demonstrated by opening treasure chests. In subsequent releases, they will drive most player-to-game actions.\n\nYou can view your inventory by pressing the M key. The inventory is displayed in a Menu.\n\nThis box is a Dialog. Press Enter to hide it.");
    dia->setDimension(500, 300);
    dia->refresh();
    dia->show();

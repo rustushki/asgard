@@ -61,12 +61,14 @@ void Dialog::drawText() {
    // Black
    SDL_Color color = {0x00, 0x00, 0x00};
 
-   TTF_Font* font = ResourceLoader::GetFont("Vera.ttf", 20);
+   TTF_Font* font = ResourceLoader::GetFont("Vera.ttf", 17);
+
+   Uint16 margin = 10;
 
    // Determine the maximum number of lines which can be displayed in this
    // Dialog box..
    Uint16 fontHeight = TTF_FontHeight(font);
-   Uint16 maxLines = this->getHeight() / fontHeight;
+   Uint16 maxLines = (this->getHeight() - margin)/ fontHeight;
 
    // Stick a space on the end of the renderable text so that we can easily
    // count the number of words in the string.
@@ -86,7 +88,6 @@ void Dialog::drawText() {
 
       while (l < r) {
 
-
          m = (r - l)/2 + l + 1;
 
          chunk = Dialog::getUpToWordN(m, remainingText);
@@ -97,7 +98,7 @@ void Dialog::drawText() {
          TTF_SizeText(font, chunk.c_str(), &w, &h);
 
          // rendered width > dialog width
-         if (w > this->getWidth()) {
+         if (w > this->getWidth() - margin) {
             r = m - 1;
          } else {
             l = m + 1;
@@ -119,28 +120,26 @@ void Dialog::drawText() {
          LOG(ERROR) << "Error creating text: " << TTF_GetError();
          exit(1);
 
-         // Otherwise,
       } else {
-
-         // TODO: Implement Wrapping ...
 
          // Create a destination rectangle based on the created text surface and
          // the position parameter.
          SDL_Rect r;
          r.w = text_surface->w;
          r.h = text_surface->h;
-         r.x = 0;
-         r.y = lineNum * fontHeight;
+         r.x = margin;
+         r.y = lineNum * fontHeight + margin;
 
          // Blit the text to the screen.
          SDL_BlitSurface(text_surface, NULL, this->tempSurf, &r);
 
-         // TODO:
-         // This method needs to return whatever it decided not to display due to
-         // wrapping constraints.
       }
 
       lineNum++;
 
    }
+
+   // TODO:
+   // This method needs to return whatever it decided not to display due to
+   // wrapping constraints.
 }
