@@ -16,44 +16,72 @@ void Dialog::buildSurface() {
    this->drawText();
 }
 
-int Dialog::getWordNPos(int n, std::string text) {
-   if (n <= 0) {
+/* ------------------------------------------------------------------------------
+ * getWordNPos - Find the character position of the first character following
+ * word N of the provided string.
+ */
+int Dialog::getWordNPos(int wordN, std::string text) {
+   if (wordN <= 0) {
       return 0;
    }
 
    int pos = text.find(" ", 0);
 
-   while (n-- > 0 && pos != -1) {
+   while (wordN-- > 0 && pos != string::npos) {
       pos = text.find(" ", pos+1);
    }
 
    return pos;
 }
 
+/* ------------------------------------------------------------------------------
+ * getWordCount - Count the words in the provided string.
+ */
 int Dialog::getWordCount(std::string text) {
    int pos = text.find(" ", 0);
 
    int count = 0;
 
-   while (pos != -1) {
+   while (pos != string::npos) {
       count++;
       pos = text.find(" ", pos+1);
+   }
+
+   if (pos == string::npos) {
+      count++;
    }
 
    return count;
 }
 
+/* ------------------------------------------------------------------------------
+ * getUpToWordN - Get a substring from the beginning of the provided string up
+ * to Word N of the string.
+ */
 std::string Dialog::getUpToWordN(int n, std::string text) {
    int pos = Dialog::getWordNPos(n-1, text);
-
 
    return text.substr(0, pos);
 }
 
+/* ------------------------------------------------------------------------------
+ * getAfterWordN - Return the string following word N in the provided string.
+ */
 std::string Dialog::getAfterWordN(int n, std::string text) {
-   int pos = Dialog::getWordNPos(n-1, text);
+   int pos = Dialog::getWordNPos(n, text);
 
-   return text.substr(pos+1);
+   // If there is no more string after word N, return the empty string.
+   //
+   // GOTCHA:
+   // Be careful because string::npos == -1.  If we were to add 1 to
+   // string::npos, we would get character 0 of the string.  That would cause
+   // this method to effectively return the entire string.
+   if (pos == string::npos) {
+      return "";
+
+   } else {
+      return text.substr(pos+1);
+   }
 }
 
 std::string Dialog::getNextLine(std::string & remainingText, TTF_Font* font, Uint16 maxWidth) {
@@ -106,7 +134,7 @@ void Dialog::drawText() {
 
    // Stick a space on the end of the renderable text so that we can easily
    // count the number of words in the string.
-   std::string remainingText = this->text + " ";
+   std::string remainingText = this->text;
 
    // Render Each Line Onto the Dialog Box.
    Uint16 lineNum = 0;
