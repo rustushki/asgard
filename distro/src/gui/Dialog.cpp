@@ -113,7 +113,7 @@ std::string Dialog::getNextLine(std::string & remainingText, TTF_Font* font, Uin
       }
    }
 
-   remainingText = Dialog::getAfterWordN(m, remainingText);
+   remainingText = Dialog::getAfterWordN(r, remainingText);
    
    return line;
 }
