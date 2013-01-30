@@ -93,7 +93,7 @@ std::string Dialog::getNextLine(std::string & remainingText, TTF_Font* font, Uin
 void Dialog::drawText() {
 
    // Black
-   SDL_Color color = {0x00, 0x00, 0x00};
+   SDL_Color color = {0x33, 0x33, 0x33};
 
    TTF_Font* font = ResourceLoader::GetFont("Vera.ttf", 17);
 
