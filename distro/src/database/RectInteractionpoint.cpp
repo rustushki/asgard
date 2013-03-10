@@ -38,13 +38,13 @@ RectInteractionpoint::~RectInteractionpoint()
 {
 }
 
-bool RectInteractionpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+bool RectInteractionpoint::conflict(const Coordinate & accepter, const Coordinate & initiator) const
 {
    Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
+   Coordinate tl = this->coordinate + accepter;
    br = tl + Coordinate(this->width, this->height);
 
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
+   if((initiator.getX() > tl.getX()) && (initiator.getY() > tl.getY()) && (initiator.getX() < br.getX()) && (initiator.getY() < br.getY()))
       return true;
    else
       return false;

@@ -33,14 +33,10 @@ class RectInteractionpoint : public Interactionpoint
       RectInteractionpoint(int x, int y, int h, int w, bool requiresMouseClick);
       ~RectInteractionpoint();
 
-      bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      /* arg1=accepter MapObject's world coordinate, arg2=initiator MapObject's world coordinate */
+      bool conflict(const Coordinate & accepter, const Coordinate & initiator) const;
       void setRequiresMouseClick(bool requiresMouseClick);
       bool getRequiresMouseClick() const;
-      /* TEST */
-      //Coordinate getCoord() const;
-      //int getHeight() const;
-      //int getWidth() const;
-      /* ENDTEST */
 };
 
 #endif //RECT_INTERACTIONPOINT_H
