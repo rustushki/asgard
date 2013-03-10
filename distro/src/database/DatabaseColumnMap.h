@@ -89,6 +89,58 @@ enum HardpointColumn
    HARDPOINT_COLUMN_COUNT
 };
 
+/* Default Interaction selection */
+enum InteractionColumn
+{
+   INTERACTION_COLUMN_PRIORITY,
+   INTERACTION_COLUMN_IS_HANDLED_ONCE,
+   INTERACTION_COLUMN_COUNT
+};
+
+/* Interaction inner joined to Animation */
+/* See QueryGenerator::animationInteraction() */
+enum AnimationInteractionColumn
+{
+   ANIMATION_INTERACTION_COLUMN_PRIORITY,
+   ANIMATION_INTERACTION_COLUMN_IS_HANDLED_ONCE,
+   ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME,
+   ANIMATION_INTERACTION_COLUMN_COUNT
+};
+
+/* Interaction inner joined to Item */
+/* See QueryGenerator::itemInteraction() */
+enum ItemInteractionColumn
+{
+   ITEM_INTERACTION_COLUMN_PRIORITY,
+   ITEM_INTERACTION_COLUMN_IS_HANDLED_ONCE,
+   ITEM_INTERACTION_COLUMN_ITEM_NAME,
+   ITEM_INTERACTION_COLUMN_COUNT
+};
+
+/* Interaction inner joined to Dialog */
+/* See QueryGenerator::dialogInteraction() */
+enum DialogInteractionColumn
+{
+   DIALOG_INTERACTION_COLUMN_PRIORITY,
+   DIALOG_INTERACTION_COLUMN_IS_HANDLED_ONCE,
+   DIALOG_INTERACTION_COLUMN_QUOTE,
+   DIALOG_INTERACTION_COLUMN_COUNT
+};
+
+/* Interactionpoints */ 
+enum InteractionpointColumn
+{
+   INTERACTIONPOINT_COLUMN_MAP_OBJECT_ID,
+   INTERACTIONPOINT_COLUMN_RELATIVE_X,
+   INTERACTIONPOINT_COLUMN_RELATIVE_Y,
+   INTERACTIONPOINT_COLUMN_INTERACTIONPOINT_TYPE,
+   INTERACTIONPOINT_COLUMN_WIDTH,
+   INTERACTIONPOINT_COLUMN_HEIGHT,
+   INTERACTIONPOINT_COLUMN_RADIUS,
+   INTERACTIONPOINT_COLUMN_REQUIRES_MOUSE_CLICK,
+   INTERACTIONPOINT_COLUMN_COUNT
+};
+
 /* Animation inner joined to SpriteSheet inner joined to Drawable */
 /* See QueryGenerator::drawable(std::string dName)                */
 

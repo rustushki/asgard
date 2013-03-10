@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -17,34 +17,50 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#include "ItemInteraction.h"
 
-RectHardpoint::RectHardpoint()
+ItemInteraction::ItemInteraction(int priority, bool isHandledOnce, std::string itemName)
 {
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
+   this->priority = priority;
+   this->itemName = itemName;
 }
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+ItemInteraction::~ItemInteraction()
 {
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
+
 }
 
-RectHardpoint::~RectHardpoint()
+void ItemInteraction::setPriority(int priority)
 {
+   this->priority = priority;
 }
 
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+int ItemInteraction::getPriority() const
 {
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
+   return this->priority;
+}
 
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
+void ItemInteraction::setIsHandledOnce(bool isHandledOnce)
+{
+   this->isHandledOnce = isHandledOnce;
+}
+
+bool ItemInteraction::getIsHandledOnce() const
+{
+   return this->isHandledOnce;
+}
+
+void ItemInteraction::setItemName(std::string itemName)
+{
+   this->itemName = itemName;
+}
+
+std::string ItemInteraction::getItemName() const
+{
+   return this->itemName;
+}
+
+int ItemInteraction::getType() const
+{
+   return INTERACTION_TYPE_ITEM;
 }

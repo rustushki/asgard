@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -17,34 +17,28 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#ifndef INTERACTION_H
+#define INTERACTION_H
 
-RectHardpoint::RectHardpoint()
+class Interaction
 {
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
-}
+   public:
+      virtual void setPriority(int priority) = 0;
+      virtual int getPriority() const = 0;
+      virtual void setIsHandledOnce(bool isHandledOnce) = 0;
+      virtual bool getIsHandledOnce() const = 0;
+      virtual int getType() const = 0;
+   protected:
+      int priority;
+      bool isHandledOnce;
+};
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+enum INTERACTION_TYPE
 {
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
-}
+   INTERACTION_TYPE_ANIMATION,
+   INTERACTION_TYPE_ITEM,
+   INTERACTION_TYPE_DIALOG,
+   INTERACTION_TYPE_COUNT
+};
 
-RectHardpoint::~RectHardpoint()
-{
-}
-
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
-{
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
-
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
-}
+#endif //INTERACTION_H

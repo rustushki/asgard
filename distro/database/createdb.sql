@@ -4,10 +4,16 @@ drop table if exists MapObjectType;
 drop table if exists MapObject;
 drop table if exists Container;
 drop table if exists Hardpoints;
+drop table if exists Interactionpoints;
 drop table if exists Tiles;
+drop table if exists Interaction;
 drop table if exists Animation;
 drop table if exists SpriteSheet;
 drop table if exists Drawable;
+drop table if exists Inventory;
+drop table if exists InventoryHasItem;
+drop table if exists Item;
+drop table if exists Dialog;
 
 create table NonPlayerCharacter
 (
@@ -65,11 +71,41 @@ create table Hardpoints
    foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
 );
 
+create table Interactionpoints
+(
+   MapObjectTypeId integer(10) not null,
+   RelativeX integer(10) not null,
+   RelativeY integer(10) not null,
+   InteractionpointType integer(1) not null,
+   Width integer(10) null,
+   Height integer(10) null,
+   Radius integer(10) null,
+   RequiresMouseClick boolean null,
+   primary key (MapObjectTypeId, RelativeX, RelativeY, InteractionpointType),
+   foreign key (MapObjectTypeId) references MapObjectType(MapObjectTypeId)
+);
+
 create table Tiles
 (
    MapObjectId integer(10) not null,
    TileType integer(10) null,
    foreign key (MapObjectId) references MapObject(MapObjectId)
+);
+
+create table Interaction
+(
+   InteractionId integer(10) not null,
+   MapObjectId integer(10) not null,
+   Priority integer(3) not null,
+   IsHandledOnce boolean not null,
+   InteractionType integer(1) not null,
+   AnimationName varchar(100),
+   ItemId integer,
+   DialogId integer,
+   foreign key(MapObjectId) references MapObject(MapObjectId),
+   foreign key(AnimationName) references Animation(AnimationName),
+   foreign key(ItemId) references Item(ItemId),
+   foreign key(DialogId) references Dialog(DialogId)
 );
 
 create table Animation
@@ -116,4 +152,11 @@ create table Item
 (
     ItemId integer primary key,
     ItemName varchar(50) not null
+);
+
+/* TEMPORARY Prototype for testing */
+create table Dialog
+(
+   DialogId integer primary key not null,
+   Quote varchar(1000) not null
 );

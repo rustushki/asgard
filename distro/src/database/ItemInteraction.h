@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -16,30 +16,27 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
- 
-#ifndef QUERY_GENERATOR_H
-#define QUERY_GENERATOR_H
+
+#ifndef ITEM_INTERACTION_H
+#define ITEM_INTERACTION_H
 
 #include "externals.h"
-#include "Map.h"
+#include "Interaction.h"
 
-class QueryGenerator
+class ItemInteraction : public Interaction
 {
    public:
-      static char* mapObject(int boxX, int boxY);
-      static char* nonPlayerCharacter(int boxX, int boxY);
-      static char* nonPlayerCharacterPath(int mapObjectId);
-      static char* container(int boxX, int boxY);
-      static char* tile(int boxX, int boxY);
-      static char* hardpoint(int mapObjectId);
-      static char* interactionpoint(int mapObjectId);
-      static char* animationInteraction(int mapObjectId, int interactionType);
-      static char* itemInteraction(int mapObjectId, int interactionType);
-      static char* dialogInteraction(int mapObjectId, int interactionType);
-      static char* drawable(std::string dName);
+      ItemInteraction(int priority, bool isHandledOnce, std::string itemName);
+      ~ItemInteraction();
+      void setPriority(int priority);
+      int getPriority() const;
+      void setIsHandledOnce(bool isHandledOnce);
+      bool getIsHandledOnce() const;
+      void setItemName(std::string itemName);
+      std::string getItemName() const;
+      int getType() const;
    private:
-      static char* makeCStr(std::string s);
-      static std::string intToString(int b);
+      std::string itemName;
 };
 
-#endif // QUERY_GENERATOR_H
+#endif //ITEM_INTERACTION_H

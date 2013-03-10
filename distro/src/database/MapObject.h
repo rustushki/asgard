@@ -24,6 +24,11 @@
 #include "Hardpoint.h"
 #include "Coordinate.h"
 #include "MapObjectState.h"
+#include "Interactionpoint.h"
+#include "Interaction.h"
+#include "Drawable.h"
+#include "Dialog.h"
+#include "Inventory.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -54,6 +59,14 @@ class MapObject
       bool conflict(Coordinate c);
       bool intersects(MapObject*);
 
+      void addInteractionpoint(Interactionpoint *interactionpoint);
+
+      // Determines if this MapObject is within one of the accepter's Interactionpoints.
+      // If so, then the accepter will allow its Interactions to be handled.
+      void interacts(MapObject *accepter, bool wasMouseClicked);
+
+      void addInteraction(Interaction *interaction);
+
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
 
       void move(Coordinate newLoc);
@@ -63,16 +76,26 @@ class MapObject
       MapObjectState getState();
       void setStep(int step);
       int getStep();
-      
+
+      // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
+      void setDrawable(Drawable *d);
+      Drawable *getDrawable() const;
+
    private:
       Coordinate leftCorner;
       list<int> boundingBoxes;
       int height,width;
       std::string drawableName;
+      Drawable *drawable; // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
 
       std::vector<Hardpoint*> hardpoints;
+      std::vector<Interactionpoint*> interactionpoints;
+      std::vector<Interaction*> interactions;
 
       MapObjectState state;
       int step;
+
+      Dialog *dialog;
+      Inventory *inv;
 };
 #endif//MAP_OBJECT_H

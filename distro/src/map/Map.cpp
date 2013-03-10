@@ -524,8 +524,11 @@ void Map::handle(SDL_Event event) {
                }
 
                Coordinate screenLoc;
+               bool wasMouseClicked = false;
                while(i < (int)path.size()) 
                {
+                  wasMouseClicked = false;
+
                   // Move MapObject with respect to World Coordinate
                   cmo->move(path[i]);
 
@@ -547,6 +550,10 @@ void Map::handle(SDL_Event event) {
                   // event if so.
                   this->checkOverMapPanThreshold();
 
+                  // Handle any Interactions between the CMO and another MapObject, if necessary
+                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
+			            cmo->interacts(*moItr,(path[i] == newCMOWorldCoordinate));
+                  
                   SDL_Delay(10);
 
                   i = i + step;
@@ -737,4 +744,3 @@ CharacterMapObject* Map::getCharacterMapObject() const {
 
    return cmo;
 }
-

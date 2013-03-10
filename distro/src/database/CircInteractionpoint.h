@@ -17,34 +17,25 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#ifndef CIRC_INTERACTIONPOINT_H
+#define CIRC_INTERACTIONPOINT_H
 
-RectHardpoint::RectHardpoint()
+#include "Interactionpoint.h"
+
+class CircInteractionpoint : public Interactionpoint
 {
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
-}
+   private:
+      double radius;
+   public:
+      CircInteractionpoint();
+      ~CircInteractionpoint();
+      CircInteractionpoint(int x, int y);
+      CircInteractionpoint(int x, int y, double r, bool requiresMouseClick);
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
-{
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
-}
+      /* arg1=accepter MapObject's world coordinate, arg2=initiator MapObject's world coordinate */
+      bool conflict(const Coordinate & accepter, const Coordinate & initiator) const;
+      void setRequiresMouseClick(bool requiresMouseClick);
+      bool getRequiresMouseClick() const;
+};
 
-RectHardpoint::~RectHardpoint()
-{
-}
-
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
-{
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
-
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
-}
+#endif //CIRC_INTERACTIONPOINT_H

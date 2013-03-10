@@ -32,6 +32,12 @@ MapObject::~MapObject() {
    for (unsigned int x = 0; x < this->hardpoints.size(); x++) {
       delete this->hardpoints[x];
    }
+   for (unsigned int x = 0; x < this->interactions.size(); x++) {
+      delete this->interactions[x];
+   }
+   for (unsigned int x = 0; x < this->interactions.size(); x++) {
+      delete this->interactionpoints[x];
+   }
 }
 
 void MapObject::setLeftCorner(const Coordinate& leftCorner)
@@ -182,6 +188,64 @@ bool MapObject::intersects(MapObject* that) {
 	);
 }
 
+void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
+{
+   this->interactionpoints.push_back(interactionpoint);
+}
+
+void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
+{
+   std::vector<Interactionpoint*>::const_iterator ipItr;
+   std::vector<Interaction*>::const_iterator iItr;
+
+   for(ipItr = accepter->interactionpoints.begin(); ipItr < accepter->interactionpoints.end(); ipItr++)
+   {
+      // Do not allow Interactions when mouse was not clicked on an Interactionpoint
+      // requiring a click (e.g. Interactionpoint for a treasure chest)
+      if(((*ipItr)->getRequiresMouseClick() == true) && (wasMouseClicked == false))
+         continue;
+
+      // Is initiator MapObject's foot within accepter MapObject's Interactionpoint(s)?
+      if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
+      {
+         // Handle Interactions
+         for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
+         {
+            switch ((*iItr)->getType())
+            {
+               case INTERACTION_TYPE_ANIMATION:
+                  accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
+                  break;
+               case INTERACTION_TYPE_ITEM:
+                  accepter->inv->transferItemToInventory(((ItemInteraction *)(*iItr))->getItemName(),this->inv);
+                  break;
+               case INTERACTION_TYPE_DIALOG:
+                  accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
+                  break;
+               default:
+                  std::cout<<"ERROR: Undefined Interaction"<<std::endl;
+            }
+            // Remove Interaction if it is only handled once
+            if((*iItr)->getIsHandledOnce()) 
+               interactions.erase(interactions.begin() + (*iItr)->getPriority());
+         }
+         break; // This MapObject's foot only needs to be within one Interactionpoint
+      }
+   }
+}
+
+void MapObject::addInteraction(Interaction *interaction)
+{
+   int priority = interaction->getPriority();
+
+   // Ensure that enough space is allocated to the vector to accommodate 
+   // insertion of interaction at position interactions[priority]
+   if(priority >= (int)interactions.capacity())
+      interactions.resize(priority+1);
+
+   interactions[priority] = interaction;
+}
+
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
 {
    int angle = 0;
@@ -296,4 +360,12 @@ void MapObject::setStep(int step) {
 
 int MapObject::getStep() {
    return this->step;
+}
+
+void MapObject::setDrawable(Drawable *d) {
+   this->drawable = d;
+}
+
+Drawable* MapObject::getDrawable() const {
+   return this->drawable;
 }

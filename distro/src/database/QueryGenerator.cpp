@@ -136,6 +136,70 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    return QueryGenerator::makeCStr(qs);
 }
 
+char* QueryGenerator::interactionpoint(int mapObjectId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "mo.MapObjectId, ";
+   qs += "i.RelativeX, ";
+   qs += "i.RelativeY, ";
+   qs += "i.InteractionpointType, ";
+   qs += "i.Width, ";
+   qs += "i.Height, ";
+   qs += "i.Radius, ";
+   qs += "i.RequiresMouseClick ";
+   qs += "from MapObject mo ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "inner join Interactionpoints i on i.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::animationInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "i.AnimationName ";
+   qs += "from Interaction i ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::itemInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "it.ItemName ";
+   qs += "from Interaction i ";
+   qs += "inner join Item it on i.ItemId = it.ItemId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "d.Quote ";
+   qs += "from Interaction i ";
+   qs += "inner join Dialog d on i.DialogId = d.DialogId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
 char* QueryGenerator::drawable(std::string dName)
 {
    std::string qs;

@@ -58,7 +58,7 @@ values(NULL,700,1217,1);
 --Treasure Chest 1 (id = 8)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,MapObjectTypeId)
-values(NULL,700,400,3);
+values(1000,700,400,3);
 
 --Treasure Chest 2 (id = 9)
 insert into MapObject
@@ -229,3 +229,38 @@ values("TreasureChest","treasurechest.png",55,75,1);
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
 values("Rock","rock.png",96,145,1);
+
+/* TreasureChest Interactionpoint */
+insert into Interactionpoints
+(MapObjectTypeId,RelativeX,RelativeY,InteractionpointType,Width,Height,RequiresMouseClick)
+values(3,5,10,0,64,42,1);
+
+insert into Animation
+(AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
+values("TreasureChestOpening","treasurechest.png",55,75,1);
+
+insert into Item
+(ItemId,ItemName)
+values(1,"Balloon Sword");
+
+insert into Dialog
+(DialogId,Quote)
+values(1,"You found a...Balloon Sword?!?");
+
+/* Item Interaction for Treasure Chest 1 */
+/*
+insert into Interaction
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(1,1000,1,1,1,NULL,1,NULL);
+*/
+/* Animation Interaction for Treasure Chest 1 */
+/*
+insert into Interaction
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(2,1000,0,1,0,"TreasureChestOpening",NULL,NULL);
+*/
+/* Dialog Interaction for Treasure Chest 1 */
+/*insert into Interaction
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(3,1000,2,1,2,NULL,NULL,1);
+*/

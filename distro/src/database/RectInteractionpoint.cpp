@@ -17,34 +17,45 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#include "RectInteractionpoint.h"
 
-RectHardpoint::RectHardpoint()
+RectInteractionpoint::RectInteractionpoint()
 {
    this->coordinate = Coordinate(0,0);
    this->height = 0;
    this->width = 0;
 }
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
+RectInteractionpoint::RectInteractionpoint(int x, int y, int height, int width, bool requiresMouseClick)
 {
    this->coordinate = Coordinate(x,y);
    this->height = height;
    this->width = width;
+   this->requiresMouseClick = requiresMouseClick;
 }
 
-RectHardpoint::~RectHardpoint()
+RectInteractionpoint::~RectInteractionpoint()
 {
 }
 
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+bool RectInteractionpoint::conflict(const Coordinate & accepter, const Coordinate & initiator) const
 {
    Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
+   Coordinate tl = this->coordinate + accepter;
    br = tl + Coordinate(this->width, this->height);
 
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
+   if((initiator.getX() > tl.getX()) && (initiator.getY() > tl.getY()) && (initiator.getX() < br.getX()) && (initiator.getY() < br.getY()))
       return true;
    else
       return false;
+}
+
+void RectInteractionpoint::setRequiresMouseClick(bool requiresMouseClick)
+{
+   this->requiresMouseClick = requiresMouseClick;
+}
+
+bool RectInteractionpoint::getRequiresMouseClick() const
+{
+   return this->requiresMouseClick;
 }
