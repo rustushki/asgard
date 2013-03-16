@@ -54,6 +54,7 @@ objects = [
 './gui/Dialog.cpp',
 './gui/Theme.cpp',
 './map/Map.cpp',
+'./model/GamerInventory.cpp',
 './model/Inventory.cpp',
 './model/Item.cpp',
 './common/EventHandler.cpp',
