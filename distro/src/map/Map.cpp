@@ -175,11 +175,16 @@ void Map::loadBoundingBoxes() {
 }
 
 void Map::unloadBoundingBoxes() {
-   std::vector<Coordinate>::iterator bbIter;
-   for (bbIter = this->boundingBoxContainer.begin(); bbIter != this->boundingBoxContainer.end(); bbIter++) {
-      if (!this->isBoundingBoxInScope(*bbIter)) {
-         this->boundingBoxContainer.erase(bbIter);
+   std::vector<Coordinate>::iterator bbIter = boundingBoxContainer.begin();
+
+   while (bbIter != boundingBoxContainer.end()) {
+
+      if (!isBoundingBoxInScope(*bbIter)) {
+         bbIter = boundingBoxContainer.erase(bbIter);
+      } else {
+         bbIter++;
       }
+
    }
    this->unloadMapObjects();
 }
