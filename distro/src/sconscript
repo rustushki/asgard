@@ -64,5 +64,9 @@ objects = [
 './main/main.cpp'
 ]
 
+if ARGUMENTS.get('VERBOSE') != "1":
+	env['CXXCOMSTR'] = "[CC] $TARGET"
+	env['LINKCOMSTR'] = "[LK] $TARGET"
+
 asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','python2.7'], CXXFLAGS=['-Wall', '-O2'])
 Export("asgard")
