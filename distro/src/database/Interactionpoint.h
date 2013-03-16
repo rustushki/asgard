@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -31,9 +31,8 @@ class Interactionpoint
       virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
       virtual void setRequiresMouseClick(bool requiresMouseClick) = 0;
       virtual bool getRequiresMouseClick() const = 0;
-      /* TEST */
-      //virtual Coordinate getCoord() const = 0;
-      /* ENDTEST */
+
+      virtual ~Interactionpoint() {};
 };
 
 enum INTERACTIONPOINT_TYPE

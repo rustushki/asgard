@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -23,11 +23,14 @@
 class Interaction
 {
    public:
+
+      virtual ~Interaction() {};
       virtual void setPriority(int priority) = 0;
       virtual int getPriority() const = 0;
       virtual void setIsHandledOnce(bool isHandledOnce) = 0;
       virtual bool getIsHandledOnce() const = 0;
       virtual int getType() const = 0;
+
    protected:
       int priority;
       bool isHandledOnce;
