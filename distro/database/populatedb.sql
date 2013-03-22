@@ -58,7 +58,7 @@ values(NULL,700,1217,1);
 --Treasure Chest 1 (id = 8)
 insert into MapObject
 (MapObjectId,WC_X,WC_Y,MapObjectTypeId)
-values(1000,700,400,3);
+values(NULL,700,400,3);
 
 --Treasure Chest 2 (id = 9)
 insert into MapObject
@@ -247,12 +247,18 @@ insert into Dialog
 (DialogId,Quote)
 values(1,"You found a...Balloon Sword?!?");
 
-/* Item Interaction for Treasure Chest 1 */
-/*
+/* Item Interactions for Treasure Chests*/
 insert into Interaction
 (InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,1000,1,1,1,NULL,1,NULL);
-*/
+values(1,2,1,1,1,NULL,1,NULL);
+
+insert into Interaction
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(1,8,1,1,1,NULL,1,NULL);
+
+insert into Interaction
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
+values(1,9,1,1,1,NULL,1,NULL);
 /* Animation Interaction for Treasure Chest 1 */
 /*
 insert into Interaction

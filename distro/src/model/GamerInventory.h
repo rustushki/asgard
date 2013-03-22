@@ -25,7 +25,7 @@
 class GamerInventory : public Inventory {
 
 public:
-	static GamerInventory* GetInstance();
+	static GamerInventory* getInstance();
 
 private:
 	GamerInventory();

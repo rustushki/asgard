@@ -19,6 +19,7 @@
 
 #include "MapObject.h"
 #include "GraphicsEngine.h"
+#include "GamerInventory.h"
 #include "Drawable.h"
 
 MapObject::MapObject(std::string drawableName)
@@ -209,15 +210,19 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
       if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
       {
          // Handle Interactions
+         int i = 0;
          for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
          {
+            std::cout<<++i<<std::endl;
             switch ((*iItr)->getType())
             {
                case INTERACTION_TYPE_ANIMATION:
                   accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
                   break;
                case INTERACTION_TYPE_ITEM:
-                  accepter->inv->transferItemToInventory(((ItemInteraction *)(*iItr))->getItemName(),this->inv);
+                  // Transfer item from accepter's inventory to GamerInventory
+                  GamerInventory *gi = GamerInventory::getInstance();
+                  (Container *)accepter->inv->transferItemToInventory(((ItemInteraction *)(*iItr))->getItemName(),gi);
                   break;
                case INTERACTION_TYPE_DIALOG:
                   accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
@@ -229,7 +234,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
             if((*iItr)->getIsHandledOnce()) 
                interactions.erase(interactions.begin() + (*iItr)->getPriority());
          }
-         break; // This MapObject's foot only needs to be within one Interactionpoint
+         break; // Initiator's foot only needs to be within one Interactionpoint
       }
    }
 }

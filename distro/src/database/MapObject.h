@@ -28,7 +28,6 @@
 #include "Interaction.h"
 #include "Drawable.h"
 #include "Dialog.h"
-#include "Inventory.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -96,6 +95,5 @@ class MapObject
       int step;
 
       Dialog *dialog;
-      Inventory *inv;
 };
 #endif//MAP_OBJECT_H

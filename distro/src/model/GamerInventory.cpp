@@ -29,7 +29,7 @@ GamerInventory::~GamerInventory() {
 
 }
 
-GamerInventory* GamerInventory::GetInstance() {
+GamerInventory* GamerInventory::getInstance() {
 	if (GamerInventory::instance == NULL) {
 		GamerInventory::instance = new GamerInventory();
 	}

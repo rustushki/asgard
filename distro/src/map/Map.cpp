@@ -557,7 +557,12 @@ void Map::handle(SDL_Event event) {
 
                   // Handle any Interactions between the CMO and another MapObject, if necessary
                   for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
-			            cmo->interacts(*moItr,(path[i] == newCMOWorldCoordinate));
+                  {
+                     // TEMPORARY implementation solely for demonstrating Interactions
+                     cmo->interacts(*moItr,true);
+                     // Below implementation will be part of the future permanent solution
+			            //cmo->interacts(*moItr,(path[i] == newCMOWorldCoordinate));
+                  }
                   
                   SDL_Delay(10);
 
