@@ -98,6 +98,19 @@ char* QueryGenerator::container(int boxX, int boxY)
    return QueryGenerator::makeCStr(qs);
 }
 
+char* QueryGenerator::inventory(int itemId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "it.ItemName, ";
+   qs += "it.Quantity ";
+   qs += "from Inventory inv ";
+   qs += "inner join InventoryHasItem invhi on invhi.InventoryId = inv.InventoryId ";
+   qs += "inner join Item it on invhi.ItemId = it.ItemId ";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
 char* QueryGenerator::tile(int boxX, int boxY)
 {
    std::string qs;
