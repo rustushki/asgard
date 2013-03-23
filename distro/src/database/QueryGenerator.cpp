@@ -98,7 +98,7 @@ char* QueryGenerator::container(int boxX, int boxY)
    return QueryGenerator::makeCStr(qs);
 }
 
-char* QueryGenerator::inventory(int itemId)
+char* QueryGenerator::inventory(int inventoryId)
 {
    std::string qs;
    qs += "select ";
@@ -107,6 +107,7 @@ char* QueryGenerator::inventory(int itemId)
    qs += "from Inventory inv ";
    qs += "inner join InventoryHasItem invhi on invhi.InventoryId = inv.InventoryId ";
    qs += "inner join Item it on invhi.ItemId = it.ItemId ";
+   qs += "where inv.InventoryId = " + QueryGenerator::intToString(inventoryId);
 
    return QueryGenerator::makeCStr(qs);
 }

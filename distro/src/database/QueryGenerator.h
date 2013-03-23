@@ -30,6 +30,7 @@ class QueryGenerator
       static char* nonPlayerCharacter(int boxX, int boxY);
       static char* nonPlayerCharacterPath(int mapObjectId);
       static char* container(int boxX, int boxY);
+      static char* inventory(int inventoryId);
       static char* tile(int boxX, int boxY);
       static char* hardpoint(int mapObjectId);
       static char* interactionpoint(int mapObjectId);
