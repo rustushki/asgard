@@ -220,9 +220,22 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
                   accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
                   break;
                case INTERACTION_TYPE_ITEM:
-                  // Transfer item from accepter's inventory to GamerInventory
+                  {
+
+                  // Transfer from this Container
+                  Container* container = ((Container*) accepter);
+
+                  // This Item
+                  std::string itemName =  ((ItemInteraction *)(*iItr))->getItemName();
+
+                  // To Gamer Inventory
                   GamerInventory *gi = GamerInventory::getInstance();
-                  (Container *)accepter->inv->transferItemToInventory(((ItemInteraction *)(*iItr))->getItemName(),gi);
+
+                  // Perform Transfer
+                  container->inventory().transferItemToInventory(itemName, gi);
+
+                  }
+
                   break;
                case INTERACTION_TYPE_DIALOG:
                   accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
