@@ -27,6 +27,7 @@ class Inventory {
 
     public:
         Inventory();
+        Inventory(const Inventory& inv);
         ~Inventory();
 
         void addItem(Item item);
