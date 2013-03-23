@@ -247,6 +247,42 @@ insert into Dialog
 (DialogId,Quote)
 values(1,"You found a...Balloon Sword?!?");
 
+insert into Container
+(MapObjectId, InventoryId)
+values(2,1);
+
+insert into Inventory
+(InventoryId)
+values(1);
+
+insert into InventoryHasItem
+(InventoryId, ItemId, Quantity)
+values(1, 1, 1);
+
+insert into Container
+(MapObjectId, InventoryId)
+values(8,1);
+
+insert into Inventory
+(InventoryId)
+values(2);
+
+insert into InventoryHasItem
+(InventoryId, ItemId, Quantity)
+values(2, 1, 1);
+
+insert into Container
+(MapObjectId, InventoryId)
+values(9,1);
+
+insert into Inventory
+(InventoryId)
+values(3);
+
+insert into InventoryHasItem
+(InventoryId, ItemId, Quantity)
+values(3, 1, 1);
+
 /* Item Interactions for Treasure Chests*/
 insert into Interaction
 (InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
