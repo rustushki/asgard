@@ -67,6 +67,13 @@ enum ContainerColumn
    CONTAINER_COLUMN_COUNT
 };
 
+enum InventoryColumn
+{
+   INVENTORY_COLUMN_ITEMNAME,
+   INVENTORY_COLUMN_QUANTITY,
+   INVENTORY_COLUMN_COUNT
+};
+
 enum TileColumn
 {
    TILE_COLUMN_MAP_OBJECT_ID,

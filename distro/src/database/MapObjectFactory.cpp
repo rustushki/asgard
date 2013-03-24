@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -113,19 +113,33 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
 
    std::string drawableName = drawable->getInstanceName();
 
-   Container* container = new Container(drawableName);
+   int mapObjectId = sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID);
 
-   // Create Hardpoints
-   RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID));
+   // Create Inventory
+   Inventory inv;
+   RowSet* rs = loadInventory(db, mapObjectId);
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++) {
+         std::string itemName = rs->getColumnValue(row,INVENTORY_COLUMN_ITEMNAME);
+         int quantity = atoi(rs->getColumnValue(row,INVENTORY_COLUMN_QUANTITY));
 
-   if (rs != NULL)
-   {
-      for (int row = 0; row < rs->getRowCount(); row++)
-         container->addHardpoint(createHardpoint(rs,row));
+         while(quantity > 0) {
+            inv.addItem(itemName);
+            quantity--;
+         }
+      }
    }
    delete rs;
 
+   Container* container = new Container(drawableName, inv);
+
+   std::cout << "loading container" << std::endl;
+
    if (container != NULL) {
+
+      addInteractions(db, (MapObject*) container, mapObjectId);
+      addHardpoints(db, (MapObject*) container, mapObjectId);
+
       // Set Container attributes
       container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(container, drawable);
@@ -142,21 +156,15 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
    std::string drawableName = drawable->getInstanceName();
 
    NonPlayerCharacter *npc = new NonPlayerCharacter(drawableName);
-  
-   if (npc != NULL)
-   {
-      // Create Hardpoints
-      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
 
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-            npc->addHardpoint(createHardpoint(rs,row));
-      }
+   if (npc != NULL) {
 
-      delete rs;
+      int mapObjectId = sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID);
+
+      addHardpoints(db, (MapObject*) npc, mapObjectId);
 
       // Create NonPlayerCharacterPath
-      rs = loadNonPlayerCharacterPath(db, sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID));
+      RowSet *rs = loadNonPlayerCharacterPath(db, mapObjectId);
 
       if (rs != NULL) {
          for (int row = 0; row < rs->getRowCount(); row++)
@@ -171,6 +179,13 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 }
 
 void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
+
+   // No starter MapObject to pass in.
+   MapObjectFactory::createMapObject(db, stmt, NULL);
+
+}
+
+void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt, MapObject *mo) {
    Drawable* drawable = DrawableFactory::build(
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, MAP_OBJECT_COLUMN_DRAWABLE_NAME)
@@ -181,61 +196,71 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
    MapObject *mapObject = new MapObject(drawableName);
 
    if (mapObject != NULL) {
-      // Create Hardpoints
-      RowSet* rs = loadHardpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
 
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addHardpoint(createHardpoint(rs,row));
-         }
-      }
-      delete rs;
+      int mapObjectId = sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID);
 
-      // Create Interactionpoints
-      rs = loadInteractionpoints(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID));
-
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteractionpoint(createInteractionpoint(rs,row));
-         }
-      }
-      delete rs;
-
-      // Create AnimationInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ANIMATION);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ANIMATION));
-         }
-      }
-      delete rs;
-
-      // Create ItemInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_ITEM);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ITEM));
-         }
-      }
-      delete rs;
-
-      // Create DialogInteractions
-      rs = loadInteractions(db, sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID), INTERACTION_TYPE_DIALOG);
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-         {
-            mapObject->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_DIALOG));
-         }
-      }
-      delete rs;
+      addInteractions(db, mapObject, mapObjectId);
+      addHardpoints(db, mapObject, mapObjectId);
 
       mapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(mapObject, drawable);
    }
+}
+
+void MapObjectFactory::addHardpoints(sqlite3 *db, MapObject *mo, int mapObjectId) { 
+   // Create Hardpoints
+   RowSet *rs = loadHardpoints(db, mapObjectId);
+
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++)
+         mo->addHardpoint(createHardpoint(rs,row));
+   }
+   delete rs;
+}
+
+void MapObjectFactory::addInteractions(sqlite3 *db, MapObject *mo, int mapObjectId) {
+
+   RowSet* rs;
+
+   // Create Interactionpoints
+   rs = loadInteractionpoints(db, mapObjectId);
+
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++) {
+         mo->addInteractionpoint(createInteractionpoint(rs,row));
+      }
+   }
+   delete rs;
+
+
+   // Create AnimationInteractions
+   rs = loadInteractions(db, mapObjectId, INTERACTION_TYPE_ANIMATION);
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++) {
+         mo->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ANIMATION));
+      }
+   }
+   delete rs;
+
+   // Create ItemInteractions
+   rs = loadInteractions(db, mapObjectId, INTERACTION_TYPE_ITEM);
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++) {
+         std::cout << "item interaction" << std::endl;
+         mo->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_ITEM));
+      }
+   }
+   delete rs;
+
+   // Create DialogInteractions
+   rs = loadInteractions(db, mapObjectId, INTERACTION_TYPE_DIALOG);
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++) {
+         mo->addInteraction(createInteraction(rs,row,INTERACTION_TYPE_DIALOG));
+      }
+   }
+   delete rs;
+
 }
 
 Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
@@ -245,21 +270,18 @@ Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
       int y = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_RELATIVE_Y));
 
       // Only RectHardpoints
-      if (type == HARDPOINT_TYPE_RECT)
-      {
+      if (type == HARDPOINT_TYPE_RECT) {
          int height = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_HEIGHT));
          int width = atoi(rs->getColumnValue(row,HARDPOINT_COLUMN_WIDTH));
          return new RectHardpoint(x,y,height,width);
-      }
+
       // Only CircHardpoints
-      else if (type == HARDPOINT_TYPE_CIRC)
-      {
+      } else if (type == HARDPOINT_TYPE_CIRC) {
          double r = atof(rs->getColumnValue(row,HARDPOINT_COLUMN_RADIUS));
          return new CircHardpoint(x,y,r);
-      }
-      // Default
-      else
-      {
+
+      // Default 
+      } else {
          return new RectHardpoint();
       }
 }
@@ -272,21 +294,18 @@ Interactionpoint* MapObjectFactory::createInteractionpoint(RowSet* rs, int row) 
       bool requiresMouseClick = atoi(rs->getColumnValue(row,INTERACTIONPOINT_COLUMN_REQUIRES_MOUSE_CLICK)) != 0;
 
       // Only RectInteractionpoints
-      if (type == INTERACTIONPOINT_TYPE_RECT)
-      {
+      if (type == INTERACTIONPOINT_TYPE_RECT) {
          int height = atoi(rs->getColumnValue(row,INTERACTIONPOINT_COLUMN_HEIGHT));
          int width = atoi(rs->getColumnValue(row,INTERACTIONPOINT_COLUMN_WIDTH));
          return new RectInteractionpoint(x,y,height,width,requiresMouseClick);
-      }
+
       // Only CircInteractionpoints
-      else if (type == INTERACTIONPOINT_TYPE_CIRC)
-      {
+      } else if (type == INTERACTIONPOINT_TYPE_CIRC) {
          double r = atof(rs->getColumnValue(row,INTERACTIONPOINT_COLUMN_RADIUS));
          return new CircInteractionpoint(x,y,r,requiresMouseClick);
-      }
+
       // Default
-      else
-      {
+      } else {
          return new RectInteractionpoint();
       }
 }
@@ -298,8 +317,7 @@ Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int intera
    bool isHandledOnce = atoi(rs->getColumnValue(row,INTERACTION_COLUMN_IS_HANDLED_ONCE)) != 0;
 
    // AnimationInteractions
-   switch (interactionType)
-   {
+   switch (interactionType) {
       // AnimationInteractions
       case INTERACTION_TYPE_ANIMATION:
          return new AnimationInteraction(priority, isHandledOnce, rs->getColumnValue(row,ANIMATION_INTERACTION_COLUMN_ANIMATION_NAME));
@@ -327,6 +345,23 @@ Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int 
    return new Coordinate(wc_x, wc_y);
 }
 
+RowSet* MapObjectFactory::loadInventory(sqlite3 *db, int inventoryId) {
+   RowSet* rs = new RowSet();
+   char* invQuery;
+   int rc;
+ 
+   invQuery = QueryGenerator::inventory(inventoryId);
+   rc = rs->select(db, invQuery);
+   delete [] invQuery;
+
+   if (rc == SQLITE_OK) {
+      assert(rs->getColCount() == INVENTORY_COLUMN_COUNT);
+   }
+
+   return rs;
+
+}
+
 RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    RowSet* rs = new RowSet();
    char* hpQuery;
@@ -336,8 +371,7 @@ RowSet* MapObjectFactory::loadHardpoints(sqlite3 *db, int smoId) {
    rc = rs->select(db, hpQuery);
    delete [] hpQuery;
 
-   if (rc == SQLITE_OK)
-   {
+   if (rc == SQLITE_OK) {
       assert(rs->getColCount() == HARDPOINT_COLUMN_COUNT);
    }
 
@@ -353,8 +387,8 @@ RowSet* MapObjectFactory::loadInteractionpoints(sqlite3 *db, int smoId) {
    rc = rs->select(db, ipQuery);
    delete [] ipQuery;
 
-   if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
-   {
+   // If no rows returned, no columns returned
+   if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) {
       assert(rs->getColCount() == INTERACTIONPOINT_COLUMN_COUNT);
    }
 
@@ -366,15 +400,15 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
    char* iQuery;
    int rc;
  
-   switch (interactionType)
-   {
+   switch (interactionType) {
       // Load AnimationInteractions
       case INTERACTION_TYPE_ANIMATION:
          iQuery = QueryGenerator::animationInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
-         {
+
+         // If no rows returned, no columns returned
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) {
             assert(rs->getColCount() == ANIMATION_INTERACTION_COLUMN_COUNT);
          }
          break;
@@ -383,8 +417,9 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
          iQuery = QueryGenerator::itemInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
-         {
+
+         // If no rows returned, no columns returned
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) {
             assert(rs->getColCount() == ITEM_INTERACTION_COLUMN_COUNT);
          }
          break;
@@ -393,8 +428,9 @@ RowSet* MapObjectFactory::loadInteractions(sqlite3 *db, int smoId, int interacti
          iQuery = QueryGenerator::dialogInteraction(smoId,interactionType);
          rc = rs->select(db, iQuery);
          delete [] iQuery;
-         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) // If no rows returned, no columns returned
-         {
+
+         // If no rows returned, no columns returned
+         if ((rc == SQLITE_OK) && (rs->getRowCount() > 0)) {
             assert(rs->getColCount() == DIALOG_INTERACTION_COLUMN_COUNT);
          }
          break;
@@ -414,8 +450,7 @@ RowSet* MapObjectFactory::loadNonPlayerCharacterPath(sqlite3 *db, int npcId) {
    rc = rs->select(db, npcPathQuery);
    delete [] npcPathQuery;
 
-   if (rc == SQLITE_OK)
-   {
+   if (rc == SQLITE_OK) {
       assert(rs->getColCount() == NON_PLAYER_CHARACTER_PATH_COLUMN_COUNT);
    }
 

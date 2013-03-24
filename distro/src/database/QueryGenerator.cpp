@@ -55,7 +55,7 @@ char* QueryGenerator::nonPlayerCharacter(int boxX, int boxY)
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
    qs += "mo.DrawableName, ";
-   qs += "npc.Speed, ";
+   qs += "npc.Speed ";
    qs += "from MapObject mo ";
    qs += "inner join NonPlayerCharacter npc on npc.MapObjectId = mo.MapObjectId ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
@@ -87,9 +87,10 @@ char* QueryGenerator::container(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.DrawableName, ";
+   qs += "mot.DrawableName ";
    qs += "from MapObject mo ";
    qs += "inner join Container c on c.MapObjectId = mo.MapObjectId ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
    qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
    qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);

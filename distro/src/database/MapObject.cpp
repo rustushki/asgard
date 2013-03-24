@@ -210,10 +210,8 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
       if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
       {
          // Handle Interactions
-         int i = 0;
          for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
          {
-            std::cout<<++i<<std::endl;
             switch ((*iItr)->getType())
             {
                case INTERACTION_TYPE_ANIMATION:
@@ -230,6 +228,8 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
 
                   // To Gamer Inventory
                   GamerInventory *gi = GamerInventory::getInstance();
+
+                  std::cout << "You got a " << itemName << std::endl;
 
                   // Perform Transfer
                   container->inventory().transferItemToInventory(itemName, gi);
@@ -252,16 +252,10 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
    }
 }
 
-void MapObject::addInteraction(Interaction *interaction)
-{
-   int priority = interaction->getPriority();
+void MapObject::addInteraction(Interaction *interaction) {
 
-   // Ensure that enough space is allocated to the vector to accommodate 
-   // insertion of interaction at position interactions[priority]
-   if(priority >= (int)interactions.capacity())
-      interactions.resize(priority+1);
+   interactions.push_back(interaction);
 
-   interactions[priority] = interaction;
 }
 
 int MapObject::computeAngleOfMovement(int newX, int newY, int oldX, int oldY)
