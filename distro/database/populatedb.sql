@@ -286,15 +286,15 @@ values(3, 1, 1);
 /* Item Interactions for Treasure Chests*/
 insert into Interaction
 (InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,2,1,1,1,NULL,1,NULL);
+values(1,2,0,1,1,NULL,1,NULL);
 
 insert into Interaction
 (InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,8,1,1,1,NULL,1,NULL);
+values(1,8,0,1,1,NULL,1,NULL);
 
 insert into Interaction
 (InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,9,1,1,1,NULL,1,NULL);
+values(1,9,0,1,1,NULL,1,NULL);
 /* Animation Interaction for Treasure Chest 1 */
 /*
 insert into Interaction

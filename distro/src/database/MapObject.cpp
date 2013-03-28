@@ -245,7 +245,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
             }
             // Remove Interaction if it is only handled once
             if((*iItr)->getIsHandledOnce()) 
-               interactions.erase(interactions.begin() + (*iItr)->getPriority());
+               accepter->interactions.erase(accepter->interactions.begin());
          }
          break; // Initiator's foot only needs to be within one Interactionpoint
       }
