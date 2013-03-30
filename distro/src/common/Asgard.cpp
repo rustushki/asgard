@@ -19,7 +19,6 @@
 
 #include "Asgard.h"
 #include "ConsolePython.h"
-#include "GuiFactory.h"
 
 Asgard* Asgard::instance = NULL;
 int     Asgard::argc     = 0;
@@ -67,12 +66,6 @@ void Asgard::controller() {
    this->gate.wait(lock);
 
    // The View is now ready.
-
-   GuiFactory* gf = GuiFactory::GetInstance();
-   Dialog* dia = gf->buildDialog("match.png", "Welcome to Asgard. This is a simple interactive demo used by the developers to test out new features. In Asgard 0.3.11, we support Interactions, Dialogs and Menus.\n\nInteractions are demonstrated by opening treasure chests. In subsequent releases, they will drive most player-to-game actions.\n\nYou can view your inventory by pressing the M key. The inventory is displayed in a Menu.\n\nThis box is a Dialog. Press Enter to hide it.");
-   dia->setDimension(500, 300);
-   dia->refresh();
-   dia->show();
 
    // Read from the Console and Process all Input.
    Console::getInstance()->inputLoop();
