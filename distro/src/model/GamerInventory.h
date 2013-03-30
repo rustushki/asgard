@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -17,34 +17,22 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "RectHardpoint.h"
+#ifndef GAMER_INVENTORY_H
+#define GAMER_INVENTORY_H
 
-RectHardpoint::RectHardpoint()
-{
-   this->coordinate = Coordinate(0,0);
-   this->height = 0;
-   this->width = 0;
-}
+#include "Inventory.h"
 
-RectHardpoint::RectHardpoint(int x, int y, int height, int width)
-{
-   this->coordinate = Coordinate(x,y);
-   this->height = height;
-   this->width = width;
-}
+class GamerInventory : public Inventory {
 
-RectHardpoint::~RectHardpoint()
-{
-}
+public:
+	static GamerInventory* getInstance();
 
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
-{
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
+private:
+	GamerInventory();
+	~GamerInventory();
 
-   if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
-      return true;
-   else
-      return false;
-}
+	static GamerInventory* instance;
+
+};
+
+#endif//GAMER_INVENTORY_H

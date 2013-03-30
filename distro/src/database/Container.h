@@ -22,22 +22,19 @@
 
 #include "externals.h"
 #include "MapObject.h"
-#include "Item.h"
+#include "Inventory.h"
 
 class Container : public MapObject
 {
    public:
       Container(std::string drawableName);
+      Container(std::string drawableName, const Inventory& inv);
       ~Container();
-      int getItemCount();
-      Item* getItem(int index);
-      bool putItem(Item* item);
-      bool isOpenable();
-      std::string peek(int index);
-      
+
+      Inventory& inventory();
+
    private:
-      const static int MAX_ITEMS = 15;
-      std::vector<Item*> items;
+      Inventory inv;
 };
 
 #endif //CONTAINER_H

@@ -37,6 +37,11 @@ objects = [
 './database/DesertTile.cpp',
 './database/Tile.cpp',
 './database/DrawableFactory.cpp',
+'./database/AnimationInteraction.cpp',
+'./database/ItemInteraction.cpp',
+'./database/DialogInteraction.cpp',
+'./database/RectInteractionpoint.cpp',
+'./database/CircInteractionpoint.cpp',
 './graphicsEngine/GraphicsEngine.cpp',
 './graphicsEngine/Animation.cpp',
 './graphicsEngine/Drawable.cpp',
@@ -50,6 +55,7 @@ objects = [
 './gui/ResourceLoader.cpp',
 './gui/Theme.cpp',
 './map/Map.cpp',
+'./model/GamerInventory.cpp',
 './model/Inventory.cpp',
 './model/Item.cpp',
 './common/EventHandler.cpp',
@@ -59,6 +65,10 @@ objects = [
 #'./model/test.cpp'
 './main/main.cpp'
 ]
+
+if ARGUMENTS.get('VERBOSE') != "1":
+	env['CXXCOMSTR'] = "[CC] $TARGET"
+	env['LINKCOMSTR'] = "[LK] $TARGET"
 
 asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','SDL_ttf','python2.7'], CXXFLAGS=['-Wall', '-O2'])
 Export("asgard")

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -34,9 +34,6 @@ class CircHardpoint : public Hardpoint
 
       bool conflict(const Coordinate & wc, const Coordinate & moc) const;
 
-      /*TEST*/
-      Coordinate getCoord() const;
-      /*ENDTEST*/
 };
 
 #endif //CIRC_HARDPOINT_H

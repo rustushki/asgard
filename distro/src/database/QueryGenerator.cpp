@@ -55,7 +55,7 @@ char* QueryGenerator::nonPlayerCharacter(int boxX, int boxY)
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
    qs += "mo.DrawableName, ";
-   qs += "npc.Speed, ";
+   qs += "npc.Speed ";
    qs += "from MapObject mo ";
    qs += "inner join NonPlayerCharacter npc on npc.MapObjectId = mo.MapObjectId ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
@@ -87,14 +87,29 @@ char* QueryGenerator::container(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mo.DrawableName, ";
+   qs += "mot.DrawableName ";
    qs += "from MapObject mo ";
    qs += "inner join Container c on c.MapObjectId = mo.MapObjectId ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.WC_X  > " + QueryGenerator::intToString(boxX);
    qs += "  and mo.WC_X <= " + QueryGenerator::intToString(boxX + Map::BOUNDING_BOX_SIZE);
    qs += "  and mo.WC_Y  > " + QueryGenerator::intToString(boxY);
    qs += "  and mo.WC_Y <= " + QueryGenerator::intToString(boxY + Map::BOUNDING_BOX_SIZE);
    
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::inventory(int inventoryId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "it.ItemName, ";
+   qs += "it.Quantity ";
+   qs += "from Inventory inv ";
+   qs += "inner join InventoryHasItem invhi on invhi.InventoryId = inv.InventoryId ";
+   qs += "inner join Item it on invhi.ItemId = it.ItemId ";
+   qs += "where inv.InventoryId = " + QueryGenerator::intToString(inventoryId);
+
    return QueryGenerator::makeCStr(qs);
 }
 
@@ -133,6 +148,70 @@ char* QueryGenerator::hardpoint(int mapObjectId)
    qs += "inner join Hardpoints h on h.MapObjectTypeId = mot.MapObjectTypeId ";
    qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
    
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::interactionpoint(int mapObjectId)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "mo.MapObjectId, ";
+   qs += "i.RelativeX, ";
+   qs += "i.RelativeY, ";
+   qs += "i.InteractionpointType, ";
+   qs += "i.Width, ";
+   qs += "i.Height, ";
+   qs += "i.Radius, ";
+   qs += "i.RequiresMouseClick ";
+   qs += "from MapObject mo ";
+   qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "inner join Interactionpoints i on i.MapObjectTypeId = mot.MapObjectTypeId ";
+   qs += "where mo.MapObjectId = " + QueryGenerator::intToString(mapObjectId) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::animationInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "i.AnimationName ";
+   qs += "from Interaction i ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::itemInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "it.ItemName ";
+   qs += "from Interaction i ";
+   qs += "inner join Item it on i.ItemId = it.ItemId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
+char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
+{
+   std::string qs;
+   qs += "select ";
+   qs += "i.Priority, ";
+   qs += "i.IsHandledOnce, ";
+   qs += "d.Quote ";
+   qs += "from Interaction i ";
+   qs += "inner join Dialog d on i.DialogId = d.DialogId ";
+   qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
+   qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
+
    return QueryGenerator::makeCStr(qs);
 }
 

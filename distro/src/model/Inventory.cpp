@@ -8,6 +8,13 @@ Inventory::~Inventory() {
 
 }
 
+/* ------------------------------------------------------------------------------
+ * Copy Constructor for Inventory.
+ */
+Inventory::Inventory(const Inventory& inv) {
+   this->item = inv.item;
+}
+
 
 /*------------------------------------------------------------------------------
  * addItem - Add an item to this inventory.

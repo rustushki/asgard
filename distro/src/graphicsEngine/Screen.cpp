@@ -105,7 +105,7 @@ void Screen::insertLayer(Layer* newLayer, unsigned int position) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    //  should throw invalid position exception.
-   if (position >= 0 && position <= this->layer.size()) {
+   if (position <= this->layer.size()) {
       this->layer.insert(this->layer.begin()+position, newLayer);
    }
 }

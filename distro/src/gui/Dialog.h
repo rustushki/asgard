@@ -28,6 +28,7 @@ class Dialog : public Box {
       void drawText();
 
       friend class GuiFactory;
+
 };
 
 #endif//DIALOG_H

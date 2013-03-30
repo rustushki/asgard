@@ -175,11 +175,16 @@ void Map::loadBoundingBoxes() {
 }
 
 void Map::unloadBoundingBoxes() {
-   std::vector<Coordinate>::iterator bbIter;
-   for (bbIter = this->boundingBoxContainer.begin(); bbIter != this->boundingBoxContainer.end(); bbIter++) {
-      if (!this->isBoundingBoxInScope(*bbIter)) {
-         this->boundingBoxContainer.erase(bbIter);
+   std::vector<Coordinate>::iterator bbIter = boundingBoxContainer.begin();
+
+   while (bbIter != boundingBoxContainer.end()) {
+
+      if (!isBoundingBoxInScope(*bbIter)) {
+         bbIter = boundingBoxContainer.erase(bbIter);
+      } else {
+         bbIter++;
       }
+
    }
    this->unloadMapObjects();
 }
@@ -524,8 +529,11 @@ void Map::handle(SDL_Event event) {
                }
 
                Coordinate screenLoc;
+               bool wasMouseClicked = false;
                while(i < (int)path.size()) 
                {
+                  wasMouseClicked = false;
+
                   // Move MapObject with respect to World Coordinate
                   cmo->move(path[i]);
 
@@ -547,6 +555,15 @@ void Map::handle(SDL_Event event) {
                   // event if so.
                   this->checkOverMapPanThreshold();
 
+                  // Handle any Interactions between the CMO and another MapObject, if necessary
+                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
+                  {
+                     // TEMPORARY implementation solely for demonstrating Interactions
+                     cmo->interacts(*moItr,true);
+                     // Below implementation will be part of the future permanent solution
+			            //cmo->interacts(*moItr,(path[i] == newCMOWorldCoordinate));
+                  }
+                  
                   SDL_Delay(10);
 
                   i = i + step;
@@ -737,4 +754,3 @@ CharacterMapObject* Map::getCharacterMapObject() const {
 
    return cmo;
 }
-

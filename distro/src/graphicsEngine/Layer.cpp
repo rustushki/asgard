@@ -65,7 +65,7 @@ void Layer::insertDrawable(Drawable* drawable, unsigned int zIndex) {
    //TODO: Error handling...
    //  should throw duplicate name exception.
    //  should throw invalid zIndex exception.
-   if (zIndex >= 0 && zIndex <= this->drawable.size())
+   if (zIndex <= this->drawable.size())
       this->drawable.insert(this->drawable.begin()+zIndex, drawable);
    GraphicsEngine::releaseLock();
 }

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2011 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *
  * Asgard is free software; you can redistribute it and/or modify
@@ -20,66 +20,27 @@
 
 /* Constructor */
 Container::Container(std::string drawableName) : MapObject(drawableName) {
-   items.reserve(MAX_ITEMS);
-   
-   std::vector<Item*>::iterator currentItem;
-   for(currentItem = items.begin(); currentItem != items.end(); currentItem++) {
-      *currentItem = NULL;
-   }
-   
+   this->inv = Inventory();
+}
+
+Container::Container(std::string drawableName, const Inventory& inv) : MapObject(drawableName) {
+
+   // Set the Inventory as the Provided Inventory.
+   this->inv = Inventory(inv);
+
 }
 
 Container::~Container() {
 }
 
-/* Returns number of Items in Container */
-int Container::getItemCount() {
-   int validItemCount = 0;
-   std::vector<Item*>::iterator currentItem;
-   for(currentItem = items.begin(); currentItem != items.end(); currentItem++) {
-      if(*currentItem != NULL) validItemCount++;
-   }
-   return validItemCount;
-}
 
-/* Retrieve Item */
-Item* Container::getItem(int index) {
-   Item* itemToReturn = NULL;
-   
-   if(!items.empty() && index < MAX_ITEMS) {
-      itemToReturn = items[index];
-      items[index] = NULL;
-   }
-   
-   return itemToReturn;
-}
+/* ------------------------------------------------------------------------------
+ * inventory - Return a constant pointer to the inventory for this container.
+ * The contents of the inventory may be changed, but the actually inventory
+ * object may not be replaced with another one.
+ */
+Inventory& Container::inventory() {
 
-/* Insert Item in Container */
-bool Container::putItem(Item* item) {
-   bool itemAdded = false;
-   
-   assert(item);
-   
-   std::vector<Item*>::iterator currentItem;
-   for(currentItem = items.begin(); currentItem != items.end() && !itemAdded; currentItem++) {
-      if(*currentItem != NULL)
-      {
-         *currentItem = item;
-         itemAdded = true;
-      }
-   }
-   
-   return itemAdded;
-}
+   return inv;
 
-/* Can Container be opened? */
-bool Container::isOpenable() {
-   return true;
-}
-
-/* What Item is cursor pointing at? */
-std::string Container::peek(int index) {
-   assert(index < MAX_ITEMS);
-   
-   return items[index]->getName();
 }

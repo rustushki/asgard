@@ -1,7 +1,7 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
- *
+ * 
  * Asgard is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -10,41 +10,33 @@
  * Asgard is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
+ * GNU General Public License for more details. 
+ * 
  * You should have received a copy of the GNU General Public License
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#ifndef INVENTORY_H
-#define INVENTORY_H
+#ifndef ITEM_INTERACTION_H
+#define ITEM_INTERACTION_H
 
 #include "externals.h"
-#include "Item.h"
+#include "Interaction.h"
 
-class Inventory {
-
-    public:
-        Inventory();
-        Inventory(const Inventory& inv);
-        ~Inventory();
-
-        void addItem(Item item);
-        Inventory getItemsByName(std::string name);
-        void transferAll(Inventory* inventory);
-        bool transferItemToInventory(std::string name, Inventory* inventory);
-        unsigned int transferItemToInventory(std::string name, Inventory* inventory, unsigned int count);
-
-        unsigned int countUniqueItems() const;
-        unsigned int countItems() const;
-        unsigned int countItemsByName(std::string name) const;
-
-
-    private:
-        std::vector<Item> item;
-
-
+class ItemInteraction : public Interaction
+{
+   public:
+      ItemInteraction(int priority, bool isHandledOnce, std::string itemName);
+      ~ItemInteraction();
+      void setPriority(int priority);
+      int getPriority() const;
+      void setIsHandledOnce(bool isHandledOnce);
+      bool getIsHandledOnce() const;
+      void setItemName(std::string itemName);
+      std::string getItemName() const;
+      int getType() const;
+   private:
+      std::string itemName;
 };
 
-#endif//INVENTORY_H
+#endif //ITEM_INTERACTION_H

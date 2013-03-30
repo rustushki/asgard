@@ -132,6 +132,9 @@ void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawab
          d->moveByOffset(xOffset, yOffset);
       }
    }
+
+   // Free provided drawable names.
+   delete drawableNames;
 }
 
 /* ------------------------------------------------------------------------------
