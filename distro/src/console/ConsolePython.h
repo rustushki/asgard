@@ -20,7 +20,6 @@
 #ifndef CONSOLEPYTHON_H
 #define CONSOLEPYTHON_H
 #include "externals.h"
-#include "Map.h"
 #include "Database.h"
 
 PyObject* map_SetFocus(PyObject* self, PyObject* args);

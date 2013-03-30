@@ -22,7 +22,6 @@
 
 #include "externals.h"
 #include "Coordinate.h"
-#include "MapObjectFactory.h"
 #include "DrawableFactory.h"
  
 class Database

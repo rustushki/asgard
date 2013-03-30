@@ -21,6 +21,9 @@
 #include "GraphicsEngine.h"
 #include "GamerInventory.h"
 #include "Drawable.h"
+#include "AnimationInteraction.h"
+#include "ItemInteraction.h"
+#include "Container.h"
 
 MapObject::MapObject(std::string drawableName)
 {
@@ -238,7 +241,13 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
 
                   break;
                case INTERACTION_TYPE_DIALOG:
-                  accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
+
+                  // TODO: How does DialogInteraction use Dialogs provided by Container.
+                  // (RA; 03/30/2013)
+                  //
+
+                  //accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
+
                   break;
                default:
                   std::cout<<"ERROR: Undefined Interaction"<<std::endl;

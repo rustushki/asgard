@@ -27,7 +27,6 @@
 #include "Interactionpoint.h"
 #include "Interaction.h"
 #include "Drawable.h"
-#include "Dialog.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
@@ -93,7 +92,5 @@ class MapObject
 
       MapObjectState state;
       int step;
-
-      Dialog *dialog;
 };
 #endif//MAP_OBJECT_H

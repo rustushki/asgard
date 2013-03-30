@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "Database.h"
+#include "MapObjectFactory.h"
 #include "consts.h"
 
 Database* Database::instance = NULL;
