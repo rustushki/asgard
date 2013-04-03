@@ -23,6 +23,7 @@ ItemInteraction::ItemInteraction(int priority, bool isHandledOnce, std::string i
 {
    this->priority = priority;
    this->itemName = itemName;
+   this->isHandledOnce = isHandledOnce;
 }
 
 ItemInteraction::~ItemInteraction()
