@@ -8,6 +8,7 @@
 GuiFactory* GuiFactory::instance = NULL;
 
 GuiFactory::GuiFactory() {
+   this->theme = NULL;
    this->setThemeName("default");
 }
 
@@ -42,7 +43,10 @@ Dialog* GuiFactory::buildDialog(std::string imagePath, std::string text) {
 void GuiFactory::setThemeName(std::string themeName) {
    if (this->themeName != themeName) {
       this->themeName = themeName;
-      delete this->theme;
+
+      if (this->theme != NULL) {
+         delete this->theme;
+      }
 
       this->theme = new Theme(themeName);
    }

@@ -3,6 +3,7 @@
 
 Box::Box() {
    this->tempSurf = NULL;
+   this->box = NULL;
 }
 
 Box::~Box() {
