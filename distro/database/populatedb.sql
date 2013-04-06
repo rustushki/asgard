@@ -243,6 +243,14 @@ insert into Item
 (ItemId,ItemName)
 values(1,"Balloon Sword");
 
+insert into Item
+(ItemId,ItemName)
+values(2,"Yoyo of Uncertainty");
+
+insert into Item
+(ItemId,ItemName)
+values(3,"Eyeball Pear Staff");
+
 insert into Container
 (MapObjectId, InventoryId)
 values(2,1);
@@ -257,7 +265,7 @@ values(1, 1, 1);
 
 insert into Container
 (MapObjectId, InventoryId)
-values(8,1);
+values(8,2);
 
 insert into Inventory
 (InventoryId)
@@ -265,11 +273,11 @@ values(2);
 
 insert into InventoryHasItem
 (InventoryId, ItemId, Quantity)
-values(2, 1, 1);
+values(2, 2, 1);
 
 insert into Container
 (MapObjectId, InventoryId)
-values(9,1);
+values(9,3);
 
 insert into Inventory
 (InventoryId)
@@ -277,28 +285,28 @@ values(3);
 
 insert into InventoryHasItem
 (InventoryId, ItemId, Quantity)
-values(3, 1, 1);
+values(3, 3, 1);
 
 /* Item Interactions for Treasure Chests*/
 insert into Interaction
-(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,2,0,1,1,NULL,1,NULL);
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId)
+values(1,2,0,1,1,NULL,1);
 
 insert into Interaction
-(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,8,0,1,1,NULL,1,NULL);
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId)
+values(1,8,0,1,1,NULL,1);
 
 insert into Interaction
-(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(1,9,0,1,1,NULL,1,NULL);
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId)
+values(1,9,0,1,1,NULL,1);
 /* Animation Interaction for Treasure Chest 1 */
 /*
 insert into Interaction
-(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(2,1000,0,1,0,"TreasureChestOpening",NULL,NULL);
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId)
+values(2,1000,0,1,0,"TreasureChestOpening",NULL);
 */
 /* Dialog Interaction for Treasure Chest 1 */
 /*insert into Interaction
-(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId,DialogId)
-values(3,1000,2,1,2,NULL,NULL,1);
+(InteractionId,MapObjectId,Priority,IsHandledOnce,InteractionType,AnimationName,ItemId)
+values(3,1000,2,1,2,NULL,NULL);
 */
