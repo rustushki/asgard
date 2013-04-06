@@ -25,7 +25,7 @@ int Dialog::getWordNPos(int wordN, std::string text) {
       return 0;
    }
 
-   int pos = text.find(" ", 0);
+   size_t pos = text.find(" ", 0);
 
    while (wordN-- > 0 && pos != string::npos) {
       pos = text.find(" ", pos+1);
@@ -38,7 +38,7 @@ int Dialog::getWordNPos(int wordN, std::string text) {
  * getWordCount - Count the words in the provided string.
  */
 int Dialog::getWordCount(std::string text) {
-   int pos = text.find(" ", 0);
+   size_t pos = text.find(" ", 0);
 
    int count = 0;
 
@@ -68,7 +68,7 @@ std::string Dialog::getUpToWordN(int n, std::string text) {
  * getAfterWordN - Return the string following word N in the provided string.
  */
 std::string Dialog::getAfterWordN(int n, std::string text) {
-   int pos = Dialog::getWordNPos(n, text);
+   size_t pos = Dialog::getWordNPos(n, text);
 
    // If there is no more string after word N, return the empty string.
    //
