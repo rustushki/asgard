@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Container.h"
+#include "DialogInteraction.h"
 
 /* Constructor */
 Container::Container(std::string drawableName) : MapObject(drawableName) {
@@ -27,6 +28,19 @@ Container::Container(std::string drawableName, const Inventory& inv) : MapObject
 
    // Set the Inventory as the Provided Inventory.
    this->inv = Inventory(inv);
+
+   // Construct the Dialog Interaction.
+   Uint16 priority = 0;
+   bool isHandledOnce = true;
+   std::string msg = "You got the " + inv.toString() + ".";
+   DialogInteraction* di = new DialogInteraction(
+        priority
+      , isHandledOnce
+      , msg
+   );
+
+   // Add the Dialog Interaciton.
+   this->addInteraction((Interaction*) di);
 
 }
 

@@ -20,6 +20,7 @@
 #include "MapObject.h"
 #include "GraphicsEngine.h"
 #include "GamerInventory.h"
+#include "DialogInteraction.h"
 #include "Drawable.h"
 #include "AnimationInteraction.h"
 #include "ItemInteraction.h"
@@ -242,11 +243,8 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
                   break;
                case INTERACTION_TYPE_DIALOG:
 
-                  // TODO: How does DialogInteraction use Dialogs provided by Container.
-                  // (RA; 03/30/2013)
-                  //
+                  ((DialogInteraction*)(*iItr))->handle();
 
-                  //accepter->dialog->setText(((DialogInteraction *)(*iItr))->getQuote());
 
                   break;
                default:
