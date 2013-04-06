@@ -82,7 +82,6 @@ class MapObject
    private:
       Coordinate leftCorner;
       list<int> boundingBoxes;
-      int height,width;
       std::string drawableName;
       Drawable *drawable; // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion
 
