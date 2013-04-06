@@ -260,7 +260,6 @@ void MapObjectFactory::addInteractions(sqlite3 *db, MapObject *mo, int mapObject
       }
    }
    delete rs;
-
 }
 
 Hardpoint* MapObjectFactory::createHardpoint(RowSet* rs, int row) {
@@ -328,7 +327,7 @@ Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int intera
          break;
       // DialogInteractions
       case INTERACTION_TYPE_DIALOG:
-         return new DialogInteraction(priority, isHandledOnce, rs->getColumnValue(row,DIALOG_INTERACTION_COLUMN_QUOTE));
+         return new DialogInteraction(priority, isHandledOnce, rs->getColumnValue(row,DIALOG_INTERACTION_COLUMN_TEXT));
          break;
       default:
          std::cout<<"ERROR:  Undefined Interaction Type!"<<std::endl;

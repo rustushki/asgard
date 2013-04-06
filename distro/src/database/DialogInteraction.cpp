@@ -18,11 +18,12 @@
  ****************************************************************************/
 
 #include "DialogInteraction.h"
+#include "GuiFactory.h"
 
-DialogInteraction::DialogInteraction(int priority, bool isHandledOnce, std::string quote)
+DialogInteraction::DialogInteraction(int priority, bool isHandledOnce, std::string text)
 {
    this->priority = priority;
-   this->quote = quote;
+   this->text = text;
 }
 
 DialogInteraction::~DialogInteraction()
@@ -50,17 +51,16 @@ bool DialogInteraction::getIsHandledOnce() const
    return this->isHandledOnce;
 }
 
-void DialogInteraction::setQuote(std::string quote)
-{
-   this->quote = quote;
-}
-
-std::string DialogInteraction::getQuote() const
-{
-   return this->quote;
-}
-
 int DialogInteraction::getType() const
 {
    return INTERACTION_TYPE_DIALOG;
+}
+
+void DialogInteraction::handle()
+{
+   GuiFactory* gf = GuiFactory::GetInstance();
+   Dialog* dia = gf->buildDialog("notused.png", this->text); 
+   dia->setDimension(500, 300);
+   dia->refresh();
+   dia->show();
 }

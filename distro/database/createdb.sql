@@ -101,11 +101,10 @@ create table Interaction
    InteractionType integer(1) not null,
    AnimationName varchar(100),
    ItemId integer,
-   DialogId integer,
+   Text varchar(1000),
    foreign key(MapObjectId) references MapObject(MapObjectId),
    foreign key(AnimationName) references Animation(AnimationName),
    foreign key(ItemId) references Item(ItemId),
-   foreign key(DialogId) references Dialog(DialogId)
 );
 
 create table Animation

@@ -206,9 +206,8 @@ char* QueryGenerator::dialogInteraction(int mapObjectId, int interactionType)
    qs += "select ";
    qs += "i.Priority, ";
    qs += "i.IsHandledOnce, ";
-   qs += "d.Quote ";
+   qs += "i.Text ";
    qs += "from Interaction i ";
-   qs += "inner join Dialog d on i.DialogId = d.DialogId ";
    qs += "where i.MapObjectId = " + QueryGenerator::intToString(mapObjectId);
    qs += " and i.InteractionType = " + QueryGenerator::intToString(interactionType) + ";";
 

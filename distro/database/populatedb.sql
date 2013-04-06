@@ -243,10 +243,6 @@ insert into Item
 (ItemId,ItemName)
 values(1,"Balloon Sword");
 
-insert into Dialog
-(DialogId,Quote)
-values(1,"You found a...Balloon Sword?!?");
-
 insert into Container
 (MapObjectId, InventoryId)
 values(2,1);
