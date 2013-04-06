@@ -233,8 +233,6 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
                   // To Gamer Inventory
                   GamerInventory *gi = GamerInventory::getInstance();
 
-                  std::cout << "You got a " << itemName << std::endl;
-
                   // Perform Transfer
                   container->inventory().transferItemToInventory(itemName, gi);
 
