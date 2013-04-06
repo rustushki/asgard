@@ -114,17 +114,18 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    std::string drawableName = drawable->getInstanceName();
 
    int mapObjectId = sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID);
+   int inventoryId = sqlite3_column_int(stmt, CONTAINER_COLUMN_INVENTORY_ID);
 
    // Create Inventory
    Inventory inv;
-   RowSet* rs = loadInventory(db, mapObjectId);
+   RowSet* rs = loadInventory(db, inventoryId);
    if (rs != NULL) {
       for (int row = 0; row < rs->getRowCount(); row++) {
          std::string itemName = rs->getColumnValue(row,INVENTORY_COLUMN_ITEMNAME);
          int quantity = atoi(rs->getColumnValue(row,INVENTORY_COLUMN_QUANTITY));
 
          while(quantity > 0) {
-            inv.addItem(itemName);
+            inv.addItem(Item(itemName));
             quantity--;
          }
       }

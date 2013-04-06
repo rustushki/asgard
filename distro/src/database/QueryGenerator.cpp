@@ -87,7 +87,8 @@ char* QueryGenerator::container(int boxX, int boxY)
    qs += "mo.MapObjectId, ";
    qs += "mo.WC_X, ";
    qs += "mo.WC_Y, ";
-   qs += "mot.DrawableName ";
+   qs += "mot.DrawableName, ";
+   qs += "c.InventoryId ";
    qs += "from MapObject mo ";
    qs += "inner join Container c on c.MapObjectId = mo.MapObjectId ";
    qs += "inner join MapObjectType mot on mo.MapObjectTypeId = mot.MapObjectTypeId ";
@@ -104,7 +105,7 @@ char* QueryGenerator::inventory(int inventoryId)
    std::string qs;
    qs += "select ";
    qs += "it.ItemName, ";
-   qs += "it.Quantity ";
+   qs += "invhi.Quantity ";
    qs += "from Inventory inv ";
    qs += "inner join InventoryHasItem invhi on invhi.InventoryId = inv.InventoryId ";
    qs += "inner join Item it on invhi.ItemId = it.ItemId ";
