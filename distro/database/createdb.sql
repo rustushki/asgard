@@ -104,7 +104,7 @@ create table Interaction
    Text varchar(1000),
    foreign key(MapObjectId) references MapObject(MapObjectId),
    foreign key(AnimationName) references Animation(AnimationName),
-   foreign key(ItemId) references Item(ItemId),
+   foreign key(ItemId) references Item(ItemId)
 );
 
 create table Animation
