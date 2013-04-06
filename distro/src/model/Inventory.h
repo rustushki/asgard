@@ -40,6 +40,8 @@ class Inventory {
         unsigned int countItems() const;
         unsigned int countItemsByName(std::string name) const;
 
+        std::string toString() const;
+
 
     private:
         std::vector<Item> item;

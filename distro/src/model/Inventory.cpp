@@ -105,18 +105,18 @@ unsigned int Inventory::transferItemToInventory(std::string name, Inventory* inv
  */
 unsigned int Inventory::countUniqueItems() const {
 
-	std::set<std::string> uniqueSet;
-    std::vector<Item>::const_iterator itemI;
+   std::set<std::string> uniqueSet;
+   std::vector<Item>::const_iterator itemI;
 
-    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
-        
-        std::string cName = itemI->getName();
-        std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
+   for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
 
-		uniqueSet.insert(cName);
-    }
+      std::string cName = itemI->getName();
+      std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
-    return uniqueSet.size();
+      uniqueSet.insert(cName);
+   }
+
+   return uniqueSet.size();
 }
 
 /*------------------------------------------------------------------------------
@@ -130,23 +130,46 @@ unsigned int Inventory::countItems() const {
  * countItems - Given an item name, count how many of them are in this inventory.
  */
 unsigned int Inventory::countItemsByName(std::string name) const {
-    std::vector<Item>::const_iterator itemI;
+   std::vector<Item>::const_iterator itemI;
 
-    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+   std::transform(name.begin(), name.end(), name.begin(), ::tolower);
 
-	unsigned int count = 0;
+   unsigned int count = 0;
 
-    for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
-        
-        std::string cName = itemI->getName();
-        std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
+   for(itemI = this->item.begin(); itemI < this->item.end(); itemI++) {
 
-		if (cName.compare(name) == 0) {
-			count++;
-		}
+      std::string cName = itemI->getName();
+      std::transform(cName.begin(), cName.end(), cName.begin(), ::tolower);
 
-    }
+      if (cName.compare(name) == 0) {
+         count++;
+      }
 
-	return count;
+   }
+
+   return count;
+
+}
+
+/* ------------------------------------------------------------------------------
+ * toString - Return a string which represents the contents of the inventory.
+ */
+std::string Inventory::toString() const {
+
+   if (this->countItems() <= 0) {
+      return "Empty.";
+   }
+
+   // Convert the Inventory contents into a Comma Separated List.
+   std::string str = "";
+   std::vector<Item>::const_iterator itemI;
+   for(itemI = item.begin(); itemI < item.end(); itemI++) {
+      if (itemI != item.begin()) {
+         str += ", ";
+      }
+      str += (*itemI).getName();
+   }
+
+   return str;
 
 }
