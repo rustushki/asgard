@@ -141,6 +141,8 @@ void Layer::update() {
       (*itr)->doSwap();
    for (itr = this->drawable.begin(); itr != this->drawable.end(); itr++)
       (*itr)->doAnim();
+   for (itr = this->drawable.begin(); itr != this->drawable.end(); itr++)
+      (*itr)->doHide();
 }
 
 void Layer::updateRect(SDL_Rect r) {
