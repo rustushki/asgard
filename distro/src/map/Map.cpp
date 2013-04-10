@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "Map.h"
+#include "GuiFactory.h"
 
 Map* Map::instance = NULL;
 
@@ -400,6 +401,9 @@ void Map::handle(SDL_Event event) {
          LOG(INFO) << "Map Click: " << event.button.x << ", " << event.button.y;
 
          {
+
+            // Delete all boxes in GUI
+            GuiFactory::GetInstance()->deleteAll();
 
             // Translate the SDL_MOUSEBUTTONDOWN into Asgard's move CMO event.
             // Use CANCEL event concurrency policy to prevent multiple user

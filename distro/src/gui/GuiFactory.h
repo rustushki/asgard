@@ -33,6 +33,8 @@ public:
 	std::string getThemeName() const;
 	Theme* getTheme() const;
 
+   void deleteAll();
+
 };
 
 #endif//GUIFACTORY_H

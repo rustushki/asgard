@@ -50,7 +50,6 @@ uint Box::getWidth() const {
    return this->width;
 }
 
-
 /* ------------------------------------------------------------------------------
  * show - Display the Box instance on the GUI Layer of the GraphicsEngine.
  */
@@ -64,6 +63,13 @@ void Box::show() const {
  */
 void Box::hide() const {
    this->box->hide();
+}
+
+/* ------------------------------------------------------------------------------
+ * unload - Hide this Box instance and remove it from memory.
+ */
+void Box::unload() const {
+   this->box->unload();
 }
 
 /* ------------------------------------------------------------------------------

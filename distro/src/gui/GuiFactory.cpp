@@ -59,3 +59,12 @@ std::string GuiFactory::getThemeName() const {
 Theme* GuiFactory::getTheme() const {
    return this->theme;
 }
+
+void GuiFactory::deleteAll() {
+   // Hide all Boxes
+   for (int i=0; i<this->box.size(); i++)
+      box[i]->unload(); // also deletes associated Drawable
+
+   // Free Boxes from memory
+   this->box.clear();
+}

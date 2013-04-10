@@ -21,6 +21,7 @@ public:
 
 	void show() const;
 	void hide() const;
+   void unload() const;
 	void refresh();
 
 protected:
