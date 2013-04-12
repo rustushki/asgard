@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -22,42 +22,42 @@
 
 #include "externals.h"
 
-class Coordinate
-{
+class Coordinate {
+
    public:
-      Coordinate();
-      Coordinate(int x, int y);
-      Coordinate(const Coordinate& copyme);
+      virtual void operator+= (const Coordinate rhc);
+      virtual void operator-= (const Coordinate rhc);
 
-      void operator+= (const Coordinate rhwc);
-      void operator-= (const Coordinate rhwc);
-
-      Coordinate operator+ (const Coordinate rhwc) const;
-      Coordinate operator- (const Coordinate rhwc) const;
+      virtual Coordinate operator+ (const Coordinate rhc) const;
+      virtual Coordinate operator- (const Coordinate rhc) const;
       
       // scaling arithmetic
-      Coordinate operator+ (const int scalar) const;
-      Coordinate operator- (const int scalar) const;
-      Coordinate operator* (const int scalar) const;
-      Coordinate operator/ (const int scalar) const;
+      virtual Coordinate operator+ (const int scalar) const;
+      virtual Coordinate operator- (const int scalar) const;
+      virtual Coordinate operator* (const int scalar) const;
+      virtual Coordinate operator/ (const int scalar) const;
       friend Coordinate operator+(const int scalar, const Coordinate& wc);
       friend Coordinate operator-(const int scalar, const Coordinate& wc);
       friend Coordinate operator*(const int scalar, const Coordinate& wc);
       friend Coordinate operator/(const int scalar, const Coordinate& wc);
 
-      bool operator== (const Coordinate rhwc) const;
-      bool operator!= (const Coordinate rhwc) const;
-      bool operator>  (const Coordinate rhwc) const;
-      bool operator<  (const Coordinate rhwc) const;
-      bool operator<= (const Coordinate rhwc) const;
-      bool operator>= (const Coordinate rhwc) const;
+      virtual bool operator== (const Coordinate rhc) const;
+      virtual bool operator!= (const Coordinate rhc) const;
+      virtual bool operator>  (const Coordinate rhc) const;
+      virtual bool operator<  (const Coordinate rhc) const;
+      virtual bool operator<= (const Coordinate rhc) const;
+      virtual bool operator>= (const Coordinate rhc) const;
 
       int getX() const;
       int getY() const;
 
       friend double distance(const Coordinate&,const Coordinate&); 
 
-   private:
+   protected:
       int x,y;
+
+      Coordinate();
+      Coordinate(int x, int y);
+      Coordinate(const Coordinate& copyme);
 };
 #endif //COORDINATE_H
