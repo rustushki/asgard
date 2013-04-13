@@ -4,12 +4,8 @@
 class Point {
 
 public:
-   Point(int x, int y);
+   Point();
    ~Point();
-
-protected:
-   int x;
-   int y;
 };
 
 #endif//POINT_H

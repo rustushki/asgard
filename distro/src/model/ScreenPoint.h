@@ -6,7 +6,7 @@
 class ScreenPoint : public Point {
 
 public:
-   ScreenPoint(int x, int y);
+   ScreenPoint();
    ~ScreenPoint();
 
 };

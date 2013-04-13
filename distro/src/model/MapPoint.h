@@ -6,9 +6,8 @@
 class MapPoint : public Point {
 
 public:
-   MapPoint(int x, int y);
+   MapPoint();
    ~MapPoint();
-
 };
 
 #endif//MAPPOINT_H
