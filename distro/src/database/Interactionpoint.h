@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Coordinate.h"
+#include "MapPoint.h"
 
 #ifndef INTERACTIONPOINT_H
 #define INTERACTIONPOINT_H
@@ -24,11 +25,11 @@
 class Interactionpoint
 {
    protected:
-      Coordinate coordinate;
+      Coordinate<MapPoint> coordinate;
       bool requiresMouseClick; // Handle Interactions whether or not user clicks within point
 
    public:
-      virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
+      virtual bool conflict(const Coordinate<MapPoint>&,const Coordinate<MapPoint> &) const = 0;
       virtual void setRequiresMouseClick(bool requiresMouseClick) = 0;
       virtual bool getRequiresMouseClick() const = 0;
 

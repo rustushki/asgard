@@ -54,7 +54,7 @@ class MapObjectFactory
       static Hardpoint* createHardpoint(RowSet* rs, int row);
       static Interactionpoint* createInteractionpoint(RowSet* rs, int row);
       static Interaction* createInteraction(RowSet* rs, int row, int interactionType);
-      static Coordinate* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
+      static Coordinate<MapPoint>* createNonPlayerCharacterPathPoint(RowSet* rs, int row);
       static void addHardpoints(sqlite3 *db, MapObject *mo, int mapObjectId); 
       static void addInteractions(sqlite3 *db, MapObject *mo, int mapObjectId);
       static RowSet* loadInventory(sqlite3 *db, int inventoryId);

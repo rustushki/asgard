@@ -14,7 +14,7 @@ Box::~Box() {
  * setPosition - Set the top left corner of the box.  The coordinate provided
  * should be a screen coordinate.
  */
-void Box::setPosition(Coordinate pos) {
+void Box::setPosition(Coordinate<ScreenPoint> pos) {
    this->pos = pos;
    this->refresh();
 }
@@ -32,7 +32,7 @@ void Box::setDimension(uint width, uint height) {
  * getPosition - Return the coordinate of the top left corner of the box.
  * This is a screen coordinate.
  */
-Coordinate Box::getPosition() const {
+Coordinate<ScreenPoint> Box::getPosition() const {
    return this->pos;
 }
 

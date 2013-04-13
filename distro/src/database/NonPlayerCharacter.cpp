@@ -36,7 +36,7 @@ void NonPlayerCharacter::setSpeed(int speed)
    this->speed = speed;
 }
 
-void NonPlayerCharacter::addCoordinateToPath(Coordinate *coordinate)
+void NonPlayerCharacter::addCoordinateToPath(Coordinate<MapPoint> *coordinate)
 {
    this->path.push_back(coordinate);
 }

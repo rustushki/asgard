@@ -21,7 +21,7 @@
 
 CircHardpoint::CircHardpoint()
 {
-   this->coordinate = Coordinate(0,0);
+   this->coordinate = Coordinate<MapPoint>(0,0);
    this->radius = 0;
 }
 
@@ -31,17 +31,17 @@ CircHardpoint::~CircHardpoint()
 
 CircHardpoint::CircHardpoint(int x, int y)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->radius = 0;
 }
 
 CircHardpoint::CircHardpoint(int x, int y, double radius)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->radius = radius;
 }
       
-bool CircHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+bool CircHardpoint::conflict(const Coordinate<MapPoint> & wc, const Coordinate<MapPoint> & moc) const
 {
    return (distance(this->coordinate + moc,wc) < this->radius); 
 }

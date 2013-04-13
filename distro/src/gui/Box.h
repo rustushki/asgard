@@ -13,9 +13,9 @@ public:
 	~Box();
 
 	// Setters and Getters for positional and dimensional values.
-	void setPosition(Coordinate pos);
+	void setPosition(Coordinate<ScreenPoint> pos);
 	void setDimension(uint width, uint height);
-	Coordinate getPosition() const;
+	Coordinate<ScreenPoint> getPosition() const;
 	uint getHeight() const;
 	uint getWidth() const;
 
@@ -42,7 +42,7 @@ private:
 	// Position and Dimension Details
 	uint height;
 	uint width;
-	Coordinate pos;
+	Coordinate<ScreenPoint> pos;
 
 	// Drawable for this box.
 	Drawable* box;

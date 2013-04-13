@@ -21,7 +21,7 @@
 
 CircInteractionpoint::CircInteractionpoint()
 {
-   this->coordinate = Coordinate(0,0);
+   this->coordinate = Coordinate<MapPoint>(0,0);
    this->radius = 0;
 }
 
@@ -31,18 +31,18 @@ CircInteractionpoint::~CircInteractionpoint()
 
 CircInteractionpoint::CircInteractionpoint(int x, int y)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->radius = 0;
 }
 
 CircInteractionpoint::CircInteractionpoint(int x, int y, double radius, bool requiresMouseClick)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->radius = radius;
    this->requiresMouseClick = requiresMouseClick;
 }
       
-bool CircInteractionpoint::conflict(const Coordinate & accepter, const Coordinate & initiator) const
+bool CircInteractionpoint::conflict(const Coordinate<MapPoint> & accepter, const Coordinate<MapPoint> & initiator) const
 {
    return (distance(this->coordinate + accepter,initiator) < this->radius); 
 }

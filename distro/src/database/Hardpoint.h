@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Coordinate.h"
+#include "MapPoint.h"
 
 #ifndef HARDPOINT_H
 #define HARDPOINT_H
@@ -24,10 +25,10 @@
 class Hardpoint
 {
    protected:
-      Coordinate coordinate;
+      Coordinate<MapPoint> coordinate;
 
    public:
-      virtual bool conflict(const Coordinate&,const Coordinate &) const = 0;
+      virtual bool conflict(const Coordinate<MapPoint> &,const Coordinate<MapPoint>  &) const = 0;
       virtual ~Hardpoint() {};
 };
 

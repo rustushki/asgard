@@ -100,7 +100,7 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
 
    if(tile != NULL) {
       // Set Tile Map Object attributes
-      tile->setLeftCorner(Coordinate(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
+      tile->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(tile, drawable);
    }
 }
@@ -142,7 +142,7 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
       addHardpoints(db, (MapObject*) container, mapObjectId);
 
       // Set Container attributes
-      container->setLeftCorner(Coordinate(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
+      container->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(container, drawable);
    }
 
@@ -172,7 +172,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
             npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
       }
 
-      npc->setLeftCorner(Coordinate(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
+      npc->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(npc, drawable);
         
       delete rs;
@@ -203,7 +203,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt, MapObjec
       addInteractions(db, mapObject, mapObjectId);
       addHardpoints(db, mapObject, mapObjectId);
 
-      mapObject->setLeftCorner(Coordinate(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
+      mapObject->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(mapObject, drawable);
    }
 }
@@ -336,13 +336,13 @@ Interaction* MapObjectFactory::createInteraction(RowSet* rs, int row, int intera
    }
 }
 
-Coordinate* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row) {
+Coordinate<MapPoint>* MapObjectFactory::createNonPlayerCharacterPathPoint(RowSet* rs, int row) {
    int wc_x,wc_y = 0;
 
    wc_x = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_X));
    wc_y = atoi(rs->getColumnValue(row,NON_PLAYER_CHARACTER_PATH_COLUMN_WC_Y));
 
-   return new Coordinate(wc_x, wc_y);
+   return new Coordinate<MapPoint>(wc_x, wc_y);
 }
 
 RowSet* MapObjectFactory::loadInventory(sqlite3 *db, int inventoryId) {

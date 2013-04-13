@@ -21,14 +21,14 @@
 
 RectHardpoint::RectHardpoint()
 {
-   this->coordinate = Coordinate(0,0);
+   this->coordinate = Coordinate<MapPoint>(0,0);
    this->height = 0;
    this->width = 0;
 }
 
 RectHardpoint::RectHardpoint(int x, int y, int height, int width)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->height = height;
    this->width = width;
 }
@@ -37,11 +37,11 @@ RectHardpoint::~RectHardpoint()
 {
 }
 
-bool RectHardpoint::conflict(const Coordinate & wc, const Coordinate & moc) const
+bool RectHardpoint::conflict(const Coordinate<MapPoint> & wc, const Coordinate<MapPoint> & moc) const
 {
-   Coordinate br; 
-   Coordinate tl = this->coordinate + moc;
-   br = tl + Coordinate(this->width, this->height);
+   Coordinate<MapPoint> br; 
+   Coordinate<MapPoint> tl = this->coordinate + moc;
+   br = tl + Coordinate<MapPoint>(this->width, this->height);
 
    if((wc.getX() > tl.getX()) && (wc.getY() > tl.getY()) && (wc.getX() < br.getX()) && (wc.getY() < br.getY()))
       return true;

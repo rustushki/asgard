@@ -45,12 +45,12 @@ MapObject::~MapObject() {
    }
 }
 
-void MapObject::setLeftCorner(const Coordinate& leftCorner)
+void MapObject::setLeftCorner(const Coordinate<MapPoint>& leftCorner)
 {
    this->leftCorner = leftCorner;
 }
 
-Coordinate MapObject::getLeftCorner() const {
+Coordinate<MapPoint> MapObject::getLeftCorner() const {
    return this->leftCorner;
 }
 
@@ -99,7 +99,7 @@ uint MapObject::getHeight() const {
  * half.
  */
 int MapObject::getMiddle() const {
-	Coordinate topLc = this->getLeftCorner();
+	Coordinate<MapPoint> topLc = this->getLeftCorner();
 	return topLc.getY() + this->getHeight()/2;
 }
 
@@ -108,7 +108,7 @@ int MapObject::getMiddle() const {
  * getBottom - Return the Y of the bottom edge of the MapObject.
  */
 int MapObject::getBottom() const {
-	Coordinate topLc = this->getLeftCorner();
+	Coordinate<MapPoint> topLc = this->getLeftCorner();
 	return topLc.getY() + this->getHeight();
 }
 
@@ -116,7 +116,7 @@ int MapObject::getBottom() const {
  * getTop - Return the Y of the top edge of the MapObject.
  */
 int MapObject::getTop() const {
-	Coordinate topLc = this->getLeftCorner();
+	Coordinate<MapPoint> topLc = this->getLeftCorner();
 	return topLc.getY();
 
 }
@@ -125,7 +125,7 @@ int MapObject::getTop() const {
  * getLeft - Return the X of the left edge of the MapObject.
  */
 int MapObject::getLeft() const {
-	Coordinate topLc = this->getLeftCorner();
+	Coordinate<MapPoint> topLc = this->getLeftCorner();
 	return topLc.getX();
 }
 
@@ -133,7 +133,7 @@ int MapObject::getLeft() const {
  * getRight - Return the X of the right edge of the MapObject.
  */
 int MapObject::getRight() const {
-	Coordinate topLc = this->getLeftCorner();
+	Coordinate<MapPoint> topLc = this->getLeftCorner();
 	return topLc.getX() + this->getWidth();
 }
 
@@ -141,10 +141,10 @@ int MapObject::getRight() const {
  * getFoot - Return the world coordinate of the center of the bottom of the 
  *           MapObject.
  */
-Coordinate MapObject::getFoot() const
+Coordinate<MapPoint> MapObject::getFoot() const
 {
-   Coordinate topLc = this->getLeftCorner();
-   Coordinate foot(topLc.getX()+this->getWidth()/2, this->getBottom());
+   Coordinate<MapPoint> topLc = this->getLeftCorner();
+   Coordinate<MapPoint> foot(topLc.getX()+this->getWidth()/2, this->getBottom());
    return foot;
 }
 
@@ -160,7 +160,7 @@ void MapObject::addHardpoint(Hardpoint *hardpoint) {
    this->hardpoints.push_back(hardpoint);
 }
 
-bool MapObject::conflict(Coordinate c) {
+bool MapObject::conflict(Coordinate<MapPoint> c) {
    std::vector<Hardpoint*>::const_iterator hpItr;
    bool isConflict = false;
    for(hpItr = hardpoints.begin(); hpItr < hardpoints.end(); hpItr++)
@@ -349,7 +349,7 @@ void MapObject::move(int newX, int newY) {
    this->state = MAP_OBJECT_STATE_MOVING;
 
    // Set new LeftCorner
-   Coordinate newLC(newX,newY);
+   Coordinate<MapPoint> newLC(newX,newY);
    this->setLeftCorner(newLC);
 
    // Set state to 'idle'
@@ -359,7 +359,7 @@ void MapObject::move(int newX, int newY) {
 /* ------------------------------------------------------------------------------
  * move - Move the MapObject to the Coordinate.
  */
-void MapObject::move(Coordinate newLoc) {
+void MapObject::move(Coordinate<MapPoint> newLoc) {
    move(newLoc.getX(), newLoc.getY());
 }
 

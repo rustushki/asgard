@@ -32,9 +32,9 @@ class NonPlayerCharacter : public MapObject
       ~NonPlayerCharacter();
       
       void setSpeed(int speed);
-      void addCoordinateToPath(Coordinate *coordinate);
+      void addCoordinateToPath(Coordinate<MapPoint> *coordinate);
    private:
-      std::vector<Coordinate*> path;
+      std::vector< Coordinate<MapPoint>* > path;
       int speed;
 };
 

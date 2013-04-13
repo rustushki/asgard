@@ -33,7 +33,7 @@ class RectHardpoint : public Hardpoint
       RectHardpoint(int x, int y, int h, int w);
       ~RectHardpoint();
 
-      bool conflict(const Coordinate & wc, const Coordinate & moc) const;
+      bool conflict(const Coordinate<MapPoint> & wc, const Coordinate<MapPoint> & moc) const;
       /* TEST */
       //Coordinate getCoord() const;
       //int getHeight() const;

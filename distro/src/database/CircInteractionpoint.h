@@ -33,7 +33,7 @@ class CircInteractionpoint : public Interactionpoint
       CircInteractionpoint(int x, int y, double r, bool requiresMouseClick);
 
       /* arg1=accepter MapObject's world coordinate, arg2=initiator MapObject's world coordinate */
-      bool conflict(const Coordinate & accepter, const Coordinate & initiator) const;
+      bool conflict(const Coordinate<MapPoint> & accepter, const Coordinate<MapPoint> & initiator) const;
       void setRequiresMouseClick(bool requiresMouseClick);
       bool getRequiresMouseClick() const;
 };

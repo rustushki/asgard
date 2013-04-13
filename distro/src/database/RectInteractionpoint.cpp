@@ -21,14 +21,14 @@
 
 RectInteractionpoint::RectInteractionpoint()
 {
-   this->coordinate = Coordinate(0,0);
+   this->coordinate = Coordinate<MapPoint>(0,0);
    this->height = 0;
    this->width = 0;
 }
 
 RectInteractionpoint::RectInteractionpoint(int x, int y, int height, int width, bool requiresMouseClick)
 {
-   this->coordinate = Coordinate(x,y);
+   this->coordinate = Coordinate<MapPoint>(x,y);
    this->height = height;
    this->width = width;
    this->requiresMouseClick = requiresMouseClick;
@@ -38,11 +38,11 @@ RectInteractionpoint::~RectInteractionpoint()
 {
 }
 
-bool RectInteractionpoint::conflict(const Coordinate & accepter, const Coordinate & initiator) const
+bool RectInteractionpoint::conflict(const Coordinate<MapPoint> & accepter, const Coordinate<MapPoint> & initiator) const
 {
-   Coordinate br; 
-   Coordinate tl = this->coordinate + accepter;
-   br = tl + Coordinate(this->width, this->height);
+   Coordinate<MapPoint> br; 
+   Coordinate<MapPoint> tl = this->coordinate + accepter;
+   br = tl + Coordinate<MapPoint>(this->width, this->height);
 
    if((initiator.getX() > tl.getX()) && (initiator.getY() > tl.getY()) && (initiator.getX() < br.getX()) && (initiator.getY() < br.getY()))
       return true;

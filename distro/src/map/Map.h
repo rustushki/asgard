@@ -8,6 +8,7 @@
 #include "EventHandler.h"
 #include "CharacterMapObject.h"
 #include "AsgardEvent.h"
+#include "ScreenPoint.h"
 
 class Map : public EventHandler {
    public:
@@ -28,16 +29,16 @@ class Map : public EventHandler {
 
       virtual void handle(SDL_Event event);
 
-      Coordinate convertWorldToScreen(Coordinate w) const;
-      Coordinate convertScreenToWorld(Coordinate s) const;
+      Coordinate<ScreenPoint> convertWorldToScreen(Coordinate<MapPoint> w) const;
+      Coordinate<MapPoint> convertScreenToWorld(Coordinate<ScreenPoint> s) const;
 
    private:
       Map();
 
-      Coordinate display;
-      Coordinate focus;
+      Coordinate<MapPoint> display;
+      Coordinate<MapPoint> focus;
       std::vector<MapObject*> mapObjectContainer;
-      std::vector<Coordinate> boundingBoxContainer;
+      std::vector< Coordinate<MapPoint> > boundingBoxContainer;
 
       // Distance from LEFT, RIGHT, BOTTOM and TOP sides of the screen which
       // when crossed by a CharacterMapObject will cause the firing of a Map
@@ -47,20 +48,20 @@ class Map : public EventHandler {
       void adjustDisplay();
       void loadBoundingBoxes();
       void unloadBoundingBoxes();
-      void loadBoundingBox(Coordinate bb);
-      void moveDrawables(Coordinate offset);
+      void loadBoundingBox(Coordinate<MapPoint> bb);
+      void moveDrawables(Coordinate<MapPoint> offset);
       void unloadMapObjects();
       bool isMapObjectInScope(MapObject* mo);
-      bool isValidBoundingBox(Coordinate bb);
-      bool isBoundingBoxLoaded(Coordinate bb);
-      bool isBoundingBoxInScope(Coordinate bb);
+      bool isValidBoundingBox(Coordinate<MapPoint> bb);
+      bool isBoundingBoxLoaded(Coordinate<MapPoint> bb);
+      bool isBoundingBoxInScope(Coordinate<MapPoint> bb);
 
       void restack(MapObject* a, MapObject* b) const;
 
-      Coordinate getFocusBoundingBox();
-      Coordinate getTopLeftOfRegion();
+      Coordinate<MapPoint> getFocusBoundingBox();
+      Coordinate<MapPoint> getTopLeftOfRegion();
 
-      std::vector<Coordinate> constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const;
+      std::vector< Coordinate<MapPoint> > constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const;
 
       void checkOverMapPanThreshold() const;
       CharacterMapObject* getCharacterMapObject() const;

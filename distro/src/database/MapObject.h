@@ -39,8 +39,8 @@ class MapObject
       MapObject(std::string drawableName);
       virtual ~MapObject();
       
-      void setLeftCorner(const Coordinate& leftCorner);
-      Coordinate getLeftCorner() const;
+      void setLeftCorner(const Coordinate<MapPoint>& leftCorner);
+      Coordinate<MapPoint> getLeftCorner() const;
       uint getHeight() const;
       uint getWidth() const;
 
@@ -49,12 +49,12 @@ class MapObject
       int getTop() const;
       int getLeft() const;
       int getRight() const;
-      Coordinate getFoot() const;
+      Coordinate<MapPoint> getFoot() const;
 
       std::string getDrawableName() const;
       
       void addHardpoint(Hardpoint *hardpoint);
-      bool conflict(Coordinate c);
+      bool conflict(Coordinate<MapPoint> c);
       bool intersects(MapObject*);
 
       void addInteractionpoint(Interactionpoint *interactionpoint);
@@ -67,7 +67,7 @@ class MapObject
 
       int computeAngleOfMovement(int newX, int newY, int oldX, int oldY);
 
-      void move(Coordinate newLoc);
+      void move(Coordinate<MapPoint> newLoc);
       void move(int newX, int newY);
 
       void setState(MapObjectState state);
@@ -80,7 +80,7 @@ class MapObject
       Drawable *getDrawable() const;
 
    private:
-      Coordinate leftCorner;
+      Coordinate<MapPoint> leftCorner;
       list<int> boundingBoxes;
       std::string drawableName;
       Drawable *drawable; // WORKAROUND: MapObject will contain a pointer to its Drawable but not necessarily in this fashion

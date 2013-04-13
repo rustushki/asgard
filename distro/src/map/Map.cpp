@@ -54,7 +54,7 @@ Map::Map() {
       cmo->setState(MAP_OBJECT_STATE_IDLE);
 
       // x = 300, y = 300 puts this CMO in BB (0, 0)
-      cmo->setLeftCorner(Coordinate(300,400));
+      cmo->setLeftCorner(Coordinate<MapPoint>(300,400));
 
       this->installMapObject(cmo, d);
 
@@ -88,8 +88,8 @@ void Map::setFocusPoint(int x, int y) {
 
    // TODO: Maximum Map dimensions is currently out of scope.
 
-   Coordinate newFocus(x, y);
-   Coordinate offset = this->focus - newFocus;
+   Coordinate<MapPoint> newFocus(x, y);
+   Coordinate<MapPoint> offset = this->focus - newFocus;
 
    // Move the Existing Drawables.
    this->moveDrawables(offset);
@@ -108,13 +108,13 @@ void Map::setFocusPoint(int x, int y) {
 void Map::panFocusPoint(int x, int y) {
 
     // This is the focus point before the Map Pan started.
-    Coordinate startFocusPoint = this->focus;
+    Coordinate<MapPoint> startFocusPoint = this->focus;
 
     // The point to which we would like to pan the focus point.
-    Coordinate finalFocusPoint(x, y);
+    Coordinate<MapPoint> finalFocusPoint(x, y);
 
     // The difference between the two points.
-    Coordinate offset = startFocusPoint - finalFocusPoint;
+    Coordinate<MapPoint> offset = startFocusPoint - finalFocusPoint;
 
     // The total amount of time the panning should take (in milliseconds).
     // This could be parameterized later.
@@ -128,12 +128,12 @@ void Map::panFocusPoint(int x, int y) {
     int wait = duration/step;
 
 
-    Coordinate stepOffset(offset.getX()/step, offset.getY()/step);
+    Coordinate<MapPoint> stepOffset(offset.getX()/step, offset.getY()/step);
 
     for (int stepCv = 0; stepCv < step; stepCv++) {
         
         // Determine the next temporary focus point.
-        Coordinate tempFocusPoint = this->focus - stepOffset;
+        Coordinate<MapPoint> tempFocusPoint = this->focus - stepOffset;
 
         // Set to the next temporary focus point.
         this->setFocusPoint(tempFocusPoint.getX(), tempFocusPoint.getY());
@@ -150,7 +150,7 @@ void Map::panFocusPoint(int x, int y) {
 
 }
 
-void Map::moveDrawables(Coordinate offset) {
+void Map::moveDrawables(Coordinate<MapPoint> offset) {
 
    std::vector<std::string>* drawableNames = new std::vector<std::string>();
 
@@ -163,10 +163,10 @@ void Map::moveDrawables(Coordinate offset) {
 }
 
 void Map::loadBoundingBoxes() {
-   Coordinate tl = this->getTopLeftOfRegion();
+   Coordinate<MapPoint> tl = this->getTopLeftOfRegion();
    for (int x = 0; x < Map::BOUNDING_BOX_MEM; x++) {
       for (int y = 0; y < Map::BOUNDING_BOX_MEM; y++) {
-         Coordinate bb(
+         Coordinate<MapPoint> bb(
               tl.getX() + x * Map::BOUNDING_BOX_SIZE
             , tl.getY() + y * Map::BOUNDING_BOX_SIZE
          );
@@ -176,7 +176,7 @@ void Map::loadBoundingBoxes() {
 }
 
 void Map::unloadBoundingBoxes() {
-   std::vector<Coordinate>::iterator bbIter = boundingBoxContainer.begin();
+   std::vector< Coordinate<MapPoint> >::iterator bbIter = boundingBoxContainer.begin();
 
    while (bbIter != boundingBoxContainer.end()) {
 
@@ -190,7 +190,7 @@ void Map::unloadBoundingBoxes() {
    this->unloadMapObjects();
 }
 
-void Map::loadBoundingBox(Coordinate bb) {
+void Map::loadBoundingBox(Coordinate<MapPoint> bb) {
    if (this->isValidBoundingBox(bb)) {
 
       if (!this->isBoundingBoxLoaded(bb)) {
@@ -208,9 +208,9 @@ void Map::loadBoundingBox(Coordinate bb) {
    }
 }
 
-bool Map::isBoundingBoxLoaded(Coordinate bb) {
+bool Map::isBoundingBoxLoaded(Coordinate<MapPoint> bb) {
    bool alreadyLoaded = false;
-   std::vector<Coordinate>::iterator bbIter;
+   std::vector< Coordinate<MapPoint> >::iterator bbIter;
    for (bbIter = this->boundingBoxContainer.begin(); bbIter != this->boundingBoxContainer.end(); bbIter++) {
 
       if ((*bbIter) == bb) {
@@ -253,7 +253,7 @@ void Map::restack(MapObject* a, MapObject* b) const {
    }
 }
 
-bool Map::isValidBoundingBox(Coordinate bb) {
+bool Map::isValidBoundingBox(Coordinate<MapPoint> bb) {
    if (bb.getX() % Map::BOUNDING_BOX_SIZE != 0) {
       return false;
    }
@@ -300,12 +300,12 @@ void Map::unloadMapObjects() {
 
 }
 
-bool Map::isBoundingBoxInScope(Coordinate bb) {
-   Coordinate tl = this->getTopLeftOfRegion();
+bool Map::isBoundingBoxInScope(Coordinate<MapPoint> bb) {
+   Coordinate<MapPoint> tl = this->getTopLeftOfRegion();
    for (int x = 0; x < Map::BOUNDING_BOX_MEM; x++) {
       for (int y = 0; y < Map::BOUNDING_BOX_MEM; y++) {
 
-         Coordinate thisBB(
+         Coordinate<MapPoint> thisBB(
               tl.getX() + x * Map::BOUNDING_BOX_SIZE
             , tl.getY() + y * Map::BOUNDING_BOX_SIZE
          );
@@ -322,9 +322,9 @@ bool Map::isBoundingBoxInScope(Coordinate bb) {
 bool Map::isMapObjectInScope(MapObject* mo) {
 
    // Top Left Corner of MapObject in Question.
-   Coordinate tl = mo->getLeftCorner();
+   Coordinate<MapPoint> tl = mo->getLeftCorner();
 
-   Coordinate rr = this->getTopLeftOfRegion();
+   Coordinate<MapPoint> rr = this->getTopLeftOfRegion();
 
    // Determine Dimensions of Region of Relevance
    int rrSize = Map::BOUNDING_BOX_SIZE*Map::BOUNDING_BOX_MEM;
@@ -345,31 +345,31 @@ bool Map::isMapObjectInScope(MapObject* mo) {
    return true;
 }
 
-Coordinate Map::getFocusBoundingBox() {
+Coordinate<MapPoint> Map::getFocusBoundingBox() {
    // The current focus of the Map.
-   Coordinate f = this->focus;
+   Coordinate<MapPoint> f = this->focus;
 
    // Determine the Bounding Box which contains the focus. (i.e. the Middle)
    int bX = f.getX() - (f.getX() % Map::BOUNDING_BOX_SIZE);
    int bY = f.getY() - (f.getY() % Map::BOUNDING_BOX_SIZE);
 
-   return Coordinate(bX, bY);
+   return Coordinate<MapPoint>(bX, bY);
 }
 
-Coordinate Map::getTopLeftOfRegion() {
-   Coordinate bb = this->getFocusBoundingBox();
+Coordinate<MapPoint> Map::getTopLeftOfRegion() {
+   Coordinate<MapPoint> bb = this->getFocusBoundingBox();
 
    // Given the Middle determine the Top Left of the Region of Relevance.
    int middle = Map::BOUNDING_BOX_MEM / 2;
    int tlrrX = bb.getX() - middle * Map::BOUNDING_BOX_SIZE;
    int tlrrY = bb.getY() - middle * Map::BOUNDING_BOX_SIZE;
 
-   return Coordinate(tlrrX, tlrrY);
+   return Coordinate<MapPoint>(tlrrX, tlrrY);
 }
 
 void Map::adjustDisplay() {
 
-   Coordinate offset(Screen::WIDTH/2, Screen::HEIGHT/2);
+   Coordinate<MapPoint> offset(Screen::WIDTH/2, Screen::HEIGHT/2);
    this->display = this->focus - offset;
 
    int x = this->display.getX();
@@ -382,7 +382,7 @@ void Map::installMapObject(MapObject* mo, Drawable* d) {
    // Install the MapObject.
    this->mapObjectContainer.push_back(mo);
 
-   Coordinate drawableCoord = this->convertWorldToScreen(mo->getLeftCorner());
+   Coordinate<ScreenPoint> drawableCoord = this->convertWorldToScreen(mo->getLeftCorner());
    int x = drawableCoord.getX();
    int y = drawableCoord.getY();
    d->setX(x);
@@ -408,7 +408,7 @@ void Map::handle(SDL_Event event) {
             // Translate the SDL_MOUSEBUTTONDOWN into Asgard's move CMO event.
             // Use CANCEL event concurrency policy to prevent multiple user
             // clicks from creating erratic movement.
-            Coordinate* c = new Coordinate(event.button.x, event.button.y);
+            Coordinate<MapPoint>* c = new Coordinate<MapPoint>(event.button.x, event.button.y);
             this->fireEvent(ASGARDEVENT_MOVECMO, c, CONCURRENCY_POLICY_CANCEL);
 
          }
@@ -419,7 +419,7 @@ void Map::handle(SDL_Event event) {
 
          if (event.user.code == ASGARDEVENT_MAPPAN) {
 
-            Coordinate *panHereCoord = (Coordinate*) event.user.data1;
+            Coordinate<MapPoint> *panHereCoord = (Coordinate<MapPoint>*) event.user.data1;
 
             this->panFocusPoint(panHereCoord->getX(), panHereCoord->getY());
 
@@ -429,10 +429,10 @@ void Map::handle(SDL_Event event) {
             CharacterMapObject* cmo = this->getCharacterMapObject();
 
             // Get the x/y of the Move CMO Event.
-            Coordinate* c = (Coordinate*)event.user.data1;
+            Coordinate<ScreenPoint>* c = (Coordinate<ScreenPoint>*)event.user.data1;
 
             // Convert the provided screen coordinate into a world coordinate.
-            Coordinate newCMOWorldCoordinate = convertScreenToWorld(*c);
+            Coordinate<MapPoint> newCMOWorldCoordinate = convertScreenToWorld(*c);
 
             // Offset the New World Coordinate by the distance between the Top
             // Left Corner of the CMO and it's foot.  That way, the CMO will
@@ -447,7 +447,7 @@ void Map::handle(SDL_Event event) {
             std::string drawableName, walkingAnimationName, standingAnimationName;
             Drawable *d;
             std::vector<MapObject*>::const_iterator moItr;
-            std::vector<Coordinate> path;
+            std::vector< Coordinate<MapPoint> > path;
 
             // Get Drawable for CharacterMapObject
             drawableName = cmo->getDrawableName();
@@ -457,10 +457,10 @@ void Map::handle(SDL_Event event) {
             drawableName = d->getName();
 
             // Convert the Drawable's X & Y into a World Coordinate.
-            Coordinate drawableOld(d->getX(), d->getY());
-            drawableOld = convertScreenToWorld(drawableOld);
-            draw_oldX = drawableOld.getX();
-            draw_oldY = drawableOld.getY();
+            Coordinate<ScreenPoint> drawableOld(d->getX(), d->getY());
+            Coordinate<MapPoint> drawableOldMap = convertScreenToWorld(drawableOld);
+            draw_oldX = drawableOldMap.getX();
+            draw_oldY = drawableOldMap.getY();
 
             // Compute MapObject's angle of movement
             angle = cmo->computeAngleOfMovement(x, y, draw_oldX, draw_oldY);
@@ -532,7 +532,7 @@ void Map::handle(SDL_Event event) {
                      i = step - 1;
                }
 
-               Coordinate screenLoc;
+               Coordinate<ScreenPoint> screenLoc;
                bool wasMouseClicked = false;
                while(i < (int)path.size()) 
                {
@@ -592,8 +592,8 @@ void Map::handle(SDL_Event event) {
  * path will either be the destination World Coordinate or the last World Coordinate that is not located in a 
  * Hardpoint. Hardpoint conflicts use the CMO's foot for comparison.
  */
-std::vector<Coordinate> Map::constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const {
-   std::vector<Coordinate> path;
+std::vector< Coordinate<MapPoint> > Map::constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const {
+   std::vector< Coordinate<MapPoint> > path;
    std::vector<MapObject*>::const_iterator moItr;
    int old_moX, old_moY, new_moX, new_moY, old_drawX, old_drawY, new_drawX, new_drawY;
    bool isHardpoint = false;
@@ -639,8 +639,8 @@ std::vector<Coordinate> Map::constructPath(int moX, int moY, int drawX, int draw
       }
                      
       /* Create Coordinate to which MapObject is to move */
-      Coordinate newLoc(new_drawX, new_drawY);
-      Coordinate newFoot(new_moX, new_moY);
+      Coordinate<MapPoint> newLoc(new_drawX, new_drawY);
+      Coordinate<MapPoint> newFoot(new_moX, new_moY);
 
       /* Check for Hardpoint conflict */
       for (moItr = this->mapObjectContainer.begin(); moItr < this->mapObjectContainer.end(); moItr++)
@@ -672,11 +672,13 @@ std::vector<Coordinate> Map::constructPath(int moX, int moY, int drawX, int draw
  * convertScreenToWorld - Given a screen coordinate, convert it into a World
  * Coordinate--which is a point on the Map.
  */
-Coordinate Map::convertScreenToWorld(Coordinate s) const {
+Coordinate<MapPoint> Map::convertScreenToWorld(Coordinate<ScreenPoint> s) const {
 
    // Add the World Coordinate of the current location of the top left corner
    // of the Screen to the provided screen coordinate and return the result.
-   return (this->display + s);
+   int x = this->display.getX() + s.getX();
+   int y = this->display.getY() + s.getY();
+   return Coordinate<MapPoint>(x, y);
 
 }
 
@@ -685,11 +687,13 @@ Coordinate Map::convertScreenToWorld(Coordinate s) const {
  * coordinate.  Screen coordinates which are visible to the user are greater
  * than (0,0), but less than the Height and Width of the screen.
  */
-Coordinate Map::convertWorldToScreen(Coordinate w) const {
+Coordinate<ScreenPoint> Map::convertWorldToScreen(Coordinate<MapPoint> w) const {
    
-    // The offset between the provided world coordinate and the current display
-    // coordinate is equivalent to its Screen Coordinate.
-    return (w - this->display);
+   // The offset between the provided world coordinate and the current display
+   // coordinate is equivalent to its Screen Coordinate.
+   int x = w.getX() - this->display.getX();
+   int y = w.getY() - this->display.getY();
+   return Coordinate<ScreenPoint>(x, y);
 
 }
 
@@ -725,8 +729,8 @@ void Map::checkOverMapPanThreshold() const {
       LOG(INFO) << "firing map pan event";
 
       // The Coordinate of the CMO is the parameter of the Map Pan Event.
-      Coordinate tLc = cmo->getLeftCorner();
-      Coordinate* panHereCoord = new Coordinate(tLc.getX(), tLc.getY());
+      Coordinate<MapPoint> tLc = cmo->getLeftCorner();
+      Coordinate<MapPoint>* panHereCoord = new Coordinate<MapPoint>(tLc.getX(), tLc.getY());
       this->fireEvent(ASGARDEVENT_MAPPAN, (void*)panHereCoord, CONCURRENCY_POLICY_CANCEL);
 
    }
