@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2007 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -131,7 +131,11 @@ class Coordinate
          return std::sqrt(std::pow(double(l.x - r.x), 2) + std::pow(double(l.y - r.y),2));
       }
 
-   private:
+   protected:
       int x,y;
+
+      Coordinate();
+      Coordinate(int x, int y);
+      Coordinate(const Coordinate& copyme);
 };
 #endif //COORDINATE_H
