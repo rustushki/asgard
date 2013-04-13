@@ -134,8 +134,5 @@ class Coordinate
    protected:
       int x,y;
 
-      Coordinate();
-      Coordinate(int x, int y);
-      Coordinate(const Coordinate& copyme);
 };
 #endif //COORDINATE_H
