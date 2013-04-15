@@ -10,7 +10,6 @@ typedef unsigned int uint;
 #include <cstdlib>
 #include <cstring>
 #include <iostream>
-#include <fstream>
 #include <iterator>
 #include <list>
 #include <sstream>
@@ -32,8 +31,7 @@ typedef unsigned int uint;
 #include <boost/thread/thread.hpp>
 
 // Glog
-//#include <glog/logging.h>
-#define LOG(severity) std::ostream(0)
+#include <glog/logging.h>
 
 // SDL
 #include <SDL/SDL.h>

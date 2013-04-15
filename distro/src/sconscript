@@ -71,5 +71,5 @@ if ARGUMENTS.get('VERBOSE') != "1":
 
 # Use this for FreeBSD and Boost 1.52, where boost_thread-mt has been consolidated into boost_thread
 #asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread','sqlite3','SDL','SDL_image','SDL_ttf','python2.7'], CXXFLAGS=['-Wall', '-O2'])
-asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','SDL_ttf','python2.7'], CXXFLAGS=['-Wall', '-O2'])
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread-mt','sqlite3','SDL','SDL_image','SDL_ttf','python2.7','glog'], CXXFLAGS=['-Wall', '-O2'])
 Export("asgard")
