@@ -321,6 +321,12 @@ bool Map::isBoundingBoxInScope(Coordinate<MapPoint> bb) {
 
 bool Map::isMapObjectInScope(MapObject* mo) {
 
+   // The CMO is always in scope :-)
+   CharacterMapObject* cmo = this->getCharacterMapObject();
+   if (mo == cmo) {
+      return true;
+   }
+
    // Top Left Corner of MapObject in Question.
    Coordinate<MapPoint> tl = mo->getLeftCorner();
 

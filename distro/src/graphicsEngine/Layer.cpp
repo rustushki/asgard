@@ -143,16 +143,22 @@ void Layer::update() {
       (*itr)->doAnim();
    for (itr = this->drawable.begin(); itr != this->drawable.end(); itr++)
       (*itr)->doHide();
+
+   // Unload any hidden and removed Drawables.
+   for (itr = this->drawable.begin(); itr != this->drawable.end(); itr++) {
+      Drawable* d = (*itr);
+      if (d->hasBeenHidden && d->toBeRemoved) {
+         this->removeDrawable(d->getInstanceName());
+         itr = this->drawable.begin();
+      }
+   }
 }
 
 void Layer::updateRect(SDL_Rect r) {
    std::vector<Drawable*>::iterator itr;
    for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
       Drawable* d = (*itr);
-      if (d->hasBeenHidden && d->toBeRemoved) {
-         this->removeDrawable(d->getInstanceName());
-         delete d;
-      } else {
+      if (!d->hasBeenHidden || !d->toBeRemoved) {
          d->updateRect(r);
       }
    }
