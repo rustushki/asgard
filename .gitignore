@@ -4,3 +4,6 @@ tags
 database/runquery
 *.dblite
 *.gz
+*.swo
+*.swp
+*.o
