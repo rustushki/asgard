@@ -148,8 +148,8 @@ void Layer::update() {
    for (itr = this->drawable.begin(); itr != this->drawable.end(); itr++) {
       Drawable* d = (*itr);
       if (d->hasBeenHidden && d->toBeRemoved) {
-         this->removeDrawable(d->getInstanceName());
-         itr = this->drawable.begin();
+         itr = this->drawable.erase(itr);
+         itr--;
       }
    }
 }
