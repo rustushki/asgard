@@ -84,17 +84,15 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
 	  , (const char *)sqlite3_column_text(stmt, TILE_COLUMN_DRAWABLE_NAME)
    );
 
-   std::string drawableName = drawable->getInstanceName();
-
    // Create new tile
    Tile *tile = NULL;
   
    TileType tileType = (TileType)sqlite3_column_int(stmt, TILE_COLUMN_TILE_TYPE);
 
    switch(tileType) {
-      case TILE_TYPE_WATER:   { tile = new WaterTile(drawableName); break; }
-      case TILE_TYPE_DESERT:  { tile = new DesertTile(drawableName); break; }
-      case TILE_TYPE_GRASS:   { tile = new GrassTile(drawableName); break; }
+      case TILE_TYPE_WATER:   { tile = new WaterTile(drawable); break; }
+      case TILE_TYPE_DESERT:  { tile = new DesertTile(drawable); break; }
+      case TILE_TYPE_GRASS:   { tile = new GrassTile(drawable); break; }
       default:                { break; }
    }
 
@@ -110,8 +108,6 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
         MapObjectFactory::db
 	  , (const char *)sqlite3_column_text(stmt, CONTAINER_COLUMN_DRAWABLE_NAME)
    );
-
-   std::string drawableName = drawable->getInstanceName();
 
    int mapObjectId = sqlite3_column_int(stmt, CONTAINER_COLUMN_MAP_OBJECT_ID);
    int inventoryId = sqlite3_column_int(stmt, CONTAINER_COLUMN_INVENTORY_ID);
@@ -132,7 +128,7 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    }
    delete rs;
 
-   Container* container = new Container(drawableName, inv);
+   Container* container = new Container(drawable, inv);
 
    std::cout << "loading container" << std::endl;
 
@@ -154,9 +150,7 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 	  , (const char *)sqlite3_column_text(stmt, NON_PLAYER_CHARACTER_COLUMN_DRAWABLE_NAME)
    );
 
-   std::string drawableName = drawable->getInstanceName();
-
-   NonPlayerCharacter *npc = new NonPlayerCharacter(drawableName);
+   NonPlayerCharacter *npc = new NonPlayerCharacter(drawable);
 
    if (npc != NULL) {
 
@@ -192,9 +186,7 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt, MapObjec
 	  , (const char *)sqlite3_column_text(stmt, MAP_OBJECT_COLUMN_DRAWABLE_NAME)
    );
 
-   std::string drawableName = drawable->getInstanceName();
-
-   MapObject *mapObject = new MapObject(drawableName);
+   MapObject *mapObject = new MapObject(drawable);
 
    if (mapObject != NULL) {
 

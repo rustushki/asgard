@@ -46,7 +46,7 @@ Map::Map() {
       d->addAnimation(a3, "NotMatchWalkingEast");
       d->addAnimation(a4, "NotMatchWalkingWest");
 
-      CharacterMapObject* cmo = new CharacterMapObject(d->getInstanceName());
+      CharacterMapObject* cmo = new CharacterMapObject(d);
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
@@ -152,14 +152,15 @@ void Map::panFocusPoint(int x, int y) {
 
 void Map::moveDrawables(Coordinate<MapPoint> offset) {
 
-   std::vector<std::string>* drawableNames = new std::vector<std::string>();
+   std::vector<Drawable*> drawables;
 
    std::vector<MapObject*>::iterator moIter;
-   for (moIter = this->mapObjectContainer.begin(); moIter != this->mapObjectContainer.end(); moIter++) {
-      drawableNames->push_back((*moIter)->getDrawableName());
+   for (moIter = mapObjectContainer.begin(); moIter != mapObjectContainer.end(); moIter++) {
+      drawables.push_back((*moIter)->getDrawable());
    }
 
-   GraphicsEngine::getInstance()->translateDrawablesByOffset(drawableNames, offset.getX(), offset.getY());
+   GraphicsEngine* ge = GraphicsEngine::getInstance();
+   ge->translateDrawablesByOffset(drawables, offset.getX(), offset.getY());
 }
 
 void Map::loadBoundingBoxes() {
@@ -231,8 +232,8 @@ bool Map::isBoundingBoxLoaded(Coordinate<MapPoint> bb) {
 void Map::restack(MapObject* a, MapObject* b) const {
    // Need the Drawable Names so that we may perform operations on the
    // GraphicsEngine.
-   std::string aName = a->getDrawableName();
-   std::string bName = b->getDrawableName();
+   Drawable* aDrawable = a->getDrawable();
+   Drawable* bDrawable = b->getDrawable();
 
    // Grab an instance of the GraphicsEngine.
    GraphicsEngine* ge = GraphicsEngine::getInstance();
@@ -240,16 +241,16 @@ void Map::restack(MapObject* a, MapObject* b) const {
    // Get the Layer of the Drawables for these MapObjects.
    // TODO: We need a stricter relationship between the Map and any layers that
    // it governs.
-   Layer* lA = ge->getLayerOfDrawable(aName);
-   Layer* lB = ge->getLayerOfDrawable(bName);
+   Layer* lA = ge->getLayerOfDrawable(aDrawable);
+   Layer* lB = ge->getLayerOfDrawable(bDrawable);
    assert(lA == lB);
 
    if (a->getBottom() > b->getMiddle()) {
       // Put A on Top.
-      lA->stackAonB(aName, bName);
+      lA->stackAonB(aDrawable, bDrawable);
    } else {
       // Put B on Top.
-      lA->stackAonB(bName, aName);
+      lA->stackAonB(bDrawable, aDrawable);
    }
 }
 
@@ -288,11 +289,8 @@ void Map::unloadMapObjects() {
       if (!this->isMapObjectInScope(mo)) {
          LOG(INFO) << "MapObject not in scope.";
 
-         // Unload the Drawable from the Graphics Engine.
-         GraphicsEngine::getInstance()->unloadDrawable(mo->getDrawableName());
-
          // Remove the MapObject from the Map; freeing its memory.
-	 moIter = map->erase(moIter);
+         moIter = map->erase(moIter);
       } else {
          moIter++;
       }
@@ -451,16 +449,12 @@ void Map::handle(SDL_Event event) {
 
             int angle, step, draw_oldX, draw_oldY;
             std::string drawableName, walkingAnimationName, standingAnimationName;
-            Drawable *d;
+            Drawable *d = cmo->getDrawable();
             std::vector<MapObject*>::const_iterator moItr;
             std::vector< Coordinate<MapPoint> > path;
 
-            // Get Drawable for CharacterMapObject
+            // Get Drawable's name
             drawableName = cmo->getDrawableName();
-            d = GraphicsEngine::getInstance()->getDrawableByName(drawableName);
-            
-            // Get Drawable's common name (not with unique ID)
-            drawableName = d->getName();
 
             // Convert the Drawable's X & Y into a World Coordinate.
             Coordinate<ScreenPoint> drawableOld(d->getX(), d->getY());

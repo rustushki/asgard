@@ -28,7 +28,7 @@
 class NonPlayerCharacter : public MapObject
 {
    public:
-      NonPlayerCharacter(std::string drawableName);
+      NonPlayerCharacter(Drawable* drawable);
       ~NonPlayerCharacter();
       
       void setSpeed(int speed);

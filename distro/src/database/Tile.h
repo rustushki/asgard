@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -28,7 +28,7 @@ class Tile : public MapObject
    protected:
       TileType tileType;
    public:
-      Tile(std::string drawableName);
+      Tile(Drawable* drawable);
       virtual bool isWalkable() const = 0;
 };
 

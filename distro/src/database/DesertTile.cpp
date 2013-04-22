@@ -1,6 +1,6 @@
 #include "DesertTile.h"
 
-DesertTile::DesertTile(std::string drawableName) : Tile(drawableName)
+DesertTile::DesertTile(Drawable* drawable) : Tile(drawable)
 {
    this->tileType = TILE_TYPE_DESERT;
 }

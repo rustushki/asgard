@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  *
  * Asgard is free software; you can redistribute it and/or modify
@@ -36,7 +36,7 @@ using std::list;
 class MapObject
 {
    public:
-      MapObject(std::string drawableName);
+      MapObject(Drawable* drawable);
       virtual ~MapObject();
       
       void setLeftCorner(const Coordinate<MapPoint>& leftCorner);

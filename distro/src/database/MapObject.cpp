@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -26,9 +26,9 @@
 #include "ItemInteraction.h"
 #include "Container.h"
 
-MapObject::MapObject(std::string drawableName)
+MapObject::MapObject(Drawable* drawable)
 {
-   this->drawableName = drawableName;
+   this->drawable = drawable;
    this->step = 1;
    this->state = MAP_OBJECT_STATE_IDLE;
 }
@@ -43,6 +43,8 @@ MapObject::~MapObject() {
    for (unsigned int x = 0; x < this->interactions.size(); x++) {
       delete this->interactionpoints[x];
    }
+
+   this->drawable->unload();
 }
 
 void MapObject::setLeftCorner(const Coordinate<MapPoint>& leftCorner)
@@ -56,40 +58,22 @@ Coordinate<MapPoint> MapObject::getLeftCorner() const {
 
 /* -----------------------------------------------------------------------------
  * getWidth - Return the width in pixels of the MapObject.  Internally, this
- * maps to the width of the associated drawable.  Fail miserably when
- * associated drawable doesn't exist.
+ * maps to the width of the associated drawable.
  */
 uint MapObject::getWidth() const {
 
-   GraphicsEngine* ge = GraphicsEngine::getInstance();
-
-   Drawable* d = ge->getDrawableByName(this->getDrawableName());
-
-   if (d != NULL) {
-      return d->getWidth();
-   } else {
-      LOG(FATAL) << "Drawable " << this->getDrawableName() << "didn't exist";
-   }
+   return drawable->getWidth();
 
    return 0;
 }
 
 /* -----------------------------------------------------------------------------
  * getHeight - Return the height in pixels of the MapObject.  Internally, this
- * maps to the height of the associated drawable.  Fail miserably when
- * associated drawable doesn't exist.
+ * maps to the height of the associated drawable.
  */
 uint MapObject::getHeight() const {
 
-   GraphicsEngine* ge = GraphicsEngine::getInstance();
-
-   Drawable* d = ge->getDrawableByName(this->getDrawableName());
-
-   if (d != NULL) {
-      return d->getHeight();
-   } else {
-      LOG(FATAL) << "Drawable " << this->getDrawableName() << "didn't exist";
-   }
+   return drawable->getHeight();
 
    return 0;
 }
@@ -153,7 +137,7 @@ Coordinate<MapPoint> MapObject::getFoot() const
  */
 std::string MapObject::getDrawableName() const
 {
-	return this->drawableName;
+	return this->drawable->getName();
 }
 
 void MapObject::addHardpoint(Hardpoint *hardpoint) {

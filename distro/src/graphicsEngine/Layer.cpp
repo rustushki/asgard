@@ -18,14 +18,11 @@ LayerState Layer::getStatus() {
 }
 
 /* ------------------------------------------------------------------------------
- * stackAonB - Given two drawable names, and given that they are both present
- * on the layer, put drawable a on top of drawable b.
+ * stackAonB - Given two drawables, and given that they are both present on the
+ * layer, put drawable a on top of drawable b.
  */
-void Layer::stackAonB(std::string aName, std::string bName) {
+void Layer::stackAonB(Drawable* a, Drawable* b) {
    GraphicsEngine::obtainLock();
-
-   Drawable* a = this->getDrawableByName(aName);
-   Drawable* b = this->getDrawableByName(bName);
 
    std::vector<Drawable*>::iterator aItr = find(drawable.begin(), drawable.end(), a);
    std::vector<Drawable*>::iterator bItr = find(drawable.begin(), drawable.end(), b);
@@ -60,6 +57,22 @@ void Layer::stackAonB(std::string aName, std::string bName) {
    GraphicsEngine::releaseLock();
 }
 
+bool Layer::isDrawablePresent(Drawable* d) {
+   GraphicsEngine::obtainLock();
+
+   bool found = false;
+   std::vector<Drawable*>::iterator itr;
+   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
+      if ((*itr) == d) {
+         found = true;
+         break;
+      }
+   }
+
+   GraphicsEngine::releaseLock();
+   return found;
+}
+
 void Layer::insertDrawable(Drawable* drawable, unsigned int zIndex) {
    GraphicsEngine::obtainLock();
    //TODO: Error handling...
@@ -87,46 +100,16 @@ void Layer::insertDrawableBottom(Drawable* drawable) {
    GraphicsEngine::releaseLock();
 }
 
-void Layer::removeDrawable(std::string name) {
+void Layer::removeDrawable(Drawable* drawable) {
    GraphicsEngine::obtainLock();
    std::vector<Drawable*>::iterator itr;
    for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
-      if ((*itr)->getInstanceName().compare(name) == 0) {
+      if ((*itr) == drawable) {
          this->drawable.erase(itr);
          break;
       }
    }
    GraphicsEngine::releaseLock();
-}
-
-Drawable* Layer::getDrawableByName(std::string name) const {
-   GraphicsEngine::obtainLock();
-   std::vector<Drawable*>::const_iterator itr;
-   Drawable* d = NULL;
-   for (itr = drawable.begin(); itr < drawable.end(); itr++) {
-      if ((*itr)->getInstanceName().compare(name) == 0) {
-         d = *itr;
-         break;
-      }
-   }
-
-   GraphicsEngine::releaseLock();
-   return d;
-}
-
-Drawable* Layer::getDrawableByCommonName(std::string name) const {
-   GraphicsEngine::obtainLock();
-   std::vector<Drawable*>::const_iterator itr;
-   Drawable* d = NULL;
-   for (itr = this->drawable.begin(); itr < this->drawable.end(); itr++) {
-      if ((*itr)->getName().compare(name) == 0) {
-         d = *itr;
-         break;
-      }
-   }
-
-   GraphicsEngine::releaseLock();
-   return d;
 }
 
 void Layer::update() {

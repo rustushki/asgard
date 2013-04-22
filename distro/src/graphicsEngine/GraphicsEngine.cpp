@@ -102,56 +102,20 @@ void GraphicsEngine::displayDrawable(Drawable* d, std::string layerName, int x, 
    }
 }
 
-void GraphicsEngine::unloadDrawable(std::string drawableInstanceName) {
-   LOG(INFO) << "Unloading Drawable.";
-
-   Screen* s = Screen::getInstance();
-
-   Drawable* d = s->getDrawableByName(drawableInstanceName);
-
-   if (d != NULL) {
-	   LOG(INFO) << "Successfully found drawable to unload.";
-      d->unload();
-   } else {
-	   LOG(INFO) << "Unable to find Drawable for unloading.";
-   }
-}
-
-void GraphicsEngine::translateDrawablesByOffset(std::vector<std::string>* drawableNames, int xOffset, int yOffset) {
+void GraphicsEngine::translateDrawablesByOffset(std::vector<Drawable*> drawables, int xOffset, int yOffset) {
    LOG(INFO) << "Translating Drawables By an Offset";
 
-   Screen* s = Screen::getInstance();
-
-   std::vector<std::string>::iterator itr;
-   for (itr = drawableNames->begin(); itr != drawableNames->end(); itr++) {
-      std::string drawableName = *itr;
-      LOG(INFO) << "Can we find " << drawableName << "?";
-      Drawable* d = s->getDrawableByName(drawableName);
-      if (d != NULL) {
-         LOG(INFO) << "Found it.  Moving by offset.";
-         d->moveByOffset(xOffset, yOffset);
-      }
+   std::vector<Drawable*>::iterator itr;
+   for (itr = drawables.begin(); itr != drawables.end(); itr++) {
+      (*itr)->moveByOffset(xOffset, yOffset);
    }
-
-   // Free provided drawable names.
-   delete drawableNames;
 }
 
 /* ------------------------------------------------------------------------------
- * getDrawableByName - Return the Drawable denoted by the provided instance name.
- *
- * Returns NULL if there is no such Drawable.
- */
-Drawable * GraphicsEngine::getDrawableByName(std::string name) {
-   return Screen::getInstance()->getDrawableByName(name);
-}
-
-/* ------------------------------------------------------------------------------
- * getLayerOfDrawable - Return the Layer of a Drawable by the provided drawable
- * instance name.
+ * getLayerOfDrawable - Return the Layer of a provided Drawable
  *
  * Returns NULL if no Layer.
  */
-Layer* GraphicsEngine::getLayerOfDrawable(std::string drawableName) {
-   return Screen::getInstance()->getLayerOfDrawable(drawableName);
+Layer* GraphicsEngine::getLayerOfDrawable(Drawable* drawable) {
+   return Screen::getInstance()->getLayerOfDrawable(drawable);
 }

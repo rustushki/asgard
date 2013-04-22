@@ -19,7 +19,7 @@
 
 #include "NonPlayerCharacter.h"
 
-NonPlayerCharacter::NonPlayerCharacter(std::string drawableName) : MapObject(drawableName)
+NonPlayerCharacter::NonPlayerCharacter(Drawable* drawable) : MapObject(drawable)
 {
    this->speed = NON_PLAYER_CHARACTER_DEFAULT_SPEED;
 }

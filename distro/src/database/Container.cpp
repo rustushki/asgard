@@ -20,11 +20,11 @@
 #include "DialogInteraction.h"
 
 /* Constructor */
-Container::Container(std::string drawableName) : MapObject(drawableName) {
+Container::Container(Drawable* drawable) : MapObject(drawable) {
    this->inv = Inventory();
 }
 
-Container::Container(std::string drawableName, const Inventory& inv) : MapObject(drawableName) {
+Container::Container(Drawable* drawable, const Inventory& inv) : MapObject(drawable) {
 
    // Set the Inventory as the Provided Inventory.
    this->inv = Inventory(inv);

@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2012 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -39,11 +39,9 @@ class GraphicsEngine {
       static void releaseLock();
 
       void displayDrawable(Drawable* d, std::string layerName, int x, int y);
-      void unloadDrawable(std::string drawableInstanceName);
-      void translateDrawablesByOffset(std::vector<std::string>* drawableNames, int x, int y);
+      void translateDrawablesByOffset(std::vector<Drawable*> drawables, int x, int y);
 
-      Drawable * getDrawableByName(std::string name);
-      Layer* getLayerOfDrawable(std::string drawableName);
+      Layer* getLayerOfDrawable(Drawable* drawable);
 
    private:
       static GraphicsEngine* instance;

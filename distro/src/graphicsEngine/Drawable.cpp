@@ -1,3 +1,21 @@
+/*****************************************************************************
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
+ * This file is part of Asgard.
+ * 
+ * Asgard is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * Asgard is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details. 
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with Asgard; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ ****************************************************************************/
 #include "Screen.h"
 #include "Drawable.h"
 
@@ -36,18 +54,6 @@ Drawable::~Drawable() {
  */
 std::string Drawable::getName() {
    return this->name;
-}
-
-/**
- * getInstanceName()
- *
- * Returns a unique string for identifying the drawable of the form:
- * <drawableName><uniqueNumber>
- *
- * @return std::string - "<drawableName><uniqueNumber>" (i.e. "treeb01017f")
- */
-std::string Drawable::getInstanceName() {
-   return this->instanceName;
 }
 
 DrawableState Drawable::getStatus() {
@@ -134,11 +140,13 @@ bool Drawable::needsUpdate() {
 }
 
 void Drawable::move(int newX, int newY) {
+   /*
    LOG(INFO) << "instance = " << this->getInstanceName();
    LOG(INFO) << "oldX = " << this->x;
    LOG(INFO) << "oldY = " << this->y;
    LOG(INFO) << "newX = " << newX;
    LOG(INFO) << "newY = " << newY;
+   */
 
    // Hold the new x,y pair until we're preparing the next Screen frame.
    this->newX = newX;

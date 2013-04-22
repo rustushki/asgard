@@ -1,5 +1,5 @@
 /*****************************************************************************
- * Copyright (c) 2006 Russ Adams, Sean Eubanks, Asgard Contributors
+ * Copyright (c) 2013 Russ Adams, Sean Eubanks, Asgard Contributors
  * This file is part of Asgard.
  * 
  * Asgard is free software; you can redistribute it and/or modify
@@ -25,7 +25,7 @@
 class WaterTile : public Tile
 {
    public:
-      WaterTile(std::string drawableName);
+      WaterTile(Drawable* drawable);
       bool isWalkable() const;
 };
 
