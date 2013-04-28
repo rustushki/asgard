@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 #include "Container.h"
+#include "AnimationInteraction.h"
 #include "DialogInteraction.h"
 
 /* Constructor */
@@ -29,12 +30,22 @@ Container::Container(Drawable* drawable, const Inventory& inv) : MapObject(drawa
    // Set the Inventory as the Provided Inventory.
    this->inv = Inventory(inv);
 
-   // Construct the Dialog Interaction.
+   // Construct the Animation and Dialog Interactions.
    Uint16 priority = 0;
    bool isHandledOnce = true;
+
+   AnimationInteraction* ai = new AnimationInteraction(
+        priority
+      , isHandledOnce
+      , "openTreasureChest"
+   );
+
+   // Add the Animation Interaciton.
+   this->addInteraction((Interaction*) ai);
+
    std::string msg = "You got the " + inv.toString() + ".";
    DialogInteraction* di = new DialogInteraction(
-        priority
+        ++priority
       , isHandledOnce
       , msg
    );

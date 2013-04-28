@@ -203,6 +203,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
             switch ((*iItr)->getType())
             {
                case INTERACTION_TYPE_ANIMATION:
+                  LOG(INFO) << "Animation Swapping";
                   accepter->drawable->swapAnimation(((AnimationInteraction *)(*iItr))->getAnimationName());
                   break;
                case INTERACTION_TYPE_ITEM:
