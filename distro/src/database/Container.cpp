@@ -37,7 +37,7 @@ Container::Container(Drawable* drawable, const Inventory& inv) : MapObject(drawa
    AnimationInteraction* ai = new AnimationInteraction(
         priority
       , isHandledOnce
-      , "openTreasureChest"
+      , "TreasureChestOpened"
    );
 
    // Add the Animation Interaciton.

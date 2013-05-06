@@ -156,6 +156,10 @@ values("TreasureChest","TreasureChest");
 
 insert into Drawable
 (DrawableName,AnimationName)
+values("TreasureChest","TreasureChestOpened");
+
+insert into Drawable
+(DrawableName,AnimationName)
 values("OsirisCat","OsirisCat");
 
 insert into Drawable
@@ -214,6 +218,10 @@ insert into SpriteSheet
 (SpriteSheetName,NumColumns,NumRows)
 values("NotMatchWalkingEast.png",7,1);
 
+insert into SpriteSheet
+(SpriteSheetName,NumColumns,NumRows)
+values("TreasureChestOpened.png",1,1);
+
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
 values("PalmTree","palmtree.png",240,170,6);
@@ -237,7 +245,7 @@ values(3,5,10,0,64,42,1);
 
 insert into Animation
 (AnimationName,SpriteSheetName,Height,Width,StillsPerSecond)
-values("TreasureChestOpening","treasurechest.png",55,75,1);
+values("TreasureChestOpened","TreasureChestOpened.png",55,75,1);
 
 insert into Item
 (ItemId,ItemName)
