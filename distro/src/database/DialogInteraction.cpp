@@ -23,6 +23,7 @@
 DialogInteraction::DialogInteraction(int priority, bool isHandledOnce, std::string text)
 {
    this->priority = priority;
+   this->isHandledOnce = isHandledOnce;
    this->text = text;
 }
 

@@ -185,7 +185,7 @@ void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
 void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
 {
    std::vector<Interactionpoint*>::const_iterator ipItr;
-   std::vector<Interaction*>::const_iterator iItr;
+   std::vector<Interaction*>::iterator iItr;
 
    for(ipItr = accepter->interactionpoints.begin(); ipItr < accepter->interactionpoints.end(); ipItr++)
    {
@@ -235,7 +235,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
             }
             // Remove Interaction if it is only handled once
             if((*iItr)->getIsHandledOnce()) 
-               accepter->interactions.erase(accepter->interactions.begin());
+               accepter->interactions.erase(iItr);
          }
          break; // Initiator's foot only needs to be within one Interactionpoint
       }

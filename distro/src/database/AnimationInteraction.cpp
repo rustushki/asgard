@@ -22,6 +22,7 @@
 AnimationInteraction::AnimationInteraction(int priority, bool isHandledOnce, std::string animationName)
 {
    this->priority = priority;
+   this->isHandledOnce = isHandledOnce;
    this->animationName = animationName;
 }
 
