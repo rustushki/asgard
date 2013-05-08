@@ -198,7 +198,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
       if((*ipItr)->conflict(accepter->leftCorner,this->getFoot()))
       {
          // Handle Interactions
-         for(iItr = accepter->interactions.begin(); iItr < accepter->interactions.end(); iItr++)
+         for(iItr = accepter->interactions.begin(); iItr != accepter->interactions.end(); iItr++)
          {
             switch ((*iItr)->getType())
             {
@@ -235,7 +235,10 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
             }
             // Remove Interaction if it is only handled once
             if((*iItr)->getIsHandledOnce()) 
+            {
                accepter->interactions.erase(iItr);
+               iItr--;
+            }
          }
          break; // Initiator's foot only needs to be within one Interactionpoint
       }
