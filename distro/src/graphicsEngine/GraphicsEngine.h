@@ -46,6 +46,8 @@ class GraphicsEngine {
    private:
       static GraphicsEngine* instance;
       static boost::shared_mutex updateLock;
+
+      void sleep(long delay);
 };
 
 #endif//GRAPHICSENGINE_H

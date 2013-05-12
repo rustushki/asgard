@@ -41,7 +41,7 @@ GraphicsEngine* GraphicsEngine::getInstance() {
 }
 
 void GraphicsEngine::play() {
-   int time = 0;
+   Uint32 time = 0;
    Screen* s = Screen::getInstance();
 
    while(true) {
@@ -63,7 +63,7 @@ void GraphicsEngine::play() {
       time = SDL_GetTicks() - time;
 
       // A delay of <= 0 causes this thread to never wake up
-      int delay = (1000/Screen::FPS)-time;
+      long delay = (1000/Screen::FPS)-time;
       if (delay <= 0) {
          delay = 1;
       }
@@ -71,7 +71,7 @@ void GraphicsEngine::play() {
       // Unlock the Controller Gate
       Asgard::getInstance()->gate.notify_one();
 
-      boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
+      sleep(delay);
    }
 }
 
@@ -118,4 +118,12 @@ void GraphicsEngine::translateDrawablesByOffset(std::vector<Drawable*> drawables
  */
 Layer* GraphicsEngine::getLayerOfDrawable(Drawable* drawable) {
    return Screen::getInstance()->getLayerOfDrawable(drawable);
+}
+
+void GraphicsEngine::sleep(long delay) {
+#if BOOST_VERSION >= 105000
+   boost::this_thread::sleep_for(boost::chrono::milliseconds(delay));
+#else
+   boost::this_thread::sleep(boost::posix_time::milliseconds(delay));
+#endif
 }
