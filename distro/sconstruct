@@ -19,7 +19,7 @@ AddOption(
 )
 
 # Build the environment and export it for child sconscripts
-env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', CPPFLAGS='-g')
+env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', CPPFLAGS='-g -std=c++11')
 #env = Environment(PREFIX = GetOption('prefix'), CXX='g++', CPPFLAGS='-g')
 Export('env')
 

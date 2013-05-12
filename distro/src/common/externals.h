@@ -18,6 +18,7 @@ typedef unsigned int uint;
 #include <unistd.h>
 #include <vector>
 #include <set>
+#include <memory>
 
 
 // Boost
