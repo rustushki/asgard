@@ -69,5 +69,21 @@ if ARGUMENTS.get('VERBOSE') != "1":
 	env['CXXCOMSTR'] = "[CC] $TARGET"
 	env['LINKCOMSTR'] = "[LK] $TARGET"
 
-asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=['boost_thread','sqlite3','SDL','SDL_image','SDL_ttf','python2.7','glog'], CXXFLAGS=['-Wall', '-O2'])
+
+# Construct list of Library to Link Against
+libarr=['sqlite3','SDL','SDL_image','SDL_ttf','python2.7','glog']
+
+# Attempt to find boost_thread
+# TODO: It'd be great to drop boost dependency here by using C++11's threads
+# instead. 
+conf = Configure(env)
+if (conf.CheckLib("boost_thread")):
+   libarr.append("boost_thread")
+elif (conf.CheckLib("boost_thread-mt")):
+   libarr.append("boost_thread-mt")
+else:
+   print "Failed to find a Boost Thread library."
+   Exit(1)
+
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=libarr, CXXFLAGS=['-Wall', '-O2'])
 Export("asgard")

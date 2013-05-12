@@ -7,3 +7,5 @@ database/runquery
 *.swo
 *.swp
 *.o
+.sconf_temp
+config.log
