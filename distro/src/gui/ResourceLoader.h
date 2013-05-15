@@ -7,8 +7,19 @@
 class ResourceLoader {
 
 public:
-   static SDL_Surface* LoadSDLSurface(std::string path);
-   static TTF_Font* GetFont(std::string fontFn, Uint16 pointSize);
+   static ResourceLoader* GetInstance();
+
+   SDL_Surface* loadSDLSurface(std::string path);
+   TTF_Font* getFont(std::string fontFn, Uint16 pointSize);
+
+   ~ResourceLoader();
+
+private:
+
+   static ResourceLoader* instance;
+   ResourceLoader();
+   std::map<std::string, SDL_Surface*> surfCache;
+   std::map<std::string, TTF_Font*> ttfCache;
 
 };
 

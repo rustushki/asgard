@@ -16,6 +16,6 @@ SDL_Surface* Theme::buildElement(std::string elementName) {
                path += elementName + ".png";
 
    // Return SDL_Surface.
-   return ResourceLoader::LoadSDLSurface(path);
+   return ResourceLoader::GetInstance()->loadSDLSurface(path);
 
 }

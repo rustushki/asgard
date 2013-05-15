@@ -1,6 +1,28 @@
 #include "ResourceLoader.h"
 
-SDL_Surface* ResourceLoader::LoadSDLSurface(std::string elementPath) {
+ResourceLoader* ResourceLoader::instance = NULL;
+
+ResourceLoader::ResourceLoader() {
+}
+
+ResourceLoader* ResourceLoader::GetInstance() {
+   if (ResourceLoader::instance == NULL) {
+      ResourceLoader::instance = new ResourceLoader();
+   }
+
+   return ResourceLoader::instance;
+}
+
+SDL_Surface* ResourceLoader::loadSDLSurface(std::string elementPath) {
+
+   // Get an iterator into the surfCache.
+   std::map<std::string, SDL_Surface*>::iterator iter = surfCache.begin();
+
+   // Return the spritesheet if can be found in the cache
+   iter = surfCache.find(elementPath);
+   if (iter != surfCache.end()) {
+      return iter->second;
+   }
 
    // Otherwise, read and create from hard disk.
    SDL_Surface* surface = NULL;
@@ -34,17 +56,30 @@ SDL_Surface* ResourceLoader::LoadSDLSurface(std::string elementPath) {
       }
    }
 
+   surfCache[elementPath] = surface;
+
    return surface;
 
 }
 
 /* ------------------------------------------------------------------------------
- * GetFont - Load a font for usage.
+ * getFont - Load a font for usage.
  *
  * TODO:
  * Optimize this by keeping the font loaded in memory.
  */
-TTF_Font* ResourceLoader::GetFont(std::string fontFn, Uint16 pointSize) {
+TTF_Font* ResourceLoader::getFont(std::string fontFn, Uint16 pointSize) {
+
+   std::string key = fontFn + std::to_string(pointSize);
+
+   // Get an iterator into the surfCache.
+   std::map<std::string, TTF_Font*>::iterator iter = ttfCache.begin();
+
+   // Return the spritesheet if can be found in the cache
+   iter = ttfCache.find(key);
+   if (iter != ttfCache.end()) {
+      return iter->second;
+   }
 
    // Build path to the Font Resource.
    std::string path(RES);
@@ -64,6 +99,8 @@ TTF_Font* ResourceLoader::GetFont(std::string fontFn, Uint16 pointSize) {
       LOG(ERROR) << TTF_GetError();
       exit(1);
    }
+
+   ttfCache[key] = font;
 
    // Return the font.
    return font;

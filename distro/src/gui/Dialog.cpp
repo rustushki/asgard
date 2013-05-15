@@ -123,7 +123,7 @@ void Dialog::drawText() {
    // Black
    SDL_Color color = {0x33, 0x33, 0x33};
 
-   TTF_Font* font = ResourceLoader::GetFont("Vera.ttf", 17);
+   TTF_Font* font = ResourceLoader::GetInstance()->getFont("Vera.ttf", 17);
 
    Uint16 margin = 10;
 

@@ -1,11 +1,11 @@
 #include "Animation.h"
-#include "SpriteSheetCache.h"
+#include "ResourceLoader.h"
 #include "Screen.h"
 
 Animation::Animation(std::string filename, uint width, uint height, uint sps, uint ssRows, uint ssCols)
 {
-   SpriteSheetCache* ssCache = SpriteSheetCache::getInstance();
-   this->spriteSheet = ssCache->retrieve(filename);
+   ResourceLoader* rl = ResourceLoader::GetInstance();
+   this->spriteSheet = rl->loadSDLSurface("spritesheet/" + filename);
    this->init(width, height, sps, ssRows, ssCols);
 }
 

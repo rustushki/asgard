@@ -47,7 +47,6 @@ objects = [
 './graphicsEngine/Layer.cpp',
 './graphicsEngine/RectBlitter.cpp',
 './graphicsEngine/Screen.cpp',
-'./graphicsEngine/SpriteSheetCache.cpp',
 './gui/Box.cpp',
 './gui/GuiFactory.cpp',
 './gui/Dialog.cpp',
