@@ -19,8 +19,8 @@ include_path =                     \
 
 # List of Objects to Compile
 objects = [
-'./console/Console.cpp',
-'./console/ConsolePython.cpp',
+#'./console/Console.cpp',
+#'./console/ConsolePython.cpp',
 './database/QueryGenerator.cpp',
 './database/GrassTile.cpp',
 './database/RowSet.cpp',
@@ -70,7 +70,8 @@ if ARGUMENTS.get('VERBOSE') != "1":
 
 
 # Construct list of Library to Link Against
-libarr=['sqlite3','SDL','SDL_image','SDL_ttf','python2.7','glog']
+libarr=['sqlite3','SDL','SDL_image','SDL_ttf','glog']
+#libarr=['sqlite3','SDL','SDL_image','SDL_ttf','python2.7','glog']
 
 # Attempt to find boost_thread
 # TODO: It'd be great to drop boost dependency here by using C++11's threads
@@ -84,5 +85,5 @@ else:
    print "Failed to find a Boost Thread library."
    Exit(1)
 
-asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=libarr, CXXFLAGS=['-Wall', '-O2'])
+asgard = env.Program('../asgard', objects, CPPPATH=include_path, LIBS=libarr, CXXFLAGS=['-Wall', '-O0', '-g'])
 Export("asgard")

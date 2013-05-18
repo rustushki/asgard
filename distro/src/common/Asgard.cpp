@@ -52,7 +52,7 @@ void Asgard::initModel() {
    GraphicsEngine::getInstance();
    Database::getInstance();
    Map::getInstance();
-   Console::getInstance();
+   //Console::getInstance();
 }
 
 void Asgard::controller() {
@@ -68,7 +68,9 @@ void Asgard::controller() {
    // The View is now ready.
 
    // Read from the Console and Process all Input.
-   Console::getInstance()->inputLoop();
+   //Console::getInstance()->inputLoop();
+ 
+   Map::getInstance()->setFocusPoint(0,0);
 
    // Wait for Events
    LOG(INFO) << "Waiting for Events ...";
@@ -209,14 +211,14 @@ void Asgard::initExternal() {
    google::InitGoogleLogging("asgard");
 
    // Initialize Asgard's Python Interface.
-   InitAsgardPython();
+   //InitAsgardPython();
 
    // Initialize SDL_ttf
    TTF_Init();
 }
 
 Asgard::~Asgard() {
-   Py_Finalize();
+   //Py_Finalize();
    SDL_Quit();
 }
 
