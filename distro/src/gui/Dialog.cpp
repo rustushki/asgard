@@ -145,14 +145,16 @@ void Dialog::drawText() {
       std::string line = this->getNextLine(remainingText, font, maxWidth);
 
       // Build the text surface containing the given string.
-      SDL_Surface* text_surface = TTF_RenderText_Solid(
-           font
-         , line.c_str()
-         , color
+      std::unique_ptr<SDL_Surface> text_surface = std::unique_ptr<SDL_Surface>(
+         TTF_RenderText_Solid(
+              font
+            , line.c_str()
+            , color
+         )
       );
 
       // If the surface is not created successfully.
-      if (text_surface == NULL) {
+      if (text_surface == nullptr) {
          LOG(INFO) << this->text.c_str();
          LOG(ERROR) << "Error creating text: " << TTF_GetError();
          exit(1);
@@ -168,7 +170,7 @@ void Dialog::drawText() {
          r.y = lineNum * fontHeight + margin;
 
          // Blit the text to the screen.
-         SDL_BlitSurface(text_surface, NULL, getTempSurf().get(), &r);
+         SDL_BlitSurface(text_surface.get(), NULL, getTempSurf().get(), &r);
 
       }
 
