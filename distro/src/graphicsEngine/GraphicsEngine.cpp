@@ -41,7 +41,6 @@ GraphicsEngine* GraphicsEngine::getInstance() {
 }
 
 void GraphicsEngine::play() {
-   Uint32 time = 0;
    Screen* s = Screen::getInstance();
 
    while(true) {
@@ -52,7 +51,7 @@ void GraphicsEngine::play() {
          return;
       }
 
-      time = SDL_GetTicks();
+      Uint32 startTime = SDL_GetTicks();
 
       // Wait for write access to layers.  Once obtained, update them.
       GraphicsEngine::obtainLock();
@@ -60,11 +59,23 @@ void GraphicsEngine::play() {
       GraphicsEngine::releaseLock();
 
       s->flip();
-      time = SDL_GetTicks() - time;
+
+      Uint32 endTime = SDL_GetTicks();
+      Uint32 diff = endTime - startTime;
+
+      // This is the maximum amount of time we might sleep before updating the
+      // next frame.
+      Uint32 frameDelay = 1000/Screen::FPS;
+
+      // Now determine how much less time we must wait to keep up with the
+      // frame rate.
+      long delay = 1;
+      if (diff <= frameDelay) {
+         delay = frameDelay - diff;
+      }
 
       // A delay of <= 0 causes this thread to never wake up
-      long delay = (1000/Screen::FPS)-time;
-      if (delay <= 0) {
+      if (delay < 0) {
          delay = 1;
       }
 
