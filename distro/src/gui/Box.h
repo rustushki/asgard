@@ -34,8 +34,7 @@ protected:
 
    virtual void buildSurface();
 
-   // Construct the surface for the Drawable here.
-   SDL_Surface* tempSurf;
+   std::shared_ptr<SDL_Surface> getTempSurf();
 
 private:
 
@@ -46,6 +45,9 @@ private:
 
 	// Drawable for this box.
 	Drawable* box;
+
+   // Construct the surface for the Drawable here.
+   std::shared_ptr<SDL_Surface> tempSurf;
 
 };
 

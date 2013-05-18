@@ -2,7 +2,6 @@
 #include "GuiFactory.h"
 
 Box::Box() {
-   this->tempSurf = NULL;
    this->box = NULL;
 }
 
@@ -85,12 +84,12 @@ void Box::refresh() {
    // Write the text.
 
    // Build an Single Still Animation based on the constructed SDL_Surface.
-   Animation* anim = new Animation(this->tempSurf);
+   Animation* anim = new Animation(this->tempSurf.get());
 
    // If the initial Drawable has not yet been built, go ahead and build it.
    bool justCreated = false;
    if (this->box == NULL) {
-      this->box = DrawableFactory::build(this->tempSurf, "dialog");
+      this->box = DrawableFactory::build(this->tempSurf.get(), "dialog");
       justCreated = true;
 
    // Otherwise, go ahead and switch out the animation.
@@ -118,13 +117,13 @@ void Box::refresh() {
 void Box::buildSurface() {
 
    // Create an SDL_Surface.
-   this->tempSurf = SDL_CreateRGBSurface(
+   this->tempSurf = std::shared_ptr<SDL_Surface>(SDL_CreateRGBSurface(
         SDL_HWSURFACE
       , this->width
       , this->height
       , 32
       , 0,0,0,0
-   );
+   ));
 
    // Get the Theme object.
    Theme* theme = GuiFactory::GetInstance()->getTheme();
@@ -181,7 +180,7 @@ void Box::singBlit(SDL_Surface* surf, Uint16 x, Uint16 y) {
    destRect.w = surf->w;
 
    // Perform Blit.
-   SDL_BlitSurface(surf, &srcRect, this->tempSurf, &destRect);
+   SDL_BlitSurface(surf, &srcRect, this->tempSurf.get(), &destRect);
 }
 
 /* ------------------------------------------------------------------------------
@@ -203,7 +202,7 @@ void Box::horzLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w) {
    rect.y = y;
    rect.h = surf->h;
    rect.w = w;
-   SDL_SetClipRect(this->tempSurf, &rect);
+   SDL_SetClipRect(this->tempSurf.get(), &rect);
 
    // Blit the Surface across the horizontal region.
    for (Uint16 cnt = 0; cnt < blitCnt; cnt++) {
@@ -211,7 +210,7 @@ void Box::horzLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w) {
    }
 
    // Clear the Clipping Rect.
-   SDL_SetClipRect(this->tempSurf, NULL);
+   SDL_SetClipRect(this->tempSurf.get(), NULL);
 }
 
 /* ------------------------------------------------------------------------------
@@ -234,7 +233,7 @@ void Box::vertLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 h) {
 
    // Set the Clipping Rect.
    // This ensures that we never blit beyond the edges of this rectable.
-   SDL_SetClipRect(this->tempSurf, &rect);
+   SDL_SetClipRect(this->tempSurf.get(), &rect);
 
    // Blit the Surface across the vertical region.
    for (Uint16 cnt = 0; cnt < blitCnt; cnt++) {
@@ -242,7 +241,7 @@ void Box::vertLinearTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 h) {
    }
 
    // Clear the Clipping Rect.
-   SDL_SetClipRect(this->tempSurf, NULL);
+   SDL_SetClipRect(this->tempSurf.get(), NULL);
 }
 
 /* ------------------------------------------------------------------------------
@@ -265,7 +264,7 @@ void Box::twoDimTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w, Uint16 h) 
    rect.y = y;
    rect.h = h;
    rect.w = w;
-   SDL_SetClipRect(this->tempSurf, &rect);
+   SDL_SetClipRect(this->tempSurf.get(), &rect);
 
    for (Uint16 hCnt = 0; hCnt <= hBlitCnt; hCnt++) {
       for (Uint16 vCnt = 0; vCnt <= vBlitCnt; vCnt++) {
@@ -274,5 +273,9 @@ void Box::twoDimTile(SDL_Surface* surf, Uint16 x, Uint16 y, Uint16 w, Uint16 h) 
    }
 
    // Clear the Clipping Rect.
-   SDL_SetClipRect(this->tempSurf, NULL);
+   SDL_SetClipRect(this->tempSurf.get(), NULL);
+}
+
+std::shared_ptr<SDL_Surface> Box::getTempSurf() {
+   return tempSurf;
 }

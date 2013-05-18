@@ -168,7 +168,7 @@ void Dialog::drawText() {
          r.y = lineNum * fontHeight + margin;
 
          // Blit the text to the screen.
-         SDL_BlitSurface(text_surface, NULL, this->tempSurf, &r);
+         SDL_BlitSurface(text_surface, NULL, getTempSurf().get(), &r);
 
       }
 
