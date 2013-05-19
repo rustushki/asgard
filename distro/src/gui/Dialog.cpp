@@ -1,5 +1,6 @@
 #include "externals.h"
 #include "Dialog.h"
+#include "SDLSurfaceDeleter.h"
 
 Dialog::Dialog(std::string image, std::string text) {
 	// Discard Image for the Momemnt.
@@ -146,12 +147,13 @@ void Dialog::drawText() {
       std::string line = this->getNextLine(remainingText, font, maxWidth);
 
       // Build the text surface containing the given string.
-      std::unique_ptr<SDL_Surface> text_surface = std::unique_ptr<SDL_Surface>(
-         TTF_RenderText_Solid(
+      auto text_surface = std::unique_ptr<SDL_Surface, SDLSurfaceDeleter>(
+           TTF_RenderText_Solid(
               font
             , line.c_str()
             , color
          )
+         , SDLSurfaceDeleter()
       );
 
       // If the surface is not created successfully.
