@@ -8,11 +8,12 @@
 GuiFactory* GuiFactory::instance = NULL;
 
 GuiFactory::GuiFactory() {
-   this->theme = NULL;
-   this->setThemeName("default");
+   theme = nullptr;
+   setThemeName("default");
 }
 
 GuiFactory::~GuiFactory() {
+   deleteAll();
 }
 
 GuiFactory* GuiFactory::GetInstance() {
@@ -23,41 +24,41 @@ GuiFactory* GuiFactory::GetInstance() {
    return GuiFactory::instance;
 }
 
-Menu* GuiFactory::buildMenu(std::vector<std::string> list) {
+std::shared_ptr<Menu> GuiFactory::buildMenu(std::vector<std::string> list) {
 /*
-   Menu* menu = new Menu(list);
-   this->box.push_back((Box*) menu);
+   auto menu = std::shared_ptr<Menu>(new Menu(list));
+   box.push_back(menu);
 
    return menu;
 */
-   return NULL;
+   return nullptr;
 }
 
-Dialog* GuiFactory::buildDialog(std::string imagePath, std::string text) {
-   Dialog* dialog = new Dialog(imagePath, text);
-   this->box.push_back((Box*) dialog);
+std::shared_ptr<Dialog> GuiFactory::buildDialog(std::string imagePath, std::string text) {
+   auto dialog = std::shared_ptr<Dialog>(new Dialog(imagePath, text));
+   box.push_back(dialog);
 
    return dialog;
 }
 
 void GuiFactory::setThemeName(std::string themeName) {
    if (this->themeName != themeName) {
-      this->themeName = themeName;
+      themeName = themeName;
 
-      if (this->theme != NULL) {
-         delete this->theme;
+      if (theme != nullptr) {
+         theme.reset();
       }
 
-      this->theme = new Theme(themeName);
+      theme = std::shared_ptr<Theme>(new Theme(themeName));
    }
 }
 
 std::string GuiFactory::getThemeName() const {
-   return this->themeName;
+   return themeName;
 }
 
-Theme* GuiFactory::getTheme() const {
-   return this->theme;
+std::shared_ptr<Theme> GuiFactory::getTheme() const {
+   return theme;
 }
 
 void GuiFactory::deleteAll() {

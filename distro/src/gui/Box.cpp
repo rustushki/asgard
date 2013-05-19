@@ -130,7 +130,7 @@ void Box::buildSurface() {
    ));
 
    // Get the Theme object.
-   Theme* theme = GuiFactory::GetInstance()->getTheme();
+   auto theme = GuiFactory::GetInstance()->getTheme();
 
    // Tile
    SDL_Surface* bg = theme->buildElement("bg");

@@ -60,7 +60,7 @@ int DialogInteraction::getType() const
 void DialogInteraction::handle()
 {
    GuiFactory* gf = GuiFactory::GetInstance();
-   Dialog* dia = gf->buildDialog("notused.png", this->text); 
+   auto dia = gf->buildDialog("notused.png", this->text); 
    dia->setDimension(500, 300);
    dia->refresh();
    dia->show();
