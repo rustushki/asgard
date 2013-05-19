@@ -1,5 +1,9 @@
+#include "externals.h"
 #include "Box.h"
+#include "DrawableFactory.h"
 #include "GuiFactory.h"
+#include "GraphicsEngine.h"
+#include "Theme.h"
 
 Box::Box() {
    this->box = NULL;

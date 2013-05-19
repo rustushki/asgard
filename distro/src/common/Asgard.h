@@ -22,13 +22,14 @@
 #include "externals.h"
 #include "Screen.h"
 #include "Console.h"
-#include "GraphicsEngine.h"
-#include "Database.h"
-#include "Map.h"
 #include "AsgardMode.h"
 #include "AsgardEvent.h"
 
+class GraphicsEngine;
+class GuiFactory;
 class EventHandler;
+class Map;
+class Database;
 
 class Asgard {
    public:
@@ -80,6 +81,13 @@ class Asgard {
 
       // Mapping of AsgardEvent Types to Thread IDs.
       std::map<AsgardEvent, boost::thread*> asgardEventToThread;
+
+      // Asgard memory manages these singleton components.
+      std::unique_ptr<GraphicsEngine> ge;
+      std::unique_ptr<Database>       db;
+      std::unique_ptr<Map>            mp;
+      //std::unique_ptr<Console>        co;
+      std::unique_ptr<GuiFactory>     gf;
 };
 
 #endif//ASGARD_H

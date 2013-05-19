@@ -13,7 +13,6 @@ class GuiFactory {
 
 private:
 	GuiFactory();
-	~GuiFactory();
 
 	static GuiFactory* instance;
 
@@ -25,6 +24,7 @@ private:
 public:
 
 	static GuiFactory* GetInstance();
+	~GuiFactory();
 
 	Menu* buildMenu(std::vector<std::string> list);
 	Dialog* buildDialog(std::string imagePath, std::string text);

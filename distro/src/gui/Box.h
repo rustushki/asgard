@@ -1,11 +1,10 @@
 #ifndef BOX_H
 #define BOX_H
 
-#include "externals.h"
 #include "Coordinate.h"
-#include "Drawable.h"
-#include "GraphicsEngine.h"
-#include "Theme.h"
+
+class Drawable;
+class ScreenPoint;
 
 class Box {
 

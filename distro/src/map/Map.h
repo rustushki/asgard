@@ -12,7 +12,7 @@
 
 class Map : public EventHandler {
    public:
-      ~Map();
+      virtual ~Map();
 
       static Map* getInstance();
 

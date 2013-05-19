@@ -1,3 +1,4 @@
+#include "externals.h"
 #include "Dialog.h"
 
 Dialog::Dialog(std::string image, std::string text) {
@@ -27,7 +28,7 @@ int Dialog::getWordNPos(int wordN, std::string text) {
 
    size_t pos = text.find(" ", 0);
 
-   while (wordN-- > 0 && pos != string::npos) {
+   while (wordN-- > 0 && pos != std::string::npos) {
       pos = text.find(" ", pos+1);
    }
 
@@ -42,12 +43,12 @@ int Dialog::getWordCount(std::string text) {
 
    int count = 0;
 
-   while (pos != string::npos) {
+   while (pos != std::string::npos) {
       count++;
       pos = text.find(" ", pos+1);
    }
 
-   if (pos == string::npos) {
+   if (pos == std::string::npos) {
       count++;
    }
 
@@ -73,10 +74,10 @@ std::string Dialog::getAfterWordN(int n, std::string text) {
    // If there is no more string after word N, return the empty string.
    //
    // GOTCHA:
-   // Be careful because string::npos == -1.  If we were to add 1 to
-   // string::npos, we would get character 0 of the string.  That would cause
-   // this method to effectively return the entire string.
-   if (pos == string::npos) {
+   // Be careful because std::string::npos == -1.  If we were to add 1 to
+   // std::string::npos, we would get character 0 of the string.  That would
+   // cause this method to effectively return the entire string.
+   if (pos == std::string::npos) {
       return "";
 
    } else {

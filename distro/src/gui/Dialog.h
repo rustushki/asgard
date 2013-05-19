@@ -1,10 +1,9 @@
 #ifndef DIALOG_H
 #define DIALOG_H
 
-#include <string>
+#include "externals.h" 
 #include "Box.h"
 #include "ResourceLoader.h"
-#include "externals.h"
 
 class Dialog : public Box {
 

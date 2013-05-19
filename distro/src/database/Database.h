@@ -27,6 +27,8 @@
 class Database
 {
    public:
+      ~Database();
+
       static Database* getInstance();
       sqlite3* getAsgardDb() const;
 
@@ -35,7 +37,6 @@ class Database
 
    private:
       Database();
-      ~Database();
       sqlite3 *asgardDb;
       static Database* instance;
       
