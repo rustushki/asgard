@@ -21,6 +21,9 @@
 #include "ConsolePython.h"
 #include "GuiFactory.h"
 #include "GraphicsEngine.h"
+#include "AsgardMode.h"
+#include "AsgardEvent.h"
+#include "Screen.h"
 
 Asgard* Asgard::instance = NULL;
 int     Asgard::argc     = 0;
@@ -51,11 +54,12 @@ Asgard::Asgard() {
 }
 
 void Asgard::initModel() {
-   ge = std::unique_ptr<GraphicsEngine>(GraphicsEngine::getInstance());
-   db = std::unique_ptr<Database>      (Database::getInstance());
-   mp = std::unique_ptr<Map>           (Map::getInstance());
-   //co = std::unique_ptr<Console>       (Console::getInstance());
-   gf = std::unique_ptr<GuiFactory>    (GuiFactory::GetInstance());
+   ge = std::unique_ptr<GraphicsEngine> (GraphicsEngine::getInstance());
+   db = std::unique_ptr<Database>       (Database::getInstance());
+   mp = std::unique_ptr<Map>            (Map::getInstance());
+   //co = std::unique_ptr<Console>        (Console::getInstance());
+   gf = std::unique_ptr<GuiFactory>     (GuiFactory::GetInstance());
+   rl = std::unique_ptr<ResourceLoader> (ResourceLoader::GetInstance());
 }
 
 void Asgard::controller() {

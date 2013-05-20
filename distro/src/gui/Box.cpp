@@ -3,6 +3,7 @@
 #include "DrawableFactory.h"
 #include "GuiFactory.h"
 #include "GraphicsEngine.h"
+#include "SDLSurfaceDeleter.h"
 #include "Theme.h"
 
 Box::Box() {
@@ -122,43 +123,45 @@ void Box::buildSurface() {
 
    // Create an SDL_Surface.
    this->tempSurf = std::shared_ptr<SDL_Surface>(SDL_CreateRGBSurface(
-        SDL_HWSURFACE
-      , this->width
-      , this->height
-      , 32
-      , 0,0,0,0
-   ));
+           SDL_HWSURFACE
+         , this->width
+         , this->height
+         , 32
+         , 0,0,0,0
+      )
+      , SDLSurfaceDeleter()
+   );
 
    // Get the Theme object.
    auto theme = GuiFactory::GetInstance()->getTheme();
 
    // Tile
-   SDL_Surface* bg = theme->buildElement("bg");
+   auto bg = theme->buildElement("bg");
 
    // Edges
-   SDL_Surface* bh = theme->buildElement("bh");
-   SDL_Surface* bw = theme->buildElement("bw");
+   auto bh = theme->buildElement("bh");
+   auto bw = theme->buildElement("bw");
 
    // Corners
-   SDL_Surface* tl = theme->buildElement("tl");
-   SDL_Surface* tr = theme->buildElement("tr");
-   SDL_Surface* bl = theme->buildElement("bl");
-   SDL_Surface* br = theme->buildElement("br");
+   auto tl = theme->buildElement("tl");
+   auto tr = theme->buildElement("tr");
+   auto bl = theme->buildElement("bl");
+   auto br = theme->buildElement("br");
 
    // Tile the Background onto the Surface.
-   this->twoDimTile(bg, tl->w/2, tl->h/2, this->tempSurf->w - br->w, this->tempSurf->h - br->h);
+   this->twoDimTile(bg.get(), tl->w/2, tl->h/2, this->tempSurf->w - br->w, this->tempSurf->h - br->h);
 
    // Tiles the Edges onto the Surface.
-   this->horzLinearTile(bw, tl->w, 0, this->tempSurf->w - tl->w);
-   this->vertLinearTile(bh, 0, tl->h, this->tempSurf->h - bl->h);
-   this->horzLinearTile(bw, br->w, this->getHeight() - br->h, this->tempSurf->w - tl->w);
-   this->vertLinearTile(bh, this->getWidth() - tr->w, tl->h, this->tempSurf->h - br->h);
+   this->horzLinearTile(bw.get(), tl->w, 0, this->tempSurf->w - tl->w);
+   this->vertLinearTile(bh.get(), 0, tl->h, this->tempSurf->h - bl->h);
+   this->horzLinearTile(bw.get(), br->w, this->getHeight() - br->h, this->tempSurf->w - tl->w);
+   this->vertLinearTile(bh.get(), this->getWidth() - tr->w, tl->h, this->tempSurf->h - br->h);
 
    // Draw the Corners onto the surface.
-   this->singBlit(tl, 0, 0);
-   this->singBlit(tr, this->getWidth() - tr->w, 0);
-   this->singBlit(bl, 0, this->getHeight() - bl->h);
-   this->singBlit(br, this->getWidth() - br->w, this->getHeight() - br->h);
+   this->singBlit(tl.get(), 0, 0);
+   this->singBlit(tr.get(), this->getWidth() - tr->w, 0);
+   this->singBlit(bl.get(), 0, this->getHeight() - bl->h);
+   this->singBlit(br.get(), this->getWidth() - br->w, this->getHeight() - br->h);
 
 }
 

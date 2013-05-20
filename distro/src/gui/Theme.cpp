@@ -4,7 +4,7 @@ Theme::Theme(std::string themeName) {
    this->name = themeName;
 }
 
-SDL_Surface* Theme::buildElement(std::string elementName) {
+std::shared_ptr<SDL_Surface> Theme::buildElement(std::string elementName) {
 
    std::string path  = "gui/";
                path += this->name + "/";

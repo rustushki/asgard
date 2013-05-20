@@ -27,7 +27,7 @@ class Animation
       uint sps;
 
       // Sprite Sheet.  Hot Pink is transparent.
-      SDL_Surface* spriteSheet;
+      std::shared_ptr<SDL_Surface> spriteSheet;
 
       // Dimensions of spritesheet.
       uint ssCols, ssRows;

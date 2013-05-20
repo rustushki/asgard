@@ -1,8 +1,19 @@
 #include "ResourceLoader.h"
+#include "SDLSurfaceDeleter.h"
 
 ResourceLoader* ResourceLoader::instance = NULL;
 
 ResourceLoader::ResourceLoader() {
+}
+
+ResourceLoader::~ResourceLoader() {
+   surfCache.clear();
+
+   for (auto itr = ttfCache.begin(); itr != ttfCache.end(); itr++) {
+      TTF_CloseFont(itr->second);
+   }
+
+   ttfCache.clear();
 }
 
 ResourceLoader* ResourceLoader::GetInstance() {
@@ -13,10 +24,10 @@ ResourceLoader* ResourceLoader::GetInstance() {
    return ResourceLoader::instance;
 }
 
-SDL_Surface* ResourceLoader::loadSDLSurface(std::string elementPath) {
+std::shared_ptr<SDL_Surface> ResourceLoader::loadSDLSurface(std::string elementPath) {
 
    // Get an iterator into the surfCache.
-   std::map<std::string, SDL_Surface*>::iterator iter = surfCache.begin();
+   auto iter = surfCache.begin();
 
    // Return the spritesheet if can be found in the cache
    iter = surfCache.find(elementPath);
@@ -35,9 +46,9 @@ SDL_Surface* ResourceLoader::loadSDLSurface(std::string elementPath) {
    // TODO: File Exists?
 
    // Handle PNG transparency.
-   SDL_RWops *rwop;
-   rwop = SDL_RWFromFile(path.c_str(), "rb");
+   SDL_RWops *rwop = SDL_RWFromFile(path.c_str(), "rb");
    bool alpha = IMG_isPNG(rwop);
+   SDL_FreeRW(rwop);
 
    surfaceRaw = IMG_Load(path.c_str());
 
@@ -56,17 +67,17 @@ SDL_Surface* ResourceLoader::loadSDLSurface(std::string elementPath) {
       }
    }
 
-   surfCache[elementPath] = surface;
+   surfCache[elementPath] = std::shared_ptr<SDL_Surface>(
+        surface
+      , SDLSurfaceDeleter()
+   );
 
-   return surface;
+   return surfCache[elementPath];
 
 }
 
 /* ------------------------------------------------------------------------------
  * getFont - Load a font for usage.
- *
- * TODO:
- * Optimize this by keeping the font loaded in memory.
  */
 TTF_Font* ResourceLoader::getFont(std::string fontFn, Uint16 pointSize) {
 

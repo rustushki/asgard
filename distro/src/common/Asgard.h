@@ -20,16 +20,16 @@
 #define ASGARD_H
 
 #include "externals.h"
-#include "Screen.h"
-#include "Console.h"
 #include "AsgardMode.h"
 #include "AsgardEvent.h"
 
+class Console;
 class GraphicsEngine;
 class GuiFactory;
 class EventHandler;
 class Map;
 class Database;
+class ResourceLoader;
 
 class Asgard {
    public:
@@ -88,6 +88,7 @@ class Asgard {
       std::unique_ptr<Map>            mp;
       //std::unique_ptr<Console>        co;
       std::unique_ptr<GuiFactory>     gf;
+      std::unique_ptr<ResourceLoader> rl;
 };
 
 #endif//ASGARD_H

@@ -1,6 +1,7 @@
 #include "Animation.h"
 #include "ResourceLoader.h"
 #include "Screen.h"
+#include "SDLSurfaceDeleter.h"
 
 Animation::Animation(std::string filename, uint width, uint height, uint sps, uint ssRows, uint ssCols)
 {
@@ -11,13 +12,13 @@ Animation::Animation(std::string filename, uint width, uint height, uint sps, ui
 
 Animation::Animation(SDL_Surface* surf, uint width, uint height, uint sps, uint ssRows, uint ssCols)
 {
-   this->spriteSheet = surf;
+   this->spriteSheet = std::shared_ptr<SDL_Surface>(surf, SDLSurfaceDeleter());
    this->init(width, height, sps, ssRows, ssCols);
 }
 
 Animation::Animation(SDL_Surface* surf)
 {
-   this->spriteSheet = surf;
+   this->spriteSheet = std::shared_ptr<SDL_Surface>(surf, SDLSurfaceDeleter());
    this->init(surf->w, surf->h, 1, 1, 1);
 }
 
@@ -109,7 +110,7 @@ void Animation::updateRect(SDL_Rect r, uint offsetX, uint offsetY)
 
    // Do a blit to the Screen.
    RectBlitter* rb = RectBlitter::getInstance();
-   rb->blit(r, this->spriteSheet, stillClip);
+   rb->blit(r, spriteSheet.get(), stillClip);
 }
 
 /* -----------------------------------------------------------------------------

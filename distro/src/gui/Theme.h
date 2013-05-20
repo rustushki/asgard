@@ -22,7 +22,7 @@ public:
    Theme(std::string themeName);
 
    // Build Drawable for associated with the special string provided.
-   SDL_Surface* buildElement(std::string elementName);
+   std::shared_ptr<SDL_Surface> buildElement(std::string elementName);
 
 private:
 
