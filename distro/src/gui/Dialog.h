@@ -3,7 +3,6 @@
 
 #include "externals.h" 
 #include "Box.h"
-#include "ResourceLoader.h"
 
 class Dialog : public Box {
 

@@ -1,5 +1,5 @@
-#include "externals.h"
 #include "Dialog.h"
+#include "ResourceLoader.h"
 #include "SDLSurfaceDeleter.h"
 
 Dialog::Dialog(std::string image, std::string text) {
