@@ -58,13 +58,13 @@ class MapObject
       
       void addHardpoint(Hardpoint *hardpoint);
       bool conflict(Coordinate<MapPoint> c);
-      bool intersects(MapObject*);
+      bool intersects(std::shared_ptr<MapObject>);
 
       void addInteractionpoint(Interactionpoint *interactionpoint);
 
       // Determines if this MapObject is within one of the accepter's Interactionpoints.
       // If so, then the accepter will allow its Interactions to be handled.
-      void interacts(MapObject *accepter, bool wasMouseClicked);
+      void interacts(std::shared_ptr<MapObject> accepter, bool wasMouseClicked);
 
       void addInteraction(Interaction *interaction);
 

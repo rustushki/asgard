@@ -54,7 +54,7 @@ Map::Map() {
       d->addAnimation(a3, "NotMatchWalkingEast");
       d->addAnimation(a4, "NotMatchWalkingWest");
 
-      CharacterMapObject* cmo = new CharacterMapObject(d);
+      std::shared_ptr<CharacterMapObject> cmo(new CharacterMapObject(d));
 
       // These are mostly irrelevant at the moment.
       // They become more important when hard points are used.
@@ -236,7 +236,7 @@ bool Map::isBoundingBoxLoaded(Coordinate<MapPoint> bb) {
  * B's middle.  Otherwise, stack A beneath B.
  * 
  */
-void Map::restack(MapObject* a, MapObject* b) const {
+void Map::restack(std::shared_ptr<MapObject> a, std::shared_ptr<MapObject> b) const {
    // Need the Drawable Names so that we may perform operations on the
    // GraphicsEngine.
    Drawable* aDrawable = a->getDrawable();
@@ -283,23 +283,21 @@ bool Map::isValidBoundingBox(Coordinate<MapPoint> bb) {
  * @return
  */
 void Map::unloadMapObjects() {
-   // Grab a reference to the container for MapObjects for shorter code.
-   std::vector<MapObject*>* map = &(moContainer);
 
    // Iterate through each MapObject loaded on the Map ...
-   std::vector<MapObject*>::iterator moIter = map->begin();
-   while (moIter != map->end()) {
+   auto itr = moContainer.begin();
+   while (itr != moContainer.end()) {
 
-      MapObject* mo = *moIter;
+      std::shared_ptr<MapObject> mo = *itr;
 
       // Is the MapObject in the Region of Relevance?
       if (!this->isMapObjectInScope(mo)) {
          LOG(INFO) << "MapObject not in scope.";
 
          // Remove the MapObject from the Map; freeing its memory.
-         moIter = map->erase(moIter);
+         itr = moContainer.erase(itr);
       } else {
-         moIter++;
+         itr++;
       }
    }
 
@@ -324,10 +322,10 @@ bool Map::isBoundingBoxInScope(Coordinate<MapPoint> bb) {
    return false;
 }
 
-bool Map::isMapObjectInScope(MapObject* mo) {
+bool Map::isMapObjectInScope(std::shared_ptr<MapObject> mo) {
 
    // The CMO is always in scope :-)
-   CharacterMapObject* cmo = this->getCharacterMapObject();
+   auto cmo = getCharacterMapObject();
    if (mo == cmo) {
       return true;
    }
@@ -388,7 +386,7 @@ void Map::adjustDisplay() {
    LOG(INFO) << "Set Map Display Point = " << x << ", " << y;	
 }
 
-void Map::installMapObject(MapObject* mo, Drawable* d) {
+void Map::installMapObject(std::shared_ptr<MapObject> mo, Drawable* d) {
    
    // Install the MapObject.
    moContainer.push_back(mo);
@@ -437,7 +435,7 @@ void Map::handle(SDL_Event event) {
          } else if (event.user.code == ASGARDEVENT_MOVECMO) {
 
             // Grab the CMO.
-            CharacterMapObject* cmo = this->getCharacterMapObject();
+            auto cmo = this->getCharacterMapObject();
 
             // Get the x/y of the Move CMO Event.
             Coordinate<ScreenPoint>* c = (Coordinate<ScreenPoint>*)event.user.data1;
@@ -711,7 +709,7 @@ Coordinate<ScreenPoint> Map::convertWorldToScreen(Coordinate<MapPoint> w) const 
 void Map::checkOverMapPanThreshold() const {
 
    // Find the CharacterMapObject.  As of 0.3.8, there's only 1.
-   CharacterMapObject* cmo = this->getCharacterMapObject();
+   auto cmo = this->getCharacterMapObject();
 
    // Compute top, bottom, right and left margins of the screen.
    int top    = Screen::HEIGHT * threshold;
@@ -748,17 +746,17 @@ void Map::checkOverMapPanThreshold() const {
  *
  * Return NULL if none found.
  */
-CharacterMapObject* Map::getCharacterMapObject() const {
+std::shared_ptr<CharacterMapObject> Map::getCharacterMapObject() const {
 
-   CharacterMapObject* cmo = NULL;
+   std::shared_ptr<CharacterMapObject> cmo;
 
    // Iterate over MapObjects on the Map.  Find the one which is the
    // CharacterMapObject and move it to the provided x/y.
    for (auto itr = moContainer.begin(); itr < moContainer.end(); itr++) {
 
       // In Asgard 0.3.8, there will be only one CharacterMapObject.
-      if(dynamic_cast<CharacterMapObject*>(*itr)) {
-         cmo = dynamic_cast<CharacterMapObject*>(*itr);
+      if(std::dynamic_pointer_cast<CharacterMapObject>(*itr)) {
+         cmo = std::dynamic_pointer_cast<CharacterMapObject>(*itr);
          break;
       }
    }

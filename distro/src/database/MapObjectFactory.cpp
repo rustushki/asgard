@@ -107,18 +107,18 @@ void MapObjectFactory::createTile(sqlite3_stmt *stmt) {
    );
 
    // Create new tile
-   Tile *tile = NULL;
+   std::shared_ptr<Tile> tile;
   
    TileType tileType = (TileType)sqlite3_column_int(stmt, TILE_COLUMN_TILE_TYPE);
 
    switch(tileType) {
-      case TILE_TYPE_WATER:   { tile = new WaterTile(drawable); break; }
-      case TILE_TYPE_DESERT:  { tile = new DesertTile(drawable); break; }
-      case TILE_TYPE_GRASS:   { tile = new GrassTile(drawable); break; }
+      case TILE_TYPE_WATER:   { tile = std::shared_ptr<Tile>(new WaterTile(drawable)); break; }
+      case TILE_TYPE_DESERT:  { tile = std::shared_ptr<Tile>(new DesertTile(drawable)); break; }
+      case TILE_TYPE_GRASS:   { tile = std::shared_ptr<Tile>(new GrassTile(drawable)); break; }
       default:                { break; }
    }
 
-   if(tile != NULL) {
+   if(tile != nullptr) {
       // Set Tile Map Object attributes
       tile->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, TILE_COLUMN_WC_X), sqlite3_column_int(stmt, TILE_COLUMN_WC_Y)));
       Map::getInstance()->installMapObject(tile, drawable);
@@ -150,19 +150,16 @@ void MapObjectFactory::createContainer(sqlite3 *db, sqlite3_stmt *stmt) {
    }
    delete rs;
 
-   Container* container = new Container(drawable, inv);
+   std::shared_ptr<Container> container(new Container(drawable, inv));
 
    std::cout << "loading container" << std::endl;
 
-   if (container != NULL) {
+   addInteractions(db, container, mapObjectId);
+   addHardpoints(db, container, mapObjectId);
 
-      addInteractions(db, (MapObject*) container, mapObjectId);
-      addHardpoints(db, (MapObject*) container, mapObjectId);
-
-      // Set Container attributes
-      container->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
-      Map::getInstance()->installMapObject(container, drawable);
-   }
+   // Set Container attributes
+   container->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_X), sqlite3_column_int(stmt, CONTAINER_COLUMN_WC_Y)));
+   Map::getInstance()->installMapObject(container, drawable);
 
 }
 
@@ -172,27 +169,24 @@ void MapObjectFactory::createNonPlayerCharacter(sqlite3 *db, sqlite3_stmt *stmt)
 	  , (const char *)sqlite3_column_text(stmt, NON_PLAYER_CHARACTER_COLUMN_DRAWABLE_NAME)
    );
 
-   NonPlayerCharacter *npc = new NonPlayerCharacter(drawable);
+   std::shared_ptr<NonPlayerCharacter> npc(new NonPlayerCharacter(drawable));
 
-   if (npc != NULL) {
+   int mapObjectId = sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID);
 
-      int mapObjectId = sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_MAP_OBJECT_ID);
+   addHardpoints(db, npc, mapObjectId);
 
-      addHardpoints(db, (MapObject*) npc, mapObjectId);
+   // Create NonPlayerCharacterPath
+   RowSet *rs = loadNonPlayerCharacterPath(db, mapObjectId);
 
-      // Create NonPlayerCharacterPath
-      RowSet *rs = loadNonPlayerCharacterPath(db, mapObjectId);
-
-      if (rs != NULL) {
-         for (int row = 0; row < rs->getRowCount(); row++)
-            npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
-      }
-
-      npc->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
-      Map::getInstance()->installMapObject(npc, drawable);
-        
-      delete rs;
+   if (rs != NULL) {
+      for (int row = 0; row < rs->getRowCount(); row++)
+         npc->addCoordinateToPath(createNonPlayerCharacterPathPoint(rs,row));
    }
+
+   npc->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_X), sqlite3_column_int(stmt, NON_PLAYER_CHARACTER_COLUMN_WC_Y)));
+   Map::getInstance()->installMapObject(npc, drawable);
+     
+   delete rs;
 }
 
 void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt) {
@@ -208,21 +202,18 @@ void MapObjectFactory::createMapObject(sqlite3 *db, sqlite3_stmt *stmt, MapObjec
 	  , (const char *)sqlite3_column_text(stmt, MAP_OBJECT_COLUMN_DRAWABLE_NAME)
    );
 
-   MapObject *mapObject = new MapObject(drawable);
+   std::shared_ptr<MapObject> mapObject(new MapObject(drawable));
 
-   if (mapObject != NULL) {
+   int mapObjectId = sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID);
 
-      int mapObjectId = sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_MAP_OBJECT_ID);
+   addInteractions(db, mapObject, mapObjectId);
+   addHardpoints(db, mapObject, mapObjectId);
 
-      addInteractions(db, mapObject, mapObjectId);
-      addHardpoints(db, mapObject, mapObjectId);
-
-      mapObject->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
-      Map::getInstance()->installMapObject(mapObject, drawable);
-   }
+   mapObject->setLeftCorner(Coordinate<MapPoint>(sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_X), sqlite3_column_int(stmt, MAP_OBJECT_COLUMN_WC_Y)));
+   Map::getInstance()->installMapObject(mapObject, drawable);
 }
 
-void MapObjectFactory::addHardpoints(sqlite3 *db, MapObject *mo, int mapObjectId) { 
+void MapObjectFactory::addHardpoints(sqlite3 *db, std::shared_ptr<MapObject> mo, int mapObjectId) { 
    // Create Hardpoints
    RowSet *rs = loadHardpoints(db, mapObjectId);
 
@@ -233,7 +224,7 @@ void MapObjectFactory::addHardpoints(sqlite3 *db, MapObject *mo, int mapObjectId
    delete rs;
 }
 
-void MapObjectFactory::addInteractions(sqlite3 *db, MapObject *mo, int mapObjectId) {
+void MapObjectFactory::addInteractions(sqlite3 *db, std::shared_ptr<MapObject> mo, int mapObjectId) {
 
    RowSet* rs;
 

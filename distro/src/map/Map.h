@@ -25,7 +25,7 @@ class Map : public EventHandler {
       // N x N grid of bounding boxes.
       static const int BOUNDING_BOX_MEM  = 3;
 
-      void installMapObject(MapObject* mo, Drawable* d);
+      void installMapObject(std::shared_ptr<MapObject> mo, Drawable* d);
 
       virtual void handle(SDL_Event event);
 
@@ -37,7 +37,7 @@ class Map : public EventHandler {
 
       Coordinate<MapPoint> display;
       Coordinate<MapPoint> focus;
-      std::vector<MapObject*> moContainer;
+      std::vector< std::shared_ptr<MapObject> > moContainer;
       std::vector< Coordinate<MapPoint> > boundingBoxContainer;
 
       // Distance from LEFT, RIGHT, BOTTOM and TOP sides of the screen which
@@ -51,12 +51,12 @@ class Map : public EventHandler {
       void loadBoundingBox(Coordinate<MapPoint> bb);
       void moveDrawables(Coordinate<MapPoint> offset);
       void unloadMapObjects();
-      bool isMapObjectInScope(MapObject* mo);
+      bool isMapObjectInScope(std::shared_ptr<MapObject> mo);
       bool isValidBoundingBox(Coordinate<MapPoint> bb);
       bool isBoundingBoxLoaded(Coordinate<MapPoint> bb);
       bool isBoundingBoxInScope(Coordinate<MapPoint> bb);
 
-      void restack(MapObject* a, MapObject* b) const;
+      void restack(std::shared_ptr<MapObject> a, std::shared_ptr<MapObject> b) const;
 
       Coordinate<MapPoint> getFocusBoundingBox();
       Coordinate<MapPoint> getTopLeftOfRegion();
@@ -64,7 +64,7 @@ class Map : public EventHandler {
       std::vector< Coordinate<MapPoint> > constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const;
 
       void checkOverMapPanThreshold() const;
-      CharacterMapObject* getCharacterMapObject() const;
+      std::shared_ptr<CharacterMapObject> getCharacterMapObject() const;
 
       static Map* instance;
 };

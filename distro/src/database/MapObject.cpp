@@ -170,7 +170,7 @@ bool MapObject::conflict(Coordinate<MapPoint> c) {
  * Please note that this is not a hard point collision.  This merely means that
  * the two MapObjects' Drawables are occupying some of the same x/y space.
  */
-bool MapObject::intersects(MapObject* that) {
+bool MapObject::intersects(std::shared_ptr<MapObject> that) {
 	return !(
 		   this->getBottom() < that->getTop()
 		|| this->getLeft()   > that->getRight()
@@ -184,7 +184,7 @@ void MapObject::addInteractionpoint(Interactionpoint *interactionpoint)
    this->interactionpoints.push_back(interactionpoint);
 }
 
-void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
+void MapObject::interacts(std::shared_ptr<MapObject> accepter, bool wasMouseClicked)
 {
    std::vector<Interactionpoint*>::const_iterator ipItr;
    std::vector<Interaction*>::iterator iItr;
@@ -212,7 +212,7 @@ void MapObject::interacts(MapObject *accepter, bool wasMouseClicked)
                   {
 
                   // Transfer from this Container
-                  Container* container = ((Container*) accepter);
+                  auto container = std::dynamic_pointer_cast< Container >(accepter);
 
                   // This Item
                   std::string itemName =  ((ItemInteraction *)(*iItr))->getItemName();
