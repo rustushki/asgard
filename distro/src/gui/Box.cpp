@@ -1,6 +1,7 @@
 #include "externals.h"
 #include "Animation.h"
 #include "Box.h"
+#include "Drawable.h"
 #include "DrawableFactory.h"
 #include "GuiFactory.h"
 #include "GraphicsEngine.h"

@@ -21,9 +21,8 @@
 #define DRAWABLE_FACTORY_H
 
 #include "externals.h"
-#include "DatabaseColumnMap.h"
-#include "Drawable.h"
-#include "QueryGenerator.h"
+
+class Drawable;
 
 class DrawableFactory
 {

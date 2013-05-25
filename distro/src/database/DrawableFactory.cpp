@@ -18,7 +18,10 @@
  ******************************************************************************/
 
 #include "Animation.h"
+#include "DatabaseColumnMap.h"
+#include "Drawable.h"
 #include "DrawableFactory.h"
+#include "QueryGenerator.h"
 
 Drawable* DrawableFactory::build(sqlite3 *db, std::string dName) {
    Drawable *d;
