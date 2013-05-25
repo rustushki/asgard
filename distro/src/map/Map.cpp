@@ -17,8 +17,13 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "Map.h"
+#include "CharacterMapObject.h"
+#include "Database.h"
+#include "Drawable.h"
 #include "GuiFactory.h"
+#include "Map.h"
+#include "MapObject.h"
+#include "Screen.h"
 
 Map* Map::instance = NULL;
 

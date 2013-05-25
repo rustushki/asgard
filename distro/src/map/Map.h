@@ -2,13 +2,13 @@
 #define MAP_H
 
 #include "externals.h"
-#include "MapObject.h"
-#include "Screen.h"
-#include "Database.h"
+#include "Coordinate.h"
 #include "EventHandler.h"
-#include "CharacterMapObject.h"
-#include "AsgardEvent.h"
-#include "ScreenPoint.h"
+class CharacterMapObject;
+class Drawable;
+class MapPoint;
+class MapObject;
+class ScreenPoint;
 
 class Map : public EventHandler {
    public:
