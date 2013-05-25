@@ -1,10 +1,7 @@
 #ifndef THEME_H
 #define THEME_H
 
-#include <string>
-#include <SDL/SDL.h>
-
-#include "ResourceLoader.h"
+#include "externals.h"
 
 
 /*

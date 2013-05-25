@@ -1,3 +1,4 @@
+#include "ResourceLoader.h"
 #include "Theme.h"
 
 Theme::Theme(std::string themeName) {
