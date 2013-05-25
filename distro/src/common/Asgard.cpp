@@ -24,6 +24,7 @@
 #include "GraphicsEngine.h"
 #include "GuiFactory.h"
 #include "Map.h"
+#include "ResourceLoader.h"
 #include "Screen.h"
 
 Asgard* Asgard::instance = NULL;

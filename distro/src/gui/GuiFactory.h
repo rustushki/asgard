@@ -1,13 +1,12 @@
 #ifndef GUIFACTORY_H
 #define GUIFACTORY_H
 
-#include <vector>
-#include <string>
+#include "externals.h"
 
-#include "Dialog.h"
-#include "Box.h"
-#include "Theme.h"
+class Box;
+class Dialog;
 class Menu;
+class Theme;
 
 class GuiFactory {
 
