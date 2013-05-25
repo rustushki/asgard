@@ -37,7 +37,7 @@ class Map : public EventHandler {
 
       Coordinate<MapPoint> display;
       Coordinate<MapPoint> focus;
-      std::vector<MapObject*> mapObjectContainer;
+      std::vector<MapObject*> moContainer;
       std::vector< Coordinate<MapPoint> > boundingBoxContainer;
 
       // Distance from LEFT, RIGHT, BOTTOM and TOP sides of the screen which

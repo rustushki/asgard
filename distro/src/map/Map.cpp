@@ -154,9 +154,8 @@ void Map::moveDrawables(Coordinate<MapPoint> offset) {
 
    std::vector<Drawable*> drawables;
 
-   std::vector<MapObject*>::iterator moIter;
-   for (moIter = mapObjectContainer.begin(); moIter != mapObjectContainer.end(); moIter++) {
-      drawables.push_back((*moIter)->getDrawable());
+   for (auto itr = moContainer.begin(); itr != moContainer.end(); itr++) {
+      drawables.push_back((*itr)->getDrawable());
    }
 
    GraphicsEngine* ge = GraphicsEngine::getInstance();
@@ -277,7 +276,7 @@ bool Map::isValidBoundingBox(Coordinate<MapPoint> bb) {
  */
 void Map::unloadMapObjects() {
    // Grab a reference to the container for MapObjects for shorter code.
-   std::vector<MapObject*>* map = &(this->mapObjectContainer);
+   std::vector<MapObject*>* map = &(moContainer);
 
    // Iterate through each MapObject loaded on the Map ...
    std::vector<MapObject*>::iterator moIter = map->begin();
@@ -384,7 +383,7 @@ void Map::adjustDisplay() {
 void Map::installMapObject(MapObject* mo, Drawable* d) {
    
    // Install the MapObject.
-   this->mapObjectContainer.push_back(mo);
+   moContainer.push_back(mo);
 
    Coordinate<ScreenPoint> drawableCoord = this->convertWorldToScreen(mo->getLeftCorner());
    int x = drawableCoord.getX();
@@ -450,7 +449,6 @@ void Map::handle(SDL_Event event) {
             int angle, step, draw_oldX, draw_oldY;
             std::string drawableName, walkingAnimationName, standingAnimationName;
             Drawable *d = cmo->getDrawable();
-            std::vector<MapObject*>::const_iterator moItr;
             std::vector< Coordinate<MapPoint> > path;
 
             // Get Drawable's name
@@ -546,11 +544,10 @@ void Map::handle(SDL_Event event) {
                   d->move(screenLoc.getX(),screenLoc.getY());
 
                   // Restack MapObjects that Intersect.
-                  std::vector<MapObject*>::iterator moItr;
-                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++) {
-                     if (*moItr != cmo) {
-                        if (cmo->intersects(*moItr)) {
-                           this->restack(cmo, *moItr);
+                  for (auto itr = moContainer.begin(); itr < moContainer.end(); itr++) {
+                     if (*itr != cmo) {
+                        if (cmo->intersects(*itr)) {
+                           this->restack(cmo, *itr);
                         }
                      }
                   }
@@ -560,12 +557,12 @@ void Map::handle(SDL_Event event) {
                   this->checkOverMapPanThreshold();
 
                   // Handle any Interactions between the CMO and another MapObject, if necessary
-                  for (moItr = mapObjectContainer.begin(); moItr < mapObjectContainer.end(); moItr++)
+                  for (auto itr = moContainer.begin(); itr < moContainer.end(); itr++)
                   {
                      // TEMPORARY implementation solely for demonstrating Interactions
-                     cmo->interacts(*moItr,true);
+                     cmo->interacts(*itr,true);
                      // Below implementation will be part of the future permanent solution
-			            //cmo->interacts(*moItr,(path[i] == newCMOWorldCoordinate));
+                     //cmo->interacts(*itr,(path[i] == newCMOWorldCoordinate));
                   }
                   
                   SDL_Delay(10);
@@ -594,7 +591,6 @@ void Map::handle(SDL_Event event) {
  */
 std::vector< Coordinate<MapPoint> > Map::constructPath(int moX, int moY, int drawX, int drawY, int destX, int destY) const {
    std::vector< Coordinate<MapPoint> > path;
-   std::vector<MapObject*>::const_iterator moItr;
    int old_moX, old_moY, new_moX, new_moY, old_drawX, old_drawY, new_drawX, new_drawY;
    bool isHardpoint = false;
 
@@ -643,10 +639,10 @@ std::vector< Coordinate<MapPoint> > Map::constructPath(int moX, int moY, int dra
       Coordinate<MapPoint> newFoot(new_moX, new_moY);
 
       /* Check for Hardpoint conflict */
-      for (moItr = this->mapObjectContainer.begin(); moItr < this->mapObjectContainer.end(); moItr++)
+      for (auto itr = moContainer.begin(); itr < moContainer.end(); itr++)
       {
          // Leave loop if Hardpoint detected
-         isHardpoint = (*moItr)->conflict(newFoot);
+         isHardpoint = (*itr)->conflict(newFoot);
          if(isHardpoint)
             break;
       }
@@ -750,8 +746,7 @@ CharacterMapObject* Map::getCharacterMapObject() const {
 
    // Iterate over MapObjects on the Map.  Find the one which is the
    // CharacterMapObject and move it to the provided x/y.
-   std::vector<MapObject*>::const_iterator itr;
-   for (itr = mapObjectContainer.begin(); itr < mapObjectContainer.end(); itr++) {
+   for (auto itr = moContainer.begin(); itr < moContainer.end(); itr++) {
 
       // In Asgard 0.3.8, there will be only one CharacterMapObject.
       if(dynamic_cast<CharacterMapObject*>(*itr)) {
