@@ -17,14 +17,16 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "MapObject.h"
-#include "GraphicsEngine.h"
-#include "GamerInventory.h"
+#include "AnimationInteraction.h"
+#include "Container.h"
 #include "DialogInteraction.h"
 #include "Drawable.h"
-#include "AnimationInteraction.h"
+#include "GamerInventory.h"
+#include "GraphicsEngine.h"
+#include "Hardpoint.h"
+#include "Interactionpoint.h"
 #include "ItemInteraction.h"
-#include "Container.h"
+#include "MapObject.h"
 
 MapObject::MapObject(Drawable* drawable)
 {

@@ -21,13 +21,15 @@
 #define MAP_OBJECT_H
 
 #include "externals.h"
-#include "Hardpoint.h"
 #include "Coordinate.h"
 #include "MapObjectState.h"
-#include "Interactionpoint.h"
-#include "Interaction.h"
-#include "Drawable.h"
 #include "Inventory.h"
+
+class Drawable;
+class Hardpoint;
+class Interactionpoint;
+class Interaction;
+class MapPoint;
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
