@@ -19,6 +19,7 @@
 
 #include "Database.h"
 #include "MapObjectFactory.h"
+#include "DrawableFactory.h"
 #include "consts.h"
 
 Database* Database::instance = NULL;

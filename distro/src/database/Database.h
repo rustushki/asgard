@@ -21,8 +21,6 @@
 #define DATABASE_H
 
 #include "externals.h"
-#include "Coordinate.h"
-#include "DrawableFactory.h"
  
 class Database
 {
