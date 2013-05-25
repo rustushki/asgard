@@ -20,7 +20,10 @@
 #ifndef CIRC_INTERACTIONPOINT_H
 #define CIRC_INTERACTIONPOINT_H
 
+#include "Coordinate.h"
 #include "Interactionpoint.h"
+
+class MapPoint;
 
 class CircInteractionpoint : public Interactionpoint
 {

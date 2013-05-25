@@ -20,9 +20,9 @@
 #ifndef CONTAINER_H
 #define CONTAINER_H
 
-#include "externals.h"
 #include "MapObject.h"
-#include "Inventory.h"
+
+class Inventory;
 
 class Container : public MapObject
 {

@@ -16,9 +16,11 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#include "Container.h"
+#include "externals.h"
 #include "AnimationInteraction.h"
+#include "Container.h"
 #include "DialogInteraction.h"
+#include "Inventory.h"
 
 /* Constructor */
 Container::Container(Drawable* drawable) : MapObject(drawable) {

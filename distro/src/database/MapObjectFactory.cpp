@@ -19,6 +19,8 @@
 
 #include "Map.h"
 #include "MapObjectFactory.h"
+#include "Inventory.h"
+#include "Item.h"
 
 sqlite3* MapObjectFactory::db = NULL;
 

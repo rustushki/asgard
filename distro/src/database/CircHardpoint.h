@@ -21,6 +21,9 @@
 #define CIRC_HARDPOINT_H
 
 #include "Hardpoint.h"
+#include "Coordinate.h"
+
+class MapPoint;
 
 class CircHardpoint : public Hardpoint
 {

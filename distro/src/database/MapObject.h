@@ -27,6 +27,7 @@
 #include "Interactionpoint.h"
 #include "Interaction.h"
 #include "Drawable.h"
+#include "Inventory.h"
 
 #define MAP_OBJECT_HEIGHT_DEFAULT   10
 #define MAP_OBJECT_WIDTH_DEFAULT    10
