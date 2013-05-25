@@ -17,10 +17,29 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
+#include "AnimationInteraction.h"
+#include "CircHardpoint.h"
+#include "CircInteractionpoint.h"
+#include "Container.h"
+#include "DatabaseColumnMap.h"
+#include "DesertTile.h"
+#include "DialogInteraction.h"
+#include "DrawableFactory.h"
+#include "ItemInteraction.h"
 #include "Map.h"
 #include "MapObjectFactory.h"
+#include "NonPlayerCharacter.h"
+#include "GrassTile.h"
 #include "Inventory.h"
 #include "Item.h"
+#include "RectHardpoint.h"
+#include "RectInteractionpoint.h"
+#include "RowSet.h"
+#include "QueryGenerator.h"
+#include "WaterTile.h"
+
+class Drawable;
+class Tile;
 
 sqlite3* MapObjectFactory::db = NULL;
 

@@ -21,27 +21,14 @@
 #define MAP_OBJECT_FACTORY_H
 
 #include "externals.h"
-#include "Hardpoint.h"
-#include "Interactionpoint.h"
-#include "Interaction.h"
-#include "RowSet.h"
-#include "Tile.h"
-#include "WaterTile.h"
-#include "GrassTile.h"
-#include "DesertTile.h"
-#include "Container.h"
-#include "NonPlayerCharacter.h"
-#include "DatabaseColumnMap.h"
-#include "CircHardpoint.h"
-#include "RectHardpoint.h"
-#include "CircInteractionpoint.h"
-#include "RectInteractionpoint.h"
-#include "AnimationInteraction.h"
-#include "ItemInteraction.h"
-#include "DialogInteraction.h"
-#include "QueryGenerator.h"
-#include "Drawable.h"
-#include "DrawableFactory.h"
+#include "Coordinate.h"
+
+class Interaction;
+class Interactionpoint;
+class Hardpoint;
+class MapObject;
+class MapPoint;
+class RowSet;
 
 class MapObjectFactory
 {
