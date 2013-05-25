@@ -18,6 +18,7 @@
  ****************************************************************************/
 
 #include "GraphicsEngine.h"
+#include "Layer.h"
 
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;

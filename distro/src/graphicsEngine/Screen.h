@@ -20,9 +20,9 @@
 #define SCREEN_H
 
 #include "externals.h"
-#include "Layer.h"
 #include "ScreenState.h"
 
+class Drawable;
 class Layer;
 
 class Screen
