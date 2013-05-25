@@ -20,7 +20,6 @@
 #define LAYER_H
 
 #include "externals.h"
-#include "GraphicsEngine.h"
 #include "LayerState.h"
 
 class Drawable;
