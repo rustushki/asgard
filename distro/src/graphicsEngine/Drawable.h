@@ -20,7 +20,8 @@
 #define DRAWABLE_H
 #include "externals.h"
 #include "DrawableState.h"
-#include "Animation.h"
+
+class Animation;
 
 class Drawable
 {

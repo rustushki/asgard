@@ -17,6 +17,7 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ******************************************************************************/
 
+#include "Animation.h"
 #include "DrawableFactory.h"
 
 Drawable* DrawableFactory::build(sqlite3 *db, std::string dName) {

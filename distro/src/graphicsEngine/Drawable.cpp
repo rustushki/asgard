@@ -16,8 +16,9 @@
  * along with Asgard; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
-#include "Screen.h"
+#include "Animation.h"
 #include "Drawable.h"
+#include "Screen.h"
 
 unsigned int Drawable::nextUniqueNumber = 0;
 
