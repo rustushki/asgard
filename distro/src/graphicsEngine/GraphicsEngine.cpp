@@ -17,8 +17,11 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
+#include "Asgard.h"
+#include "Drawable.h"
 #include "GraphicsEngine.h"
 #include "Layer.h"
+#include "Screen.h"
 
 GraphicsEngine* GraphicsEngine::instance = NULL;
 boost::shared_mutex GraphicsEngine::updateLock;

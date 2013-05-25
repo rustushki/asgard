@@ -19,10 +19,7 @@
 #ifndef GRAPHICSENGINE_H
 #define GRAPHICSENGINE_H
 
-#include "Drawable.h"
-#include "Screen.h"
-#include "Asgard.h"
-
+class Drawable;
 class Layer;
 
 class GraphicsEngine {
