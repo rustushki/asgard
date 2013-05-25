@@ -18,11 +18,12 @@
  ****************************************************************************/
 
 #include "Asgard.h"
-#include "ConsolePython.h"
-#include "GuiFactory.h"
-#include "GraphicsEngine.h"
 #include "AsgardMode.h"
 #include "AsgardEvent.h"
+#include "ConsolePython.h"
+#include "GraphicsEngine.h"
+#include "GuiFactory.h"
+#include "Map.h"
 #include "Screen.h"
 
 Asgard* Asgard::instance = NULL;

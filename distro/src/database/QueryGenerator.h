@@ -21,7 +21,6 @@
 #define QUERY_GENERATOR_H
 
 #include "externals.h"
-#include "Map.h"
 
 class QueryGenerator
 {
