@@ -21,6 +21,7 @@
 #include "Container.h"
 #include "DialogInteraction.h"
 #include "Inventory.h"
+#include "Item.h"
 
 /* Constructor */
 Container::Container(Drawable* drawable) : MapObject(drawable) {

@@ -21,7 +21,8 @@
 #define INVENTORY_H
 
 #include "externals.h"
-#include "Item.h"
+
+class Item;
 
 class Inventory {
 
