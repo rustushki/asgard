@@ -147,7 +147,7 @@ void Dialog::drawText() {
       std::string line = this->getNextLine(remainingText, font, maxWidth);
 
       // Build the text surface containing the given string.
-      auto text_surface = std::unique_ptr<SDL_Surface, SDLSurfaceDeleter>(
+      std::unique_ptr<SDL_Surface, SDLSurfaceDeleter> text_surface(
            TTF_RenderText_Solid(
               font
             , line.c_str()

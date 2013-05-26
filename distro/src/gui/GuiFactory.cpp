@@ -26,7 +26,7 @@ GuiFactory* GuiFactory::GetInstance() {
 
 std::shared_ptr<Menu> GuiFactory::buildMenu(std::vector<std::string> list) {
 /*
-   auto menu = std::shared_ptr<Menu>(new Menu(list));
+   std::shared_ptr<Menu> menu(new Menu(list));
    box.push_back(menu);
 
    return menu;
@@ -35,7 +35,7 @@ std::shared_ptr<Menu> GuiFactory::buildMenu(std::vector<std::string> list) {
 }
 
 std::shared_ptr<Dialog> GuiFactory::buildDialog(std::string imagePath, std::string text) {
-   auto dialog = std::shared_ptr<Dialog>(new Dialog(imagePath, text));
+   std::shared_ptr<Dialog> dialog(new Dialog(imagePath, text));
    box.push_back(dialog);
 
    return dialog;
