@@ -4,15 +4,21 @@ Import('env')
 # Build asgard.db3
 # Note that this requires sqlite3; but you should already have that if you
 # expect to compile and run.
+
+# target
 target = './asgard.db3'
+
+# sources
 createdbscript   = 'createdb.sql'
 populatedbscript = 'populatedb.sql'
+sources = [createdbscript, populatedbscript]
+
+# command
 create = 'sqlite3 $TARGET < ./database/' + createdbscript
 populate = 'sqlite3  $TARGET < ./database/' + populatedbscript
-asgarddb3 = env.Command(target, [], create+' && '+populate)
+command = create + ' && ' + populate
 
-Depends(asgarddb3, createdbscript)
-Depends(asgarddb3, populatedbscript)
+asgarddb3 = env.Command(target, sources, command)
 
 # Let scons know how to cleanup asgard.db3
 Clean(asgarddb3, 'asgard.db3')
