@@ -26,6 +26,7 @@
 class Console;
 class GraphicsEngine;
 class GuiFactory;
+class ISaveable;
 class EventHandler;
 class Map;
 class Database;
@@ -56,6 +57,16 @@ class Asgard {
       // Return the event handler currently accepting events, or NULL if there
       // is none.
       EventHandler* getEventHandler();
+
+      // Save the current state of the game.
+      void save();
+
+      // Load a game state file.
+      void load();
+
+      // Register an object that implements ISaveable so that Asgard::save()
+      // may write it to the save file.
+      void registerSaveable(std::shared_ptr<ISaveable> is);
 
    private:
 

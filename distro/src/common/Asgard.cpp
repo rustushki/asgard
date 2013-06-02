@@ -226,6 +226,30 @@ void Asgard::initExternal() {
    TTF_Init();
 }
 
+/* ------------------------------------------------------------------------------
+ * save - Iterate over all registered ISaveables and write each to the save
+ * file.
+ */
+void Asgard::save() {
+
+}
+
+/* ------------------------------------------------------------------------------
+ * load - Iterates over all registered ISaveables and loads each one from the
+ * save file.
+ */
+void Asgard::load() {
+
+}
+
+/* ------------------------------------------------------------------------------
+ * registerSaveable - Given an ISaveable, this method will keep a reference to
+ * the ISaveable so that it may be saved or loaded.
+ */
+void Asgard::registerSaveable(std::shared_ptr<ISaveable> is) {
+
+}
+
 Asgard::~Asgard() {
    //Py_Finalize();
    SDL_Quit();
