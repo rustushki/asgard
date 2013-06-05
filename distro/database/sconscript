@@ -18,7 +18,14 @@ create = 'sqlite3 $TARGET < ./database/' + createdbscript
 populate = 'sqlite3  $TARGET < ./database/' + populatedbscript
 command = create + ' && ' + populate
 
-asgarddb3 = env.Command(target, sources, command)
+# build the action object for the command.
+# be sure to constrain output if not in VERBOSE build mode
+if ARGUMENTS.get('VERBOSE') != "1":
+	act = Action(command, '[DB] $TARGET')
+else:
+	act = Action(command)
+
+asgarddb3 = env.Command(target, sources, act)
 
 # Let scons know how to cleanup asgard.db3
 Clean(asgarddb3, 'asgard.db3')
