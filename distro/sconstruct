@@ -19,8 +19,12 @@ AddOption(
 )
 
 # Build the environment and export it for child sconscripts
-env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', CPPFLAGS='-g -std=c++11')
-#env = Environment(PREFIX = GetOption('prefix'), CXX='g++', CPPFLAGS='-g')
+if os.uname()[0] == 'FreeBSD':
+   env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', LIBPATH='/usr/local/lib/', \
+                     LD_LIBRARY_PATH='/usr/local/lib/', CPPFLAGS='-std=c++11')
+else:
+   env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', CPPFLAGS='-g -std=c++11')
+
 Export('env')
 
 # Child conscripts
