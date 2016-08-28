@@ -22,11 +22,11 @@
 #include "externals.h"
 #include "AsgardMode.h"
 #include "AsgardEvent.h"
+#include "ISaveable.h"
 
 class Console;
 class GraphicsEngine;
 class GuiFactory;
-class ISaveable;
 class EventHandler;
 class Map;
 class Database;
@@ -100,6 +100,9 @@ class Asgard {
       //std::unique_ptr<Console>        co;
       std::unique_ptr<GuiFactory>     gf;
       std::unique_ptr<ResourceLoader> rl;
+
+      // Registered ISaveable objects
+      std::vector<std::shared_ptr<ISaveable>> saveables;
 };
 
 #endif//ASGARD_H

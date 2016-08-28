@@ -20,12 +20,14 @@
 #ifndef GAMER_INVENTORY_H
 #define GAMER_INVENTORY_H
 
+#include "ISaveable.h"
 #include "Inventory.h"
 
-class GamerInventory : public Inventory {
+class GamerInventory : public ISaveable, public Inventory {
 
 public:
 	static GamerInventory* getInstance();
+   void save();
 
 private:
 	GamerInventory();

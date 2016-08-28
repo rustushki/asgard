@@ -17,26 +17,14 @@
  * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
  ****************************************************************************/
 
-#include "GamerInventory.h"
+#ifndef I_SAVEABLE_H
+#define I_SAVEABLE_H
 
-GamerInventory* GamerInventory::instance = NULL;
+class ISaveable
+{
+   public:
+      virtual ~ISaveable() {};
+      virtual void save() = 0;
+};
 
-GamerInventory::GamerInventory() {
-
-}
-
-GamerInventory::~GamerInventory() {
-
-}
-
-GamerInventory* GamerInventory::getInstance() {
-	if (GamerInventory::instance == NULL) {
-		GamerInventory::instance = new GamerInventory();
-	}
-
-	return GamerInventory::instance;
-}
-
-void GamerInventory::save() {
-
-}
+#endif //I_SAVEABLE_H

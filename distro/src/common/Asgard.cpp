@@ -231,7 +231,9 @@ void Asgard::initExternal() {
  * file.
  */
 void Asgard::save() {
-
+   std::vector<std::shared_ptr<ISaveable>>::const_iterator isItr;
+   for(isItr = saveables.begin(); isItr < saveables.end(); isItr++)
+      (*isItr)->save();
 }
 
 /* ------------------------------------------------------------------------------
@@ -247,7 +249,7 @@ void Asgard::load() {
  * the ISaveable so that it may be saved or loaded.
  */
 void Asgard::registerSaveable(std::shared_ptr<ISaveable> is) {
-
+   this->saveables.push_back(is);
 }
 
 Asgard::~Asgard() {
