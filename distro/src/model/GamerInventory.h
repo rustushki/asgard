@@ -26,12 +26,12 @@
 class GamerInventory : public ISaveable, public Inventory {
 
 public:
+	~GamerInventory();
 	static GamerInventory* getInstance();
    void save();
 
 private:
 	GamerInventory();
-	~GamerInventory();
 
 	static GamerInventory* instance;
 

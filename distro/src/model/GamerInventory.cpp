@@ -18,11 +18,13 @@
  ****************************************************************************/
 
 #include "GamerInventory.h"
+#include "Asgard.h"
 
 GamerInventory* GamerInventory::instance = NULL;
 
 GamerInventory::GamerInventory() {
-
+   // Register as saveable object
+   Asgard::getInstance()->registerSaveable((std::shared_ptr<ISaveable>)this);
 }
 
 GamerInventory::~GamerInventory() {
