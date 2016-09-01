@@ -241,7 +241,9 @@ void Asgard::save() {
  * save file.
  */
 void Asgard::load() {
-
+   std::vector<std::shared_ptr<ISaveable>>::const_iterator isItr;
+   for(isItr = saveables.begin(); isItr < saveables.end(); isItr++)
+      (*isItr)->load();
 }
 
 /* ------------------------------------------------------------------------------

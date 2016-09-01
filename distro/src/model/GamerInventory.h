@@ -29,6 +29,7 @@ public:
 	~GamerInventory();
 	static GamerInventory* getInstance();
    void save();
+   void load();
 
 private:
 	GamerInventory();

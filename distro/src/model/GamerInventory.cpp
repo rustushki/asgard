@@ -42,3 +42,7 @@ GamerInventory* GamerInventory::getInstance() {
 void GamerInventory::save() {
 
 }
+
+void GamerInventory::load() {
+
+}

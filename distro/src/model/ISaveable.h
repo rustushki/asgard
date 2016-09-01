@@ -25,6 +25,7 @@ class ISaveable
    public:
       virtual ~ISaveable() {};
       virtual void save() = 0;
+      virtual void load() = 0;
 };
 
 #endif //I_SAVEABLE_H
