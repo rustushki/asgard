@@ -8,6 +8,9 @@ import os
 # scons manpage   - compresses manpage
 # scons install   - install asgard to system
 
+# Get name of OS
+osName = os.uname()[0]
+
 AddOption(
 	'--prefix',
 	dest='prefix',
@@ -19,7 +22,7 @@ AddOption(
 )
 
 # Build the environment and export it for child sconscripts
-if os.uname()[0] == 'FreeBSD':
+if osName == 'FreeBSD':
    env = Environment(PREFIX = GetOption('prefix'), CXX='clang++', LIBPATH='/usr/local/lib/', \
                      LD_LIBRARY_PATH='/usr/local/lib/', CPPFLAGS='-std=c++11')
 else:
@@ -51,8 +54,16 @@ env.Alias("db"     , asgarddb3)
 env.Alias("manpage", manpage)
 
 # 'install' Alias
-env.Alias("install", env.Install("$PREFIX/usr/games", asgard))
-env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("scripts")))
-env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("spritesheet")))
-env.Alias("install", env.Install("$PREFIX/usr/share/asgard/database", asgarddb3))
-env.Alias("install", env.Install("$PREFIX/usr/share/man/man1", manpage))
+if osName == 'FreeBSD':
+   env.Alias("install", env.Install("$PREFIX/usr/games", asgard))
+   env.Alias("install", env.Install("$PREFIX/usr/local/share/asgard/", Dir("scripts")))
+   env.Alias("install", env.Install("$PREFIX/usr/local/share/asgard/", Dir("spritesheet")))
+   env.Alias("install", env.Install("$PREFIX/usr/local/share/asgard/database", asgarddb3))
+   env.Alias("install", env.Install("$PREFIX/usr/local/man/man1", manpage))
+else:
+   env.Alias("install", env.Install("$PREFIX/usr/games", asgard))
+   env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("scripts")))
+   env.Alias("install", env.Install("$PREFIX/usr/share/asgard/", Dir("spritesheet")))
+   env.Alias("install", env.Install("$PREFIX/usr/share/asgard/database", asgarddb3))
+   env.Alias("install", env.Install("$PREFIX/usr/share/man/man1", manpage))
+

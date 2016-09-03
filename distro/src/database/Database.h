@@ -29,17 +29,18 @@ class Database
 
       static Database* getInstance();
       sqlite3* getAsgardDb() const;
+      sqlite3* getSaveDb() const;
 
       bool loadBoundingBox(int boxX, int boxY);
       bool loadDrawable(std::string dName);
 
    private:
       Database();
-      sqlite3 *asgardDb;
+      sqlite3 *asgardDb, *saveDb;
       static Database* instance;
       
-      void loop();
-      std::string getDatabasePath();
+      std::string getAsgardDatabasePath();
+      std::string getSaveDatabasePath();
 };
 
 #endif //DATABASE_H

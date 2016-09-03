@@ -25,14 +25,26 @@
 Database* Database::instance = NULL;
 
 Database::Database() {
+   int status;
+   std::string path;
+
    LOG(INFO) << "Database starting ...";
 
-   std::string path = this->getDatabasePath();
-   int status = sqlite3_open(path.c_str(), &this->asgardDb);
-   
+   // Open initial Asgard database
+   path = this->getAsgardDatabasePath();
+   status = sqlite3_open(path.c_str(), &this->asgardDb);
    if(status != SQLITE_OK)
    {
       sqlite3_close(this->asgardDb);
+   }
+
+   // Open save database
+   // If doesn't exist, will be created
+   path = this->getSaveDatabasePath();
+   status = sqlite3_open(path.c_str(), &this->saveDb);
+   if(status != SQLITE_OK)
+   {
+      sqlite3_close(this->saveDb);
    }
 
    // TODO: Add some type of logging for status
@@ -40,6 +52,7 @@ Database::Database() {
 
 Database::~Database() {
    sqlite3_close(this->asgardDb);
+   sqlite3_close(this->saveDb);
 }
 
 Database* Database::getInstance() {
@@ -51,14 +64,24 @@ sqlite3* Database::getAsgardDb() const {
    return this->asgardDb;
 }
 
+sqlite3* Database::getSaveDb() const {
+   return this->saveDb;
+}
+
 /* Gets the path to the database. Uses RES resource path from consts.h
  *
  * @return std::string - path to database.
  * @access private
  */
-std::string Database::getDatabasePath() {
+std::string Database::getAsgardDatabasePath() {
    std::string path(RES);
    path.append("database/asgard.db3");
+   return path;
+}
+
+std::string Database::getSaveDatabasePath() {
+   std::string path(RES);
+   path.append("~/.config/asgard/save1.db3");
    return path;
 }
 
