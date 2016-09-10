@@ -236,6 +236,25 @@ char* QueryGenerator::drawable(std::string dName)
    return QueryGenerator::makeCStr(qs);
 }
 
+char* QueryGenerator::saveGamerInventory(std::string itemName, unsigned int quantity, unsigned int numIter)
+{
+   std::string qs;
+
+   // (Re)create the table at beginning of each save
+   if (numIter == 1)
+   {
+      qs += "drop table GamerInventory if exists; ";
+      qs += "create table GamerInventory ";
+      qs += "(ItemName varchar(50) not null, Quantity integer(10) not null, primary key(ItemName)); ";
+   }
+
+   qs += "insert into GamerInventory ";
+   qs += "(ItemName, Quantity) ";
+   qs += "values('" + itemName + "', " + QueryGenerator::intToString(quantity) + ");";
+
+   return QueryGenerator::makeCStr(qs);
+}
+
 // Convert an integer into a string.  We used to use std::stringstream for this
 // purpose, but then discovered that std::stringstream is not threadsafe when
 // compiled with g++.

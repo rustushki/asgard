@@ -37,7 +37,7 @@ class QueryGenerator
       static char* itemInteraction(int mapObjectId, int interactionType);
       static char* dialogInteraction(int mapObjectId, int interactionType);
       static char* drawable(std::string dName);
-      static char* saveGamerInventory(int itemId, int quantity);
+      static char* saveGamerInventory(std::string itemName, unsigned int quantity, unsigned int numIter);
    private:
       static char* makeCStr(std::string s);
       static std::string intToString(int b);

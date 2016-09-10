@@ -32,6 +32,7 @@ class Inventory {
         ~Inventory();
 
         void addItem(Item item);
+        std::shared_ptr<std::vector<Item>> getItems();
         Inventory getItemsByName(std::string name);
         void transferAll(Inventory* inventory);
         bool transferItemToInventory(std::string name, Inventory* inventory);
@@ -43,10 +44,8 @@ class Inventory {
 
         std::string toString() const;
 
-
-    private:
+    protected:
         std::vector<Item> item;
-
 
 };
 

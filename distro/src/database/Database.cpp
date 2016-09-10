@@ -80,8 +80,8 @@ std::string Database::getAsgardDatabasePath() {
 }
 
 std::string Database::getSaveDatabasePath() {
-   std::string path(RES);
-   path.append("~/.config/asgard/save1.db3");
+   std::string path; 
+   path = "~/.config/asgard/save1.db3";
    return path;
 }
 

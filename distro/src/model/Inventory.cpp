@@ -25,6 +25,14 @@ void Inventory::addItem(Item item) {
 }
 
 /*------------------------------------------------------------------------------
+ * getItems - Return a pointer to this Inventory's item vector
+ */
+
+std::shared_ptr<std::vector<Item>> Inventory::getItems() {
+   return std::make_shared<std::vector<Item>>();
+}
+
+/*------------------------------------------------------------------------------
  * getItemByName - Return an inventory containing the item denoted by the
  * provided name.  Note that we need an Inventory returned because there may be
  * multiple items of the same type.  Use transferItemToInventory to move items
